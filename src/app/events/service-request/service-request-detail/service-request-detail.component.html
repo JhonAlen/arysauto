@@ -1,0 +1,356 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <form [formGroup]="detail_form">
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.SERVICEREQUESTS.SERVICEREQUEST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                    <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.SERVICEREQUESTS.CANCEL" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editServiceRequest()" *ngIf="canEdit && showEditButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.SERVICEREQUESTS.EDIT" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.SERVICEREQUESTS.SAVE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.CREATIONDATE" | translate }}</label>
+                                    <input type="date" formControlName="fcreacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fcreacion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fcreacion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.MANAGEMENTDATE" | translate }}</label>
+                                    <input type="date" formControlName="fdiagestion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fdiagestion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fdiagestion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.MANAGEMENTTIME" | translate }}</label>
+                                    <input type="time" formControlName="fhoragestion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fhoragestion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fhoragestion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.APPLICANT" | translate }}</label>
+                                    <select formControlName="isolicitante" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('isolicitante').errors }">
+                                        <option></option>
+                                        <option value="PRV">{{ "DROPDOWN.PROVIDER" | translate }}</option>
+                                        <option value="USR">{{ "DROPDOWN.USER" | translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('isolicitante').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('isolicitante').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDAPPLICANT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bcubierto" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcubierto').errors }">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.COVERED" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bcubierto').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.ACTIVE" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDACTIVE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.ORIGIN" | translate }}</label>
+                                    <select formControlName="cprocedencia" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cprocedencia').errors }">
+                                        <option></option>
+                                        <option value="API">{{ "DROPDOWN.API" | translate }}</option>
+                                        <option value="PRO">{{ "DROPDOWN.PRODUCTION" | translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cprocedencia').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.SERVICEREQUESTS.CONTRACTDATA" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="searchClubContractManagement()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.SERVICEREQUESTS.SEARCHCONTRACT" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombre').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombre').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xapellido').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xapellido').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                    <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidad').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xdocidentidad').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.PLATE" | translate }}</label>
+                                    <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplaca').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xplaca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.SERVICEREQUESTS.SERVICE" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.SERVICETYPE" | translate }}</label>
+                                    <select formControlName="ctiposervicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctiposervicio').errors }" (change)="serviceDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let serviceType of serviceTypeList" value="{{ serviceType.id }}">{{ serviceType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ctiposervicio').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ctiposervicio').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDSERVICETYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.SERVICE" | translate }}</label>
+                                    <select formControlName="cservicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cservicio').errors }">
+                                        <option></option>
+                                        <option *ngFor="let service of serviceList" value="{{ service.id }}">{{ service.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cservicio').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cservicio').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDSERVICE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.SERVICEREQUESTS.PROVIDERDATA" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || !detail_form.get('ctiposervicio').value || !detail_form.get('cservicio').value" class="btn company-detail-button float-right mr-1" type="button" (click)="searchProvider()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.SERVICEREQUESTS.SEARCHPROVIDER" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xproveedor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xproveedor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xproveedor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.BUSINESSNAME" | translate }}</label>
+                                    <input type="text" formControlName="xrazonsocial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xrazonsocial').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xrazonsocial').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.STATE" | translate }}</label>
+                                    <input type="text" formControlName="xestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xestado').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xestado').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.CITY" | translate }}</label>
+                                    <input type="tel" formControlName="xciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xciudad').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xciudad').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.SERVICEREQUESTS.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdireccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdireccion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.SERVICEREQUESTS.TRACINGSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="addTracing()" *ngIf="canEdit">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.SERVICEREQUESTS.ADDTRACING" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="tracingList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="tracingRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onTracingsGridReady($event)">
+                                <ag-grid-column headerName="Type" field="xtiposeguimiento" [width]="207" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Motive" field="xmotivoseguimiento" [width]="207" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Day" field="fdia" [width]="207" [sortable]="false"></ag-grid-column>
+                                <ag-grid-column headerName="Time" field="fhora" [width]="207" [sortable]="false"></ag-grid-column>
+                                <ag-grid-column headerName="Status" field="xcerrado" [width]="208" [sortable]="false"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<footer >    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+

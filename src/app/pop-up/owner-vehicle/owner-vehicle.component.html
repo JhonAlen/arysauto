@@ -1,0 +1,229 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "THIRDPARTIES.OWNERS.VEHICLE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <div class="row mt-2">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)"  *ngIf="canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "THIRDPARTIES.OWNERS.SAVE" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn btn-danger float-right mr-1" type="button" (click)="deleteVehicle()" *ngIf="isEdit">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "THIRDPARTIES.OWNERS.DELETE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.BRAND" | translate }}</label>
+                                    <select formControlName="cmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmarca').errors }" (change)="modelDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let brand of brandList" value="{{ brand.id }}">{{ brand.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmarca').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cmarca').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDBRAND" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.MODEL" | translate }}</label>
+                                    <select formControlName="cmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmodelo').errors }" (change)="versionDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let model of modelList" value="{{ model.id }}">{{ model.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmodelo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cmodelo').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDMODEL" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.VERSION" | translate }}</label>
+                                    <select formControlName="cversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cversion').errors }">
+                                        <option></option>
+                                        <option *ngFor="let version of versionList" value="{{ version.id }}">{{ version.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cversion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cversion').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDVERSION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.PLATE" | translate }}</label>
+                                    <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xplaca').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xplaca').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xplaca').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDPLATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.YEAR" | translate }}</label>
+                                    <input type="number" formControlName="fano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fano').errors }">
+                                    <div *ngIf="submitted && popup_form.get('fano').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('fano').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDYEAR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.COLOR" | translate }}</label>
+                                    <input type="text" formControlName="xcolor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcolor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xcolor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xcolor').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDCOLOR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.MILEAGE" | translate }}</label>
+                                    <input type="number" formControlName="nkilometraje" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('nkilometraje').errors }">
+                                    <div *ngIf="submitted && popup_form.get('nkilometraje').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('nkilometraje').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDMILEAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.ORIGINCERTIFICATE" | translate }}</label>
+                                    <input type="text" formControlName="xcertificadoorigen" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcertificadoorigen').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xcertificadoorigen').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xcertificadoorigen').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDORIGINCERTIFICATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.VEHICLEPRICE" | translate }}</label>
+                                    <input type="number" formControlName="mpreciovehiculo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mpreciovehiculo').errors }">
+                                    <div *ngIf="submitted && popup_form.get('mpreciovehiculo').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('mpreciovehiculo').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDVEHICLEPRICE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.BODYWORKSERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialcarroceria" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xserialcarroceria').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xserialcarroceria').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xserialcarroceria').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDBODYWORKSERIAL" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.ENGINESERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialmotor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xserialmotor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xserialmotor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xserialmotor').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDENGINESERIAL" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.PASSINGERS" | translate }}</label>
+                                    <input type="number" formControlName="ncapacidadpasajeros" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ncapacidadpasajeros').errors }">
+                                    <div *ngIf="submitted && popup_form.get('ncapacidadpasajeros').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ncapacidadpasajeros').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDPASSINGER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.CHARGECAPACITY" | translate }}</label>
+                                    <input type="number" formControlName="ncapacidadcarga" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ncapacidadcarga').errors }">
+                                    <div *ngIf="submitted && popup_form.get('ncapacidadcarga').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ncapacidadcarga').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDCHARGECAPACITY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.UTILITY" | translate }}</label>
+                                    <input type="text" formControlName="xuso" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xuso').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xuso').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xuso').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDUTILITY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.MODELTYPE" | translate }}</label>
+                                    <input type="text" formControlName="xtipo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtipo').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xtipo').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xtipo').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDMODELTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "THIRDPARTIES.OWNERS.COIN" | translate }}</label>
+                                    <select formControlName="cmoneda" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmoneda').errors }">
+                                        <option></option>
+                                        <option *ngFor="let coin of coinList" value="{{ coin.id }}">{{ coin.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmoneda').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cmoneda').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDCOIN" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bimportado" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bimportado').errors }">
+                                    <label>{{ "THIRDPARTIES.OWNERS.IMPORTED" | translate }}</label>
+                                    <div *ngIf="submitted && popup_form.get('bimportado').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('bimportado').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDIMPORTED" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "THIRDPARTIES.OWNERS.IMAGESLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="addImage()" *ngIf="isEdit || canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "THIRDPARTIES.OWNERS.ADDIMAGE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="imageList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="imageRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onImagesGridReady($event)">
+                            <ag-grid-column headerName="Image" field="ximagen" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Route" field="xrutaimagen" [width]="518" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

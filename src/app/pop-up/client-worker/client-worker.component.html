@@ -1,0 +1,184 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "CLIENTS.CLIENTS.WORKER" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.NAME" | translate }}</label>
+                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xnombre').errors }">
+                    <div *ngIf="submitted && popup_form.get('xnombre').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xnombre').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDNAME" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.LASTNAME" | translate }}</label>
+                    <input type="text" formControlName="xapellido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xapellido').errors }">
+                    <div *ngIf="submitted && popup_form.get('xapellido').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xapellido').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDLASTNAME" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.DOCUMENTTYPE" | translate }}</label>
+                    <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipodocidentidad').errors }">
+                        <option></option>
+                        <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctipodocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                    <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocidentidad').errors }">
+                    <div *ngIf="submitted && popup_form.get('xdocidentidad').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xdocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.BIRTHDATE" | translate }}</label>
+                    <input type="date" formControlName="fnacimiento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fnacimiento').errors }">
+                    <div *ngIf="submitted && popup_form.get('fnacimiento').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('fnacimiento').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBIRTHDATE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.CIVILSTATUS" | translate }}</label>
+                    <select formControlName="cestadocivil" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cestadocivil').errors }">
+                        <option></option>
+                        <option *ngFor="let civilStatus of civilStatusList" value="{{ civilStatus.id }}">{{ civilStatus.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cestadocivil').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cestadocivil').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCIVILSTATUS" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.PROFESSION" | translate }}</label>
+                    <input type="text" formControlName="xprofesion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xprofesion').errors }">
+                    <div *ngIf="submitted && popup_form.get('xprofesion').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xprofesion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDPROFESSION" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.OCCUPATION" | translate }}</label>
+                    <input type="text" formControlName="xocupacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xocupacion').errors }">
+                    <div *ngIf="submitted && popup_form.get('xocupacion').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xocupacion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDOCCUPATION" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.STATE" | translate }}</label>
+                    <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                        <option></option>
+                        <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cestado').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cestado').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTATE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.CITY" | translate }}</label>
+                    <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cciudad').errors }">
+                        <option></option>
+                        <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cciudad').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cciudad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCITY" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.ADDRESS" | translate }}</label>
+                    <textarea type="text" formControlName="xdireccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdireccion').errors }" cols="30" rows="2"></textarea>
+                    <div *ngIf="submitted && popup_form.get('xdireccion').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xdireccion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDADDRESS" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.CELLPHONE" | translate }}</label>
+                    <input type="tel" formControlName="xtelefonocelular" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocelular').errors }">
+                    <div *ngIf="submitted && popup_form.get('xtelefonocelular').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xtelefonocelular').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCELLPHONE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.EMAIL" | translate }}</label>
+                    <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xemail').errors }">
+                    <div *ngIf="submitted && popup_form.get('xemail').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xemail').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDEMAIL" | translate }}</div>
+                        <div *ngIf="popup_form.get('xemail').errors.pattern">{{ "CLIENTS.CLIENTS.EMAILPATTERNERROR" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.HOMEPHONE" | translate }}</label>
+                    <input type="tel" formControlName="xtelefonocasa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocasa').errors }">
+                    <div *ngIf="submitted && popup_form.get('xtelefonocasa').errors" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.FAX" | translate }}</label>
+                    <input type="text" formControlName="xfax" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xfax').errors }">
+                    <div *ngIf="submitted && popup_form.get('xfax').errors" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.RELATIONSHIP" | translate }}</label>
+                    <select formControlName="cparentesco" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cparentesco').errors }">
+                        <option></option>
+                        <option *ngFor="let relationship of relationshipList" value="{{ relationship.id }}">{{ relationship.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cparentesco').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cparentesco').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDRELATIONSHIP" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "CLIENTS.CLIENTS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteWorker()" *ngIf="isEdit">
+                    {{ "CLIENTS.CLIENTS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "PROVIDERS.PROVIDERS.SERVICE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <!-- <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.PROVIDERS.SERVICETYPE" | translate }}</label>
+                    <select formControlName="ctiposervicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctiposervicio').errors }" (change)="serviceDropdownDataRequest()">
+                        <option></option>
+                        <option *ngFor="let serviceType of serviceTypeList" value="{{ serviceType.id }}">{{ serviceType.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ctiposervicio').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctiposervicio').errors.required">{{ "PROVIDERS.PROVIDERS.REQUIREDSERVICETYPE" | translate }}</div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.PROVIDERS.SERVICE" | translate }}</label>
+                    <select formControlName="cservicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cservicio').errors }">
+                        <option></option>
+                        <option *ngFor="let service of serviceList" value="{{ service.id }}">{{ service.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cservicio').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cservicio').errors.required">{{ "PROVIDERS.PROVIDERS.REQUIREDSERVICE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "PROVIDERS.PROVIDERS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteService()" *ngIf="isEdit">
+                    {{ "PROVIDERS.PROVIDERS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

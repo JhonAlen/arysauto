@@ -1,0 +1,40 @@
+@import url(./styles_Club/vendor/bootstrap/css/bootstrap.min.css);
+@import url(./styles_Club/vendor/bootstrap-icons/bootstrap-icons.css);
+@import url(./styles_Club/vendor/fontawesome-free/css/all.min.css);
+@import url(./styles_Club/vendor/aos/aos.css);
+@import url(./styles_Club/vendor/glightbox/css/glightbox.min.css);
+@import url(./styles_Club/vendor/swiper/swiper-bundle.min.css);
+@import url(./styles_Club/css/main.css);
+
+
+
+/* Colores y logos de las paginas */
+
+.card-header{
+    background-color:#CCDBFC;
+}
+.company-detail-button{
+    background-color:#142263;
+    border-color:white;
+    color: white;
+}
+.navbar{
+    position: initial;
+    z-index: 999;
+}
+
+.logocompany{
+    background: url("./assets/imagenes/mundial-logo2.png") no-repeat;
+    background-size: contain;
+    padding: 83px;
+  }
+
+nav{
+    margin-top: -54px;
+}
+
+.col-sm-12,
+.col-6,
+.card{
+    position: static;
+}

@@ -1,0 +1,746 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.CLIENT" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editClient()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <img [src]="xrutaimagen" width="100%"> 
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>{{ "CLIENTS.CLIENTS.UPLOADIMAGE" | translate }}</label>
+                                        <input type="file" name="ximagen" class="form-control"  accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" #Ximagen>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.NAME" | translate }}</label>
+                                            <input type="text" formControlName="xcliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcliente').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xcliente').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xcliente').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.CONTRACTNUMBER" | translate }}</label>
+                                            <input type="text" formControlName="xcontrato" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcontrato').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xcontrato').errors"  class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.REPRESENTATIVE" | translate }}</label>
+                                            <input type="text" formControlName="xrepresentante" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xrepresentante').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xrepresentante').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xrepresentante').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDREPRESENTATIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.ENTERPRISE" | translate }}</label>
+                                            <select formControlName="cempresa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cempresa').errors }">
+                                                <option></option>
+                                                <option *ngFor="let enterprise of enterpriseList" value="{{ enterprise.id }}">{{ enterprise.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cempresa').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cempresa').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDENTERPRISE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.BUSINESSACTIVITY" | translate }}</label>
+                                            <select formControlName="cactividadempresa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cactividadempresa').errors }">
+                                                <option></option>
+                                                <option *ngFor="let businessActivity of businessActivityList" value="{{ businessActivity.id }}">{{ businessActivity.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cactividadempresa').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cactividadempresa').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBUSINESSACTIVITY" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.DOCUMENTTYPE" | translate }}</label>
+                                            <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipodocidentidad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ctipodocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                            <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidad').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xdocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xdocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.EMAIL" | translate }}</label>
+                                            <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemail').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xemail').errors" class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xemail').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDEMAIL" | translate }}</div>
+                                                <div *ngIf="detail_form.get('xemail').errors.pattern">{{ "CLIENTS.CLIENTS.EMAILPATTERNERROR" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.PHONENUMBER" | translate }}</label>
+                                            <input type="tel" formControlName="xtelefono" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefono').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xtelefono').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.STATE" | translate }}</label>
+                                            <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                                                <option></option>
+                                                <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cestado').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cestado').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.CITY" | translate }}</label>
+                                            <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cciudad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cciudad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cciudad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCITY" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.TAXADDRESS" | translate }}</label>
+                                            <textarea type="text" formControlName="xdireccionfiscal" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccionfiscal').errors }" cols="30" rows="2"></textarea>
+                                            <div *ngIf="submitted && detail_form.get('xdireccionfiscal').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xdireccionfiscal').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXADDRESS" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.MAXYEAR" | translate }}</label>
+                                            <input type="number" formControlName="fanomaximo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fanomaximo').errors }">
+                                            <div *ngIf="submitted && detail_form.get('fanomaximo').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('fanomaximo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDMAXYEAR" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.STARTDATE" | translate }}</label>
+                                            <input type="date" formControlName="finicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('finicio').errors }">
+                                            <div *ngIf="submitted && detail_form.get('finicio').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('finicio').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTARTDATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.WEBPAGE" | translate }}</label>
+                                            <input type="text" formControlName="xpaginaweb" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xpaginaweb').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xpaginaweb').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.PAYMENTTYPE" | translate }}</label>
+                                            <select formControlName="ctipopago" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipopago').errors }">
+                                                <option></option>
+                                                <option *ngFor="let paymentType of paymentTypeList" value="{{ paymentType.id }}">{{ paymentType.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('ctipopago').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ctipopago').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDPAYMENTTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bcolectivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcolectivo').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.COLECTIVE" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bcolectivo').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bcolectivo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCOLECTIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bfacturar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bfacturar').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.CHECKIN" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bfacturar').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bfacturar').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCHECKIN" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bfinanciar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bfinanciar').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.TOFINANCE" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bfinanciar').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bfinanciar').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTOFINANCE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bcontribuyente" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcontribuyente').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.TAXPAYER" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bcontribuyente').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bcontribuyente').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXPAYER" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bimpuesto" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bimpuesto').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.COVERSTAXES" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bimpuesto').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bimpuesto').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCOVERSTAXES" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bnotificacionsms" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bnotificacionsms').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.SMSNOTIFICATIONS" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bnotificacionsms').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bnotificacionsms').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSMSNOTIFICATIONS" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.BILLINGTYPE" | translate }}</label>
+                                            <select formControlName="ifacturacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ifacturacion').errors }">
+                                                <option></option>
+                                                <option value="G">{{ "DROPDOWN.GLOBAL" | translate }}</option>
+                                                <option value="I">{{ "DROPDOWN.INDIVIDUAL" | translate }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('ifacturacion').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ifacturacion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBILLINGTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.ACTIVE" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bactivo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDACTIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.BANKSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addBank()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDBANK" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="bankList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bankRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBanksGridReady($event)">
+                            <ag-grid-column headerName="Bank" field="xbanco" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Account Type" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Account Number" field="xnumerocuenta" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Principal" field="xprincipal" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.ASSOCIATESLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addAssociate()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDASSOCIATE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="associateList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="associateRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAssociatesGridReady($event)">
+                            <ag-grid-column headerName="Name" field="xasociado" [width]="1036" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.BONDSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addBond()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDBOND" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="bondList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bondRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBondsGridReady($event)">
+                            <ag-grid-column headerName="Code" field="cbono" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Percentage" field="pbono" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Ammount" field="mbono" [width]="346" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.CONTACTSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addContact()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDCONTACT" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="contactList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="contactRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onContactsGridReady($event)">
+                            <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Lastname" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Cellphone" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Email" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.BROKERSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addBroker()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDBROKER" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="brokerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="brokerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBrokersGridReady($event)">
+                            <ag-grid-column headerName="Broker" field="xcorredor" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Percentage" field="pcorredor" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Ammount" field="mcorredor" [width]="346" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.DEPRECIATIONSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addDepreciation()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDDEPRECIATION" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="depreciationList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="depreciationRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDepreciationsGridReady($event)">
+                            <ag-grid-column headerName="Depreciation" field="xdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Percentage" field="pdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Ammount" field="mdepreciacion" [width]="346" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.RELATIONSHIPSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addRelationship()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDRELATIONSHIP" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="relationshipList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="relationshipRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onRelationshipsGridReady($event)">
+                            <ag-grid-column headerName="Relationship" field="xparentesco" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.PENALTIESLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addPenalty()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDPENALTY" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="penaltyList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="penaltyRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPenaltiesGridReady($event)">
+                            <ag-grid-column headerName="Penalty" field="xpenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Percentage" field="ppenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Ammount" field="mpenalizacion" [width]="346" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.EXCLUDEDPROVIDERSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addProvider()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDEXCLUDEDPROVIDER" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="providerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="providerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onProvidersGridReady($event)">
+                            <ag-grid-column headerName="Provider" field="xproveedor" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.EXCLUDEDMODELSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addModel()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDEXCLUDEDMODEL" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="modelList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="modelRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onModelsGridReady($event)">
+                            <ag-grid-column headerName="Brand" field="xmarca" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Model" field="xmodelo" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="346" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.WORKERSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addWorker()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDWORKER" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="workerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="workerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onWorkersGridReady($event)">
+                            <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Lastname" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Cellphone" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Email" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.DOCUMENTSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addDocument()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDDOCUMENT" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="documentList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="documentRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDocumentsGridReady($event)">
+                            <ag-grid-column headerName="Document" field="xdocumento" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Route" field="xrutaarchivo" [width]="518" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.GROUPERSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addGrouper()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDGROUPER" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="grouperList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="grouperRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGroupersGridReady($event)">
+                            <ag-grid-column headerName="Code" field="cagrupador" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Phone Number" field="xtelefono" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Email" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.PLANSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addPlan()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDPLAN" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="planList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="planRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPlansGridReady($event)">
+                            <ag-grid-column headerName="Code" field="cplancliente" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xplan" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Type" field="xtipoplan" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Associate" field="xasociado" [width]="259" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer >    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+

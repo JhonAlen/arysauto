@@ -1,0 +1,136 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "ADMINISTRATION.COLLECTION.PAYMENT" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "ADMINISTRATION.COLLECTION.PAYMENT" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "ADMINISTRATION.COLLECTION.PAYMENTTYPE" | translate }}</label>
+                                    <select formControlName="ctipopago" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipopago').errors }" (change)="changeBank()">
+                                        <option></option>
+                                        <option *ngFor="let pay of typeOfPayList" value="{{ pay.id }}">{{ pay.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('ctipopago').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ctipopago').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "ADMINISTRATION.COLLECTION.BANK" | translate }}</label>
+                                    <select formControlName="cbanco" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cbanco').errors }">
+                                        <option></option>
+                                        <option *ngFor="let bank of bankList" value="{{ bank.id }}">{{ bank.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cbanco').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cbanco').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Banco Destino</label>
+                                    <select formControlName="cbanco_destino" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cbanco_destino').errors }">
+                                        <option></option>
+                                        <option *ngFor="let destinationBank of destinationBankList" value="{{ destinationBank.id }}">{{ destinationBank.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cbanco_destino').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cbanco_destino').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "ADMINISTRATION.COLLECTION.DATEPAY" | translate }}</label>
+                                    <input type="date" formControlName="fcobro" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fcobro').errors }">
+                                    <div *ngIf="submitted && popup_form.get('fcobro').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('fcobro').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "ADMINISTRATION.COLLECTION.REFERENCE" | translate }}</label>
+                                    <input type="text" formControlName="xreferencia" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xreferencia').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xreferencia').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xreferencia').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="flex-flow: nowrap;width: 53%;">
+                                <div > 
+                                    <div class="col-auto">
+                                        <div class="form-group">
+                                            <label>Monto en Dólares</label>
+                                            <input type="number" formControlName="mprima" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mprima').errors }">
+                                            <div *ngIf="submitted && popup_form.get('mprima').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('mprima').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div >
+                                    <div class="col-auto">
+                                        <div class="form-group">
+                                            <label>Monto en Bolívares</label>
+                                            <input type="number" formControlName="mprima_bs" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mprima_bs').errors }">
+                                            <div *ngIf="submitted && popup_form.get('mprima_bs').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('mprima_bs').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-left: 88px;">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Tasa de Cambio</label>
+                                        <input type="number" formControlName="mtasa_cambio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mtasa_cambio').errors }">
+                                        <div *ngIf="submitted && popup_form.get('mtasa_cambio').errors"  class="invalid-feedback">
+                                            <div *ngIf="popup_form.get('mtasa_cambio').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDNAME" | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Nota</label>
+                                    <textarea type="text" formControlName="xnota" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xnota').errors }"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xnota').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xnota').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 mt-2">
+                                    <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="button" (click)="onSubmit(popup_form.value)" *ngIf="canSave">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "ADMINISTRATION.COLLECTION.SAVE" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

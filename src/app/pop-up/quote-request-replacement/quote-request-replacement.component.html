@@ -1,0 +1,114 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "PROVIDERS.QUOTEREQUESTS.REPLACEMENT" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.REPLACEMENTTYPE" | translate }}</label>
+                    <select formControlName="ctiporepuesto" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctiporepuesto').errors }" (change)="replacementDropdownDataRequest()">
+                        <option></option>
+                        <option *ngFor="let replacementType of replacementTypeList" value="{{ replacementType.id }}">{{ replacementType.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ctiporepuesto').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctiporepuesto').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDREPLACEMENTTYPE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.REPLACEMENT" | translate }}</label>
+                    <select formControlName="crepuesto" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('crepuesto').errors }">
+                        <option></option>
+                        <option *ngFor="let replacement of replacementList" value="{{ replacement.id }}">{{ replacement.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('crepuesto').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('crepuesto').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDREPLACEMENT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.QUANTITY" | translate }}</label>
+                    <input type="number" formControlName="ncantidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ncantidad').errors }">
+                    <div *ngIf="submitted && popup_form.get('ncantidad').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ncantidad').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDQUANTITY" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.DAMAGELEVEL" | translate }}</label>
+                    <select formControlName="cniveldano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cniveldano').errors }">
+                        <option></option>
+                        <option *ngFor="let damageLevel of damageLevelList" value="{{ damageLevel.id }}">{{ damageLevel.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cniveldano').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cniveldano').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDDAMAGELEVEL" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bdisponible" class="form-check-input" (change)="checkAvailable($event)" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bdisponible').errors }">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.AVAILABLE" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bdisponible').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bdisponible').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDAVAILABLE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.REPLACEMENTUNITAMOUNT" | translate }}</label>
+                    <input type="number" formControlName="munitariorepuesto" class="form-control" (change)="calculateTotal()" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('munitariorepuesto').errors }">
+                    <div *ngIf="submitted && popup_form.get('munitariorepuesto').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('munitariorepuesto').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDREPLACEMENTUNITAMOUNT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.COIN" | translate }}</label>
+                    <select formControlName="cmoneda" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmoneda').errors }">
+                        <option></option>
+                        <option *ngFor="let coin of coinList" value="{{ coin.id }}">{{ coin.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cmoneda').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cmoneda').errors.required">{{ "THIRDPARTIES.OWNERS.REQUIREDCOIN" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bdescuento" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bdescuento').errors }">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.DISCOUNT" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bdescuento').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bdescuento').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDDISCOUNT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "PROVIDERS.QUOTEREQUESTS.REPLACEMENTTOTALAMOUNT" | translate }}</label>
+                    <input type="number" formControlName="mtotalrepuesto" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mtotalrepuesto').errors }">
+                    <div *ngIf="submitted && popup_form.get('mtotalrepuesto').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('mtotalrepuesto').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDREPLACEMENTTOTALAMOUNT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "EVENTS.NOTIFICATIONS.SAVE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

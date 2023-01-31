@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "EVENTS.NOTIFICATIONS.REPLACEMENT" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <div class="row mt-2">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "EVENTS.NOTIFICATIONS.VEHICLEREPLACEMENTSLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="vehicleReplacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Replacement" field="xrepuesto" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Type" field="xtiporepuesto" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Quantity" field="ncantidad" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Damage Level" field="xniveldano" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "EVENTS.NOTIFICATIONS.THIRDPARTYVEHICLEREPLACEMENTSLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="thirdpartyVehicleReplacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Replacement" field="xrepuesto" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Type" field="xtiporepuesto" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Quantity" field="ncantidad" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Damage Level" field="xniveldano" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

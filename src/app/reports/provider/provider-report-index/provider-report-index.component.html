@@ -1,0 +1,63 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "REPORTS.PROVIDERS.SEARCHPROVIDERREPORT" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "REPORTS.PROVIDERS.SEARCH" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "REPORTS.PROVIDERS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xreporte" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xreporte').errors }">
+                                    <div *ngIf="submitted && search_form.get('xreporte').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "REPORTS.PROVIDERS.PROVIDERREPORTSLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="providerReportsList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Code" field="creporte" [width]="345" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xreporte" [width]="345" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Active" field="xactivo" [width]="346" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

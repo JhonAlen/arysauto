@@ -1,0 +1,32 @@
+
+
+<section>
+  <div>
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row g-0">
+       <div class="card">
+        <div class="card-header company-card-header"><h5 class="card-title">Detalles del Recibo</h5></div>
+        <div class="row" style="padding: 10px;">
+          <div class="col-md-4 mb-4 pb-2">
+            <form class="example-form"><label>Number</label>
+              <mat-form-field class="example-full-width" appearance="fill">
+                
+                <input type="text"
+                       aria-label="Number"
+                       matInput
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
+          </div>
+        </div> 
+       </div>
+      </div>
+    </div>
+  </div>
+</section>

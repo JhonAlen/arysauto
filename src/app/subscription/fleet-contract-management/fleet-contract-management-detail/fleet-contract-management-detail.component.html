@@ -1,0 +1,739 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <form [formGroup]="detail_form">
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.FLEETCONTRACT" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                    <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CANCEL" | translate }}
+                                </button>
+
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="createPDF2()" *ngIf="cuadro">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.POLICYBOX" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editFleetContract()" *ngIf="canEdit && showEditButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.EDIT" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SAVE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CLIENT" | translate }}</label>
+                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }" (change)="searchDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccliente').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ccliente').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDCLIENT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ASSOCIATE" | translate }}</label>
+                                    <select formControlName="casociado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('casociado').errors }">
+                                        <option></option>
+                                        <option *ngFor="let associate of associateList" value="{{ associate.id }}">{{ associate.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('casociado').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('casociado').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDASSOCIATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.GROUPER" | translate }}</label>
+                                    <select formControlName="cagrupador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cagrupador').errors }">
+                                        <option></option>
+                                        <option *ngFor="let grouper of grouperList" value="{{ grouper.id }}">{{ grouper.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cagrupador').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cagrupador').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDGROUPER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.MANAGEMENTCERTIFICATE" | translate }}</label>
+                                    <input type="text" formControlName="xcertificadogestion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcertificadogestion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcertificadogestion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ASSOCIATECERTIFICATE" | translate }}</label>
+                                    <input type="text" formControlName="xcertificadoasociado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcertificadoasociado').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcertificadoasociado').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xcertificadoasociado').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDASSOCIATECERTIFICATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.STARTDATE" | translate }}</label>
+                                    <input type="date" formControlName="fdesde_pol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fdesde_pol').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fdesde_pol').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('fdesde_pol').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.DATEUNTIL" | translate }}</label>
+                                    <input type="date" formControlName="fhasta_pol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fhasta_pol').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fhasta_pol').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('fhasta_pol').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDDATEUNTIL" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.RECEIPTTYPE" | translate }}</label>
+                                    <select formControlName="ctiporecibo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctiporecibo').errors }" >
+                                        <option></option>
+                                        <option *ngFor="let receiptType of receiptTypeList" value="{{ receiptType.id }}">{{ receiptType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ctiporecibo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ctiporecibo').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDRECEIPTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Inicial de la vigencia del Recibo</label>
+                                    <input type="date" formControlName="fdesde_rec" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fdesde_rec').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fdesde_rec').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('fdesde_rec').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDDATEUNTILRECEIPT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.DATEUNTILRECEIPT" | translate }}</label>
+                                    <input type="date" formControlName="fhasta_rec" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fhasta_rec').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fhasta_rec').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('fhasta_rec').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDDATEUNTILRECEIPT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ISSUANCEBRANCH" | translate }}</label>
+                                    <input type="text" formControlName="xsucursalemision" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xsucursalemision').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xsucursalemision').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xsucursalemision').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDISSUANCEBRANCH" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SUBSCRIBINGBRANCH" | translate }}</label>
+                                    <input type="text" formControlName="xsucursalsuscriptora" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xsucursalsuscriptora').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xsucursalsuscriptora').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xsucursalsuscriptora').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SUBSCRIBINGBRANCH" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.PREMIUM" | translate }}</label>
+                                    <input type="number" formControlName="mprima" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mprima').errors }">
+                                    <div *ngIf="submitted && detail_form.get('mprima').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.GENERALSTATUS" | translate }}</label>
+                                    <select formControlName="cestatusgeneral" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestatusgeneral').errors }">
+                                        <option></option>
+                                        <option *ngFor="let generalStatus of generalStatusList" value="{{ generalStatus.id }}">{{ generalStatus.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cestatusgeneral').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cestatusgeneral').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDGENERALSTATUS" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.OWNER" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="searchOwner()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SEARCHOWNER" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombrepropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombrepropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombrepropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.DOCUMENTTYPE" | translate }}</label>
+                                    <input type="text" formControlName="xtipodocidentidadpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtipodocidentidadpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtipodocidentidadpropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                    <input type="text" formControlName="xdocidentidadpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidadpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xdocidentidadpropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdireccionpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccionpropietario').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdireccionpropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CELLPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocelularpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefonocelularpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtelefonocelularpropietario').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemailpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemailpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xemailpropietario').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.VEHICLE" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="searchVehicle()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SEARCHVEHICLE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.BRAND" | translate }}</label>
+                                    <input type="text" formControlName="xmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmarca').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmarca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.MODEL" | translate }}</label>
+                                    <input type="text" formControlName="xmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmodelo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmodelo').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.VERSION" | translate }}</label>
+                                    <input type="text" formControlName="xversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xversion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xversion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.PLATE" | translate }}</label>
+                                    <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplaca').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xplaca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.YEAR" | translate }}</label>
+                                    <input type="number" formControlName="fano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fano').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fano').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.COLOR" | translate }}</label>
+                                    <input type="text" formControlName="xcolor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcolor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcolor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.BODYWORKSERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialcarroceria" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xserialcarroceria').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xserialcarroceria').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ENGINESERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialmotor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xserialmotor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xserialmotor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.PLAN" | translate }} {{ planCoberturas }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 440px;" class="ag-theme-alpine" [rowData]="realCoverageList" [pagination]="true" [paginationPageSize]="8" rowSelection="single" [enableCellChangeFlash]="true" (rowClicked)="rowClicked($event)" (gridReady)="onCoverageGridReady($event)">
+                                <ag-grid-column headerName="Código" field="ccobertura" [width]="120" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Cobertura" field="xcobertura" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Prima" field="xprimacobertura" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                    <!--<div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.PLANTYPE" | translate }}</label>
+                                    <select formControlName="ctipoplan" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipoplan').errors }" (change)="planDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let planType of planTypeList" value="{{ planType.id }}">{{ planType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ctipoplan').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ctipoplan').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDPLANTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.PLAN" | translate }}</label>
+                                    <select formControlName="xplan" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplan').errors }" (change)="paymentMethodologyDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let plan of planList" value="{{ plan.id }}">{{ plan.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('xplan').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xplan').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDPLAN" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.PAYMENTMETHODOLOGY" | translate }}</label>
+                                    <select formControlName="cmetodologiapago" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cmetodologiapago').errors }">
+                                        <option></option>
+                                        <option *ngFor="let paymentMethodology of paymentMethodologyList" value="{{ paymentMethodology.id }}">{{ paymentMethodology.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cmetodologiapago').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cmetodologiapago').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDPAYMENTMETHODOLOGY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SERVICE" | translate }} {{ planServicios }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 345px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationPageSize]="6" rowSelection="single" [enableCellChangeFlash]="true">
+                                <ag-grid-column headerName="Código" field="cservicio" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Servicio" field="xservicio" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 pb-2">
+                                <div class="form-outline">
+                                  <label class="form-label">Anexos</label>
+                                  <textarea type="text" formControlName="xanexo" class="form-control form-control-lg" required [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xanexo').errors }" ></textarea>
+                                </div>
+                              </div>
+                              <div class="col-md-6 mb-4 pb-2">
+                                <div class="form-outline">
+                                  <label class="form-label">Observaciones</label>
+                                  <textarea type="text" formControlName="xobservaciones" class="form-control form-control-lg" required [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xobservaciones').errors }" ></textarea>
+
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+     <!--   <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.TOTALAMOUNTS" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.INSURANCECARRIERFEE" | translate }}</label>
+                                    <input type="number" formControlName="ptasaaseguradora" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ptasaaseguradora').errors }">
+                                    <div *ngIf="submitted && detail_form.get('ptasaaseguradora').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.MANAGEMENTFEE" | translate }}</label>
+                                    <input type="number" formControlName="ptasagestion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ptasagestion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('ptasagestion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ROADMANAGEMENTAMOUNT" | translate }}</label>
+                                    <input type="number" formControlName="mgestionvial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mgestionvial').errors }">
+                                    <div *ngIf="submitted && detail_form.get('mgestionvial').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CONTRIBUTION" | translate }}</label>
+                                    <input type="number" formControlName="maporte" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('maporte').errors }">
+                                    <div *ngIf="submitted && detail_form.get('maporte').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.PREMIUM" | translate }}</label>
+                                    <input type="number" formControlName="mprima" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mprima').errors }">
+                                    <div *ngIf="submitted && detail_form.get('mprima').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.MAXIMUMMANAGEDAMOUNT" | translate }}</label>
+                                    <input type="number" formControlName="mmaximoadministrado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mmaximoadministrado').errors }">
+                                    <div *ngIf="submitted && detail_form.get('mmaximoadministrado').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.COIN" | translate }}</label>
+                                    <input type="text" formControlName="xmoneda" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cmoneda').errors }">
+                                    <div *ngIf="submitted && detail_form.get('cmoneda').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.INSPECTIONSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addInspection()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ADDINSPECTION" | translate }}
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="inspectionList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="inspectionRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onInspectionsGridReady($event)">
+                                <ag-grid-column headerName="Type" field="xtipoinspeccion" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Proficient" field="xperito" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.WORKER" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="searchWorker()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SEARCHWORKER" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombretrabajador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombretrabajador').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombretrabajador').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.DOCUMENTTYPE" | translate }}</label>
+                                    <input type="text" formControlName="xtipodocidentidadtrabajador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtipodocidentidadtrabajador').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtipodocidentidadtrabajador').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                    <input type="text" formControlName="xdocidentidadtrabajador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidadtrabajador').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xdocidentidadtrabajador').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdirecciontrabajador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdirecciontrabajador').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdirecciontrabajador').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CELLPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocelulartrabajador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefonocelulartrabajador').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtelefonocelulartrabajador').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemailtrabajador" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemailtrabajador').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xemailtrabajador').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ACCESORIESLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addAccesory()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ADDACCESORY" | translate }}
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="accesoryList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="accesoryRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAccesoriesGridReady($event)">
+                                <ag-grid-column headerName="Name" field="xaccesorio" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Amount" field="maccesoriocontratoflota" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.EXTRACOVERAGESLIST" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="extraCoverageList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onExtraCoveragesGridReady($event)">
+                                <ag-grid-column headerName="Description" field="xdescripcion" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Amount" field="mcoberturaextra" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </form>
+</div>
+
+
+<footer>    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>

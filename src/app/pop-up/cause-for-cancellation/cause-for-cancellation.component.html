@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Causa de Anulación</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                Causa de Anulación
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form3Examplev5">Póliza Matriz</label>
+                                    <div style="background: fixed">
+                                    <ng-autocomplete  [data]="causeCancellationList" [searchKeyword]="keyword" 
+                                                    placeholder="Seleccione la Causa" (selected)='codeSelected($event)'
+                                                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">                                 
+                                    </ng-autocomplete>
+                                
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.value" value="{{ item.id }}"></a>
+                                    </ng-template>
+                                
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                  </div>
+                                </div>
+                            </div> 
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 mt-2">
+                                    <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="button" (click)="onSubmit(popup_form.value)" *ngIf="canSave">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "ADMINISTRATION.COLLECTION.SAVE" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

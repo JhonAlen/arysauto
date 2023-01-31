@@ -1,0 +1,129 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="container">
+                            <label>Buscar Primas Pendientes</label>
+                            <button [disabled]="loading || !searchStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="onSearch(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Desde</label>
+                                    <input type="date" formControlName="fdesde" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fdesde').errors }" (change)="onChangeDateFrom()">
+                                    <div *ngIf="submitted && search_form.get('fdesde').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Hasta</label>
+                                    <input type="date" formControlName="fhasta" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fhasta').errors }" (change)="onChangeDateUntil()">
+                                    <div *ngIf="submitted && search_form.get('fhasta').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Listado de Recibos Pendientes
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 416px;" class="ag-theme-alpine" [rowData]="receiptList" [pagination]="false" [paginationPageSize]="9" [columnDefs]="columnDefs">
+                            <!--<ag-grid-column headerName="N°" field="nconsecutivo" [width]="55" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Recibo" field="xrecibo" [width]="115" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Contrato" field="ccontratoflota" [width]="115" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Placa" field="xplaca" [width]="140" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Inicio Vigencia" field="fdesde_rec" [width]="150" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Fin Vigencia" field="fhasta_rec" [width]="160" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Prima Total Recibo (USD)" field="mprima_anual" [width]="220" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Estatus" field="xstatus" [width]="140" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Descargar" cellClass="ag-download-column" field="xdescargar" [width]="130" [sortable]="true" [resizable]="true" [onCellClicked]="downloadReceipt"></ag-grid-column> -->
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>    
+  <div class="container">       
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="footer-widget">
+          <h3 style="margin-right: 110px;">Horario</h3>
+          <div class="footer-widget-content">
+            <div class="open-time ">
+                <ul class="opening-time">
+                  <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                  <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+          <h6 >Copyright© CompuAmerica 2022.</h6>
+          <div class="footer-widget-content">
+              <br>
+              <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+              <div class="footer-social">
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="footer-widget">
+          <h3>Redes Sociales</h3>
+          <div class="footer-widget-content" style=" text-align: -webkit-center;">
+            <div class="images-gellary">
+              <p></p>
+              <table style="margin-left: 25px;">
+                <tr>
+                  <td>
+                    <ul>
+                      <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                      <br>
+                      <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                      <br>
+                      <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

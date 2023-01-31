@@ -1,0 +1,15 @@
+
+ Para solucion de posibles errores ejecutar los siguientes comandos
+
+En caso de que muestre mensaje de que el repositorio se encuentra sucio:
+  1.git stash save --include-untracked
+
+  2.git stash pop
+
+Para errores del paquete pdfmake
+  1.npm i --save-dev @types/pdfmake
+
+ Para otro error
+  1.npm i @angular/cdk --legacy-peer-deps
+
+En cuenta: Antes de realizar cualquier acción,se recomienda eliminar los node_modules

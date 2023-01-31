@@ -1,0 +1,87 @@
+ 
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "EVENTS.NOTIFICATIONS.PROVIDER" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.PROVIDER" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)"  *ngIf="canSave">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.SAVE" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn btn-danger float-right mr-1" type="button" (click)="deleteProvider()" *ngIf="isEdit">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.DELETE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.PROVIDER" | translate }}</label>
+                                    <select formControlName="cproveedor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cproveedor').errors }">
+                                        <option></option>
+                                        <option *ngFor="let provider of providerList" value="{{ provider.id }}">{{ provider.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cproveedor').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cproveedor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDPROVIDER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.OBSERVATION" | translate }}</label>
+                                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xobservacion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xobservacion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOBSERVATION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.REPLACEMENTSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="addReplacement()" *ngIf="isEdit || canSave">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDREPLACEMENT" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="replacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="replacementRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onReplacementsGridReady($event)">
+                                <ag-grid-column headerName="Replacement" field="xrepuesto" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Quantity" field="ncantidad" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,357 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "EVENTS.NOTIFICATIONS.THIRDPARTYVEHICLE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.DRIVERINFORMATION" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)"  *ngIf="canSave">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.SAVE" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn btn-danger float-right mr-1" type="button" (click)="deleteThirdpartyVehicle()" *ngIf="isEdit">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.DELETE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombreconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xnombreconductor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xnombreconductor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xnombreconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellidoconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xapellidoconductor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xapellidoconductor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xapellidoconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDLASTNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.DOCUMENTTYPE" | translate }}</label>
+                                    <select formControlName="ctipodocidentidadconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipodocidentidadconductor').errors }">
+                                        <option></option>
+                                        <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('ctipodocidentidadconductor').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ctipodocidentidadconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                    <input type="text" formControlName="xdocidentidadconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocidentidadconductor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xdocidentidadconductor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xdocidentidadconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CELLPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocelularconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocelularconductor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xtelefonocelularconductor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xtelefonocelularconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCELLPHONE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemailconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xemailconductor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xemailconductor').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xemailconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDEMAIL" | translate }}</div>
+                                        <div *ngIf="popup_form.get('xemailconductor').errors.pattern">{{ "EVENTS.NOTIFICATIONS.EMAILPATTERNERROR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.HOMEPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocasaconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocasaconductor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xtelefonocasaconductor').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.OBSERVATION" | translate }}</label>
+                                    <textarea type="text" formControlName="xobservacionconductor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacionconductor').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xobservacionconductor').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xobservacionconductor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOBSERVATION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.VEHICLEINFORMATION" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.BRAND" | translate }}</label>
+                                    <select formControlName="cmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmarca').errors }" (change)="modelDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let brand of brandList" value="{{ brand.id }}">{{ brand.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmarca').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cmarca').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDBRAND" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.MODEL" | translate }}</label>
+                                    <select formControlName="cmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmodelo').errors }" (change)="versionDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let model of modelList" value="{{ model.id }}">{{ model.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmodelo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cmodelo').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDMODEL" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.VERSION" | translate }}</label>
+                                    <select formControlName="cversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cversion').errors }">
+                                        <option></option>
+                                        <option *ngFor="let version of versionList" value="{{ version.id }}">{{ version.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cversion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cversion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDVERSION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.PLATE" | translate }}</label>
+                                    <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xplaca').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xplaca').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xplaca').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDPLATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.YEAR" | translate }}</label>
+                                    <input type="number" formControlName="fano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fano').errors }">
+                                    <div *ngIf="submitted && popup_form.get('fano').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('fano').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDYEAR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.COLOR" | translate }}</label>
+                                    <select formControlName="ccolor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ccolor').errors }">
+                                        <option></option>
+                                        <option *ngFor="let color of colorList" value="{{ color.id }}">{{ color.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('ccolor').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ccolor').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCOLOR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.OBSERVATION" | translate }}</label>
+                                    <textarea type="text" formControlName="xobservacionvehiculo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacionvehiculo').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xobservacionvehiculo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xobservacionvehiculo').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOBSERVATION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.OWNERINFORMATION" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombrepropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xnombrepropietario').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xnombrepropietario').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xnombrepropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellidopropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xapellidopropietario').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xapellidopropietario').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xapellidopropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDLASTNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.DOCUMENTTYPE" | translate }}</label>
+                                    <select formControlName="ctipodocidentidadpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipodocidentidadpropietario').errors }">
+                                        <option></option>
+                                        <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('ctipodocidentidadpropietario').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ctipodocidentidadpropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                    <input type="text" formControlName="xdocidentidadpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocidentidadpropietario').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xdocidentidadpropietario').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xdocidentidadpropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.STATE" | translate }}</label>
+                                    <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cestado').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cestado').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDSTATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CITY" | translate }}</label>
+                                    <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cciudad').errors }">
+                                        <option></option>
+                                        <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cciudad').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('cciudad').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCITY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdireccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdireccion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xdireccion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xdireccion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDADDRESS" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CELLPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocelularpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocelularpropietario').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xtelefonocelularpropietario').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xtelefonocelularpropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCELLPHONE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemailpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xemailpropietario').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xemailpropietario').errors" class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xemailpropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDEMAIL" | translate }}</div>
+                                        <div *ngIf="popup_form.get('xemailpropietario').errors.pattern">{{ "EVENTS.NOTIFICATIONS.EMAILPATTERNERROR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.HOMEPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocasapropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocasapropietario').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xtelefonocasapropietario').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.OBSERVATION" | translate }}</label>
+                                    <textarea type="text" formControlName="xobservacionpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacionpropietario').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xobservacionpropietario').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xobservacionpropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOBSERVATION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.REPLACEMENTSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="addReplacement()" *ngIf="isEdit || canSave">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDREPLACEMENT" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="replacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="replacementRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onReplacementsGridReady($event)">
+                                <ag-grid-column headerName="Replacement" field="xrepuesto" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Quantity" field="ncantidad" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.VEHICLETYPE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.VEHICLETYPE" | translate }}</label>
+                    <select formControlName="ctipovehiculo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipovehiculo').errors }">
+                        <option></option>
+                        <option *ngFor="let vehicleType of vehicleTypeList" value="{{ vehicleType.id }}">{{ vehicleType.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ctipovehiculo').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctipovehiculo').errors.required">{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.REQUIREDVEHICLETYPE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.EFFECTIVEDATE" | translate }}</label>
+                    <input type="date" formControlName="fefectiva" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fefectiva').errors }">
+                    <div *ngIf="submitted && popup_form.get('fefectiva').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('fefectiva').errors.required">{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.REQUIREDEFFECTIVEDATE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.AMOUNT" | translate }}</label>
+                    <input type="number" formControlName="mtipovehiculoconfiguraciongestionvial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mtipovehiculoconfiguraciongestionvial').errors }">
+                    <div *ngIf="submitted && popup_form.get('mtipovehiculoconfiguraciongestionvial').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('mtipovehiculoconfiguraciongestionvial').errors.required">{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.REQUIREDAMOUNT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.NUMBERYEARSLIMIT" | translate }}</label>
+                    <input type="number" formControlName="nlimiteano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('nlimiteano').errors }">
+                    <div *ngIf="submitted && popup_form.get('nlimiteano').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('nlimiteano').errors.required">{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.REQUIREDNUMBERYEARSLIMIT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.AMOUNTGREATERYEARLIMIT" | translate }}</label>
+                    <input type="number" formControlName="mmayorlimiteano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mmayorlimiteano').errors }">
+                    <div *ngIf="submitted && popup_form.get('mmayorlimiteano').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('mmayorlimiteano').errors.required">{{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.REQUIREDAMOUNTGREATERYEARLIMIT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteVehicleType()" *ngIf="isEdit">
+                    {{ "QUOTATION.ROADMANAGEMENTCONFIGURATIONS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,85 @@
+.containerr{
+    width: 100%;
+    max-width: 95%;
+}
+
+.bread{
+    padding: 0px 0 75px 0;
+}
+section{
+    padding: 0px 0px;
+}
+
+h2{
+    color: #364d59;
+}
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+  }
+
+.col-lg-4{
+    padding: 10px;
+}
+.col-lg-6{
+    border-right-style: inset;
+  }
+form{
+    padding: 40px;
+}
+
+footer{
+    background-color: #132646;
+    border-top-style: solid;
+}
+
+h3,h6{
+    color: white;
+}
+
+.g-0{
+    border-radius: 0px 0px 5px 5px;
+}
+
+
+button{
+    background-color: #142263;
+    color: white;
+}
+
+.button{
+    text-align-last: center;
+    /* margin-top:-90px */
+}
+
+.card-header{
+padding: 2px;
+border-radius: 5px 5px 0px 0px;
+text-align-last: center;
+}
+
+option{
+    font-size: 17px;
+
+}
+
+  input.example-right-align {
+    -moz-appearance: textfield;
+  }
+
+.buton{
+    padding: 29px;
+    width: 41%;
+}
+hr{
+    width: 98%;
+}
+.required:after {
+    content:" *";
+    color: red;
+  }

@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Seleccionar Ordenes de Servicios</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">    
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header company-card-header">
+                <div class="row">
+                    <div class="col-6" style="font-weight: bolder;">
+                        Lista de Ordenes de Servicios.
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceOrderList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceOrderRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServiceOrderGridReady($event)">
+                        <ag-grid-column headerName="Código" field="corden" [width]="100" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Cliente" field="xcliente" [width]="240" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Servicio" field="xservicio" [width]="225" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Monto de Grua" field="mmontototal" [width]="140" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Moneda grúa" field="xmonedagrua" [width]="140" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Monto Cotizacion" field="mtotal" [width]="140" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Moneda Cotizacion" field="xmonedacoti" [width]="140" [sortable]="true"></ag-grid-column>
+                    </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="card">
+            <div class="card-header company-card-header">
+                <div class="row">
+                    <div class="col-6" style="font-weight: bolder;">
+                        Lista de Ordenes de Servicios a Facturar
+                    </div>
+                    <div class="col-6">
+                        <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit()"  *ngIf="showSaveButton">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="acceptedServiceOrderList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single"  [enableCellChangeFlash]="true" (gridReady)="onAcceptedServiceOrderGridReady($event)">
+                        <ag-grid-column headerName="Código" field="corden" [width]="100" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Cliente" field="xcliente" [width]="240" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Servicio" field="xservicio" [width]="225" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Monto de Grua" field="mmontototal" [width]="140" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Moneda grúa" field="xmonedagrua" [width]="140" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Monto Cotizacion" field="mtotal" [width]="140" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Moneda Cotizacion" field="xmonedacoti" [width]="140" [sortable]="true"></ag-grid-column>
+                    </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

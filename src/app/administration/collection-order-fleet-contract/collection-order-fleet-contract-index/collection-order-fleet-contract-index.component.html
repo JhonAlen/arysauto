@@ -1,0 +1,141 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "ADMINISTRATION.COLLECTIONORDERSFLEETCONTRACTS.SEARCHCOLLECTIONORDERSFLEETCONTRACTS" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "ADMINISTRATION.COLLECTIONORDERSFLEETCONTRACTS.SEARCH" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ADMINISTRATION.COLLECTIONORDERSFLEETCONTRACTS.CLIENT" | translate }}</label>
+                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('ccliente').errors }">
+                                        <option></option>
+                                        <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('ccliente').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ADMINISTRATION.COLLECTIONORDERSFLEETCONTRACTS.BILLINGTYPE" | translate }}</label>
+                                    <select formControlName="ifacturacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('ifacturacion').errors }">
+                                        <option></option>
+                                        <option value="G">{{ "DROPDOWN.GLOBAL" | translate }}</option>
+                                        <option value="I">{{ "DROPDOWN.INDIVIDUAL" | translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('ifacturacion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "ADMINISTRATION.COLLECTIONORDERSFLEETCONTRACTS.COLLECTIONORDERSFLEETCONTRACTSLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 250px;" class="ag-theme-alpine" [rowData]="collectionOrderFleetContractList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Code" field="csolicitudcobrocontratoflota" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xcliente" [width]="208" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Billing Type" field="xfacturacion" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Status" field="xestatusgeneral" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Active" field="xactivo" [width]="207" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer >    
+  <div class="container">       
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="footer-widget">
+          <h3 style="margin-right: 110px;">Horario</h3>
+          <div class="footer-widget-content">
+            <div class="open-time ">
+                <ul class="opening-time">
+                  <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                  <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+          <h6 >Copyright© CompuAmerica 2022.</h6>
+          <div class="footer-widget-content">
+              <br>
+              <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+              <div class="footer-social">
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="footer-widget">
+          <h3>Redes Sociales</h3>
+          <div class="footer-widget-content" style=" text-align: -webkit-center;">
+            <div class="images-gellary">
+              <p></p>
+              <table style="margin-left: 25px;">
+                <tr>
+                  <td>
+                    <ul>
+                      <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                      <br>
+                      <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                      <br>
+                      <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+

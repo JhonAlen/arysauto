@@ -1,0 +1,80 @@
+.btn-secondary{
+    background-color:#77bbfd
+}
+
+.dropdown-toggle{
+    background-color:#77bbfd
+}
+
+.card-registration{
+    margin-top: -155px;
+
+}
+
+@media (min-width: 1025px) {
+.h-custom {
+height: 100vh !important;
+}
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
+}
+.card-registration .select-arrow {
+top: 13px;
+}
+
+.gradient-custom-2 ::before{
+/* fallback for old browsers */
+/* background: #ffecbe; */
+
+
+background-color: rgba(0, 0, 0, 0.7);
+}
+
+.bg-indigo {
+background-color: #77bbfd;
+float: right;
+
+}
+@media (min-width: 992px) {
+.card-registration-2 .bg-indigo {
+border-top-right-radius: 15px;
+border-bottom-right-radius: 15px;
+}
+}
+@media (max-width: 991px) {
+.card-registration-2 .bg-indigo {
+border-bottom-left-radius: 15px;
+border-bottom-right-radius: 15px;
+}
+}
+
+.hideShowToolbar{
+    -webkit-transition: all .5s ease-in-out !important;
+    -moz-transition: all .5s ease-in-out !important;
+    -o-transition: all .5s ease-in-out !important;
+    transition: all .5s ease-in-out !important;
+    position: fixed;
+    top:0px;
+} 
+
+.hideToolbar {
+     -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+.showToolbar{
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}
+
+button,select{
+    text-transform: capitalize
+}

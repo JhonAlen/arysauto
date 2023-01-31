@@ -1,0 +1,175 @@
+<title>Registrate</title>
+<section class="h-100 h-custom gradient-custom-2 breadcrumbs d-flex " style="background-image: url(./../../../assets/imagenes/arys/register.jpg);">
+    <div class="container py-5 h-100 " >
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <!-- formulario de busqueda y -->
+            <form [formGroup]="search_form">
+            
+            <div class="card-body p-0">
+              <div class="row g-0">
+
+                <!-- informacion general -->
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <h3 class="fw-normal mb-5" style="color: #ffb700">Información General</h3>  
+                    <div class="row">
+                      <div class="col-md-6 mb-4 pb-2">
+                        <div class="form-outline">
+                          <label class="form-label" >Nombre</label>
+                          <input type="text" formControlName="xnombre" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xnombre').errors }"/>
+                          <div *ngIf="submitted && search_form.get('xnombre').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('xnombre').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4 pb-2">
+                        <div class="form-outline">
+                          <label class="form-label" for="form3Examplev3">Apellido</label>
+                          <input type="text" formControlName="xapellido" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xapellido').errors }"/>
+                          <div *ngIf="submitted && search_form.get('xapellido').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('xapellido').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4 pb-2">
+                          <div class="form-outline">
+                            <label class="form-label" for="form3Examplev2">Género</label>
+                            <select formControlName="csexo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('csexo').errors }">
+                              <option></option>
+                              <option *ngFor="let sex of sexList" value="{{ sex.csexo }}">{{ sex.xsexo }}</option>
+                            </select>
+                            <div *ngIf="submitted && search_form.get('csexo').errors"  class="invalid-feedback">
+                              <div *ngIf="search_form.get('csexo').errors.required"></div>
+                          </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4 pb-2">
+                          <div class="form-outline">
+                           <label class="form-label" for="form3Examplev4">fecha de nacimiento</label>
+                           <input type="date" formControlName="fnacimiento" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fnacimiento').errors }"/>
+                           <div *ngIf="submitted && search_form.get('fnacimiento').errors"  class="invalid-feedback">
+                             <div *ngIf="search_form.get('fnacimiento').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                           </div>
+                         </div>
+                       </div>
+                       
+                      </div>
+
+
+
+                    
+
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline">                        
+                        <label class="form-label" for="form3Examplev4">Correo Electrónico</label>
+                        <input type="email" formControlName="xemail" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xemail').errors }"/>
+                        <div *ngIf="submitted && search_form.get('xemail').errors"  class="invalid-feedback">
+                          <div *ngIf="search_form.get('xemail').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+                        <div class="form-outline">
+                          <label class="form-label" for="form3Examplev5">Contraseña</label>
+                          <input type="password" formControlName="xcontrasena" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xcontrasena').errors }"/>
+                          <div *ngIf="submitted && search_form.get('xcontrasena').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('xcontrasena').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Detalles del contacto -->
+                <div class="col-lg-6 bg-indigo text-white">
+                  <div class="p-5">
+                    <h3 class="fw-normal mb-5">Detalles del Contacto</h3>
+  
+                    <div class="row">
+                      <div class="col-md-6 mb-4 pb-2">
+                        <div class="form-outline">
+                          <label class="form-label" for="form3Examplev2">Estado</label>
+                          <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cestado').errors }" (change)="getCityData()">
+                            <option></option>
+                            <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                          </select>
+                          <div *ngIf="submitted && search_form.get('cestado').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('cestado').errors.required"></div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4 pb-2">
+                        <div class="form-outline">
+                          <label class="form-label" for="form3Examplev3">Ciudad</label>
+                          <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cciudad').errors }" >
+                            <option></option>
+                            <option *ngFor="let city of cityList" value="{{ city.cciudad }}">{{ city.xciudad }}</option>
+                          </select>
+                          <div *ngIf="submitted && search_form.get('cciudad').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('cciudad').errors.required"></div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline form-white">
+                        <label class="form-label" for="form3Examplea2">Dirección</label>
+                        <input type="text" formControlName="xdireccion" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xdireccion').errors }"/>
+                        <div *ngIf="submitted && search_form.get('xdireccion').errors"  class="invalid-feedback">
+                          <div *ngIf="search_form.get('xdireccion').errors.required"></div>
+                      </div>
+                      </div>
+                    </div>
+                   
+
+  
+                    <div class="row">
+                      <div class="col-md-5 mb-4 pb-2">
+                        <div class="form-outline form-white">
+                          <label class="form-label" for="form3Examplea7">Número de Télefono</label>
+                          <input type="text" formControlName="xtelefonocelular" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xtelefonocelular').errors }"/>
+                          <div *ngIf="submitted && search_form.get('xtelefonocelular').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('xtelefonocelular').errors.required"></div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="col-md-5 mb-4 pb-2">
+                        <div class="form-outline form-white">
+                          <label class="form-label" for="form3Examplea8">Número de Cédula</label>
+                          <input type="text" formControlName="xdocidentidad" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xdocidentidad').errors }"/>
+                          <div *ngIf="submitted && search_form.get('xdocidentidad').errors"  class="invalid-feedback">
+                            <div *ngIf="search_form.get('xdocidentidad').errors.required"></div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-check d-flex justify-content-start mb-4 pb-3">
+                      <input class="form-check-input me-3" type="checkbox" value="" id="form2Example3c" />
+                      <label class="form-check-label text-white" for="form2Example3">
+                        Acepto los <a href="./../../../assets/pdf/Politica de privacidad Arysauto SAS.pdf" class="text-white"><u>Terminos y Condiciones</u></a> de su sitio web.
+                      </label>
+                    </div>
+  
+                    <button type="button" class="btn btn-light btn-lg" data-mdb-ripple-color="dark" (click)="onSubmit(search_form.value)">Registrarme</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>

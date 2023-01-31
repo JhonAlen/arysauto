@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "SECURITY.USERS.PROVIDER" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Lista de Corredores
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading" class="btn company-detail-button float-right" type="button" (click)="onSubmit(popup_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="brokerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Codigo" field="ccorredor" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Corredor" field="xcorredor" [width]="259" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

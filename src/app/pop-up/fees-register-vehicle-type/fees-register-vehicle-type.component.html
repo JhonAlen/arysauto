@@ -1,0 +1,102 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "QUOTATION.FEESREGISTERS.VEHICLETYPE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <div class="row mt-2">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)"  *ngIf="canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "QUOTATION.FEESREGISTERS.SAVE" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn btn-danger float-right mr-1" type="button" (click)="deleteVehicleType()" *ngIf="isEdit">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "QUOTATION.FEESREGISTERS.DELETE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "QUOTATION.FEESREGISTERS.VEHICLETYPE" | translate }}</label>
+                                    <select formControlName="ctipovehiculo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipovehiculo').errors }">
+                                        <option></option>
+                                        <option *ngFor="let vehicleType of vehicleTypeList" value="{{ vehicleType.id }}">{{ vehicleType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('ctipovehiculo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ctipovehiculo').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDVEHICLETYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "QUOTATION.FEESREGISTERS.AMOUNTINTERVALSTART" | translate }}</label>
+                                    <input type="number" formControlName="miniciointervalo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('miniciointervalo').errors }">
+                                    <div *ngIf="submitted && popup_form.get('miniciointervalo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('miniciointervalo').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDAMOUNTINTERVALSTART" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "QUOTATION.FEESREGISTERS.AMOUNTINTERVALEND" | translate }}</label>
+                                    <input type="number" formControlName="mfinalintervalo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mfinalintervalo').errors }">
+                                    <div *ngIf="submitted && popup_form.get('mfinalintervalo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('mfinalintervalo').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDAMOUNTINTERVALEND" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "QUOTATION.FEESREGISTERS.FEEPERCENTAGE" | translate }}</label>
+                                    <input type="number" formControlName="ptasa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ptasa').errors }">
+                                    <div *ngIf="submitted && popup_form.get('ptasa').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ptasa').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDFEEPERCENTAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "QUOTATION.FEESREGISTERS.YEARSINTERVALSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="addInterval()" *ngIf="isEdit || canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "QUOTATION.FEESREGISTERS.ADDYEARINTERVAL" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="intervalList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="intervalRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onIntervalsGridReady($event)">
+                            <ag-grid-column headerName="Start Year" field="fanoinicio" [width]="345" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="End Year" field="fanofinal" [width]="345" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Percentage" field="ptasainterna" [width]="346" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

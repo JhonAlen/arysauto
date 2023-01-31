@@ -1,0 +1,78 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "SECURITY.ROLES.SEARCHROLE" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button class="btn company-detail-button float-right" type="button" (click)="goToDetail()">
+                                {{ "SECURITY.ROLES.CREATE" | translate }}
+                            </button>
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "SECURITY.ROLES.SEARCH" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.ROLES.DEPARTMENT" | translate }}</label>
+                                    <select formControlName="cdepartamento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cdepartamento').errors }">
+                                        <option></option>
+                                        <option *ngFor="let department of departmentList" value="{{ department.id }}">{{ department.value || translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('cdepartamento').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.ROLES.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xrol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xrol').errors }">
+                                    <div *ngIf="submitted && search_form.get('xrol').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "SECURITY.ROLES.ROLESLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="roleList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Code" field="crol" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xrol" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Department" field="xdepartamento" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Active" field="xactivo" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

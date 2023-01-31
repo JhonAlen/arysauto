@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.EDITCOVERAGE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.EDITCOVERAGE" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CONTRACT" | translate }}</label>
+                                    <input type="text" formControlName="ccontratoflota" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ccontratoflota').errors }">
+                                    <div *ngIf="submitted && popup_form.get('ccontratoflota').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ccontratoflota').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.CODECOVERAGE" | translate }}</label>
+                                    <input type="text" formControlName="ccobertura" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ccobertura').errors }">
+                                    <div *ngIf="submitted && popup_form.get('ccobertura').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ccobertura').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.COVERAGE" | translate }}</label>
+                                    <input type="text" formControlName="xcobertura" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcobertura').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xcobertura').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xcobertura').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.PREMIUM" | translate }}</label>
+                                    <input type="number" formControlName="mprima" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mprima').errors }">
+                                    <div *ngIf="submitted && popup_form.get('mprima').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('mprima').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SUMASSURED" | translate }}</label>
+                                    <input type="number" formControlName="msuma_aseg" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_aseg').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_aseg').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_aseg').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 mt-2">
+                                    <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="button" (click)="onSubmit(popup_form.value)" *ngIf="canSave">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SAVE" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

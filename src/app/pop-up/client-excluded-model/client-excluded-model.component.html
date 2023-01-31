@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "CLIENTS.CLIENTS.EXCLUDEDMODEL" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.BRAND" | translate }}</label>
+                    <select formControlName="cmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmarca').errors }" (change)="modelDropdownDataRequest()">
+                        <option></option>
+                        <option *ngFor="let brand of brandList" value="{{ brand.id }}">{{ brand.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cmarca').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cmarca').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBRAND" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.MODEL" | translate }}</label>
+                    <select formControlName="cmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmodelo').errors }">
+                        <option></option>
+                        <option *ngFor="let model of modelList" value="{{ model.id }}">{{ model.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cmodelo').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cmodelo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDMODEL" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.OBSERVATION" | translate }}</label>
+                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacion').errors }" cols="30" rows="2"></textarea>
+                    <div *ngIf="submitted && popup_form.get('xobservacion').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xobservacion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDOBSERVATION" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "CLIENTS.CLIENTS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteModel()" *ngIf="isEdit">
+                    {{ "CLIENTS.CLIENTS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

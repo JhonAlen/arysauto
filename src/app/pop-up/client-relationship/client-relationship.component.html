@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "CLIENTS.CLIENTS.RELATIONSHIP" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.RELATIONSHIP" | translate }}</label>
+                    <select formControlName="cparentesco" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cparentesco').errors }">
+                        <option></option>
+                        <option *ngFor="let relationship of relationshipList" value="{{ relationship.id }}">{{ relationship.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cparentesco').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cparentesco').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDRELATIONSHIP" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.OBSERVATION" | translate }}</label>
+                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacion').errors }" cols="30" rows="2"></textarea>
+                    <div *ngIf="submitted && popup_form.get('xobservacion').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xobservacion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDOBSERVATION" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "CLIENTS.CLIENTS.EFFECTIVEDATE" | translate }}</label>
+                    <input type="date" formControlName="fefectiva" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fefectiva').errors }">
+                    <div *ngIf="submitted && popup_form.get('fefectiva').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('fefectiva').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDEFFECTIVEDATE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "CLIENTS.CLIENTS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteRelationship()" *ngIf="isEdit">
+                    {{ "CLIENTS.CLIENTS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

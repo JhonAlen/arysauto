@@ -1,0 +1,216 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "THIRDPARTIES.ENTERPRISES.ENTERPRISE" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "THIRDPARTIES.ENTERPRISES.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editEnterprise()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "THIRDPARTIES.ENTERPRISES.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "THIRDPARTIES.ENTERPRISES.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <img [src]="xrutaimagen" width="100%"> 
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>{{ "THIRDPARTIES.ENTERPRISES.UPLOADIMAGE" | translate }}</label>
+                                        <input type="file" name="ximagen" class="form-control"  accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" #Ximagen>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.NAME" | translate }}</label>
+                                            <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombre').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xnombre').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xnombre').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.BUSINESSNAME" | translate }}</label>
+                                            <input type="text" formControlName="xrazonsocial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xrazonsocial').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xrazonsocial').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xrazonsocial').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDBUSINESSNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.DOCUMENTTYPE" | translate }}</label>
+                                            <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipodocidentidad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ctipodocidentidad').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                            <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidad').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xdocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xdocidentidad').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.PHONENUMBER" | translate }}</label>
+                                            <input type="tel" formControlName="xtelefono" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefono').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xtelefono').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xtelefono').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDPHONENUMBER" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.FAX" | translate }}</label>
+                                            <input type="email" formControlName="xfax" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xfax').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xfax').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.STATE" | translate }}</label>
+                                            <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                                                <option></option>
+                                                <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cestado').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cestado').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDSTATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.CITY" | translate }}</label>
+                                            <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cciudad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cciudad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cciudad').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDCITY" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.ADDRESS" | translate }}</label>
+                                            <textarea type="text" formControlName="xdireccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccion').errors }" cols="30" rows="2"></textarea>
+                                            <div *ngIf="submitted && detail_form.get('xdireccion').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xdireccion').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDADDRESS" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                            <label>{{ "THIRDPARTIES.ENTERPRISES.ACTIVE" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bactivo').errors.required">{{ "THIRDPARTIES.ENTERPRISES.REQUIREDACTIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer >    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>

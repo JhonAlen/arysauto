@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "API.CLUBMENUS.SUBMENU" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "API.CLUBMENUS.NAME" | translate }}</label>
+                    <input type="text" formControlName="xsubmenuclub" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xsubmenuclub').errors }">
+                    <div *ngIf="submitted && popup_form.get('xsubmenuclub').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xsubmenuclub').errors.required">{{ "API.CLUBMENUS.REQUIREDNAME" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "API.CLUBMENUS.COMPONENT" | translate }}</label>
+                    <input type="text" formControlName="xcomponente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcomponente').errors }">
+                    <div *ngIf="submitted && popup_form.get('xcomponente').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xcomponente').errors.required">{{ "API.CLUBMENUS.REQUIREDCOMPONENT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "API.CLUBMENUS.CONTENT" | translate }}</label>
+                    <textarea type="text" formControlName="xcontenido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcontenido').errors }" cols="30" rows="2"></textarea>
+                    <div *ngIf="submitted && popup_form.get('xcontenido').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xcontenido').errors.required">{{ "API.CLUBMENUS.REQUIREDCONTENT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bactivo').errors }">
+                    <label>{{ "API.CLUBMENUS.ACTIVE" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bactivo').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bactivo').errors.required">{{ "API.CLUBMENUS.REQUIREDACTIVE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "API.CLUBMENUS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteSubMenu()" *ngIf="isEdit">
+                    {{ "API.CLUBMENUS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

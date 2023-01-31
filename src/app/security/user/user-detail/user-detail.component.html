@@ -1,0 +1,259 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <form [formGroup]="detail_form">
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SECURITY.USERS.USER" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                    <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SECURITY.USERS.CANCEL" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editUser()" *ngIf="canEdit && showEditButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SECURITY.USERS.EDIT" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SECURITY.USERS.SAVE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.COUNTRY" | translate }}</label>
+                                    <select formControlName="cpais" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cpais').errors }">
+                                        <option></option>
+                                        <option *ngFor="let country of countryList" value="{{ country.id }}">{{ country.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cpais').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cpais').errors.required">{{ "SECURITY.USERS.REQUIREDCOUNTRY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.COMPANY" | translate }}</label>
+                                    <select formControlName="ccompania" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccompania').errors }">
+                                        <option></option>
+                                        <option *ngFor="let company of companyList" value="{{ company.id }}">{{ company.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccompania').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ccompania').errors.required">{{ "SECURITY.USERS.REQUIREDCOMPANY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.DEPARTMENT" | translate }}</label>
+                                    <select formControlName="cdepartamento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cdepartamento').errors }" (change)="roleDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let department of departmentList" value="{{ department.id }}">{{ department.value || translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cdepartamento').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cdepartamento').errors.required">{{ "SECURITY.USERS.REQUIREDDEPARTMENT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.ROLE" | translate }}</label>
+                                    <select formControlName="crol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('crol').errors }">
+                                        <option></option>
+                                        <option *ngFor="let role of roleList" value="{{ role.id }}">{{ role.value || translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('crol').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('crol').errors.required">{{ "SECURITY.USERS.REQUIREDROLE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombre').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombre').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xnombre').errors.required">{{ "SECURITY.USERS.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xapellido').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xapellido').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xapellido').errors.required">{{ "SECURITY.USERS.REQUIREDLASTNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemail').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xemail').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xemail').errors.required">{{ "SECURITY.USERS.REQUIREDEMAIL" | translate }}</div>
+                                        <div *ngIf="detail_form.get('xemail').errors.pattern">{{ "SECURITY.USERS.EMAILPATTERNERROR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div formGroupName="matching_xcontrasena" class="col-sm-12 col-md-8" [ngClass]="{ 'is-invalid': submitted && detail_form.get('matching_xcontrasena').errors }">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ "SECURITY.USERS.PASSWORD" | translate }}</label>
+                                            <input type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('matching_xcontrasena').get('xcontrasena').errors }">
+                                            <div *ngIf="submitted && detail_form.get('matching_xcontrasena').get('xcontrasena').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('matching_xcontrasena').get('xcontrasena').errors.required">{{ "SECURITY.USERS.REQUIREDPASSWORD" | translate }}</div>
+                                                <div *ngIf="detail_form.get('matching_xcontrasena').get('xcontrasena').errors.minlength">{{ "SECURITY.USERS.PASSWORDLENGTHERROR" | translate }}</div>
+                                                <div *ngIf="detail_form.get('matching_xcontrasena').get('xcontrasena').errors.pattern">{{ "SECURITY.USERS.PASSWORDPATTERNERROR" | translate }}</div>
+                                            </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ "SECURITY.USERS.VERIFYPASSWORD" | translate }}</label>
+                                            <input type="password" formControlName="verify_xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('matching_xcontrasena').get('verify_xcontrasena').errors }">
+                                            <div *ngIf="submitted && detail_form.get('matching_xcontrasena').get('verify_xcontrasena').errors"  class="invalid-feedback">
+                                            <div *ngIf="detail_form.get('matching_xcontrasena').get('verify_xcontrasena').errors.required">{{ "SECURITY.USERS.REQUIREDVERIFYPASSWORD" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="submitted && detail_form.get('matching_xcontrasena').errors"  class="invalid-feedback container mb-4">
+                                <div *ngIf="detail_form.get('matching_xcontrasena').errors.areEqual">{{ "SECURITY.USERS.PASSWORDMATCHERROR" | translate }}</div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.PHONENUMBER" | translate }}</label>
+                                    <input type="text" formControlName="xtelefono" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefono').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtelefono').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xtelefono').errors.required">{{ "SECURITY.USERS.REQUIREDPHONENUMBER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdireccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdireccion').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xdireccion').errors.required">{{ "SECURITY.USERS.REQUIREDADDRESS" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bproveedor" class="form-check-input" (change)="checkProvider($event)" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bproveedor').errors }">
+                                    <label>{{ "SECURITY.USERS.PROVIDER" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bproveedor').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bproveedor').errors.required">{{ "SECURITY.USERS.REQUIREDPROVIDER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bcorredor" class="form-check-input" (change)="checkBroker($event)" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcorredor').errors }">
+                                    <label>Corredor</label>
+                                    <div *ngIf="submitted && detail_form.get('bcorredor').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bcorredor').errors.required">{{ "SECURITY.USERS.REQUIREDPROVIDER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                    <label>{{ "SECURITY.USERS.ACTIVE" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "SECURITY.USERS.REQUIREDACTIVE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "SECURITY.USERS.PROVIDER" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || !detail_form.get('bproveedor').value" class="btn company-detail-button float-right mr-1" type="button" (click)="searchProvider()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "SECURITY.USERS.SEARCHPROVIDER" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombre').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombre').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.BUSINESSNAME" | translate }}</label>
+                                    <input type="text" formControlName="xrazonsocial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xrazonsocial').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xrazonsocial').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                Corredores
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || !detail_form.get('bcorredor').value" class="btn company-detail-button float-right mr-1" type="button" (click)="searchBroker()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    Buscar Corredor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xcorredor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcorredor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcorredor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

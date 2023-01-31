@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "EVENTS.SERVICEREQUESTS.TRACING" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "EVENTS.SERVICEREQUESTS.TRACINGTYPE" | translate }}</label>
+                    <select formControlName="ctiposeguimiento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctiposeguimiento').errors }">
+                        <option></option>
+                        <option *ngFor="let tracingType of tracingTypeList" value="{{ tracingType.id }}">{{ tracingType.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ctiposeguimiento').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctiposeguimiento').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDTRACINGTYPE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "EVENTS.SERVICEREQUESTS.TRACINGMOTIVE" | translate }}</label>
+                    <select formControlName="cmotivoseguimiento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmotivoseguimiento').errors }">
+                        <option></option>
+                        <option *ngFor="let tracingMotive of tracingMotiveList" value="{{ tracingMotive.id }}">{{ tracingMotive.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cmotivoseguimiento').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cmotivoseguimiento').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDTRACINGMOTIVE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "EVENTS.SERVICEREQUESTS.TRACINGDAY" | translate }}</label>
+                    <input type="date" formControlName="fdia" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fdia').errors }">
+                    <div *ngIf="submitted && popup_form.get('fdia').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('fdia').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDTRACINGDAY" }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "EVENTS.SERVICEREQUESTS.TRACINGTIME" | translate }}</label>
+                    <input type="time" formControlName="fhora" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('fhora').errors }">
+                    <div *ngIf="submitted && popup_form.get('fhora').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('fhora').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDTRACINGTIME" }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "EVENTS.SERVICEREQUESTS.OBSERVATION" | translate }}</label>
+                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacion').errors }" cols="30" rows="2"></textarea>
+                    <div *ngIf="submitted && popup_form.get('xobservacion').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xobservacion').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDOBSERVATION" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bcerrado" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bcerrado').errors }">
+                    <label>{{ "EVENTS.SERVICEREQUESTS.CLOSE" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bcerrado').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bcerrado').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDCLOSE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "EVENTS.SERVICEREQUESTS.SAVE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

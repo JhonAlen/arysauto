@@ -1,0 +1,87 @@
+
+<app-toolbar></app-toolbar>
+<title>Login</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<div class="container" style="width: 430px;">
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+      <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+      <form [formGroup]="signin_form" (ngSubmit)="onSubmit(signin_form.value)" style="background-color: white;border-radius: 21px;margin:32px 0px 44px 0px;padding-bottom: 32px;">
+        <img src="./../../assets/imagenes/mundial-logo1.png" style="width: 197px; margin-left: 96px;margin-top: 43px;">
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-12">
+            <div class="form-group">
+              <label  style="margin-left: 30px;">{{ "SIGNIN.EMAIL" | translate }}</label>
+              <input  style="margin-left: 65px;width: 71%;" type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xemail').errors }">
+              <div *ngIf="submitted && signin_form.get('xemail').errors" class="invalid-feedback">
+                <div *ngIf="signin_form.get('xemail').errors.required">{{ "SIGNIN.REQUIRED_EMAIL" | translate }}Correo requerido</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label  style="margin-left: 30px;">{{ "SIGNIN.PASSWORD" | translate }}</label>
+              <input  style="margin-left: 65px;width: 71%;" type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xcontrasena').errors }">
+              <div *ngIf="submitted && signin_form.get('xcontrasena').errors" class="invalid-feedback">
+                <div *ngIf="signin_form.get('xcontrasena').errors.required">{{ "SIGNIN.REQUIRED_PASSWORD" | translate }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col-sm-12 col-md-6 mt-2">
+            <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              {{ "SIGNIN.LOGIN" | translate }}
+            </button>
+          </div>
+          <div class="col-sm-12 col-md-6 mt-2">
+            <button type="button" class="btn btn-lg btn-block">{{ "SIGNIN.PASSWORD_RECOVERY" | translate }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
+  <footer id="footer" class="footer" style="background-image:url(./../../../../assets/imagenes/arys/planes.jpg); background-position: center;">
+    <div class="footer-content position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Mundial Autos</h3>
+              <p>
+                Av. Francisco de Miranda, <br>
+                Edif. Cavendes, Piso 11 OF 1101
+Urb. Los Palos Grandes,<br>1060 Chacao,<br>Caracas.<br>
+                <br><strong>Teléfono:</strong> <a href="https://api.whatsapp.com/send?phone=584242061351&text=Gracias%20por%20comunicarte%20con%20La%20Mundial,%20en%20breves%20momentos%20te%20atenderemos">+584242061351 </a><br>
+                <strong>Teléfono:</strong><a href="tel:02122839619"> +58 212 283-9619</a>
+                <br><strong>Correo:</strong> <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=info@lamundialdeseguros.com">info@lamundialdeseguros.com</a><br>
+              </p>
+              <div class="social-links d-flex mt-3">
+                <a href="https://www.instagram.com/lamundialseguros/" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 footer-links">
+            <ul>
+              <li><a href="inicio">Inicio</a></li>
+              <li><a href="qsomos">Quienes Somos</a></li>
+    <!---->             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-legal text-center position-relative">
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Mundial Autos</span></strong>. Todos los Derechos Reservados
+        </div>
+        <div class="credits">
+          Diseñado por Compuamerica
+        </div>
+      </div>
+    </div>
+  </footer>

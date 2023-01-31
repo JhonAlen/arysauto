@@ -1,0 +1,141 @@
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "ALERTS.EMAILALERTS.EMAILALERT" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "ALERTS.EMAILALERTS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editEmailAlert()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "ALERTS.EMAILALERTS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "ALERTS.EMAILALERTS.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="detail_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ALERTS.EMAILALERTS.COUNTRY" | translate }}</label>
+                                    <select formControlName="cpais" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cpais').errors }">
+                                        <option></option>
+                                        <option *ngFor="let country of countryList" value="{{ country.id }}">{{ country.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cpais').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cpais').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDCOUNTRY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ALERTS.EMAILALERTS.COMPANY" | translate }}</label>
+                                    <select formControlName="ccompania" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccompania').errors }">
+                                        <option></option>
+                                        <option *ngFor="let company of companyList" value="{{ company.id }}">{{ company.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccompania').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ccompania').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDCOMPANY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ALERTS.EMAILALERTS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xcorreo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcorreo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcorreo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xcorreo').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ALERTS.EMAILALERTS.LANGUAGE" | translate }}</label>
+                                    <select formControlName="ilenguaje" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ilenguaje').errors }">
+                                        <option></option>
+                                        <option value="EN">{{ "DROPDOWN.ENGLISH" | translate }}</option>
+                                        <option value="ES">{{ "DROPDOWN.SPANISH" | translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ilenguaje').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ilenguaje').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDLANGUAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "ALERTS.EMAILALERTS.SUBJECT" | translate }}</label>
+                                    <input type="text" formControlName="xasunto" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xasunto').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xasunto').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xasunto').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDSUBJECT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>{{ "ALERTS.EMAILALERTS.CONTENT" | translate }}</label>
+                                    <textarea type="text" formControlName="xhtml" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xhtml').errors }" cols="30" rows="5"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xhtml').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xhtml').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDCONTENT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                    <label>{{ "ALERTS.EMAILALERTS.ACTIVE" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "ALERTS.EMAILALERTS.REQUIREDACTIVE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "ALERTS.EMAILALERTS.ROLESLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addRole()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "ALERTS.EMAILALERTS.ADDROLE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="roleList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGridReady($event)">
+                            <ag-grid-column headerName="Department" field="xdepartamento" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xrol" [width]="518" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

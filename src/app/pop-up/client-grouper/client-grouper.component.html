@@ -1,0 +1,225 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "CLIENTS.CLIENTS.GROUPER" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <div class="row mt-2">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)"  *ngIf="canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.SAVE" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn btn-danger float-right mr-1" type="button" (click)="deleteGrouper()" *ngIf="isEdit">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.DELETE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <img [src]="xrutaimagen" width="100%"> 
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.UPLOADIMAGE" | translate }}</label>
+                                            <input type="file" name="ximagen" class="form-control"  accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" #Ximagen>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.NAME" | translate }}</label>
+                                            <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xnombre').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xnombre').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('xnombre').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.ALTERNATIVECONTRACT" | translate }}</label>
+                                            <input type="text" formControlName="xcontratoalternativo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcontratoalternativo').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xcontratoalternativo').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('xcontratoalternativo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDALTERNATIVECONTRACT" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.BUSINESSNAME" | translate }}</label>
+                                            <input type="text" formControlName="xrazonsocial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xrazonsocial').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xrazonsocial').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('xrazonsocial').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBUSINESSNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.STATE" | translate }}</label>
+                                            <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                                                <option></option>
+                                                <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && popup_form.get('cestado').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('cestado').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.CITY" | translate }}</label>
+                                            <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cciudad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && popup_form.get('cciudad').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('cciudad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCITY" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.TAXADDRESS" | translate }}</label>
+                                            <textarea type="text" formControlName="xdireccionfiscal" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdireccionfiscal').errors }" cols="30" rows="2"></textarea>
+                                            <div *ngIf="submitted && popup_form.get('xdireccionfiscal').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('xdireccionfiscal').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXADDRESS" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.DOCUMENTTYPE" | translate }}</label>
+                                            <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipodocidentidad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && popup_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('ctipodocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                            <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocidentidad').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xdocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('xdocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bfacturar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bfacturar').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.CHECKIN" | translate }}</label>
+                                            <div *ngIf="submitted && popup_form.get('bfacturar').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('bfacturar').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCHECKIN" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bcontribuyente" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bcontribuyente').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.TAXPAYER" | translate }}</label>
+                                            <div *ngIf="submitted && popup_form.get('bcontribuyente').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('bcontribuyente').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXPAYER" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bimpuesto" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bimpuesto').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.COVERSTAXES" | translate }}</label>
+                                            <div *ngIf="submitted && popup_form.get('bimpuesto').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('bimpuesto').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCOVERSTAXES" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.PHONENUMBER" | translate }}</label>
+                                            <input type="tel" formControlName="xtelefono" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefono').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xtelefono').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('bimpuesto').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDPHONENUMBER" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.FAX" | translate }}</label>
+                                            <input type="text" formControlName="xfax" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xfax').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xfax').errors" class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.EMAIL" | translate }}</label>
+                                            <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xemail').errors }">
+                                            <div *ngIf="submitted && popup_form.get('xemail').errors" class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('xemail').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDEMAIL" | translate }}</div>
+                                                <div *ngIf="popup_form.get('xemail').errors.pattern">{{ "CLIENTS.CLIENTS.EMAILPATTERNERROR" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bactivo').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.ACTIVE" | translate }}</label>
+                                            <div *ngIf="submitted && popup_form.get('bactivo').errors"  class="invalid-feedback">
+                                                <div *ngIf="popup_form.get('bactivo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDACTIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.BANKSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="addBank()" *ngIf="isEdit || canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDBANK" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="bankList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bankRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBanksGridReady($event)">
+                            <ag-grid-column headerName="Bank" field="xbanco" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Account Type" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Account Number" field="xnumerocuenta" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Principal" field="xprincipal" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

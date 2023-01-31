@@ -1,0 +1,889 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <form [formGroup]="detail_form">
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.VEHICLE" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="searchVehicle()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.SEARCHVEHICLE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.BRAND" | translate }}</label>
+                                    <input type="text" formControlName="xmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmarca').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmarca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.MODEL" | translate }}</label>
+                                    <input type="text" formControlName="xmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmodelo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmodelo').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.VEHICLETYPE" | translate }}</label>
+                                    <input type="text" formControlName="xtipo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtipo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtipo').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.PLATE" | translate }}</label>
+                                    <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplaca').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xplaca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.YEAR" | translate }}</label>
+                                    <input type="number" formControlName="fano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fano').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fano').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.COLOR" | translate }}</label>
+                                    <input type="text" formControlName="xcolor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcolor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcolor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.BODYWORKSERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialcarroceria" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xserialcarroceria').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xserialcarroceria').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ENGINESERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialmotor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xserialmotor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xserialmotor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.CONTRACTINFORMATION" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CLIENT" | translate }}</label>
+                                    <input type="text" formControlName="xcliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcliente').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcliente').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.DATEFROM" | translate }}</label>
+                                    <input type="date" formControlName="fdesde_pol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fdesde_pol').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fdesde_pol').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.DATEUNTIL" | translate }}</label>
+                                    <input type="date" formControlName="fhasta_pol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fhasta_pol').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fhasta_pol').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.STATUS" | translate }}</label>
+                                    <input type="text" formControlName="xestatusgeneral" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xestatusgeneral').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xestatusgeneral').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.OWNERDATA" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombrepropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombrepropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombrepropietario').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellidopropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xapellidopropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xapellidopropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                    <input type="text" formControlName="xdocidentidadpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidadpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xdocidentidadpropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdireccionpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccionpropietario').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdireccionpropietario').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CELLPHONE" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonocelularpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefonocelularpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtelefonocelularpropietario').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemailpropietario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemailpropietario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xemailpropietario').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.NOTIFICATION" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                    <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.CANCEL" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editNotification()" *ngIf="canEdit && showEditButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.EDIT" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.SAVE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CODE" | translate }}</label>
+                                    <input type="number" formControlName="cnotificacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cnotificacion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('cnotificacion').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.NOTIFICATIONTYPE" | translate }}</label>
+                                    <select formControlName="ctiponotificacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctiponotificacion').errors }" (change)="changeTypeNotification()">
+                                        <option></option>
+                                        <option *ngFor="let notificationType of notificationTypeList" value="{{ notificationType.id }}">{{ notificationType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ctiponotificacion').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ctiponotificacion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDNOTIFICATIONTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.TYPECOLLECTIONS" | translate }}</label>
+                                    <select formControlName="crecaudo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('crecaudo').errors }">
+                                        <option></option>
+                                        <option *ngFor="let collections of collectionsList" value="{{ collections.crecaudo }}">{{ collections.xrecaudo }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('crecaudo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('crecaudo').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCITY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CLAIMCAUSE" | translate }}</label>
+                                    <select formControlName="ccausasiniestro" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccausasiniestro').errors }">
+                                        <option></option>
+                                        <option *ngFor="let claimCause of claimCauseList" value="{{ claimCause.id }}">{{ claimCause.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccausasiniestro').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ccausasiniestro').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCLAIMCAUSE" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombre').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombre').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xnombre').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDNAME" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xapellido').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xapellido').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xapellido').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDLASTNAME" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.PHONENUMBER" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefono" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefono').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtelefono').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xtelefono').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDPHONENUMBER" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ALTERNATIVENAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombrealternativo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombrealternativo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xnombrealternativo').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ALTERNATIVELASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellidoalternativo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xapellidoalternativo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xapellidoalternativo').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ALTERNATIVEPHONENUMBER" | translate }}</label>
+                                    <input type="tel" formControlName="xtelefonoalternativo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefonoalternativo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtelefonoalternativo').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 48px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.VEHICLEDAMAGE" | translate }}</label>
+                                    <div class="row">
+                                      <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                      <input type="checkbox" formControlName="bdano" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bdano').errors }" style="margin-left: 122px;"> 
+                                      <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                   </div>
+                                    <div *ngIf="submitted && detail_form.get('bdano').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bdano').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDVEHICLEDAMAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 48px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.CANTRANSIT" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="btransitar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('btransitar').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('btransitar').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('btransitar').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCANTRANSIT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: -40px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.OTHERDAMAGE" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="bdanootro" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bdanootro').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('bdanootro').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bdanootro').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOTHERDAMAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 48px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.INJURED" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="blesionado" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('blesionado').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('blesionado').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('blesionado').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDINJURED" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 4px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.OWNER" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="bpropietario" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bpropietario').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('bpropietario').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bpropietario').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOWNER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.CLAIMINFORMATION" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="collectionsPdf()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.COLLECTIONS" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addSettlement()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.SETTLEMENT" | translate }}
+                                </button>
+                            </div>
+                            <!--<div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="collectionsPdf()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.SETTLEMENT" | translate }}
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="collectionsPdf()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.REJECTIONLETTER" | translate }}
+                                </button>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.EVENTDAY" | translate }}</label>
+                                    <input type="date" formControlName="fdia" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fdia').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fdia').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('fdia').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDEVENTDAY" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.EVENTTIME" | translate }}</label>
+                                    <input type="time" formControlName="fhora" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fhora').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fhora').errors" class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('fhora').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDEVENTTIME" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.STATE" | translate }}</label>
+                                    <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cestado').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cestado').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDSTATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.CITY" | translate }}</label>
+                                    <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cciudad').errors }">
+                                        <option></option>
+                                        <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cciudad').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cciudad').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDCITY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.ADDRESS" | translate }}</label>
+                                    <textarea type="text" formControlName="xdireccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdireccion').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xdireccion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDADDRESS" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.DESCRIPTION" | translate }}</label>
+                                    <textarea type="text" formControlName="xdescripcion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdescripcion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xdescripcion').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xdescripcion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDDESCRIPTION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 48px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.TRANSITACT" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="btransito" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('btransito').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('btransito').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('btransito').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDTRANSITACT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 48px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.HADCARGO" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="bcarga" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcarga').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('bcarga').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bcarga').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDHADCARGO" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-check form-switch">
+                                    <label style="margin-left: 48px;margin-top: 13px;">{{ "EVENTS.NOTIFICATIONS.HADPASSENGERS" | translate }}</label>
+                                    <div class="row">
+                                        <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                        <input type="checkbox" formControlName="bpasajero" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bpasajero').errors }" style="margin-left: 122px;">
+                                        <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                     </div>
+                                    <div *ngIf="submitted && detail_form.get('bpasajero').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bpasajero').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDHADPASSENGERS" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.NUMBEROFPASSENGERS" | translate }}</label>
+                                    <input type="number" formControlName="npasajero" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('npasajero').errors }">
+                                    <div *ngIf="submitted && detail_form.get('npasajero').errors" class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "EVENTS.NOTIFICATIONS.OBSERVATION" | translate }}</label>
+                                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xobservacion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xobservacion').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xobservacion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDOBSERVATION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.SERVICEORDER" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addServiceOrder()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.GENERATESERVICEORDER" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceOrderList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceOrderRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServiceOrderGridReady($event)">
+                                <ag-grid-column headerName="Servicio" field="xservicio" [width]="200" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Observacion" field="xobservacion" [width]="300" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Daños" field="xdanos" [width]="280" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Fecha ajuste" field="fajuste" [width]="240" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.NOTESLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addNote()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDNOTE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="noteList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="noteRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onNotesGridReady($event)">
+                                <ag-grid-column headerName="Nota" field="xnotanotificacion" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Motivo" field="xcausafiniquito" [width]="250" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Ruta" field="xrutaarchivo" [width]="450" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.REPLACEMENTSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addReplacement()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDREPLACEMENT" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="replacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="replacementRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onReplacementsGridReady($event)">
+                                <ag-grid-column headerName="Repuestos" field="xrepuesto" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Cantidad" field="ncantidad" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.THIRDPARTIESLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="addThirdparty()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDTHIRDPARTY" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="thirdpartyList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="thirdpartyRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onThirdpartiesGridReady($event)">
+                                <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Lastname" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Identification Document" field="xdocidentidad" [width]="259" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Cellphone" field="xtelefonocelular" [width]="259" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.THIRDPARTYTRACINGSLIST" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="thirdPartyTracingList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single">
+                                <ag-grid-column headerName="Type" field="xtiposeguimiento" [width]="207" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Motive" field="xmotivoseguimiento" [width]="207" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Day" field="fdia" [width]="207" [sortable]="false"></ag-grid-column>
+                                <ag-grid-column headerName="Time" field="fhora" [width]="207" [sortable]="false"></ag-grid-column>
+                                <ag-grid-column headerName="Status" field="xcerrado" [width]="207" [sortable]="false"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.MATERIALDAMAGESLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="addMaterialDamage()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDMATERIALDAMAGE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="materialDamageList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="materialDamageRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onMaterialDamagesGridReady($event)">
+                                <ag-grid-column headerName="Material Damage" field="xdanomaterial" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Damage Level" field="xniveldano" [width]="518" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.THIRDPARTIESVEHICLESLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editStatus || editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="addThirdpartyVehicle()" *ngIf="canEdit || canCreate">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDTHIRDPARTYVEHICLE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="thirdpartyVehicleList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="thirdpartyVehicleRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onThirdpartiesVehiclesGridReady($event)">
+                                <ag-grid-column headerName="Brand" field="xmarca" [width]="259" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Model" field="xmodelo" [width]="259" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Version" field="xversion" [width]="259" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Plate" field="xplaca" [width]="259" [sortable]="true"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.PROVIDERSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="addProvider()" *ngIf="canEdit">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDPROVIDER" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="providerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="providerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onProvidersGridReady($event)">
+                                <ag-grid-column headerName="Proveedor" field="xnombre" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Observacion" field="xobservacion" [width]="518" [sortable]="false"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.QUOTESLIST" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="quoteList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="quoteRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onQuotesGridReady($event)">
+                                <ag-grid-column headerName="Proveedor" field="xnombre" [width]="518" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Cotización Total" field="mtotalcotizacion" [width]="518" [sortable]="false"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "EVENTS.NOTIFICATIONS.TRACINGSLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel || !editBlock" class="btn company-detail-button float-right mr-1" type="button" (click)="addTracing()" *ngIf="canEdit">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "EVENTS.NOTIFICATIONS.ADDTRACING" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="tracingList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="tracingRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onTracingsGridReady($event)">
+                                <ag-grid-column headerName="Tipo" field="xtiposeguimiento" [width]="207" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Motivo" field="xmotivoseguimiento" [width]="207" [sortable]="true"></ag-grid-column>
+                                <ag-grid-column headerName="Día" field="fdia" [width]="207" [sortable]="false"></ag-grid-column>
+                                <ag-grid-column headerName="Hora" field="fhora" [width]="207" [sortable]="false"></ag-grid-column>
+                                <ag-grid-column headerName="Status" field="xcerrado" [width]="208" [sortable]="false"></ag-grid-column>
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<footer >    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+

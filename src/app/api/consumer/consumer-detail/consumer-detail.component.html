@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "API.CONSUMERS.CONSUMER" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CONSUMERS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editConsumer()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CONSUMERS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CONSUMERS.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="detail_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CONSUMERS.COUNTRY" | translate }}</label>
+                                    <select formControlName="cpais" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cpais').errors }">
+                                        <option></option>
+                                        <option *ngFor="let country of countryList" value="{{ country.id }}">{{ country.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cpais').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cpais').errors.required">{{ "API.CONSUMERS.REQUIREDCOUNTRY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CONSUMERS.COMPANY" | translate }}</label>
+                                    <select formControlName="ccompania" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccompania').errors }">
+                                        <option></option>
+                                        <option *ngFor="let company of companyList" value="{{ company.id }}">{{ company.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccompania').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ccompania').errors.required">{{ "API.CONSUMERS.REQUIREDCOMPANY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CONSUMERS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xconsumidor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xconsumidor').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xconsumidor').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xconsumidor').errors.required">{{ "API.CONSUMERS.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CONSUMERS.PRODUCT" | translate }}</label>
+                                    <input type="text" formControlName="xproducto" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xproducto').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xproducto').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xproducto').errors.required">{{ "API.CONSUMERS.REQUIREDPRODUCT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CONSUMERS.EMAIL" | translate }}</label>
+                                    <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemail').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xemail').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xemail').errors.required">{{ "API.CONSUMERS.REQUIREDEMAIL" | translate }}</div>
+                                        <div *ngIf="detail_form.get('xemail').errors.pattern">{{ "API.CONSUMERS.EMAILPATTERNERROR" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CONSUMERS.USER" | translate }}</label>
+                                    <input type="text" formControlName="xusuario" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xusuario').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xusuario').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xusuario').errors.required">{{ "API.CONSUMERS.REQUIREDUSER" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div formGroupName="matching_xcontrasena" class="col-sm-12 col-md-8" [ngClass]="{ 'is-invalid': submitted && detail_form.get('matching_xcontrasena').errors }">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ "API.CONSUMERS.PASSWORD" | translate }}</label>
+                                            <input type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('matching_xcontrasena').get('xcontrasena').errors }">
+                                            <div *ngIf="submitted && detail_form.get('matching_xcontrasena').get('xcontrasena').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('matching_xcontrasena').get('xcontrasena').errors.required">{{ "API.CONSUMERS.REQUIREDPASSWORD" | translate }}</div>
+                                                <div *ngIf="detail_form.get('matching_xcontrasena').get('xcontrasena').errors.minlength">{{ "API.CONSUMERS.PASSWORDLENGTHERROR" | translate }}</div>
+                                                <div *ngIf="detail_form.get('matching_xcontrasena').get('xcontrasena').errors.pattern">{{ "API.CONSUMERS.PASSWORDPATTERNERROR" | translate }}</div>
+                                            </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ "API.CONSUMERS.VERIFYPASSWORD" | translate }}</label>
+                                            <input type="password" formControlName="verify_xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('matching_xcontrasena').get('verify_xcontrasena').errors }">
+                                            <div *ngIf="submitted && detail_form.get('matching_xcontrasena').get('verify_xcontrasena').errors"  class="invalid-feedback">
+                                            <div *ngIf="detail_form.get('matching_xcontrasena').get('verify_xcontrasena').errors.required">{{ "API.CONSUMERS.REQUIREDVERIFYPASSWORD" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="submitted && detail_form.get('matching_xcontrasena').errors"  class="invalid-feedback container mb-4">
+                                <div *ngIf="detail_form.get('matching_xcontrasena').errors.areEqual">{{ "SECURITY.USERS.PASSWORDMATCHERROR" | translate }}</div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                    <label>{{ "API.CONSUMERS.ACTIVE" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "API.CONSUMERS.REQUIREDACTIVE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "API.CONSUMERS.PERMISSIONSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addPermission()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CONSUMERS.ADDPERMISSION" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="permissionList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGridReady($event)">
+                            <ag-grid-column headerName="Group" field="xgrupo" [width]="148" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Module" field="xmodulo" [width]="148" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Index" field="xindice" [width]="148" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Create" field="xcrear" [width]="148" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Detail" field="xdetalle" [width]="148" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Edit" field="xeditar" [width]="148" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Delete" field="xeliminar" [width]="148" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "API.CONSUMERS.PERMISSION" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "API.CONSUMERS.GROUP" | translate }}</label>
+                    <select formControlName="cgrupo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cgrupo').errors }" (change)="moduleDropdownDataRequest()">
+                        <option></option>
+                        <option *ngFor="let group of groupList" value="{{ group.id }}">{{ group.value || translate }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cgrupo').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cgrupo').errors.required">{{ "API.CONSUMERS.REQUIREDGROUP" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "API.CONSUMERS.MODULE" | translate }}</label>
+                    <select formControlName="cmodulo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmodulo').errors }">
+                        <option></option>
+                        <option *ngFor="let module of moduleList" value="{{ module.id }}">{{ module.value || translate }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cmodulo').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cmodulo').errors.required">{{ "API.CONSUMERS.REQUIREDMODULE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bindice" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bindice').errors }">
+                    <label>{{ "API.CONSUMERS.INDEX" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bindice').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bindice').errors.required">{{ "API.CONSUMERS.REQUIREDINDEX" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bcrear" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bcrear').errors }">
+                    <label>{{ "API.CONSUMERS.CREATE" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bcrear').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bcrear').errors.required">{{ "API.CONSUMERS.REQUIREDCREATE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bdetalle" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bdetalle').errors }">
+                    <label>{{ "API.CONSUMERS.DETAIL" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bdetalle').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bdetalle').errors.required">{{ "API.CONSUMERS.REQUIREDDETAIL" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="beditar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('beditar').errors }">
+                    <label>{{ "API.CONSUMERS.EDIT" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('beditar').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('beditar').errors.required">{{ "API.CONSUMERS.REQUIREDEDIT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="beliminar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('beliminar').errors }">
+                    <label>{{ "API.CONSUMERS.DELETE" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('beliminar').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('beliminar').errors.required">{{ "API.CONSUMERS.REQUIREDDELETE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "API.CONSUMERS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deletePermission()" *ngIf="isEdit">
+                    {{ "API.CONSUMERS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,149 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">alert.message</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Información de la carga
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="detail_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Cliente</label>
+                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }" >
+                                        <option></option>
+                                        <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccliente').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Número de Póliza</label>
+                                    <input type="number" formControlName="npoliza" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('npoliza').errors }">
+                                    <div *ngIf="submitted && detail_form.get('npoliza').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Tipo de Pago</label>
+                                    <select formControlName="ctiporecibo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccarga').errors }">
+                                        <option></option>
+                                        <option *ngFor="let receiptType of receiptTypeList" value="{{ receiptType.id }}">{{ receiptType.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ctiporecibo').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-2">
+                            Lista de contratos
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-6">
+                            <input type="file" name="xdocumento" class="form-control"  accept=" .csv" (change)="onFileSelect($event)" #Ximagen>
+                        </div>
+
+                        <div class="col-2">
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)">Guardar Carga</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 520px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="true" [paginationPageSize]="10" rowSelection="single">
+                            <ag-grid-column headerName="N° Recibo" field="crecibo" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Contrato" field="ccontratoflota" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Marca" field="xmarca" [width]="174" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Modelo" field="xmodelo" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Versión" field="xversion" [width]="274" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Placa" field="xplaca" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>

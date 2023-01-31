@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.PAYMENTVOUCHER" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.BANK" | translate }}</label>
+                    <select formControlName="cbanco" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cbanco').errors }">
+                        <option></option>
+                        <option *ngFor="let bank of bankList" value="{{ bank.id }}">{{ bank.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('cbanco').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('cbanco').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDBANK" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.CODE" | translate }}</label>
+                    <input type="text" formControlName="ctransaccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctransaccion').errors }">
+                    <div *ngIf="submitted && popup_form.get('ctransaccion').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctransaccion').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDCODE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REFERENCE" | translate }}</label>
+                    <input type="text" formControlName="creferenciatransaccion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('creferenciatransaccion').errors }">
+                    <div *ngIf="submitted && popup_form.get('creferenciatransaccion').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('creferenciatransaccion').errors.required">{{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.REQUIREDREFERENCE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deletePaymentVoucher()" *ngIf="isEdit">
+                    {{ "SUBSCRIPTION.CLUBCONTRACTSMANAGEMENT.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

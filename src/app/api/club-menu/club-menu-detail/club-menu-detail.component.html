@@ -1,0 +1,136 @@
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "API.CLUBMENUS.CLUBMENU" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CLUBMENUS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editClubMenu()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CLUBMENUS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CLUBMENUS.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="detail_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CLUBMENUS.COUNTRY" | translate }}</label>
+                                    <select formControlName="cpais" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cpais').errors }">
+                                        <option></option>
+                                        <option *ngFor="let country of countryList" value="{{ country.id }}">{{ country.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cpais').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cpais').errors.required">{{ "API.CLUBMENUS.REQUIREDCOUNTRY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CLUBMENUS.COMPANY" | translate }}</label>
+                                    <select formControlName="ccompania" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccompania').errors }">
+                                        <option></option>
+                                        <option *ngFor="let company of companyList" value="{{ company.id }}">{{ company.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccompania').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('ccompania').errors.required">{{ "API.CLUBMENUS.REQUIREDCOMPANY" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CLUBMENUS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xmenuclub" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmenuclub').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmenuclub').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xmenuclub').errors.required">{{ "API.CLUBMENUS.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CLUBMENUS.COMPONENT" | translate }}</label>
+                                    <input type="text" formControlName="xcomponente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcomponente').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xcomponente').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "API.CLUBMENUS.CONTENT" | translate }}</label>
+                                    <textarea type="text" formControlName="xcontenido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcontenido').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xcontenido').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xcontenido').errors.required">{{ "API.CLUBMENUS.REQUIREDCONTENT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bsubmenu" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bsubmenu').errors }">
+                                    <label>{{ "API.CLUBMENUS.SUBMENU" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bsubmenu').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bsubmenu').errors.required">{{ "API.CLUBMENUS.REQUIREDSUBMENU" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                    <label>{{ "API.CLUBMENUS.ACTIVE" | translate }}</label>
+                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "API.CLUBMENUS.REQUIREDACTIVE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "API.CLUBMENUS.SUBMENUSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addSubMenu()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "API.CLUBMENUS.ADDSUBMENU" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="subMenuList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGridReady($event)">
+                            <ag-grid-column headerName="Name" field="xsubmenuclub" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Component" field="xcomponente" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Active" field="xactivo" [width]="346" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

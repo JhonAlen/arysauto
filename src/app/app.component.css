@@ -1,0 +1,25 @@
+.hideShowToolbar{
+    -webkit-transition: all .5s ease-in-out !important;
+    -moz-transition: all .5s ease-in-out !important;
+    -o-transition: all .5s ease-in-out !important;
+    transition: all .5s ease-in-out !important;
+    position: fixed;
+    top:0px;
+} 
+
+.hideToolbar {
+     -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+.showToolbar{
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}
+
+
+

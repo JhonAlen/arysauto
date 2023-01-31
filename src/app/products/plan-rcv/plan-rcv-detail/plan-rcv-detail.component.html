@@ -1,0 +1,303 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "PRODUCTS.PLAN_RCV.PLAN_RCV" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "PRODUCTS.PLANS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editPlan()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "PRODUCTS.PLANS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "PRODUCTS.PLAN_RCV.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="detail_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "PRODUCTS.PLAN_RCV.PLAN" | translate }}</label>
+                                    <input type="text" formControlName="xplan_rc" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplan_rc').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xplan_rc').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row mt-8">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card" style= "width: 470px;height: 507px;">
+                        <div class="card-header company-card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ "PRODUCTS.PLAN_RCV.GENERALINFORMATION" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div class="form-group">
+                                            <label>{{ "PRODUCTS.PLAN_RCV.RATECODE" | translate }}</label>
+                                            <input type="number" formControlName="ctarifa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctarifa').errors }">
+                                            <div *ngIf="submitted && detail_form.get('ctarifa').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>{{ "PRODUCTS.PLAN_RCV.CLASS" | translate }}</label>
+                                            <input type="text" formControlName="xclase" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xclase').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xclase').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>{{ "PRODUCTS.PLAN_RCV.TYPE" | translate }}</label>
+                                            <input type="text" formControlName="xtipo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtipo').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xtipo').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group">
+                                            <label>{{ "PRODUCTS.PLAN_RCV.GROUP" | translate }}</label>
+                                            <input type="text" formControlName="xgrupo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xgrupo').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xgrupo').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="margin-left: -171px;">
+                    <div class="card" style="width: 808px;">
+                        <div class="card-header company-card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ "PRODUCTS.PLAN_RCV.AMOUNTS" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S.A. Daños a Cosas</label>
+                                            <input type="number" formControlName="msuma_cosas_rc" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_cosas_rc').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_cosas_rc').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>P.A. Daños a Personas</label>
+                                            <input type="number" formControlName="msuma_personas_rc" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mut_personas_rc').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mut_personas_rc').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>P. A. Daños a Cosas</label>
+                                            <input type="number" formControlName="mprima_rc" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mprima_rc').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mprima_rc').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S.A. Defensa Penal</label>
+                                            <input type="number" formControlName="msuma_defensa_per" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_defensa_per').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_defensa_per').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>Prima Defensa Penal</label>
+                                            <input type="number" formControlName="mprima_defensa_per" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mprima_defensa_per').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mprima_defensa_per').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S.A. Exceso de Limite</label>
+                                            <input type="number" formControlName="msuma_limite_ind" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_limite_ind').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_limite_ind').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>Defensa Penal</label>
+                                            <input type="number" formControlName="mprima_limite_ind" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mprima_limite_ind').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mprima_limite_ind').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S. A. Muerte</label>
+                                            <input type="number" formControlName="msuma_apov_mu" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_apov_mu').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_apov_mu').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>P. A. Muerte</label>
+                                            <input type="number" formControlName="mapov_mu" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mapov_mu').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mapov_mu').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S. A. Invalidez</label>
+                                            <input type="number" formControlName="msuma_apov_in" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_apov_in').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_apov_in').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>P. A. Invalidez</label>
+                                            <input type="number" formControlName="mapov_in" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mapov_in').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mapov_in').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S. A. Gastos Medicos</label>
+                                            <input type="number" formControlName="msuma_apov_ga" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_apov_ga').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_apov_ga').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>P. A. Gastos</label>
+                                            <input type="number" formControlName="mapov_ga" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mapov_ga').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mapov_ga').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>S. A. Gastos Funerario</label>
+                                            <input type="number" formControlName="msuma_apov_fu" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_apov_fu').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('msuma_apov_fu').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>P. A. Funerario</label>
+                                            <input type="number" formControlName="mapov_fu" class="form-control" size="7" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mapov_fu').errors }" >
+                                            <div *ngIf="submitted && detail_form.get('mapov_fu').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<footer>    
+    <div class="container">       
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3 style="margin-right: 110px;">Horario</h3>
+            <div class="footer-widget-content">
+              <div class="open-time ">
+                  <ul class="opening-time">
+                    <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
+                    <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
+            <h6 >Copyright© CompuAmerica 2022.</h6>
+            <div class="footer-widget-content">
+                <br>
+                <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
+                <div class="footer-social">
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="footer-widget">
+            <h3>Redes Sociales</h3>
+            <div class="footer-widget-content" style=" text-align: -webkit-center;">
+              <div class="images-gellary">
+                <p></p>
+                <table style="margin-left: 25px;">
+                  <tr>
+                    <td>
+                      <ul>
+                        <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
+                        <br>
+                        <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>

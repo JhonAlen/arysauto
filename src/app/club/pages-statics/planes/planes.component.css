@@ -1,0 +1,32 @@
+
+.rounded-lg {
+    border-radius: 1rem !important;
+  }
+  
+  .text-small {
+    font-size: 0.9rem !important;
+  }
+  
+  .separator {
+    background-color: #77bbfd;
+    width: 5rem;
+    height: 6px;
+    border-radius: 1rem;
+
+  }
+
+  .text-club{
+    color: #77bbfd;
+  }
+
+  .btn{
+    background-color: #142263;
+    color: white
+  }
+  
+  .text-uppercase {
+    letter-spacing: 0.2em;
+  }
+  
+
+  

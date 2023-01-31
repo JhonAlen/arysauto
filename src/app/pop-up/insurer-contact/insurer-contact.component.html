@@ -1,0 +1,125 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "THIRDPARTIES.INSURERS.CONTACT" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.NAME" | translate }}</label>
+                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xnombre').errors }">
+                    <div *ngIf="submitted && popup_form.get('xnombre').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xnombre').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDNAME" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.LASTNAME" | translate }}</label>
+                    <input type="text" formControlName="xapellido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xapellido').errors }">
+                    <div *ngIf="submitted && popup_form.get('xapellido').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xapellido').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDLASTNAME" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.DOCUMENTTYPE" | translate }}</label>
+                    <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipodocidentidad').errors }">
+                        <option></option>
+                        <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ctipodocidentidad').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                    <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocidentidad').errors }">
+                    <div *ngIf="submitted && popup_form.get('xdocidentidad').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xdocidentidad').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.CELLPHONE" | translate }}</label>
+                    <input type="tel" formControlName="xtelefonocelular" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocelular').errors }">
+                    <div *ngIf="submitted && popup_form.get('xtelefonocelular').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xtelefonocelular').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDCELLPHONE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.EMAIL" | translate }}</label>
+                    <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xemail').errors }">
+                    <div *ngIf="submitted && popup_form.get('xemail').errors" class="invalid-feedback">
+                        <div *ngIf="popup_form.get('xemail').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDEMAIL" | translate }}</div>
+                        <div *ngIf="popup_form.get('xemail').errors.pattern">{{ "THIRDPARTIES.INSURERS.EMAILPATTERNERROR" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.POSITION" | translate }}</label>
+                    <input type="text" formControlName="xcargo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcargo').errors }">
+                    <div *ngIf="submitted && popup_form.get('xcargo').errors" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.OFFICEPHONE" | translate }}</label>
+                    <input type="tel" formControlName="xtelefonooficina" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonooficina').errors }">
+                    <div *ngIf="submitted && popup_form.get('xtelefonooficina').errors" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.HOMEPHONE" | translate }}</label>
+                    <input type="tel" formControlName="xtelefonocasa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocasa').errors }">
+                    <div *ngIf="submitted && popup_form.get('xtelefonocasa').errors" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>{{ "THIRDPARTIES.INSURERS.FAX" | translate }}</label>
+                    <input type="text" formControlName="xfax" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xfax').errors }">
+                    <div *ngIf="submitted && popup_form.get('xfax').errors" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group form-check">
+                    <input type="checkbox" formControlName="bnotificacion" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bnotificacion').errors }">
+                    <label>{{ "THIRDPARTIES.INSURERS.NOTIFICATION" | translate }}</label>
+                    <div *ngIf="submitted && popup_form.get('bnotificacion').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('bnotificacion').errors.required">{{ "THIRDPARTIES.INSURERS.REQUIREDNOTIFICATION" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "THIRDPARTIES.INSURERS.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteContact()" *ngIf="isEdit">
+                    {{ "THIRDPARTIES.INSURERS.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

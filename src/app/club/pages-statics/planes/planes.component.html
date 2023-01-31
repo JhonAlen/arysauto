@@ -1,0 +1,394 @@
+<title>PLanes</title>
+<link href="./../../../assets/imagenes/arys/logo.png" rel="icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+<header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="inicio" class="image d-flex align-items-center">
+        <img class="logocompany"/>
+      </a>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="inicio" >Inicio</a></li>
+          <li><a href="qsomos">Quienes Somos</a></li>
+<!---->           <li><a href="planes" class="active">Planes</a></li>
+          <li><a href="contact" >Contáctanos</a></li>
+          <li><a href="sign-in">Ingresar</a></li>
+        </ul>
+      </nav>
+    </div>
+</header>
+  <main id="main" style="background-color: white">
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('./assets/imagenes/arys/planex.jpg');">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+        <h2>Planes</h2>
+        <ol>
+          <li><a href="inicio">Inicio</a></li>
+          <li>Planes</li>
+        </ol>
+      </div>
+    </div>
+   <section id="projects" class="projects">
+      <div class="container" data-aos="fade-up">
+        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
+          <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
+            <h3 style="text-align: -webkit-center;">Selecione el plan de su preferencia para su vehiculo </h3>
+            <h2 style="text-align: -webkit-center;"> Particular, Rustico, Pick-Up</h2>
+             <li data-filter="*" class="filter-active">Todos los planes</li>
+            <li data-filter=".filter-general">Básico</li>
+            <li data-filter=".filter-liviano">General</li>
+            <li data-filter=".filter-moto">Full</li> 
+            <!-- <li data-filter=".filter-moto">Motocicletas</li>  -->
+          </ul>
+
+
+           <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+
+             <div class="col-lg-4 col-md-6 portfolio-item filter-general" >
+              <div class="portfolio-content h-100">
+                <img src="./assets/imagenes/arys/sedan.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Plan I</h4>
+                  <p>Plan I</p>
+				          <a href="#prueba" title="More Details" class="details-link" data-bs-toggle="modal"><i class="bi bi-zoom-in"></i></a>
+                </div>
+              </div>
+             </div>
+
+
+
+             <div class="col-lg-4 col-md-6 portfolio-item filter-liviano">
+              <div class="portfolio-content h-100">
+                <img src="./assets/imagenes/arys/jeep.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+				          <h4>Plan II</h4>
+                  <p>Plan II</p>
+                  <a href="#liviano" title="More Details" class="details-link" data-bs-toggle="modal"><i class="bi bi-zoom-in"></i></a>
+                </div>
+              </div>
+             </div>
+
+
+             <div class="col-lg-4 col-md-6 portfolio-item filter-moto" >
+              <div class="portfolio-content h-100">
+                <img src="./assets/imagenes/arys/sidebar.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                    <h4>Plan III</h4>
+                  	<p>Plan III</p>
+                  <a href="#moto1" title="More Details" class="details-link" data-bs-toggle="modal"><i class="bi bi-zoom-in"></i></a>
+                </div>
+              </div>
+             </div>
+
+          </div>
+ 
+        </div>
+      </div>
+   </section>
+  </main>
+
+
+  <!-- Modales inhabilitadas -->
+
+<div> <!--MODALES DE LOS PLANES-->
+<div class="modal fade" id="prueba" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  <!--MODAL DE PLANES basico-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="bg-white p-5 rounded-lg shadow">
+          <h1 class="h6 text-uppercase font-weight-bold mb-4">Basico</h1>
+          
+          <!-- <h2 class="h1 font-weight-bold" style="margin-top: 16px;">$1<span class="text-small font-weight-normal ml-2">/Mensual</span></h2>
+            <span>$12 /anual</span> -->
+          <div class="separator my-4 mx-auto "></div>
+
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  <i class="fa fa-check mr-2 text-club"></i>Asistencia Juridica
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Asesoria y asistencia legal</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  <i class="fa fa-check mr-2 text-club"></i> Mantenimiento
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Mantenimiento correctivo y preventivo</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <i class="fa fa-check mr-2 text-club"></i> Servicios
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Centrol de atencion 24/7(Call Center)<br>Red de proveedores certificados<br>Acompañamiento<br>Apoyo estadistico<br>Asistencia vial teléfonica en caso de siniestro<br>Búsqueda o ubicación de repuestos<br>Cristaleria y vidrios<br>Expedientes electrónicos<br>Manejo y administración de siniestros<br>Taller de reparación mécanica,latoneria y pintura</div>
+              </div>
+            </div>
+          </div>
+
+
+          <a href="register" class="btn  btn-block p-2 shadow rounded-pill">Comprar</a>
+        </div>
+      
+      </div>
+    </div>
+  </div><!--fIN DE MODAL DE PLANES BASICO-->
+
+<div class="modal fade" id="liviano" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  <!--MODAL DE PLAN GENERAL-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+
+        <div class="bg-white p-5 rounded-lg shadow">
+          <h1 class="h6 text-uppercase font-weight-bold mb-4">General</h1>
+         
+          <!-- <h2 class="h1 font-weight-bold" style="margin-top: 16px;">$3<span class="text-small font-weight-normal ml-2">/Mensual </span> </h2>
+             <span>$36 /Anual</span> -->
+          <div class="separator my-4 mx-auto "></div>
+
+          <div class="accordion accordion-flush" id="accordionFlushExample3">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  <i class="fa fa-check mr-2 text-club"></i>Asistencia Juridica
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample3">
+                <div class="accordion-body">Asesoria y asistencia legal</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  <i class="fa fa-check mr-2 text-club"></i> Mantenimiento
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample3">
+                <div class="accordion-body">Mantenimiento correctivo y preventivo</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <i class="fa fa-check mr-2 text-club"></i> Servicios
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample3">
+                <div class="accordion-body">Centrol de atencion 24/7(Call Center)<br>Red de proveedores certificados<br>Acompañamiento<br>Apoyo estadistico<br>Asistencia vial teléfonica en caso de siniestro<br>Búsqueda o ubicación de repuestos<br>Cristaleria y vidrios<br>Expedientes electrónicos<br>Manejo y administración de siniestros<br>Taller de reparación mécanica,latoneria y pintura</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingfor">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefor" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <i class="fa fa-check mr-2 text-club"></i> Mecánica
+                </button>
+              </h2>
+              <div id="flush-collapsefor" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample3">
+                <div class="accordion-body">Mecánica a domicilio<br>Cambio caucho de repuesto<br>Sustitución de vidrios rotos (Cobertura hasta 80$)</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingfive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefive" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <i class="fa fa-check mr-2 text-club"></i> Gruas
+                </button>
+              </h2>
+              <div id="flush-collapsefive" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample3">
+                <div class="accordion-body">ArysVial (Cobertura hasta 70$)</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingsix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsesix" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <i class="fa fa-check mr-2 text-club"></i> Asistencia de personas
+                </button>
+              </h2>
+              <div id="flush-collapsesix" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample3">
+                <div class="accordion-body">RCV</div>
+              </div>
+            </div>
+
+          </div>
+        
+
+          <a href="register" class="btn btn-block p-2 shadow rounded-pill">Comprar</a>
+        </div>
+        
+      </div>
+    </div>
+  </div><!--fIN DE MODAL DE PLAN GENERAL-->
+
+<div class="modal fade" id="moto1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  <!--MODAL DE PLAN full-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="bg-white p-5 rounded-lg shadow">
+          <h1 class="h6 text-uppercase font-weight-bold mb-4">Full</h1>
+      
+          <!-- <h2 class="h1 font-weight-bold">$6<span class="text-small font-weight-normal ml-2">/Mensual</span></h2>
+            <span>$72 /Anual</span> -->
+          <div class="separator my-4 mx-auto"></div>
+
+          <div class="accordion accordion-flush" id="accordionFlushExample2">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  <i class="fa fa-check mr-2 text-club"></i>Asistencia Juridica
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">Asesoria y asistencia legal</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  <i class="fa fa-check mr-2 text-club"></i> Mantenimiento
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">Mantenimiento correctivo y preventivo</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <i class="fa fa-check mr-2 text-club"></i> Servicios
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">Centrol de atencion 24/7(Call Center)<br>Red de proveedores certificados<br>Acompañamiento<br>Apoyo estadistico<br>Asistencia vial teléfonica en caso de siniestro<br>Búsqueda o ubicación de repuestos<br>Cristaleria y vidrios<br>Expedientes electrónicos<br>Manejo y administración de siniestros<br>Taller de reparación mécanica,latoneria y pintura</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingfor">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefor" aria-expanded="false" aria-controls="flush-collapsefor">
+                  <i class="fa fa-check mr-2 text-club"></i> Mecánica
+                </button>
+              </h2>
+              <div id="flush-collapsefor" class="accordion-collapse collapse" aria-labelledby="flush-headingfor" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">Mecánica a domicilio<br>Cambio caucho de repuesto<br>Sustitución de vidrios rotos (Cobertura hasta 80$)</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingfive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefive" aria-expanded="false" aria-controls="flush-collapsefive">
+                  <i class="fa fa-check mr-2 text-club"></i> Gruas
+                </button>
+              </h2>
+              <div id="flush-collapsefive" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">ArysVial (cobertura hasta 120$)</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingsix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsesix" aria-expanded="false" aria-controls="flush-collapsesix">
+                  <i class="fa fa-check mr-2 text-club"></i> Asistencia de personas
+                </button>
+              </h2>
+              <div id="flush-collapsesix" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">RCV</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingseven">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseseven" aria-expanded="false" aria-controls="flush-collapseseven">
+                  <i class="fa fa-check mr-2 text-club"></i>Siniestros
+                </button>
+              </h2>
+              <div id="flush-collapseseven" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample2">
+                <div class="accordion-body">Parabrisas y vidrios<br>Sustitución de vidrios rotos (Cobertura hasta 80$)</div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <a href="register" class="btn btn-block p-2 shadow rounded-pill">Comprar</a>
+        </div>
+
+     
+      </div>
+    </div>
+  </div><!--fIN DE MODAL DE PLAN FULL-->
+
+
+</div><!--Fin de Modales-->
+
+  <!-- Fin de modales inhabilitadas -->
+
+
+  <footer id="footer" class="footer" style="background-image:url(./../../../../assets/imagenes/arys/planes.jpg); background-position: center;">
+    <div class="footer-content position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Mundial Autos</h3>
+              <p>
+                Av. Francisco de Miranda, <br>
+                Edif. Cavendes, Piso 11 OF 1101
+Urb. Los Palos Grandes,<br>1060 Chacao,<br>Caracas.<br>
+                <br><strong>Teléfono:</strong> <a href="https://api.whatsapp.com/send?phone=584242061351&text=Gracias%20por%20comunicarte%20con%20La%20Mundial,%20en%20breves%20momentos%20te%20atenderemos">+584242061351 </a><br>
+                <strong>Teléfono:</strong><a href="tel:02122839619"> +58 212 283-9619</a>
+                <br><strong>Correo:</strong> <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=info@lamundialdeseguros.com">info@lamundialdeseguros.com</a><br>
+              </p>
+              <div class="social-links d-flex mt-3">
+                <a href="https://www.instagram.com/lamundialseguros/" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 footer-links">
+            <ul>
+              <li><a href="inicio">Inicio</a></li>
+              <li><a href="qsomos">Quienes Somos</a></li>
+    <!---->             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-legal text-center position-relative">
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Mundial Autos</span></strong>. Todos los Derechos Reservados
+        </div>
+        <div class="credits">
+          Diseñado por Compuamerica
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="./styles_Club/js/bootstrap.bundle.min.js"></script>
+  <script src="./styles_Club/vendor/aos/aos.js"></script>
+  <script src="./styles_Club/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="./styles_Club/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="./styles_Club/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="./styles_Club/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="./styles_Club/js/main.js"></script>

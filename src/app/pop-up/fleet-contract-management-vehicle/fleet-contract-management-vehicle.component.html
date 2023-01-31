@@ -1,0 +1,115 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.VEHICLE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <div class="row mt-2">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SEARCHVEHICLE" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading" class="btn company-detail-button float-right" type="button" (click)="onSubmit(popup_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.SEARCH" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="popup_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.PLATE" | translate }}</label>
+                                    <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xplaca').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xplaca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.BRAND" | translate }}</label>
+                                    <select formControlName="cmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmarca').errors }" (change)="modelDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let brand of brandList" value="{{ brand.id }}">{{ brand.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmarca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.MODEL" | translate }}</label>
+                                    <select formControlName="cmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cmodelo').errors }" (change)="versionDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let model of modelList" value="{{ model.id }}">{{ model.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cmodelo').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.VERSION" | translate }}</label>
+                                    <select formControlName="cversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cversion').errors }">
+                                        <option></option>
+                                        <option *ngFor="let version of versionList" value="{{ version.id }}">{{ version.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && popup_form.get('cversion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.BODYWORKSERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialcarroceria" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xserialcarroceria').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xserialcarroceria').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.ENGINESERIAL" | translate }}</label>
+                                    <input type="text" formControlName="xserialmotor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xserialmotor').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xserialmotor').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.VEHICLESLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="vehicleList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Code" field="cvehiculopropietario" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Plate" field="xplaca" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Brand" field="xmarca" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Model" field="xmodelo" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Version" field="xversion" [width]="208" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

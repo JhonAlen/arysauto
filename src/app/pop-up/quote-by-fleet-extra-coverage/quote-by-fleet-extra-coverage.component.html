@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "QUOTATION.QUOTESBYFLEET.EXTRACOVERAGE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ "QUOTATION.QUOTESBYFLEET.EXTRACOVERAGE" | translate }}</label>
+                    <select formControlName="ccoberturaextra" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ccoberturaextra').errors }">
+                        <option></option>
+                        <option *ngFor="let extraCoverage of extraCoverageList" value="{{ extraCoverage.id }}">{{ extraCoverage.value }}</option>
+                    </select>
+                    <div *ngIf="submitted && popup_form.get('ccoberturaextra').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('ccoberturaextra').errors.required">{{ "QUOTATION.QUOTESBYFLEET.REQUIREDEXTRACOVERAGE" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit" *ngIf="canSave">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{ "QUOTATION.QUOTESBYFLEET.SAVE" | translate }}
+                </button>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <button class="btn btn-danger btn-lg btn-block" type="button" (click)="deleteExtraCoverage()" *ngIf="isEdit">
+                    {{ "QUOTATION.QUOTESBYFLEET.DELETE" | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,71 @@
+ 
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "EVENTS.NOTIFICATIONS.QUOTE" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "EVENTS.NOTIFICATIONS.QUOTEDLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                        <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit()"  *ngIf="canSave">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            {{ "EVENTS.NOTIFICATIONS.SAVE" | translate }}
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="quotedReplacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="quotedReplacementRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onQuotedReplacementsGridReady($event)">
+                            <ag-grid-column headerName="Repuesto" field="xrepuesto" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Cantidad" field="ncantidad" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Disponibilidad" field="xdisponible" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto Unitario" field="munitariorepuesto" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Descuento" field="xdescuento" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto Total" field="mtotalrepuesto" [width]="173" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "EVENTS.NOTIFICATIONS.ACCEPTEDLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="addServiceOrder()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "EVENTS.SERVICEORDER.GENERATEORDER" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="acceptedReplacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="acceptedReplacementRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAcceptedReplacementsGridReady($event)">
+                            <ag-grid-column headerName="Repuesto" field="xrepuesto" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Cantidad" field="ncantidad" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Disponibilidad" field="xdisponible" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto Unitario" field="munitariorepuesto" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Descuento" field="xdescuento" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto Total" field="mtotalrepuesto" [width]="173" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

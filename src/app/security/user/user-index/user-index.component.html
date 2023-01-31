@@ -1,0 +1,120 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "SECURITY.USERS.SEARCHUSER" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button class="btn company-detail-button float-right" type="button" (click)="goToDetail()">
+                                {{ "SECURITY.USERS.CREATE" | translate }}
+                            </button>
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "SECURITY.USERS.SEARCH" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.COUNTRY" | translate }}</label>
+                                    <select formControlName="cpais" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cpais').errors }">
+                                        <option></option>
+                                        <option *ngFor="let country of countryList" value="{{ country.id }}">{{ country.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('cpais').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.COMPANY" | translate }}</label>
+                                    <select formControlName="ccompania" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('ccompania').errors }">
+                                        <option></option>
+                                        <option *ngFor="let company of companyList" value="{{ company.id }}">{{ company.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('ccompania').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.DEPARTMENT" | translate }}</label>
+                                    <select formControlName="cdepartamento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cdepartamento').errors }" (change)="roleDropdownDataRequest()">
+                                        <option></option>
+                                        <option *ngFor="let department of departmentList" value="{{ department.id }}">{{ department.value || translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('cdepartamento').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.ROLE" | translate }}</label>
+                                    <select formControlName="crol" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('crol').errors }">
+                                        <option></option>
+                                        <option *ngFor="let role of roleList" value="{{ role.id }}">{{ role.value || translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && search_form.get('crol').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.NAME" | translate }}</label>
+                                    <input type="text" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xnombre').errors }">
+                                    <div *ngIf="submitted && search_form.get('xnombre').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "SECURITY.USERS.LASTNAME" | translate }}</label>
+                                    <input type="text" formControlName="xapellido" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xapellido').errors }">
+                                    <div *ngIf="submitted && search_form.get('xapellido').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "SECURITY.USERS.USERSLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="userList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="rowClicked($event)">
+                            <ag-grid-column headerName="Code" field="cusuario" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Name" field="xnombre" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Lastname" field="xapellido" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Role" field="xrol" [width]="207" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Active" field="xactivo" [width]="208" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

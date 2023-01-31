@@ -1,0 +1,100 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">{{ "CONFIGURATION.CLAUSES.CLAUSES" | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ "CONFIGURATION.CLAUSES.CLAUSES" | translate }}
+                            </div>
+
+                            <div class="col-6">
+                                <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)"  *ngIf="canSave">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "CONFIGURATION.CLAUSES.SAVE" | translate }}
+                                </button>
+                                <button [disabled]="loading || loading_cancel" class="btn btn-danger float-right mr-1" type="button" (click)="deleteProvider()" *ngIf="isEdit">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    {{ "CONFIGURATION.CLAUSES.DELETE" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b>{{ "CONFIGURATION.CLAUSES.EXHIBIT" | translate }}</b>
+                                    </label>
+                                    <textarea type="text" formControlName="xanexo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xanexo').errors }"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xanexo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xanexo').errors.required">{{ "CONFIGURATION.CLAUSES.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <hr>    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b>{{ "CONFIGURATION.CLAUSES.CLAUSES" | translate }}</b>
+                                    </label>
+                                    <textarea type="text" formControlName="xclausulas" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xclausulas').errors }"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xclausulas').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xclausulas').errors.required">{{ "CONFIGURATION.CLAUSES.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b>{{ "CONFIGURATION.CLAUSES.OBSERVATION" | translate }}</b>
+                                    </label>
+                                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacion').errors }"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xobservacion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xobservacion').errors.required">{{ "CONFIGURATION.CLAUSES.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bactivo').errors }">
+                                    <label>{{ "CONFIGURATION.CLAUSES.ACTIVE" | translate }}</label>
+                                    <div *ngIf="submitted && popup_form.get('bactivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('bactivo').errors.required">{{ "CONFIGURATION.TAXESCONFIGURATION.REQUIREDACTIVE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

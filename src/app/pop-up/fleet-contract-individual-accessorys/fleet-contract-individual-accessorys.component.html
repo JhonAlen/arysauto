@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Accesorios</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">    
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header company-card-header">
+                <div class="row">
+                    <div class="col-6">
+                        Agregar Accesorios
+                    </div>
+                    <div class="col-6">
+                    <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit()"  *ngIf="canSave">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Guardar
+                    </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="accesoryList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="accesoryRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAccesoryGridReady($event)">
+                        <ag-grid-column headerName="Código" field="caccesorio" [width]="173" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Accesorio" field="xaccesorio" [width]="300" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Monto Máximo de Cobertura" field="mmontomax" [width]="250" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Tasa" field="ptasa" [width]="250" [sortable]="true"></ag-grid-column>
+                    </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="card">
+            <div class="card-header company-card-header">
+                <div class="row">
+                    <div class="col-6">
+                        Accesorios Agregados
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="acceptedAccesoryList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single"  (rowClicked)="accesoryAmountRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAcceptedAccesoryGridReady($event)">
+                        <ag-grid-column headerName="Código" field="caccesorio" [width]="173" [sortable]="true"></ag-grid-column>
+                        <ag-grid-column headerName="Accesorio" field="xaccesorio" [width]="300" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Monto Máximo de Cobertura" field="mmontomax" [width]="250" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        <ag-grid-column headerName="Tasa" field="ptasa" [width]="250" [sortable]="true"></ag-grid-column>
+                    </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
