@@ -24,13 +24,15 @@
 }
 
 .logocompany{
-    background: url("./assets/imagenes/mundial-logo2.png") no-repeat;
+    background: url("./assets/imagenes/arys-logo.png") no-repeat;
     background-size: contain;
     padding: 83px;
+    margin-top: 9px;
   }
 
 nav{
-    margin-top: -54px;
+    margin-top: -96px;
+    margin-left: 20px;
 }
 
 .col-sm-12,
