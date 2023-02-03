@@ -1,9 +1,9 @@
 
-<app-toolbar></app-toolbar>
+
 <title>Login</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-<div class="container" style="width: 430px;">
+<!-- <div class="container" style="width: 430px;">
   <div class="tab-content">
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
       <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
@@ -13,7 +13,7 @@
           <div class="col-12">
             <div class="form-group">
               <label  style="margin-left: 30px;">{{ "SIGNIN.EMAIL" | translate }}</label>
-              <input  style="margin-left: 65px;width: 71%;" type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xemail').errors }">
+              <input  placeholder="Enter Email" type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xemail').errors }">
               <div *ngIf="submitted && signin_form.get('xemail').errors" class="invalid-feedback">
                 <div *ngIf="signin_form.get('xemail').errors.required">{{ "SIGNIN.REQUIRED_EMAIL" | translate }}Correo requerido</div>
               </div>
@@ -22,7 +22,7 @@
           <div class="col-12">
             <div class="form-group">
               <label  style="margin-left: 30px;">{{ "SIGNIN.PASSWORD" | translate }}</label>
-              <input  style="margin-left: 65px;width: 71%;" type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xcontrasena').errors }">
+              <input  placeholder="Enter Email" type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xcontrasena').errors }">
               <div *ngIf="submitted && signin_form.get('xcontrasena').errors" class="invalid-feedback">
                 <div *ngIf="signin_form.get('xcontrasena').errors.required">{{ "SIGNIN.REQUIRED_PASSWORD" | translate }}</div>
               </div>
@@ -68,7 +68,7 @@ Urb. Los Palos Grandes,<br>1060 Chacao,<br>Caracas.<br>
             <ul>
               <li><a href="inicio">Inicio</a></li>
               <li><a href="qsomos">Quienes Somos</a></li>
-    <!---->             </ul>
+               </ul>
           </div>
         </div>
       </div>
@@ -84,4 +84,56 @@ Urb. Los Palos Grandes,<br>1060 Chacao,<br>Caracas.<br>
         </div>
       </div>
     </div>
-  </footer>
+  </footer> -->
+
+
+
+  <body>
+    <section class="form-02-main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="_lk_de">
+              <div class="form-03-main">
+                <a href="home" class="image">
+                  <img class="logocompany-system">
+                </a>
+                <form [formGroup]="signin_form" (ngSubmit)="onSubmit(signin_form.value)">
+                  <div class="form-group">
+                    <input  placeholder="Ingresa correo" type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xemail').errors }">
+                    <div *ngIf="submitted && signin_form.get('xemail').errors" class="invalid-feedback">
+                      <div *ngIf="signin_form.get('xemail').errors.required">{{ "SIGNIN.REQUIRED_EMAIL" | translate }}Correo requerido</div>
+                    </div>                 
+                  </div>
+                  <div class="form-group">
+                    <input  placeholder="Ingresa contraseña" type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xcontrasena').errors }">
+                    <div *ngIf="submitted && signin_form.get('xcontrasena').errors" class="invalid-feedback">
+                      <div *ngIf="signin_form.get('xcontrasena').errors.required">{{ "SIGNIN.REQUIRED_PASSWORD" | translate }}</div>
+                    </div>                  
+                  </div>
+                  <div class="checkbox form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="">
+                      <label class="form-check-label" for="">
+                        Remember me
+                      </label>
+                    </div>
+                    <button type="button" class="btn btn-lg btn-block">Olvide mi contraseña</button>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="_btn_04">
+                      <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="submit">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Ingresar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
