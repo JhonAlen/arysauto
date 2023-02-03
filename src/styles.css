@@ -1,13 +1,12 @@
-@import url(./styles_Club/vendor/bootstrap/css/bootstrap.min.css);
+/*@import url(./styles_Club/vendor/bootstrap/css/bootstrap.min.css);
 @import url(./styles_Club/vendor/bootstrap-icons/bootstrap-icons.css);
 @import url(./styles_Club/vendor/fontawesome-free/css/all.min.css);
-@import url(./styles_Club/vendor/aos/aos.css);
-@import url(./styles_Club/vendor/glightbox/css/glightbox.min.css);
-@import url(./styles_Club/vendor/swiper/swiper-bundle.min.css);
+ 
+@import url(./styles_Club/vendor/swiper/swiper-bundle.min.css); */
 @import url(./styles_Club/css/main.css);
-
-
-
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+@import url(./styles_Club/vendor/aos/aos.css); 
+@import url(./styles_Club/vendor/glightbox/css/glightbox.min.css);
 /* Colores y logos de las paginas */
 
 .card-header{
@@ -48,3 +47,10 @@ nav{
 .card{
     position: static;
 }
+
+
+:root {
+    --color-default: #364d59;
+    --color-primary: #fff0ad;
+    --color-secondary: #52565e;
+  }

@@ -55,7 +55,7 @@ textarea {
   z-index:2;
   overflow:hidden;
 }
-.form-02-main::before{
+.form-02-main:before{
   background-color: rgba(22, 22, 22, 0.438);
 }
 
@@ -86,6 +86,12 @@ textarea {
 }
 .logocompany-system{
   background: url("./../../assets/imagenes/arys-logo.png") no-repeat;
+  width: 34%;
+  background-size: contain;
+  padding: 30px;
+}
+.image{
+  margin-left: 110px;
 }
 
 .form-group{
@@ -207,3 +213,4 @@ textarea {
     width: 100%;
   }
 }
+

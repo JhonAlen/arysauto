@@ -95,9 +95,9 @@ Urb. Los Palos Grandes,<br>1060 Chacao,<br>Caracas.<br>
           <div class="col-md-12">
             <div class="_lk_de">
               <div class="form-03-main">
-                <div class="logo">
+                <a href="home" class="image">
                   <img class="logocompany-system">
-                </div>
+                </a>
                 <form [formGroup]="signin_form" (ngSubmit)="onSubmit(signin_form.value)">
                   <div class="form-group">
                     <input  placeholder="Ingresa correo" type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xemail').errors }">
