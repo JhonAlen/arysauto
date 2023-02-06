@@ -318,6 +318,7 @@ import { TakersDetailComponent } from './configuration/takers/takers-detail/take
 import { PendingPaymentsComponent } from './business/pending-payments/pending-payments.component';
 import { FleetContractQuotesIndexComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-index/fleet-contract-quotes-index.component';
 import { FleetContractQuotesDetailComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-detail/fleet-contract-quotes-detail.component';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -622,6 +623,7 @@ export function HttpLoaderFactory(http: HttpClient){
   ],
   imports: [
     BrowserModule,
+    NgxChartsModule,
     CdkMenuModule,
     MaterialExampleModule,
     MatInputModule,

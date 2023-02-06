@@ -220,7 +220,7 @@ hr.horizontal {
   .icon-shape i {
 	color: #fff;
 	opacity: 0.8;
-	top: 11px;
+	top: 12px;
 	position: relative;
   }
   
@@ -285,7 +285,7 @@ hr.horizontal {
   }
   
   .icon-lg i {
-	top: 31%;
+	/* top: 31%; */
 	font-size: 1.5rem;
   }
   

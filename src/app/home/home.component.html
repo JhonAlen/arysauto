@@ -71,8 +71,8 @@
               <i class="bi bi-cash-stack"></i>
             </div>
             <div class="text-end pt-1">
-              <p class="text-sm mb-0 text-capitalize">Personas con Contratos Pendientes</p>
-              <h4 class="mb-0"><input formControlName="npersonas_pendientes" style="background-color:transparent;background: inherit;border: 0px; "></h4>
+              <p class="text-sm mb-0 text-capitalize">Personas con <br> Contratos Pendientes</p>
+              <h4 class="mb-0"><input formControlName="npersonas_pendientes" style="background-color:transparent;background: inherit;border: 0px; text-align: end ;margin-left: -15px;"></h4>
             </div>
           </div>
           <hr class="dark horizontal my-0">
@@ -88,8 +88,8 @@
               <i class="bi bi-cash-stack"></i>
             </div>
             <div class="text-end pt-1">
-              <p class="text-sm mb-0 text-capitalize">Personas con Contratos Cobrados</p>
-              <h4 class="mb-0"><input formControlName="npersonas_cobradas" style="background-color:transparent;background: inherit;border: 0px; "></h4>
+              <p class="text-sm mb-0 text-capitalize">Personas con <br> Contratos Cobrados</p>
+              <h4 class="mb-0"><input formControlName="npersonas_cobradas" style="background-color:transparent;background: inherit;border: 0px;text-align: end;margin-left: -15px; "></h4>
             </div>
           </div>
           <hr class="dark horizontal my-0">
@@ -139,7 +139,13 @@
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
             <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
               <div class="chart">
-                <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
+                <ngx-charts-pie-chart 
+                [results]="saleData"
+                [legend]="true"
+                [legendTitle]="'Product Sale Report'" 
+                [view]="[400,180]"
+                [labels]="true" >
+                </ngx-charts-pie-chart>
               </div>
             </div>
           </div>
@@ -159,7 +165,19 @@
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
             <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
               <div class="chart">
-                <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
+                <ngx-charts-bar-vertical 
+    [view]="[400,400]"
+    [results]="saleData"
+    [xAxisLabel]="'Products'"
+    [legendTitle]="'Product Sale Chart'"
+    [yAxisLabel]="'Sale'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="true">
+</ngx-charts-bar-vertical>
               </div>
             </div>
           </div>
@@ -179,7 +197,9 @@
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
             <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
               <div class="chart">
-                <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
+                <ngx-charts-pie-grid 
+                [results]="saleData" >
+                </ngx-charts-pie-grid>
               </div>
             </div>
           </div>

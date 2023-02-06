@@ -26,6 +26,7 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@popperjs/core": "^2.11.6",
+    "@swimlane/ngx-charts": "^20.1.2",
     "@ubiipagos/boton-ubii": "^2.2.1",
     "@ubiipagos/boton-ubii-dc": "^0.2.7",
     "ag-grid-angular": "^28.1.0",
