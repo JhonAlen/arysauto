@@ -11,7 +11,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 import { AdministrationPaymentComponent } from '@app/pop-up/administration-payment/administration-payment.component';
-import { initUbii } from '@ubiipagos/boton-ubii-dc';
+// import { initUbii } from '@ubiipagos/boton-ubii-dc';
 //import { initUbii } from '@ubiipagos/boton-ubii';
 
 @Component({
@@ -764,19 +764,19 @@ async getmetodologia(){
   });
 }
 
-  OperatioValuePlan(){
-    let params = {
-     cplan: this.search_form.get('cplan').value,
-     cmetodologiapago: this.search_form.get('cmetodologiapago').value,
-     ctarifa_exceso: this.search_form.get('ctarifa_exceso').value,
+//   OperatioValuePlan(){
+//     let params = {
+//      cplan: this.search_form.get('cplan').value,
+//      cmetodologiapago: this.search_form.get('cmetodologiapago').value,
+//      ctarifa_exceso: this.search_form.get('ctarifa_exceso').value,
  
-   }
-      this.http.post(`${environment.apiUrl}/api/fleet-contract-management/value-plan`, params).subscribe((response: any) => {
-       if(response.data.status){
-         this.search_form.get('ncobro').setValue(response.data.mprima);
-       }
-  });
-}
+//    }
+//       this.http.post(`${environment.apiUrl}/api/fleet-contract-management/value-plan`, params).subscribe((response: any) => {
+//        if(response.data.status){
+//          this.search_form.get('ncobro').setValue(response.data.mprima);
+//        }
+//   });
+// }
 OperatioValidationPlate(){
   const now = new Date().toLocaleDateString();
   let params =  {
@@ -795,52 +795,52 @@ OperatioValidationPlate(){
     }
   },);
 }
- functio(){
-  let metodologiaPago = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
-  this.search_form.get('binternacional').setValue(metodologiaPago.binternacional);
-  this.search_form.get('ncobro').setValue('');
-  this.search_form.get('mgrua').setValue('')
+//  functio(){
+//   let metodologiaPago = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
+//   this.search_form.get('binternacional').setValue(metodologiaPago.binternacional);
+//   this.search_form.get('ncobro').setValue('');
+//   this.search_form.get('mgrua').setValue('')
 
-    if (this.search_form.get('binternacional').value == 1){
-      this.plan = true;
-      let params =  {
-        cpais: this.currentUser.data.cpais,  
-        ccompania: this.currentUser.data.ccompania,
-        binternacional: this.search_form.get('binternacional').value
-      };
-        this.http.post(`${environment.apiUrl}/api/valrep/metodologia-pago-contract`, params).subscribe((response: any) =>{
-          if(response.data.status){
-            this.metodologiaList = [];
-              for(let i = 0; i < response.data.list.length; i++){
-                this.metodologiaList.push( { 
-                  id: response.data.list[i].cmetodologiapago,
-                  value: response.data.list[i].xmetodologiapago,
-                });
-              }
-          }
-        })
-    }  
-    else{
-      this.plan = false;
-      let params =  {
-        cpais: this.currentUser.data.cpais,  
-        ccompania: this.currentUser.data.ccompania,
-        binternacional: this.search_form.get('binternacional').value
-      };
-        this.http.post(`${environment.apiUrl}/api/valrep/metodologia-pago-contract`, params).subscribe((response: any) =>{
-          if(response.data.status){
-            this.metodologiaList = [];
-              for(let i = 0; i < response.data.list.length; i++){
-                this.metodologiaList.push( { 
-                  id: response.data.list[i].cmetodologiapago,
-                  value: response.data.list[i].xmetodologiapago,
-                });
-              }
-          }
-        })
+//     if (this.search_form.get('binternacional').value == 1){
+//       this.plan = true;
+//       let params =  {
+//         cpais: this.currentUser.data.cpais,  
+//         ccompania: this.currentUser.data.ccompania,
+//         binternacional: this.search_form.get('binternacional').value
+//       };
+//         this.http.post(`${environment.apiUrl}/api/valrep/metodologia-pago-contract`, params).subscribe((response: any) =>{
+//           if(response.data.status){
+//             this.metodologiaList = [];
+//               for(let i = 0; i < response.data.list.length; i++){
+//                 this.metodologiaList.push( { 
+//                   id: response.data.list[i].cmetodologiapago,
+//                   value: response.data.list[i].xmetodologiapago,
+//                 });
+//               }
+//           }
+//         })
+//     }  
+//     else{
+//       this.plan = false;
+//       let params =  {
+//         cpais: this.currentUser.data.cpais,  
+//         ccompania: this.currentUser.data.ccompania,
+//         binternacional: this.search_form.get('binternacional').value
+//       };
+//         this.http.post(`${environment.apiUrl}/api/valrep/metodologia-pago-contract`, params).subscribe((response: any) =>{
+//           if(response.data.status){
+//             this.metodologiaList = [];
+//               for(let i = 0; i < response.data.list.length; i++){
+//                 this.metodologiaList.push( { 
+//                   id: response.data.list[i].cmetodologiapago,
+//                   value: response.data.list[i].xmetodologiapago,
+//                 });
+//               }
+//           }
+//         })
     
-    }
- }
+//     }
+//  }
   validatecoverages(){
     if(this.search_form.get('xcobertura').value == 'RCV'){
       this.cobertura = false;
@@ -913,59 +913,81 @@ OperatioValidationPlate(){
     });
   }
 
-  OperationUbii(){
-    if (this.search_form.get('xcobertura').value == 'RCV'){
-      if (!this.validateForm(this.search_form)) {
-         this.bpagarubii = false
-         this.search_form.get('cmetodologiapago').setValue('');
-         window.alert (`Debe completar los campos de la emisión antes de realizar el pago`)
-      } else {
-        if (this.bpagomanual == false) {
-          this.bpagarubii = true
-        }
-       
-      let metodologiaPago = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
-      let params = {
-       cplan: metodologiaPago.id,
-       cmetodologiapago: this.search_form.get('cmetodologiapago').value,
-       ctarifa_exceso: this.search_form.get('ctarifa_exceso').value,
-       igrua: this.search_form.get('bgrua').value, 
-       ncapacidad_p: this.search_form.get('ncapacidad_p').value
-      }  
-        this.http.post(`${environment.apiUrl}/api/fleet-contract-management/value-plan`, params).subscribe((response: any) => {
-        if(response.data.status){
-          this.search_form.get('ncobro').setValue(response.data.mprima);
-        
-          this.search_form.get('ccodigo_ubii').setValue(response.data.ccubii);
-        }
-        let prima = this.search_form.get('ncobro').value.split(" ");
 
-        let prima_ds: String = String(parseFloat(prima[0]).toFixed(2));
-
-        let prima_bs: String = String( (Math.round( ( (parseFloat(prima[0]) * (this.mtasa_cambio) ) + Number.EPSILON ) * 100 ) /100).toFixed(2) );
-
-        let orden : string = "UB_" + response.data.ccubii;
-       
-        initUbii(
-          'ubiiboton',
-          {
-            amount_ds: prima_ds,
-            amount_bs:  prima_bs,
-            concept: "COMPRA",
-            principal: "ds",
-            clientId:"f2514eda-610b-11ed-8e56-000c29b62ba1",
-            orderId: orden
-          },
-          this.callbackFn.bind(this),
-          {
-            text: 'Pagar con Ubii '
-          },
-        
-        );
-      },);
-    }
+  operationAmount(){
+    if (!this.validateForm(this.search_form)) {
+       window.alert (`Debe completar los campos de la emisión antes de realizar el pago`)
+    }else{
+     
+    let metodologiaPago = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
+    let params = {
+     cplan: metodologiaPago.id,
+     cmetodologiapago: this.search_form.get('cmetodologiapago').value,
+     ctarifa_exceso: this.search_form.get('ctarifa_exceso').value,
+     igrua: this.search_form.get('bgrua').value, 
+     ncapacidad_p: this.search_form.get('ncapacidad_p').value
+    }  
+    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/value-plan`, params).subscribe((response: any) => {
+      if(response.data.status){
+        this.search_form.get('ncobro').setValue(response.data.mprima);
+      }
+    });
     }
   }
+
+  // OperationUbii(){
+  //   if (this.search_form.get('xcobertura').value == 'RCV'){
+  //     if (!this.validateForm(this.search_form)) {
+  //        this.bpagarubii = false
+  //        this.search_form.get('cmetodologiapago').setValue('');
+  //        window.alert (`Debe completar los campos de la emisión antes de realizar el pago`)
+  //     } else {
+  //       if (this.bpagomanual == false) {
+  //         this.bpagarubii = true
+  //       }
+       
+  //     let metodologiaPago = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
+  //     let params = {
+  //      cplan: metodologiaPago.id,
+  //      cmetodologiapago: this.search_form.get('cmetodologiapago').value,
+  //      ctarifa_exceso: this.search_form.get('ctarifa_exceso').value,
+  //      igrua: this.search_form.get('bgrua').value, 
+  //      ncapacidad_p: this.search_form.get('ncapacidad_p').value
+  //     }  
+  //       this.http.post(`${environment.apiUrl}/api/fleet-contract-management/value-plan`, params).subscribe((response: any) => {
+  //       if(response.data.status){
+  //         this.search_form.get('ncobro').setValue(response.data.mprima);
+        
+  //         // this.search_form.get('ccodigo_ubii').setValue(response.data.ccubii);
+  //       }
+  //       // let prima = this.search_form.get('ncobro').value.split(" ");
+
+  //       // let prima_ds: String = String(parseFloat(prima[0]).toFixed(2));
+
+  //       // let prima_bs: String = String( (Math.round( ( (parseFloat(prima[0]) * (this.mtasa_cambio) ) + Number.EPSILON ) * 100 ) /100).toFixed(2) );
+
+  //       // let orden : string = "UB_" + response.data.ccubii;
+       
+  //       // initUbii(
+  //       //   'ubiiboton',
+  //       //   {
+  //       //     amount_ds: prima_ds,
+  //       //     amount_bs:  prima_bs,
+  //       //     concept: "COMPRA",
+  //       //     principal: "ds",
+  //       //     clientId:"f2514eda-610b-11ed-8e56-000c29b62ba1",
+  //       //     orderId: orden
+  //       //   },
+  //       //   this.callbackFn.bind(this),
+  //       //   {
+  //       //     text: 'Pagar con Ubii '
+  //       //   },
+        
+  //       // );
+  //     },);
+  //   }
+  //   }
+  // }
 
   async onSubmitUbii() {
     this.search_form.disable();

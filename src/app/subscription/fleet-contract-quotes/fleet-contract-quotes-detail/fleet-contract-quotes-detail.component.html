@@ -354,7 +354,7 @@
                 <div class="col-md-4 mb-4 pb-2">
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev4">Plan de RCV</label>
-                    <select formControlName="cplan" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cplan').errors }" (change)="functio()">
+                    <select formControlName="cplan" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cplan').errors }" (change)="operationAmount()">
                       <option *ngFor="let plan of planList" value="{{ plan.control }}">{{ plan.value }}</option>
                     </select>
                     <div *ngIf="submitted && search_form.get('cplan').errors" class="invalid-feedback">
@@ -554,7 +554,7 @@
                     </div>
                   </div>
                 </div>
-                 <div class="col-md-3 mb-4 pb-2" *ngIf="plan">
+                 <!-- <div class="col-md-3 mb-4 pb-2" *ngIf="plan">
                   <div class="form-outline">
                     <label class="form-label " for="form3Examplev5">Vigencia</label>
                     <select formControlName="cmetodologiapago" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cmetodologiapago').errors }" (change)="OperationUbii()">
@@ -566,7 +566,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 mb-4 pb-2" *ngIf="!plan"><!--- -->
+                <div class="col-md-4 mb-4 pb-2" *ngIf="!plan">
                   <div class="form-outline">
                     <label class="form-label required">Frecuencia de Pago</label>
                     <select formControlName="cmetodologiapago" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cmetodologiapago').errors }" (change)="OperationUbii()">
@@ -577,7 +577,7 @@
                       <div *ngIf="search_form.get('cmetodologiapago').errors.required">Se requiere completar el campo</div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0" *ngIf="montorcv">
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev5">Monto Total</label>

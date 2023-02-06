@@ -22,13 +22,13 @@
             </li>
                   
             <li *ngIf="auth" class="nav-item">
-              <a class="nav-link" href="inicio" (click)="logOut()" >{{ "TOOLBAR.LOGOUT" | translate }}</a>
+              <a class="nav-link" href="inicio" (click)="logOut()" style="color: #000;font-family: inherit;/* font-weight: bold; */font-size: 15px;text-transform: capitalize;;padding: 7px 12px 9px 12px;">{{ "TOOLBAR.LOGOUT" | translate }}</a>
             </li>
-            <form [formGroup]="lang_form">
+            <!-- <form [formGroup]="lang_form">
                 <select class="form-control" formControlName="langselect" (change)="changeLanguage(lang_form.value);">
                   <option *ngFor="let lang of translate.getLangs()" value="{{ lang }}">{{ lang }}</option>
                 </select>
-            </form>
+            </form> -->
           </ul>
 
         </div>
