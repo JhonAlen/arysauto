@@ -71,7 +71,7 @@ textarea {
 .form-03-main{
   width:500px;
   display:block;
-  margin:20px auto;
+  margin: 20px 19px 144px 442px;
   padding:25px 50px 25px;
   background:rgba(255,255,255,0.6);
   border-radius:6px;
@@ -122,7 +122,7 @@ textarea {
 ._btn_04 {
     display: inline-block;
     width: 100%;
-    padding: 12px 0px;
+
     background:#fff0ad;
     border-radius: 20px;
     text-align: center;
@@ -216,11 +216,17 @@ textarea {
 @media screen and (max-width: 600px) {
   .form-03-main{
     width: 100%;
+    margin: 0px 9px 4px 2px;
   }
 }
 
 
+
+
 body{
-    line-height: 6.2;
+    line-height: 4.2;
 }
 
+.company-detail-button{
+  padding: 10px;
+}

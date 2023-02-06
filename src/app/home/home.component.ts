@@ -52,10 +52,12 @@ export class HomeComponent implements OnInit {
     this.home_form = this.formBuilder.group({
       npersonas_cobradas: [''],
       npersonas_pendientes: [''],
+      nnotificacion: [''],
     })
 
     this.currentUser = this.authenticationService.currentUserValue;
-    //buscar contratos pendientes
+
+    //buscar contratos pendientes y cobrados
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
@@ -64,10 +66,46 @@ export class HomeComponent implements OnInit {
     };
     this.http.post(`${environment.apiUrl}/api/home/contract`, params, options).subscribe((response : any) => {
       if(response.data.status){
-        this.home_form.get('npersonas_pendientes').setValue(response.data.npersonas_pendientes)
-        this.home_form.get('npersonas_pendientes').disable();
-        this.home_form.get('npersonas_cobradas').setValue(response.data.npersonas_cobradas)
-        this.home_form.get('npersonas_cobradas').disable();
+        if(response.data.npersonas_pendientes){
+          this.home_form.get('npersonas_pendientes').setValue(response.data.npersonas_pendientes)
+          this.home_form.get('npersonas_pendientes').disable();
+        }else{
+          this.home_form.get('npersonas_pendientes').setValue(0)
+          this.home_form.get('npersonas_pendientes').disable();
+        }
+
+        if(response.data.npersonas_cobradas){
+          this.home_form.get('npersonas_cobradas').setValue(response.data.npersonas_cobradas)
+          this.home_form.get('npersonas_cobradas').disable();
+        }else{
+          this.home_form.get('npersonas_cobradas').setValue(0)
+          this.home_form.get('npersonas_cobradas').disable();
+        }
+
+      }
+    });
+
+    this.getDataNotification();
+  }
+
+  getDataNotification(){
+    //buscar notificaciones
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      cpais: this.currentUser.data.cpais,
+      ccompania: this.currentUser.data.ccompania,
+    };
+    this.http.post(`${environment.apiUrl}/api/home/notifications`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        if(response.data.nnotificacion){
+          this.home_form.get('nnotificacion').setValue(response.data.nnotificacion)
+          this.home_form.get('nnotificacion').disable();
+        }else{
+          this.home_form.get('nnotificacion').setValue(0)
+          this.home_form.get('nnotificacion').disable();
+        }
+
       }
     });
   }
