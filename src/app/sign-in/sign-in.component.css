@@ -5,7 +5,7 @@
 @import url(https://fonts.googleapis.com/css?family=Arimo:300,400,400italic,700,700italic);
 /* ===================================== Basic CSS ==================================== */
 * {
-  margin: 0px;
+  /* margin: 0px; */
   padding: 0px;
   list-style: none; 
 }
@@ -37,7 +37,6 @@ ol,ul{
   margin:0px;
   padding:0px;
 }
-
 a:hover,
 a:focus,
 input,
@@ -47,15 +46,16 @@ textarea {
 }
 
 .form-02-main{
-  background:url(../../assets/imagenes/arys/planes.jpg);
-  background-size:cover;
+  background:url(../../assets/imagenes/sign-in.jpeg);
+  /* background-size:cover;
+
   background-repeat:no-repeat;
-  background-position:center;
+  background-position:center; */
   position:relative;
   z-index:2;
   overflow:hidden;
 }
-.form-02-main:before{
+.form-02-main::before{
   background-color: rgba(22, 22, 22, 0.438);
 }
 
@@ -95,7 +95,7 @@ textarea {
 }
 
 .form-group{
-  padding:20px 0px;
+  /* padding:20px 0px; */
   display:inline-block;
   width:100%;
   position:relative;
@@ -115,7 +115,7 @@ textarea {
 }
 
 .checkbox{
-  display:flex;
+  /* display:flex; */
   justify-content:space-around;
 }
 
@@ -208,9 +208,19 @@ textarea {
   text-align:center;
 }
 
+.form-check-input {
+  position: initial;
+  margin: 5px;
+}
+
 @media screen and (max-width: 600px) {
   .form-03-main{
     width: 100%;
   }
+}
+
+
+body{
+    line-height: 6.2;
 }
 

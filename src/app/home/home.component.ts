@@ -16,6 +16,14 @@ import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class HomeComponent implements OnInit {
 
+  saleData = [
+    { name: "Mobiles", value: 105000 },
+    { name: "Laptop", value: 55000 },
+    { name: "AC", value: 15000 },
+    { name: "Headset", value: 150000 },
+    { name: "Fridge", value: 20000 }
+  ];
+
   showNavigationArrows = false;
   showNavigationIndicators = false;
   home_form: FormGroup;

@@ -35,6 +35,7 @@ button{
     background-size: contain;
     padding: 83px;
     margin-top: 9px;
+    margin-bottom: 10px;
   }
 
 nav{
@@ -53,4 +54,4 @@ nav{
     --color-default: #364d59;
     --color-primary: #fff0ad;
     --color-secondary: #52565e;
-  }
+}
