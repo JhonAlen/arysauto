@@ -216,16 +216,13 @@ textarea {
 @media screen and (max-width: 600px) {
   .form-03-main{
     width: 100%;
-    margin: 0px 9px 4px 2px;
+    /* margin: 0px 9px 4px 2px; */
   }
 }
 
-
-
-
-body{
+/* body{
     line-height: 4.2;
-}
+} */
 
 .company-detail-button{
   padding: 10px;
