@@ -67,8 +67,8 @@
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
           <div class="card-header p-3 pt-2">
-            <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-              <i class="bi bi-cash-stack"></i>
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-clipboard-plus-fill"></i>
             </div>
             <div class="text-end pt-1">
               <p class="text-sm mb-0 text-capitalize">Personas con <br> Contratos Pendientes</p>
@@ -77,7 +77,7 @@
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-3">
-            <p class="mb-0"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./subscription/fleet-contract-management-index">¡Click Aquí!</a></p>
+            <p class="mb-0" style="text-align: center;"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./subscription/fleet-contract-management-index">¡Click Aquí!</a></p>
           </div>
         </div>
       </div>
@@ -94,41 +94,41 @@
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-3">
-            <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month</p>
+            <p class="mb-0" style="text-align: center;"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./subscription/fleet-contract-management-index">¡Click Aquí!</a></p>
           </div>
         </div>
       </div>
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
           <div class="card-header p-3 pt-2">
-            <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-              <i class="bi bi-cash-stack"></i>
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-success text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-exclamation-triangle-fill"></i>
             </div>
             <div class="text-end pt-1">
               <p class="text-sm mb-0 text-capitalize">Notificaciones</p>
-              <h4 class="mb-0"><input formControlName="nnotificacion" style="background-color:transparent;background: inherit;border: 0px; "></h4>
+              <h4 class="mb-0"><input formControlName="nnotificacion" style="background-color:transparent;background: inherit;border: 0px;text-align: end;margin-left: -15px; "></h4>
             </div>
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-3">
-            <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+            <p class="mb-0" style="text-align: center;"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./events/notification-index">¡Click Aquí!</a></p>
           </div>
         </div>
       </div>
       <div class="col-xl-3 col-sm-6">
         <div class="card">
           <div class="card-header p-3 pt-2">
-            <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-              <i class="bi bi-cash-stack"></i>
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-info text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-person-circle"></i>
             </div>
             <div class="text-end pt-1">
-              <p class="text-sm mb-0 text-capitalize">Sales</p>
-              <h4 class="mb-0">$103,430</h4>
+              <p class="text-sm mb-0 text-capitalize">Usuario</p>
+              <h4 class="mb-0"><input formControlName="xusuario" style="background-color:transparent;background: inherit;border: 0px;text-align: end;margin-left: -15px; "></h4>
             </div>
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-3">
-            <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+            <!-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p> -->
           </div>
         </div>
       </div>
@@ -137,25 +137,25 @@
       <div class="col-lg-4 col-md-6 mt-4 mb-4">
         <div class="card z-index-2 ">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+            <div class="bg-gradient-success shadow-primary border-radius-lg py-3 pe-1">
               <div class="chart">
                 <ngx-charts-pie-chart 
-                [results]="saleData"
-                [legend]="true"
-                [legendTitle]="'Product Sale Report'" 
-                [view]="[400,180]"
+                [results]="monthsoutstandingList"
+                [legend]="false"
+                
+                [view]="[480,400]"
                 [labels]="true" >
                 </ngx-charts-pie-chart>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <h6 class="mb-0 ">Website Views</h6>
-            <p class="text-sm ">Last Campaign Performance</p>
+            <h6 class="mb-0 " style="font-weight: bolder;">Contratos Pendientes</h6>
+            <p class="text-sm ">Calculos por cada mes</p>
             <hr class="dark horizontal">
             <div class="d-flex ">
-              <i class="material-icons text-sm my-auto me-1">schedule</i>
-              <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+              <i class="bi bi-info-circle"></i>
+              <p class="mb-0 text-sm" style="margin-left: 10px;"> Recuerda chequear los contratos </p>
             </div>
           </div>
         </div>
@@ -166,28 +166,28 @@
             <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
               <div class="chart">
                 <ngx-charts-bar-vertical 
-    [view]="[400,400]"
-    [results]="saleData"
-    [xAxisLabel]="'Products'"
-    [legendTitle]="'Product Sale Chart'"
-    [yAxisLabel]="'Sale'"
-    [legend]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxis]="true"
-    [yAxis]="true"
-    [gradient]="true">
-</ngx-charts-bar-vertical>
+                    [view]="[480,400]"
+                    [results]="monthschargedList"
+                    [xAxisLabel]="'Products'"
+                  
+                    [yAxisLabel]="'Sale'"
+                    [legend]="false"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [gradient]="true">
+                </ngx-charts-bar-vertical>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <h6 class="mb-0 "> Daily Sales </h6>
-            <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>
+            <h6 class="mb-0 " style="font-weight: bolder;"> Contratos Cobrados </h6>
+            <p class="text-sm ">Calculos por cada mes</p>
             <hr class="dark horizontal">
             <div class="d-flex ">
-              <i class="material-icons text-sm my-auto me-1">schedule</i>
-              <p class="mb-0 text-sm"> updated 4 min ago </p>
+              <!-- <i class="material-icons text-sm my-auto me-1">schedule</i>
+              <p class="mb-0 text-sm"> updated 4 min ago </p> -->
             </div>
           </div>
         </div>
@@ -195,10 +195,10 @@
       <div class="col-lg-4 mt-4 mb-3">
         <div class="card z-index-2 ">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-            <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+            <div class="bg-gradient-success shadow-dark border-radius-lg py-3 pe-1">
               <div class="chart">
                 <ngx-charts-pie-grid 
-                [results]="saleData" >
+                [results]="monthschargedList" >
                 </ngx-charts-pie-grid>
               </div>
             </div>

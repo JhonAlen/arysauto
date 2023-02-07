@@ -874,13 +874,13 @@ OperatioValidationPlate(){
     }
   }
 
-  resultTypePayment(){
-    if(this.search_form.get('xpago').value == 'PASARELA'){
-      this.bpagarubii = true;
-    }else if(this.search_form.get('xpago').value == 'MANUAL'){
-      this.bpagomanual = true;
-    }
-  }
+  // resultTypePayment(){
+  //   if(this.search_form.get('xpago').value == 'PASARELA'){
+  //     this.bpagarubii = true;
+  //   }else if(this.search_form.get('xpago').value == 'MANUAL'){
+  //     this.bpagomanual = true;
+  //   }
+  // }
   
   addPayment(){
     let payment = {mprima: this.search_form.get('ncobro').value };
@@ -915,10 +915,6 @@ OperatioValidationPlate(){
 
 
   operationAmount(){
-    if (!this.validateForm(this.search_form)) {
-       window.alert (`Debe completar los campos de la emisión antes de realizar el pago`)
-    }else{
-     
     let metodologiaPago = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
     let params = {
      cplan: metodologiaPago.id,
@@ -932,7 +928,6 @@ OperatioValidationPlate(){
         this.search_form.get('ncobro').setValue(response.data.mprima);
       }
     });
-    }
   }
 
   // OperationUbii(){

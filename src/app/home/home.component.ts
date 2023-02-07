@@ -34,7 +34,9 @@ export class HomeComponent implements OnInit {
   autohide = true;
   autohide2 = true;
   autohide3 = true;
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/1700/600`);
+  monthsoutstandingList: any[] = [];
+  monthschargedList: any[] = [];
+
 
   constructor(config: NgbCarouselConfig,
               private formBuilder: FormBuilder, 
@@ -53,6 +55,7 @@ export class HomeComponent implements OnInit {
       npersonas_cobradas: [''],
       npersonas_pendientes: [''],
       nnotificacion: [''],
+      xusuario: ['']
     })
 
     this.currentUser = this.authenticationService.currentUserValue;
@@ -86,6 +89,10 @@ export class HomeComponent implements OnInit {
     });
 
     this.getDataNotification();
+    this.getUser();
+    this.getAmountsCharged();
+    this.getAmountsOutstanding();
+    this.getNotificationCount();
   }
 
   getDataNotification(){
@@ -108,6 +115,87 @@ export class HomeComponent implements OnInit {
 
       }
     });
+  }
+
+  getUser(){
+    //busca usuario que inicio sesión
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      cusuario: this.currentUser.data.cusuario
+    };
+    this.http.post(`${environment.apiUrl}/api/home/user`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        if(response.data.xusuario){
+          this.home_form.get('xusuario').setValue(response.data.xusuario)
+          this.home_form.get('xusuario').disable();
+        }else{
+          this.home_form.get('xusuario').setValue(' ')
+          this.home_form.get('xusuario').disable();
+        }
+  
+      }
+    });
+  }
+
+  getAmountsCharged(){
+    //busca primas pagadas por meses
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      cusuario: this.currentUser.data.cusuario
+    };
+    this.http.post(`${environment.apiUrl}/api/home/amounts-paid`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        this.monthschargedList = [];
+        for(let i = 0; i < response.data.list.length; i++){
+          this.monthschargedList.push({ 
+            name: response.data.list[i].mes,
+            value: response.data.list[i].mprima_pagada,
+          });
+        }
+      }
+    });
+  }
+
+  getAmountsOutstanding(){
+     //busca primas pendientes por meses
+     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+     let options = { headers: headers };
+     let params = {
+       cusuario: this.currentUser.data.cusuario
+     };
+     this.http.post(`${environment.apiUrl}/api/home/amounts-outstanding`, params, options).subscribe((response : any) => {
+       if(response.data.status){
+         this.monthsoutstandingList = [];
+         for(let i = 0; i < response.data.list.length; i++){
+           this.monthsoutstandingList.push({ 
+             name: response.data.list[i].mes,
+             value: response.data.list[i].mprima_anual,
+           });
+         }
+       }
+     });
+  }
+
+  getNotificationCount(){
+         //busca primas pendientes por meses
+         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+         let options = { headers: headers };
+         let params = {
+           cusuario: this.currentUser.data.cusuario
+         };
+         this.http.post(`${environment.apiUrl}/api/home/amounts-outstanding`, params, options).subscribe((response : any) => {
+           if(response.data.status){
+             this.monthsoutstandingList = [];
+             for(let i = 0; i < response.data.list.length; i++){
+               this.monthsoutstandingList.push({ 
+                 name: response.data.list[i].mes,
+                 value: response.data.list[i].mprima_anual,
+               });
+             }
+           }
+         });
   }
 
 }

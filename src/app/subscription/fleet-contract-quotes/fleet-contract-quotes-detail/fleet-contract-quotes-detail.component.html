@@ -354,7 +354,7 @@
                 <div class="col-md-4 mb-4 pb-2">
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev4">Plan de RCV</label>
-                    <select formControlName="cplan" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cplan').errors }" (change)="operationAmount()">
+                    <select formControlName="cplan" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cplan').errors }">
                       <option *ngFor="let plan of planList" value="{{ plan.control }}">{{ plan.value }}</option>
                     </select>
                     <div *ngIf="submitted && search_form.get('cplan').errors" class="invalid-feedback">
@@ -378,7 +378,7 @@
                     <label style="margin-left: 12px;margin-top: 13px;">¿Posee Grúa?</label>
                     <div class="row">
                       <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
-                      <input type="checkbox" formControlName="bgrua" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && search_form.get('bgrua').errors }" style="margin-left: 59px;" (change)="OperatioValueGrua()"> 
+                      <input type="checkbox" formControlName="bgrua" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && search_form.get('bgrua').errors }" style="margin-left: 59px;"> 
                       <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
                    </div>
                     <div *ngIf="submitted && search_form.get('bgrua').errors"  class="invalid-feedback">
@@ -533,7 +533,7 @@
             <div class="cards">
               <div class="card-header company-card-header"><h5 class="card-title">Detalles del recibo</h5></div>
               <div class="row" style="padding: 10px;">
-                <div class="col-md-3 mb-4 pb-2" *ngIf="modalidad">
+                <!-- <div class="col-md-3 mb-4 pb-2" *ngIf="modalidad">
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev5">Modalidad de Pagos</label>
                     <select formControlName="xpago" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xpago').errors }" (change)="resultTypePayment()">
@@ -544,11 +544,11 @@
                       <div *ngIf="search_form.get('xpago').errors.required">Se requiere completar el campo</div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev5">Fecha de inicio</label>
-                    <input type="date" formControlName="femision" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('femision').errors }" change="femisio()" />
+                    <input type="date" formControlName="femision" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('femision').errors }" (change)="operationAmount()" />
                     <div *ngIf="submitted && search_form.get('femision').errors" class="invalid-feedback">
                       <div *ngIf="search_form.get('femision').errors.required">Se requiere completar el campo</div>
                     </div>
