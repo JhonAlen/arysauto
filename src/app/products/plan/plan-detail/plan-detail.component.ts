@@ -150,7 +150,7 @@ export class PlanDetailComponent implements OnInit {
       ccompania: this.currentUser.data.ccompania,
       cplan: this.code
     };
-    this.http.post(`${environment.apiUrl}/api/v2/plan/production/detail`, params, options).subscribe((response: any) => {
+    this.http.post(`${environment.apiUrl}/api/plan/detail`, params, options).subscribe((response: any) => {
       if(response.data.status){
         this.detail_form.get('ctipoplan').setValue(response.data.ctipoplan);
         this.detail_form.get('ctipoplan').disable();
@@ -164,57 +164,14 @@ export class PlanDetailComponent implements OnInit {
         this.detail_form.get('paseguradora').disable();
         this.detail_form.get('bactivo').setValue(response.data.bactivo);
         this.detail_form.get('bactivo').disable();
-        this.paymentMethodologyList = [];
-        if(response.data.paymentMethodologies){
-          for(let i =0; i < response.data.paymentMethodologies.length; i++){
-            this.paymentMethodologyList.push({
-              cgrid: i,
-              create: false,
-              cmetodologiapago: response.data.paymentMethodologies[i].cmetodologiapago,
-              xmetodologiapago: response.data.paymentMethodologies[i].xmetodologiapago,
-              mmetodologiapago: response.data.paymentMethodologies[i].mmetodologiapago
-            });
-          }
-        }
-        this.insurerList = [];
-        if(response.data.insurers){
-          for(let i =0; i < response.data.insurers.length; i++){
-            this.insurerList.push({
-              cgrid: i,
-              create: false,
-              caseguradora: response.data.insurers[i].caseguradora,
-              xaseguradora: response.data.insurers[i].xaseguradora
-            });
-          }
-        }
         this.serviceList = [];
         if(response.data.services){
           for(let i =0; i < response.data.services.length; i++){
-            let coverages = [];
-            for(let j =0; j < response.data.services[i].coverages.length; j++){
-              coverages.push({
-                create: false,
-                ccobertura: response.data.services[i].coverages[j].ccobertura,
-                xcobertura: response.data.services[i].coverages[j].xcobertura,
-                cconceptocobertura: response.data.services[i].coverages[j].cconceptocobertura,
-                xconceptocobertura: response.data.services[i].coverages[j].xconceptocobertura
-              });
-            }
             this.serviceList.push({
               cgrid: i,
               create: false,
-              cservicio: response.data.services[i].cservicio,
-              xservicio: response.data.services[i].xservicio,
-              cservicioplan: response.data.services[i].cservicioplan,
               ctiposervicio: response.data.services[i].ctiposervicio,
               xtiposervicio: response.data.services[i].xtiposervicio,
-              ctipoagotamientoservicio: response.data.services[i].ctipoagotamientoservicio,
-              ncantidad: response.data.services[i].ncantidad,
-              pservicio: response.data.services[i].pservicio,
-              mmaximocobertura: response.data.services[i].mmaximocobertura,
-              mdeducible: response.data.services[i].mdeducible,
-              bserviciopadre: response.data.services[i].bserviciopadre,
-              coverages: coverages
             });
           }
         }
@@ -266,70 +223,22 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
-  addPaymentMethodology(){
-    let paymentMethodology = { type: 3 };
-    const modalRef = this.modalService.open(PlanPaymentMethodologyComponent);
-    modalRef.componentInstance.paymentMethodology = paymentMethodology;
-    modalRef.result.then((result: any) => { 
-      if(result){
-        if(result.type == 3){
-          this.paymentMethodologyList.push({
-            cgrid: this.insurerList.length,
-            create: true,
-            cmetodologiapago: result.cmetodologiapago,
-            xmetodologiapago: result.xmetodologiapago,
-            mmetodologiapago: result.mmetodologiapago
-          });
-          this.paymentMethodologyGridApi.setRowData(this.paymentMethodologyList);
-        }
-      }
-    });
-  }
-
-  addInsurer(){
-    let insurer = { type: 3 };
-    const modalRef = this.modalService.open(PlanInsurerComponent);
-    modalRef.componentInstance.insurer = insurer;
-    modalRef.result.then((result: any) => { 
-      if(result){
-        if(result.type == 3){
-          this.insurerList.push({
-            cgrid: this.insurerList.length,
-            create: true,
-            caseguradora: result.caseguradora,
-            xaseguradora: result.xaseguradora
-          });
-          this.insurerGridApi.setRowData(this.insurerList);
-        }
-      }
-    });
-  }
-
   addService(){
     let service = { type: 3 };
     const modalRef = this.modalService.open(PlanServiceComponent, {size: 'xl'});
     modalRef.componentInstance.service = service;
     modalRef.result.then((result: any) => { 
       if(result){
-        if(result.type == 3){
-          this.serviceList.push({
-            cgrid: this.serviceList.length,
-            create: true,
-            cservicio: result.cservicio,
-            xservicio: result.xservicio,
-            ctiposervicio: result.ctiposervicio,
-            xtiposervicio: result.xtiposervicio,
-            ctipoagotamientoservicio: result.ctipoagotamientoservicio,
-            ncantidad: result.ncantidad,
-            pservicio: result.pservicio,
-            mmaximocobertura: result.mmaximocobertura,
-            mdeducible: result.mdeducible,
-            bserviciopadre: result.bserviciopadre,
-            coverages: result.coverages
-          });
-          this.serviceGridApi.setRowData(this.serviceList);
-        }
+        console.log(result)
+        this.serviceList.push({
+          cgrid: this.serviceList.length,
+          create: true,
+          ctiposervicio: result.ctiposervicio,
+          xtiposervicio: result.xtiposervicio,
+        });
+        this.serviceGridApi.setRowData(this.serviceList);
       }
+      console.log(this.serviceList)
     });
   }
 

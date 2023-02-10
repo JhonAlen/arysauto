@@ -16,6 +16,8 @@ export class PlanServiceComponent implements OnInit {
 
   @Input() public service;
   private coverageGridApi;
+  private serviceTypeGridApi;
+  private acceptedServiceTypeGridApi;
   currentUser;
   popup_form: FormGroup;
   submitted: boolean = false;
@@ -28,6 +30,7 @@ export class PlanServiceComponent implements OnInit {
   serviceDepletionTypeList: any[] = [];
   alert = { show : false, type : "", message : "" }
   coverageDeletedRowList: any[] = [];
+  acceptedserviceTypeList;
 
   constructor(public activeModal: NgbActiveModal,
               private modalService: NgbModal,
@@ -56,10 +59,11 @@ export class PlanServiceComponent implements OnInit {
       };
       this.http.post(`${environment.apiUrl}/api/valrep/service-type`, params, options).subscribe((response : any) => {
         if(response.data.status){
+          this.serviceTypeList = [];
           for(let i = 0; i < response.data.list.length; i++){
-            this.serviceTypeList.push({ id: response.data.list[i].ctiposervicio, value: response.data.list[i].xtiposervicio });
+            this.serviceTypeList.push({ ctiposervicio: response.data.list[i].ctiposervicio, xtiposervicio: response.data.list[i].xtiposervicio });
           }
-          this.serviceTypeList.sort((a,b) => a.value > b.value ? 1 : -1);
+          this.serviceTypeList.sort((a,b) => a.xtiposervicio > b.xtiposervicio ? 1 : -1);
         }
       },
       (err) => {
@@ -72,31 +76,41 @@ export class PlanServiceComponent implements OnInit {
         this.alert.type = 'danger';
         this.alert.show = true;
       });
-      this.http.post(`${environment.apiUrl}/api/valrep/service-depletion-type`, params, options).subscribe((response : any) => {
-        if(response.data.status){
-          for(let i = 0; i < response.data.list.length; i++){
-            this.serviceDepletionTypeList.push({ id: response.data.list[i].ctipoagotamientoservicio, value: response.data.list[i].xtipoagotamientoservicio });
-          }
-          this.serviceDepletionTypeList.sort((a,b) => a.value > b.value ? 1 : -1);
+          // Pasar valores a la lista
+        let arrayPerform = this.serviceTypeList;
+        arrayPerform = arrayPerform.filter((obj) => !obj.ctiposervicio);
+        for(let i = 0; i < arrayPerform.length; i ++){
+          arrayPerform[i].cgrid = i; 
         }
-      },
-      (err) => {
-        let code = err.error.data.code;
-        let message;
-        if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-        else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICEDEPLETIONTYPENOTFOUND"; }
-        else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-        this.alert.message = message;
-        this.alert.type = 'danger';
-        this.alert.show = true;
-      });
+        
+        arrayPerform = this.serviceTypeList;
+        this.acceptedserviceTypeList = arrayPerform;
+
+      // this.http.post(`${environment.apiUrl}/api/valrep/service-depletion-type`, params, options).subscribe((response : any) => {
+      //   if(response.data.status){
+      //     for(let i = 0; i < response.data.list.length; i++){
+      //       this.serviceDepletionTypeList.push({ id: response.data.list[i].ctipoagotamientoservicio, value: response.data.list[i].xtipoagotamientoservicio });
+      //     }
+      //     this.serviceDepletionTypeList.sort((a,b) => a.value > b.value ? 1 : -1);
+      //   }
+      // },
+      // (err) => {
+      //   let code = err.error.data.code;
+      //   let message;
+      //   if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      //   else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICEDEPLETIONTYPENOTFOUND"; }
+      //   else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      //   this.alert.message = message;
+      //   this.alert.type = 'danger';
+      //   this.alert.show = true;
+      // });
       if(this.service){
         if(this.service.type == 3){
-          this.canSave = true;
+          this.canSave = false;
         }else if(this.service.type == 2){
           this.popup_form.get('ctiposervicio').setValue(this.service.ctiposervicio);
           this.popup_form.get('ctiposervicio').disable();
-          this.serviceDropdownDataRequest();
+          // this.serviceDropdownDataRequest();
           this.popup_form.get('cservicio').setValue(this.service.cservicio);
           this.popup_form.get('cservicio').disable();
           this.popup_form.get('ctipoagotamientoservicio').setValue(this.service.ctipoagotamientoservicio);
@@ -115,7 +129,7 @@ export class PlanServiceComponent implements OnInit {
           this.canSave = false;
         }else if(this.service.type == 1){
           this.popup_form.get('ctiposervicio').setValue(this.service.ctiposervicio);
-          this.serviceDropdownDataRequest();
+          // this.serviceDropdownDataRequest();
           this.popup_form.get('cservicio').setValue(this.service.cservicio);
           this.popup_form.get('ctipoagotamientoservicio').setValue(this.service.ctipoagotamientoservicio);
           this.popup_form.get('ncantidad').setValue(this.service.ncantidad);
@@ -133,157 +147,172 @@ export class PlanServiceComponent implements OnInit {
               xconceptocobertura: this.service.coverages[i].xconceptocobertura
             });
           }
-          this.canSave = true;
           this.isEdit = true;
         }
       }
     }
   }
 
-  serviceDropdownDataRequest(){
-    if(this.popup_form.get('ctiposervicio').value){
-      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      let options = { headers: headers };
-      let params = {
-        cpais: this.currentUser.data.cpais,
-        ccompania: this.currentUser.data.ccompania,
-        ctiposervicio: this.popup_form.get('ctiposervicio').value
-      }
-      this.http.post(`${environment.apiUrl}/api/valrep/service`, params, options).subscribe((response : any) => {
-        if(response.data.status){
-          this.serviceList = [];
-          for(let i = 0; i < response.data.list.length; i++){
-            this.serviceList.push({ id: response.data.list[i].cservicio, value: response.data.list[i].xservicio });
-          }
-          this.serviceList.sort((a,b) => a.value > b.value ? 1 : -1);
+  serviceTypeRowClicked(event: any){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      ctiposervicio: event.data.ctiposervicio
+    };
+    this.http.post(`${environment.apiUrl}/api/plan/search-service`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        this.serviceList = [];
+        for(let i = 0; i < response.data.list.length; i++){
+          this.serviceList.push({ cservicio: response.data.list[i].cservicio, xservicio: response.data.list[i].xservicio });
         }
-      },
-      (err) => {
-        let code = err.error.data.code;
-        let message;
-        if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-        else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICENOTFOUND"; }
-        else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-        this.alert.message = message;
-        this.alert.type = 'danger';
-        this.alert.show = true;
-      });
-    }
-  }
-
-  addCoverage(){
-    let coverage = { type: 3 };
-    const modalRef = this.modalService.open(PlanServiceCoverageComponent);
-    modalRef.componentInstance.coverage = coverage;
-    modalRef.result.then((result: any) => {
-      if(result){
-        if(result.type == 3){
-          this.coverageList.push({
-            cgrid: this.coverageList.length,
-            create: true,
-            ccobertura: result.ccobertura,
-            xcobertura: result.xcobertura,
-            cconceptocobertura: result.cconceptocobertura,
-            xconceptocobertura: result.xconceptocobertura
-          });
-          this.coverageGridApi.setRowData(this.coverageList);
-        }
+        this.serviceList.sort((a,b) => a.xservicio > b.xservicio ? 1 : -1);
       }
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICETYPENOTFOUND"; }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
     });
-  }
-
-  coverageRowClicked(event: any){
-    let coverage = {};
-    if(this.isEdit){ 
-      coverage = { 
-        type: 1,
-        create: event.data.create, 
-        cgrid: event.data.cgrid,
-        ccobertura: event.data.ccobertura,
-        cconceptocobertura: event.data.cconceptocobertura,
-        delete: false
-      };
-    }else{ 
-      coverage = { 
-        type: 2,
-        create: event.data.create,
-        cgrid: event.data.cgrid,
-        ccobertura: event.data.ccobertura,
-        cconceptocobertura: event.data.cconceptocobertura,
-        delete: false
-      }; 
+    let eventObj = event.data;
+    this.serviceTypeList = this.serviceTypeList.filter((obj) => obj.ctiposervicio != eventObj.ctiposervicio)
+    this.serviceTypeGridApi.setRowData(this.serviceTypeList);
+    this.acceptedserviceTypeList.push(eventObj);
+    for(let i = 0; i < this.acceptedserviceTypeList.length; i++){
+      this.acceptedserviceTypeList[i].cgrid = i;
+      this.acceptedserviceTypeList[i].ctiposervicio;
+      this.acceptedserviceTypeList[i].xtiposervicio;
     }
-    const modalRef = this.modalService.open(PlanServiceCoverageComponent);
-    modalRef.componentInstance.coverage = coverage;
-    modalRef.result.then((result: any) => {
-      if(result){
-        if(result.type == 1){
-          for(let i = 0; i <  this.coverageList.length; i++){
-            if( this.coverageList[i].cgrid == result.cgrid){
-              this.coverageList[i].ccobertura = result.ccobertura;
-              this.coverageList[i].xcobertura = result.xcobertura;
-              this.coverageList[i].cconceptocobertura = result.cconceptocobertura;
-              this.coverageList[i].xconceptocobertura = result.xconceptocobertura;
-              this.coverageGridApi.refreshCells();
-              return;
-            }
-          }
-        }else if(result.type == 4){
-          if(result.delete){
-            this.coverageDeletedRowList.push({ ccobertura: result.ccobertura });
-          }
-          this.coverageList = this.coverageList.filter((row) => { return row.cgrid != result.cgrid });
-          for(let i = 0; i < this.coverageList.length; i++){
-            this.coverageList[i].cgrid = i;
-          }
-          this.coverageGridApi.setRowData(this.coverageList);
-        }
-      }
-    });
-  }
+    if(this.acceptedserviceTypeList[0]){
+      this.canSave = true;
+    }
+    this.acceptedServiceTypeGridApi.setRowData(this.acceptedserviceTypeList);
+}
 
-  onCoveragesGridReady(event){
-    this.coverageGridApi = event.api;
-  }
+onServiceTypeGridReady(event){
+  this.serviceTypeGridApi = event.api;
+}
+
+onAcceptedServiceTypeGridReady(event){
+  this.acceptedServiceTypeGridApi = event.api;
+}
+
+  // serviceDropdownDataRequest(){
+  //   if(this.popup_form.get('ctiposervicio').value){
+  //     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //     let options = { headers: headers };
+  //     let params = {
+  //       cpais: this.currentUser.data.cpais,
+  //       ccompania: this.currentUser.data.ccompania,
+  //       ctiposervicio: this.popup_form.get('ctiposervicio').value
+  //     }
+  //     this.http.post(`${environment.apiUrl}/api/valrep/service`, params, options).subscribe((response : any) => {
+  //       if(response.data.status){
+  //         this.serviceList = [];
+  //         for(let i = 0; i < response.data.list.length; i++){
+  //           this.serviceList.push({ id: response.data.list[i].cservicio, value: response.data.list[i].xservicio });
+  //         }
+  //         this.serviceList.sort((a,b) => a.value > b.value ? 1 : -1);
+  //       }
+  //     },
+  //     (err) => {
+  //       let code = err.error.data.code;
+  //       let message;
+  //       if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+  //       else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICENOTFOUND"; }
+  //       else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+  //       this.alert.message = message;
+  //       this.alert.type = 'danger';
+  //       this.alert.show = true;
+  //     });
+  //   }
+  // }
+
+  // addCoverage(){
+  //   let coverage = { type: 3 };
+  //   const modalRef = this.modalService.open(PlanServiceCoverageComponent);
+  //   modalRef.componentInstance.coverage = coverage;
+  //   modalRef.result.then((result: any) => {
+  //     if(result){
+  //       if(result.type == 3){
+  //         this.coverageList.push({
+  //           cgrid: this.coverageList.length,
+  //           create: true,
+  //           ccobertura: result.ccobertura,
+  //           xcobertura: result.xcobertura,
+  //           cconceptocobertura: result.cconceptocobertura,
+  //           xconceptocobertura: result.xconceptocobertura
+  //         });
+  //         this.coverageGridApi.setRowData(this.coverageList);
+  //       }
+  //     }
+  //   });
+  // }
+
+  // coverageRowClicked(event: any){
+  //   let coverage = {};
+  //   if(this.isEdit){ 
+  //     coverage = { 
+  //       type: 1,
+  //       create: event.data.create, 
+  //       cgrid: event.data.cgrid,
+  //       ccobertura: event.data.ccobertura,
+  //       cconceptocobertura: event.data.cconceptocobertura,
+  //       delete: false
+  //     };
+  //   }else{ 
+  //     coverage = { 
+  //       type: 2,
+  //       create: event.data.create,
+  //       cgrid: event.data.cgrid,
+  //       ccobertura: event.data.ccobertura,
+  //       cconceptocobertura: event.data.cconceptocobertura,
+  //       delete: false
+  //     }; 
+  //   }
+  //   const modalRef = this.modalService.open(PlanServiceCoverageComponent);
+  //   modalRef.componentInstance.coverage = coverage;
+  //   modalRef.result.then((result: any) => {
+  //     if(result){
+  //       if(result.type == 1){
+  //         for(let i = 0; i <  this.coverageList.length; i++){
+  //           if( this.coverageList[i].cgrid == result.cgrid){
+  //             this.coverageList[i].ccobertura = result.ccobertura;
+  //             this.coverageList[i].xcobertura = result.xcobertura;
+  //             this.coverageList[i].cconceptocobertura = result.cconceptocobertura;
+  //             this.coverageList[i].xconceptocobertura = result.xconceptocobertura;
+  //             this.coverageGridApi.refreshCells();
+  //             return;
+  //           }
+  //         }
+  //       }else if(result.type == 4){
+  //         if(result.delete){
+  //           this.coverageDeletedRowList.push({ ccobertura: result.ccobertura });
+  //         }
+  //         this.coverageList = this.coverageList.filter((row) => { return row.cgrid != result.cgrid });
+  //         for(let i = 0; i < this.coverageList.length; i++){
+  //           this.coverageList[i].cgrid = i;
+  //         }
+  //         this.coverageGridApi.setRowData(this.coverageList);
+  //       }
+  //     }
+  //   });
+  // }
+
+  // onCoveragesGridReady(event){
+  //   this.coverageGridApi = event.api;
+  // }
 
   onSubmit(form){
     this.submitted = true;
     this.loading = true;
-    if (this.popup_form.invalid) {
-      this.loading = false;
-      return;
-    }
-    let serviceTypeFilter = this.serviceTypeList.filter((option) => { return option.id == form.ctiposervicio; });
-    let serviceFilter = this.serviceList.filter((option) => { return option.id == form.cservicio; });
-    this.service.ctiposervicio = form.ctiposervicio;
-    this.service.xtiposervicio = serviceTypeFilter[0].value;
-    this.service.cservicio = form.cservicio;
-    this.service.xservicio = serviceFilter[0].value;
-    this.service.ctipoagotamientoservicio = form.ctipoagotamientoservicio;
-    this.service.ncantidad = form.ncantidad;
-    this.service.pservicio = form.pservicio;
-    this.service.mmaximocobertura = form.mmaximocobertura;
-    this.service.mdeducible = form.mdeducible;
-    this.service.bserviciopadre = form.bserviciopadre;
-    this.service.coverages = this.coverageList;
-    if(this.service.cservicioplan){
-      let updateCoverageList = this.coverageList.filter((row) => { return !row.create; });
-      let createCoverageList = this.coverageList.filter((row) => { return row.create; });
-      this.service.coveragesResult = {
-        create: createCoverageList,
-        update: updateCoverageList,
-        delete: this.coverageDeletedRowList
-      };
-    }
+
+    this.service = this.acceptedserviceTypeList
+
     this.activeModal.close(this.service);
   }
-
-  deleteService(){
-    this.service.type = 4;
-    if(!this.service.create){
-      this.service.delete = true;
-    }
-    this.activeModal.close(this.service);
-  }
-
 }

@@ -111,7 +111,7 @@ export class PlanIndexComponent implements OnInit {
       ctipoplan: form.ctipoplan ? form.ctipoplan : undefined,
       xplan: form.xplan ? form.xplan : undefined
     }
-    this.http.post(`${environment.apiUrl}/api/v2/plan/production/search`, params, options).subscribe((response: any) => {
+    this.http.post(`${environment.apiUrl}/api/plan/search`, params, options).subscribe((response: any) => {
       if(response.data.status){
         this.planList = [];
         for(let i = 0; i < response.data.list.length; i++){
