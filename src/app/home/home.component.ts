@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   autohide3 = true;
   monthsoutstandingList: any[] = [];
   monthschargedList: any[] = [];
-
+  notificationCountList: any[] = [];
 
   constructor(config: NgbCarouselConfig,
               private formBuilder: FormBuilder, 
@@ -179,23 +179,23 @@ export class HomeComponent implements OnInit {
   }
 
   getNotificationCount(){
-         //busca primas pendientes por meses
-         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-         let options = { headers: headers };
-         let params = {
-           cusuario: this.currentUser.data.cusuario
-         };
-         this.http.post(`${environment.apiUrl}/api/home/amounts-outstanding`, params, options).subscribe((response : any) => {
-           if(response.data.status){
-             this.monthsoutstandingList = [];
-             for(let i = 0; i < response.data.list.length; i++){
-               this.monthsoutstandingList.push({ 
-                 name: response.data.list[i].mes,
-                 value: response.data.list[i].mprima_anual,
-               });
-             }
-           }
-         });
+     //busca primas pendientes por meses
+     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+     let options = { headers: headers };
+     let params = {
+       cusuario: this.currentUser.data.cusuario
+     };
+     this.http.post(`${environment.apiUrl}/api/home/count-notifications`, params, options).subscribe((response : any) => {
+       if(response.data.status){
+         this.notificationCountList = [];
+         for(let i = 0; i < response.data.list.length; i++){
+           this.notificationCountList.push({ 
+             name: response.data.list[i].mes,
+             value: response.data.list[i].notificaciones,
+           });
+         }
+       }
+     });
   }
 
 }
