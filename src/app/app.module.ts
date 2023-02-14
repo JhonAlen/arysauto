@@ -319,6 +319,7 @@ import { PendingPaymentsComponent } from './business/pending-payments/pending-pa
 import { FleetContractQuotesIndexComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-index/fleet-contract-quotes-index.component';
 import { FleetContractQuotesDetailComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-detail/fleet-contract-quotes-detail.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { PlanAmountRcvComponent } from './pop-up/plan-amount-rcv/plan-amount-rcv.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -619,7 +620,8 @@ export function HttpLoaderFactory(http: HttpClient){
     TakersDetailComponent,
     PendingPaymentsComponent,
     FleetContractQuotesIndexComponent,
-    FleetContractQuotesDetailComponent
+    FleetContractQuotesDetailComponent,
+    PlanAmountRcvComponent
   ],
   imports: [
     BrowserModule,
