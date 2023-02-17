@@ -98,7 +98,7 @@ export class ContractServiceArysDetailComponent implements OnInit {
   mtasa_cambio: number;
   fingreso_tasa: Date;
   cestatusgeneral: number;
-
+  valueplan : any;
   serviceList: any[] = [];
   ccorredor: number;
   xcorredor: string;
@@ -208,6 +208,7 @@ export class ContractServiceArysDetailComponent implements OnInit {
       ctipovehiculo: [''],
       xzona_postal:[''],
       nkilometraje: [''],
+      xmoneda: [''],
     });
   
     this.currentUser = this.authenticationService.currentUserValue;
@@ -281,6 +282,8 @@ export class ContractServiceArysDetailComponent implements OnInit {
       }
   }
 
+
+
   async getPlanData(){
     let params =  {
       cpais: this.currentUser.data.cpais,
@@ -298,8 +301,10 @@ export class ContractServiceArysDetailComponent implements OnInit {
             value: response.data.list[i].xplan,
             control: response.data.list[i].control,
             binternacional: response.data.list[i].binternacional,
-            mcosto: response.data.list[i].mcosto 
+            mcosto: response.data.list[i].mcosto,
+            xmoneda: response.data.list[i].xmoneda,
           });
+          this.valueplan = response.data.list[i].mcosto 
         }
         this.planList.sort((a, b) => a.id > b.id ? 1 : -1)
       }
@@ -496,7 +501,6 @@ async getModeloData(event){
     };
     this.http.post(`${environment.apiUrl}/api/contract-arys/service-type-plan`, params).subscribe((response: any) => {
       if(response.data.list){
-        console.log(response.data.list)
         this.serviceList = [];
         for(let i = 0; i < response.data.list.length; i++){
           this.serviceList.push({
@@ -510,7 +514,11 @@ async getModeloData(event){
           this.bactivarservicios = false;
         }
 
+        // let mascara = plan.mcosto + ' ' + plan.xmoneda
         this.search_form.get('ncobro').setValue(plan.mcosto)
+        this.search_form.get('ncobro').disable()
+        this.search_form.get('xmoneda').setValue(plan.xmoneda)
+        this.search_form.get('xmoneda').disable()
       } 
     },);
   }
@@ -529,6 +537,7 @@ async getModeloData(event){
     let marca = this.marcaList.find(element => element.control === parseInt(this.search_form.get('cmarca').value));
     let modelo = this.modeloList.find(element => element.control === parseInt(this.search_form.get('cmodelo').value));
     let version = this.versionList.find(element => element.control === parseInt(this.search_form.get('cversion').value));
+    let plan = this.planList.find(element => element.control === parseInt(this.search_form.get('cplan').value));
     let params = {
         icedula: this.search_form.get('icedula').value,
         xrif_cliente: form.xrif_cliente,
@@ -546,14 +555,17 @@ async getModeloData(event){
         cmodelo: modelo.id,
         cversion: version.id,
         cano:form.cano,
+        cplan: plan.id,
         ncapacidad_p: form.ncapacidad_p,
         xcolor:this.search_form.get('xcolor').value,    
         xserialcarroceria: form.xserialcarroceria,
         xserialmotor: form.xserialmotor,  
         xcedula: form.xrif_cliente,
+        femision: form.femision,
+        xzona_postal: form.xzona_postal,
         cusuario: this.currentUser.data.cusuario,
       };
-      this.http.post( `${environment.apiUrl}/api/fleet-contract-management/create/quote`,params).subscribe((response : any) => {
+      this.http.post( `${environment.apiUrl}/api/contract-arys/create`,params).subscribe((response : any) => {
         if (response.data.status) {
           // if(this.currentUser.data.crol == 18||this.currentUser.data.crol == 17||this.currentUser.data.crol == 3  || this.bpagomanual || this.search_form.get('xcobertura').value != 'RCV'){
           //   // this.getFleetContractDetail(this.ccontratoflota);

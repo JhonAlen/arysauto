@@ -289,19 +289,21 @@
                     </div>
                   </div>
                 </div>
-                <div class="card" style= "width: 446px;margin-left: 59px" *ngIf="bactivarservicios">
-                    <div class="card-header company-card-header">
-                        <div class="row">
-                            <div class="col-9">
-                                Servicio que presta el plan seleccionado
-                            </div>
+                <div class="card" style= "width: 446px;margin-left: 59px;box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);-webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);" *ngIf="bactivarservicios">      
+                    <div class="card-body" style="display: -webkit-box; width: fit-content;">
+                        <div class="col-2">
+                          <div class="form-group">
+                            <h5>
+                              <input formControlName="ncobro" style="background-color:transparent;background: inherit;border: 0px;font-weight: bolder;margin-right: -167px;font-size: xxx-large;margin-top: 84px;">
+                              <input formControlName="xmoneda" style="background-color:transparent;border: 0px;font-size: xx-large;">
+                            </h5>
+                          </div>
                         </div>
-                    </div>
-                    <div class="card-body">
                         <div class="container">
-                            <ag-grid-angular #agGrid style="width: 100%; height: 250px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
-                                <ag-grid-column headerName="Código" field="ctiposervicio" [width]="110" [sortable]="true"></ag-grid-column>
-                                <ag-grid-column headerName="Tipo de Servicio" field="xtiposervicio" [width]="250" [sortable]="true"></ag-grid-column>
+                            <h5 class="font-weight-medium mb-0" style="font-family: revert;">Servicios que presta el plan</h5>
+                            <h5 style="font-family: revert;">seleccionado</h5>
+                            <ag-grid-angular #agGrid style="width: 42%; height: 250px;text-align: center;margin-top: 26px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
+                                <ag-grid-column headerName="" field="xtiposervicio" [width]="280" [sortable]="false"></ag-grid-column>
                             </ag-grid-angular>
                         </div>
                     </div>
