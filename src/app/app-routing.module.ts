@@ -197,6 +197,8 @@ import { TakersDetailComponent } from './configuration/takers/takers-detail/take
 import { PendingPaymentsComponent } from './business/pending-payments/pending-payments.component';
 import { FleetContractQuotesIndexComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-index/fleet-contract-quotes-index.component';
 import { FleetContractQuotesDetailComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-detail/fleet-contract-quotes-detail.component';
+import { ContractServiceArysIndexComponent } from './subscription/contract-service-arys/contract-service-arys-index/contract-service-arys-index.component';
+import { ContractServiceArysDetailComponent } from './subscription/contract-service-arys/contract-service-arys-detail/contract-service-arys-detail.component';
 
 const routes: Routes = [
  
@@ -208,6 +210,8 @@ const routes: Routes = [
   { path: 'service', component: ServicesComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'dasboard', component: DashboardComponent },
+  { path: 'sign-in', component: SignInComponent },
+
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]  },
 
   { path: 'change-password/:id', component: ChangePasswordComponent, canActivate: [SessionGuard]  },
@@ -386,7 +390,6 @@ const routes: Routes = [
   { path: 'thirdparties/proficient-index', component: ProficientIndexComponent, canActivate: [AuthGuard] },
   { path: 'thirdparties/proficient-detail', component: ProficientDetailComponent, canActivate: [AuthGuard] },
   { path: 'thirdparties/proficient-detail/:id', component: ProficientDetailComponent, canActivate: [AuthGuard] },
-  { path: 'subscription/fleet-contract-management-index', component: FleetContractManagementIndexComponent, canActivate: [AuthGuard] },
   { path: 'subscription/fleet-contract-management-detail', component: FleetContractManagementDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/fleet-contract-management-detail/:id', component: FleetContractManagementDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/fleet-loading', component: FleetLoadingComponent, canActivate: [AuthGuard] },
@@ -482,7 +485,11 @@ const routes: Routes = [
   { path: 'subscription/fleet-contract-quotes-index', component: FleetContractQuotesIndexComponent, canActivate: [AuthGuard] },
   { path: 'subscription/fleet-contract-quotes-detail', component: FleetContractQuotesDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/fleet-contract-quotes-detail/:id', component: FleetContractQuotesDetailComponent, canActivate: [AuthGuard] },
-  { path: 'sign-in', component: SignInComponent },
+  { path: 'subscription/fleet-contract-management-index', component: FleetContractManagementIndexComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/contract-service-arys-index', component: ContractServiceArysIndexComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/contract-service-arys-detail', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/contract-service-arys-detail/:id', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
+
   {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
 
 ];

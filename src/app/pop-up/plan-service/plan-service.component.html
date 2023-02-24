@@ -1,4 +1,111 @@
 <div class="modal-header">
+    <h4 class="modal-tittle">Tipos de servicios</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- style="display: -webkit-box;width: fit-content;" -->
+<div class="modal-body">    
+    <div  style="display: -webkit-box;width: fit-content;">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Agregar Tipos de Servicios
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="serviceTypeList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceTypeRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServiceTypeGridReady($event)">
+                            <ag-grid-column headerName="Código" field="ctiposervicio" [width]="165" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo de servicio" field="xtiposervicio" [width]="290" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <!-- <ag-grid-column headerName="Monto Máximo de Cobertura" field="mmontomax" [width]="250" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <ag-grid-column headerName="Tasa" field="ptasa" [width]="250" [sortable]="true"></ag-grid-column> -->
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Tipo de Servicios Agregados
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit()" *ngIf="canSave">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="acceptedserviceTypeList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onAcceptedServiceTypeGridReady($event)">
+                            <ag-grid-column headerName="Código" field="ctiposervicio" [width]="165" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo de Servicio" field="xtiposervicio" [width]="290" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <!-- <ag-grid-column headerName="Monto Máximo de Cobertura" field="mmontomax" [width]="250" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <ag-grid-column headerName="Tasa" field="ptasa" [width]="250" [sortable]="true"></ag-grid-column> -->
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: -webkit-box;width: fit-content;">
+        <div class="col-sm-8" style="margin-top: 15px;">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Servicios que cubre el Tipo.
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="numberServiceRowClicked($event)" [enableCellChangeFlash]="true">
+                            <ag-grid-column headerName="Código" field="cservicio" [width]="165" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Servicio" field="xservicio" [width]="290" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <!-- <ag-grid-column headerName="Monto Máximo de Cobertura" field="mmontomax" [width]="250" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <ag-grid-column headerName="Tasa" field="ptasa" [width]="250" [sortable]="true"></ag-grid-column> -->
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8" style="margin-top: 15px;">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Servicios con Cantidad
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="quantityList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true">
+                            <ag-grid-column headerName="Código" field="cservicio" [width]="150" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Servicio" field="xservicio" [width]="150" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                            <ag-grid-column headerName="Cantidad" field="ncantidad" [width]="150" [sortable]="true" style="text-align: center;"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="modal-header">
     <h4 class="modal-tittle">{{ "PRODUCTS.PLANS.SERVICE" | translate }}</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
         <span aria-hidden="true">&times;</span>
@@ -140,4 +247,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

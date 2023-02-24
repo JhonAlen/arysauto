@@ -318,6 +318,11 @@ import { TakersDetailComponent } from './configuration/takers/takers-detail/take
 import { PendingPaymentsComponent } from './business/pending-payments/pending-payments.component';
 import { FleetContractQuotesIndexComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-index/fleet-contract-quotes-index.component';
 import { FleetContractQuotesDetailComponent } from './subscription/fleet-contract-quotes/fleet-contract-quotes-detail/fleet-contract-quotes-detail.component';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { PlanAmountRcvComponent } from './pop-up/plan-amount-rcv/plan-amount-rcv.component';
+import { ContractServiceArysIndexComponent } from './subscription/contract-service-arys/contract-service-arys-index/contract-service-arys-index.component';
+import { ContractServiceArysDetailComponent } from './subscription/contract-service-arys/contract-service-arys-detail/contract-service-arys-detail.component';
+import { NumberOfServiceComponent } from './pop-up/number-of-service/number-of-service.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -618,10 +623,15 @@ export function HttpLoaderFactory(http: HttpClient){
     TakersDetailComponent,
     PendingPaymentsComponent,
     FleetContractQuotesIndexComponent,
-    FleetContractQuotesDetailComponent
+    FleetContractQuotesDetailComponent,
+    PlanAmountRcvComponent,
+    ContractServiceArysIndexComponent,
+    ContractServiceArysDetailComponent,
+    NumberOfServiceComponent
   ],
   imports: [
     BrowserModule,
+    NgxChartsModule,
     CdkMenuModule,
     MaterialExampleModule,
     MatInputModule,

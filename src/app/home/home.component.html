@@ -7,6 +7,8 @@
         <a class="btn company-detail-button btn-lg" href="https://www.Mundial Autos.com.co/Mundial Autos/contacto" role="button">{{ "HOME.TEXT_4" | translate }}</a>
     </div>
 </div> -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
@@ -57,6 +59,166 @@
     </tr>
 </table> -->
 
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <div class="container-fluid py-4">
+    <form [formGroup]="home_form">
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-header p-3 pt-2">
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-clipboard-plus-fill"></i>
+            </div>
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">Personas con <br> Contratos Pendientes</p>
+              <h4 class="mb-0"><input formControlName="npersonas_pendientes" style="background-color:transparent;background: inherit;border: 0px; text-align: end ;margin-left: -15px;"></h4>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-3">
+            <p class="mb-0" style="text-align: center;"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./subscription/fleet-contract-management-index">¡Click Aquí!</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-header p-3 pt-2">
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-cash-stack"></i>
+            </div>
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">Personas con <br> Contratos Cobrados</p>
+              <h4 class="mb-0"><input formControlName="npersonas_cobradas" style="background-color:transparent;background: inherit;border: 0px;text-align: end;margin-left: -15px; "></h4>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-3">
+            <p class="mb-0" style="text-align: center;"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./subscription/fleet-contract-management-index">¡Click Aquí!</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-header p-3 pt-2">
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-success text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+            </div>
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">Notificaciones</p>
+              <h4 class="mb-0"><input formControlName="nnotificacion" style="background-color:transparent;background: inherit;border: 0px;text-align: end;margin-left: -15px; "></h4>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-3">
+            <p class="mb-0" style="text-align: center;"><span class="text-success text-sm font-weight-bolder">Para más información... </span><a href="./events/notification-index">¡Click Aquí!</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-header p-3 pt-2">
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-info text-center border-radius-xl mt-n4 position-absolute">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">Usuario</p>
+              <h4 class="mb-0"><input formControlName="xusuario" style="background-color:transparent;background: inherit;border: 0px;text-align: end;margin-left: -15px; "></h4>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-3">
+            <!-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-lg-4 col-md-6 mt-4 mb-4">
+        <div class="card z-index-2 ">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+            <div class="bg-gradient-success shadow-primary border-radius-lg py-3 pe-1">
+              <div class="chart">
+                <ngx-charts-pie-chart 
+                [results]="monthsoutstandingList"
+                [legend]="false"
+                
+                [view]="[480,400]"
+                [labels]="true" >
+                </ngx-charts-pie-chart>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="mb-0 " style="font-weight: bolder;">Contratos Pendientes</h6>
+            <p class="text-sm ">Calculos por cada mes</p>
+            <hr class="dark horizontal">
+            <div class="d-flex ">
+              <i class="bi bi-info-circle"></i>
+              <p class="mb-0 text-sm" style="margin-left: 10px;"> Recuerda chequear los contratos </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 mt-4 mb-4">
+        <div class="card z-index-2  ">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+            <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+              <div class="chart">
+                <ngx-charts-bar-vertical 
+                    [view]="[480,400]"
+                    [results]="monthschargedList"
+                    [xAxisLabel]="'Meses'"
+                  
+                    [yAxisLabel]="'Montos'"
+                    [legend]="false"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [gradient]="true">
+                </ngx-charts-bar-vertical>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="mb-0 " style="font-weight: bolder;"> Contratos Cobrados </h6>
+            <p class="text-sm ">Calculos por cada mes</p>
+            <hr class="dark horizontal">
+            <div class="d-flex ">
+              <!-- <i class="material-icons text-sm my-auto me-1">schedule</i>
+              <p class="mb-0 text-sm"> updated 4 min ago </p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mt-4 mb-3">
+        <div class="card z-index-2 ">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+            <div class="bg-gradient-success shadow-dark border-radius-lg py-3 pe-1">
+              <div class="chart">
+                <ngx-charts-pie-grid 
+                [results]="notificationCountList" >
+                </ngx-charts-pie-grid>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="mb-0 " style="font-weight: bolder;">Notificaciones Registradas</h6>
+            <p class="text-sm ">Calculos por cada mes</p>
+            <hr class="dark horizontal">
+            <div class="d-flex ">
+              <i class="bi bi-info-circle"></i>
+              <p class="mb-0 text-sm" style="margin-left: 10px;"> Recuerda chequear las Notificaciones </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+</main>
+<!-- 
 <section id="hero" class="hero">
   <div class="info d-flex align-items-center" style="margin-top: 461px;">
     <div class="container">
@@ -239,75 +401,8 @@
       </div>
     </div>
   </section>
-<br>
+<br> -->
 
-<footer class="footer" style="background-image:url(./assets/imagenes/arys/planes.jpg);background-position: center;">
-  <div><h3 >Mundial Autos</h3> </div>
-  
-  <div class="container">       
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="footer-widget">
-          <h3 style="margin-right: 110px;">Horario</h3>
-          <div class="footer-widget-content">
-            <div class="open-time ">
-                <ul class="opening-time">
-                  <li><span></span><h6>Horario disponible de Lunes a Viernes</h6>
-                  <li><span></span><h6><strong>A partir de :</strong> 8am - 4pm</h6>
-                </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-sm-4">
-        <div class="footer-widget" style="margin-top: 50px;text-align: -webkit-center;">
-          <h6 >Copyright© CompuAmerica 2022.</h6>
-          <div class="footer-widget-content">
-              <br>
-              <h6>6 C. Negrín, Caracas 1050, Frente al CC. El Recreo. Distrito Capital</h6>
-              <div class="footer-social">
-          </div>
-          </div>
-        </div>
-      </div>
-        
-
-      <div class="col-sm-4">
-        <div class="footer-widget">
-          <h3>Redes Sociales</h3>
-          <div class="footer-widget-content" style=" text-align: -webkit-center;">
-            <div class="images-gellary">
-              <p></p>
-              <table style="margin-left: 25px;">
-                <tr>
-                  <td>
-                    <ul>
-                      <li ><a href="https://www.facebook.com/Mundial Autos-Sas-107360681039695" target="_blank"><img  style="border-radius: 6px;background-color: #ffffff7d;" src="./assets/imagenes/facebook.png" alt="Instagram 01" width="40px" height="40px"></a></li>
-                      <br>
-                      <li><a href="https://www.instagram.com/Mundial Autoss.vzla/?hl=es-la" target="_blank"><img style="background-color: #ffffff7d;border-radius: 15px;" src="./assets/imagenes/instagram.png" alt="Instagram 02" width="40px" height="40px"></a></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <ul>
-                      <li style="border-radius: 15px;"><a  href="https://twitter.com/Mundial Autos" target="_blank"><img style="background-color: #ffffff7d;" src="./assets/imagenes/twitter.png" alt="Instagram 01" width="40px" height="40px"></a></li>
-                      <br>
-                      <li style="border-radius: 15px;"><a href="https://co.linkedin.com/company/linkedin-com-company-Mundial Autossas" target="_blank"><img  style="background-color: #ffffff7d"src="./assets/imagenes/linkedin.png"  width="40px" height="40px"></a></li>
-                    </ul>
-                  </td>
-                </tr>
-              </table>
-
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-</footer>
+<app-footer></app-footer>
 
 

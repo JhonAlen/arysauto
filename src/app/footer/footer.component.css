@@ -1,9 +1,122 @@
-footer{
-    background-color: #132646;
-    border-top-style: solid;
-    border-color: white;
+.imgRedonda {
+    width:200px;
+    height:200px;
+    border-radius:200px;
 }
 
-h3,h6{
-    color: white;
+h3 {
+	text-align: center;
+	color: white;
 }
+.dark-version .card p,
+.dark-version .swal2-popup p,
+.dark-version .dropdown .dropdown-menu p,
+.dark-version .kanban-board p {
+  color: #fff !important;
+  opacity: .6;
+}
+.box {   
+    box-shadow: 30px 20px 30px  rgba(0, 0, 0, 0.7); 
+}
+#apartado1{
+    border:1px solid black;
+    border-radius:22px;
+ }
+
+ #list {
+	margin: 4em auto;
+	padding: 41px 41px 10px 27px;
+	max-width: 600px;
+}
+
+#list h4 {
+	float: left;
+	width: 600px;
+	text-align: center;
+	opacity: 0;
+	animation: fadeIn 1s ease-in both;
+}
+
+#list h4:nth-child(2) {
+	animation-delay: 1s;
+}
+#list h4:nth-child(3) {
+	animation-delay: 2s;
+}
+#list h4:nth-child(4) {
+	animation-delay: 3s;
+}
+#list h4:nth-child(5) {
+	animation-delay: 4s;
+}
+
+#list2 {
+	margin: 2em auto;
+	max-width: 600px;
+}
+
+#list2 h1 {
+	float: left;
+	width: 680px;
+	text-align: center;
+	opacity: 0;
+	animation: fadeIn 1s ease-in both;
+}
+
+#list2 h1:nth-child(2) {
+	animation-delay: 2s;
+}
+#list2 h1:nth-child(3) {
+	animation-delay: 3s;
+}
+#list2 h1:nth-child(4) {
+	animation-delay: 4s;
+}
+#list2 h1:nth-child(5) {
+	animation-delay: 5s;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.mask-custom-1 {
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, .2);
+    border-radius: 0em;
+    border: 2px solid rgba(255, 255, 255, .1);
+    background-clip: padding-box;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); 
+  }
+  
+  @media (max-width: 100px) {
+    .bg-image {
+      height: 900px !important;
+    }
+    body {
+		font-size:80%; 
+	} 
+  }
+
+footer{
+	background-color: ghostwhite;
+    padding-top: 50px;
+}  
+
+img::before{
+	background-color: white;
+}
+
+.hero .carousel-item::before {
+	content: "";
+     background-color: rgba(75, 146, 232, 0.333); 
+	position: absolute;
+	inset: 0;
+  }

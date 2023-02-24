@@ -1,0 +1,110 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Sumas Aseguradas</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                Sumas Aseguradas requeridas
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Daños a Cosas</label>
+                                    <input type="number" formControlName="msuma_dc" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_dc').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_dc').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_dc').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Daños a Personas</label>
+                                    <input type="number" formControlName="msuma_personas" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_personas').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_personas').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_personas').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Defensa Personal</label>
+                                    <input type="number" formControlName="msuma_dp" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_dp').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_dp').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_dp').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Exceso de Límite</label>
+                                    <input type="number" formControlName="msuma_exceso" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_exceso').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_exceso').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_exceso').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Muerte</label>
+                                    <input type="number" formControlName="msuma_muerte" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_muerte').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_muerte').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_muerte').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Invalidez</label>
+                                    <input type="number" formControlName="msuma_invalidez" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_invalidez').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_invalidez').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_invalidez').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Gastos Médicos</label>
+                                    <input type="number" formControlName="msuma_gm" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_gm').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_gm').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_gm').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-3">
+                                <div class="form-group">
+                                    <label>Gastos Funerarios</label>
+                                    <input type="number" formControlName="msuma_gf" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_gf').errors }">
+                                    <div *ngIf="submitted && popup_form.get('msuma_gf').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('msuma_gf').errors.required">{{ "SUBSCRIPTION.FLEETCONTRACTSMANAGEMENT.REQUIREDSTARTDATE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-4 mt-2" style="margin-left: 370px;">
+                                    <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="button" (click)="onSubmit(popup_form.value)" *ngIf="canSave">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "ADMINISTRATION.COLLECTION.SAVE" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

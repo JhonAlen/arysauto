@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Cantidad de Servicios que se va a Prestar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+    <form [formGroup]="popup_form" (ngSubmit)="onSubmit(popup_form.value)">
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Cantidad de Servicio</label>
+                                    <input type="number" formControlName="ncantidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ncantidad').errors }" (change)="onSubmit(popup_form.value)">
+                                    <div *ngIf="submitted && popup_form.get('ncantidad').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('ncantidad').errors.required">{{ "ADMINISTRATION.COLLECTION.REQUIREDNAME" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

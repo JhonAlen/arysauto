@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PlanPaymentMethodologyComponent } from '@app/pop-up/plan-payment-methodology/plan-payment-methodology.component';
-import { PlanInsurerComponent } from '@app/pop-up/plan-insurer/plan-insurer.component';
 import { PlanServiceComponent } from '@app/pop-up/plan-service/plan-service.component';
+import { PlanAmountRcvComponent } from '@app/pop-up/plan-amount-rcv/plan-amount-rcv.component';
 
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { environment } from '@environments/environment';
@@ -32,6 +30,9 @@ export class PlanDetailComponent implements OnInit {
   paymentMethodologyList: any[] = [];
   insurerList: any[] = [];
   serviceList: any[] = [];
+  serviceTypeList: any[] = [];
+  acceptedServiceList: any[] = [];
+  quantityServiceList: any[] = [];
   serviceInsurerList: any[] = [];
   canCreate: boolean = false;
   canDetail: boolean = false;
@@ -44,6 +45,9 @@ export class PlanDetailComponent implements OnInit {
   paymentMethodologyDeletedRowList: any[] = [];
   insurerDeletedRowList: any[] = [];
   serviceDeletedRowList: any[] = [];
+  rcvAmout = {};
+  boculta_rcv: boolean = false;
+  bactiva_apov: boolean = false;
 
   constructor(private formBuilder: UntypedFormBuilder, 
               private authenticationService : AuthenticationService,
@@ -59,7 +63,8 @@ export class PlanDetailComponent implements OnInit {
       mcosto: ['', Validators.required],
       parys:[''],
       paseguradora:[''],
-      bactivo: [true, Validators.required]
+      bactivo: [true, Validators.required],
+      brcv: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
@@ -150,7 +155,7 @@ export class PlanDetailComponent implements OnInit {
       ccompania: this.currentUser.data.ccompania,
       cplan: this.code
     };
-    this.http.post(`${environment.apiUrl}/api/v2/plan/production/detail`, params, options).subscribe((response: any) => {
+    this.http.post(`${environment.apiUrl}/api/plan/detail`, params, options).subscribe((response: any) => {
       if(response.data.status){
         this.detail_form.get('ctipoplan').setValue(response.data.ctipoplan);
         this.detail_form.get('ctipoplan').disable();
@@ -162,59 +167,18 @@ export class PlanDetailComponent implements OnInit {
         this.detail_form.get('parys').disable();
         this.detail_form.get('paseguradora').setValue(response.data.paseguradora);
         this.detail_form.get('paseguradora').disable();
+        this.detail_form.get('brcv').setValue(response.data.brcv);
+        this.detail_form.get('brcv').disable();
         this.detail_form.get('bactivo').setValue(response.data.bactivo);
         this.detail_form.get('bactivo').disable();
-        this.paymentMethodologyList = [];
-        if(response.data.paymentMethodologies){
-          for(let i =0; i < response.data.paymentMethodologies.length; i++){
-            this.paymentMethodologyList.push({
-              cgrid: i,
-              create: false,
-              cmetodologiapago: response.data.paymentMethodologies[i].cmetodologiapago,
-              xmetodologiapago: response.data.paymentMethodologies[i].xmetodologiapago,
-              mmetodologiapago: response.data.paymentMethodologies[i].mmetodologiapago
-            });
-          }
-        }
-        this.insurerList = [];
-        if(response.data.insurers){
-          for(let i =0; i < response.data.insurers.length; i++){
-            this.insurerList.push({
-              cgrid: i,
-              create: false,
-              caseguradora: response.data.insurers[i].caseguradora,
-              xaseguradora: response.data.insurers[i].xaseguradora
-            });
-          }
-        }
         this.serviceList = [];
         if(response.data.services){
           for(let i =0; i < response.data.services.length; i++){
-            let coverages = [];
-            for(let j =0; j < response.data.services[i].coverages.length; j++){
-              coverages.push({
-                create: false,
-                ccobertura: response.data.services[i].coverages[j].ccobertura,
-                xcobertura: response.data.services[i].coverages[j].xcobertura,
-                cconceptocobertura: response.data.services[i].coverages[j].cconceptocobertura,
-                xconceptocobertura: response.data.services[i].coverages[j].xconceptocobertura
-              });
-            }
             this.serviceList.push({
               cgrid: i,
               create: false,
-              cservicio: response.data.services[i].cservicio,
-              xservicio: response.data.services[i].xservicio,
-              cservicioplan: response.data.services[i].cservicioplan,
               ctiposervicio: response.data.services[i].ctiposervicio,
               xtiposervicio: response.data.services[i].xtiposervicio,
-              ctipoagotamientoservicio: response.data.services[i].ctipoagotamientoservicio,
-              ncantidad: response.data.services[i].ncantidad,
-              pservicio: response.data.services[i].pservicio,
-              mmaximocobertura: response.data.services[i].mmaximocobertura,
-              mdeducible: response.data.services[i].mdeducible,
-              bserviciopadre: response.data.services[i].bserviciopadre,
-              coverages: coverages
             });
           }
         }
@@ -254,6 +218,16 @@ export class PlanDetailComponent implements OnInit {
     this.editStatus = true;
   }
 
+  changeApov(){
+    if(this.detail_form.get('ctipoplan').value != 1){
+      this.boculta_rcv = true;
+      this.bactiva_apov = false;
+    }else{
+      this.boculta_rcv = false;
+      this.bactiva_apov = true;
+    }
+  }
+
   cancelSave(){
     if(this.code){
       this.loading_cancel = true;
@@ -266,161 +240,31 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
-  addPaymentMethodology(){
-    let paymentMethodology = { type: 3 };
-    const modalRef = this.modalService.open(PlanPaymentMethodologyComponent);
-    modalRef.componentInstance.paymentMethodology = paymentMethodology;
-    modalRef.result.then((result: any) => { 
-      if(result){
-        if(result.type == 3){
-          this.paymentMethodologyList.push({
-            cgrid: this.insurerList.length,
-            create: true,
-            cmetodologiapago: result.cmetodologiapago,
-            xmetodologiapago: result.xmetodologiapago,
-            mmetodologiapago: result.mmetodologiapago
-          });
-          this.paymentMethodologyGridApi.setRowData(this.paymentMethodologyList);
-        }
-      }
-    });
-  }
-
-  addInsurer(){
-    let insurer = { type: 3 };
-    const modalRef = this.modalService.open(PlanInsurerComponent);
-    modalRef.componentInstance.insurer = insurer;
-    modalRef.result.then((result: any) => { 
-      if(result){
-        if(result.type == 3){
-          this.insurerList.push({
-            cgrid: this.insurerList.length,
-            create: true,
-            caseguradora: result.caseguradora,
-            xaseguradora: result.xaseguradora
-          });
-          this.insurerGridApi.setRowData(this.insurerList);
-        }
-      }
-    });
-  }
-
   addService(){
     let service = { type: 3 };
     const modalRef = this.modalService.open(PlanServiceComponent, {size: 'xl'});
     modalRef.componentInstance.service = service;
     modalRef.result.then((result: any) => { 
       if(result){
-        if(result.type == 3){
-          this.serviceList.push({
-            cgrid: this.serviceList.length,
+        this.serviceTypeList = []; 
+
+        for(let i = 0; i < result.acceptedservice.length; i++){
+          this.serviceTypeList.push({
+            cgrid: this.serviceTypeList.length,
             create: true,
-            cservicio: result.cservicio,
-            xservicio: result.xservicio,
-            ctiposervicio: result.ctiposervicio,
-            xtiposervicio: result.xtiposervicio,
-            ctipoagotamientoservicio: result.ctipoagotamientoservicio,
-            ncantidad: result.ncantidad,
-            pservicio: result.pservicio,
-            mmaximocobertura: result.mmaximocobertura,
-            mdeducible: result.mdeducible,
-            bserviciopadre: result.bserviciopadre,
-            coverages: result.coverages
+            ctiposervicio: result.acceptedservice[i].ctiposervicio,
+            xtiposervicio: result.acceptedservice[i].xtiposervicio,
           });
-          this.serviceGridApi.setRowData(this.serviceList);
         }
-      }
-    });
-  }
 
-  paymentMethodologyRowClicked(event: any){
-    let paymentMethodology = {};
-    if(this.editStatus){ 
-      paymentMethodology = { 
-        type: 1,
-        create: event.data.create, 
-        cgrid: event.data.cgrid,
-        cmetodologiapago: event.data.cmetodologiapago,
-        mmetodologiapago: event.data.mmetodologiapago,
-        delete: false
-      };
-    }else{ 
-      paymentMethodology = { 
-        type: 2,
-        create: event.data.create,
-        cgrid: event.data.cgrid,
-        cmetodologiapago: event.data.cmetodologiapago,
-        mmetodologiapago: event.data.mmetodologiapago,
-        delete: false
-      }; 
-    }
-    const modalRef = this.modalService.open(PlanPaymentMethodologyComponent);
-    modalRef.componentInstance.paymentMethodology = paymentMethodology;
-    modalRef.result.then((result: any) => {
-      if(result){
-        if(result.type == 1){
-          for(let i = 0; i < this.paymentMethodologyList.length; i++){
-            if(this.paymentMethodologyList[i].cgrid == result.cgrid){
-              this.paymentMethodologyList[i].mmetodologiapago = result.mmetodologiapago;
-              this.paymentMethodologyGridApi.refreshCells();
-              return;
-            }
-          }
-        }else if(result.type == 4){
-          if(result.delete){
-            this.paymentMethodologyDeletedRowList.push({ cmetodologiapago: result.cmetodologiapago });
-          }
-          this.paymentMethodologyList = this.paymentMethodologyList.filter((row) => { return row.cgrid != result.cgrid });
-          for(let i = 0; i < this.paymentMethodologyList.length; i++){
-            this.paymentMethodologyList[i].cgrid = i;
-          }
-          this.paymentMethodologyGridApi.setRowData(this.paymentMethodologyList);
-        }
-      }
-    });
-  }
-
-  insurerRowClicked(event: any){
-    let insurer = {};
-    if(this.editStatus){ 
-      insurer = { 
-        type: 1,
-        create: event.data.create, 
-        cgrid: event.data.cgrid,
-        caseguradora: event.data.caseguradora,
-        delete: false
-      };
-    }else{ 
-      insurer = { 
-        type: 2,
-        create: event.data.create,
-        cgrid: event.data.cgrid,
-        caseguradora: event.data.caseguradora,
-        delete: false
-      }; 
-    }
-    const modalRef = this.modalService.open(PlanInsurerComponent);
-    modalRef.componentInstance.insurer = insurer;
-    modalRef.result.then((result: any) => {
-      if(result){
-        if(result.type == 1){
-          for(let i = 0; i < this.insurerList.length; i++){
-            if(this.insurerList[i].cgrid == result.cgrid){
-              this.insurerList[i].caseguradora = result.caseguradora;
-              this.insurerList[i].xaseguradora = result.xaseguradora;
-              this.insurerGridApi.refreshCells();
-              return;
-            }
-          }
-        }else if(result.type == 4){
-          if(result.delete){
-            this.insurerDeletedRowList.push({ caseguradora: result.caseguradora });
-          }
-          this.insurerList = this.insurerList.filter((row) => { return row.cgrid != result.cgrid });
-          for(let i = 0; i < this.insurerList.length; i++){
-            this.insurerList[i].cgrid = i;
-          }
-          this.insurerGridApi.setRowData(this.insurerList);
+        for(let i = 0; i < result.quantity.length; i++){
+          this.quantityServiceList.push({
+            cgrid: this.quantityServiceList.length,
+            create: true,
+            ncantidad: result.quantity[i].ncantidad,
+            cservicio: result.quantity[i].cservicio,
+            xservicio: result.quantity[i].xservicio ,
+          });
         }
       }
     });
@@ -433,16 +277,7 @@ export class PlanDetailComponent implements OnInit {
         type: 1,
         create: event.data.create, 
         cgrid: event.data.cgrid,
-        cservicioplan: event.data.cservicioplan,
-        cservicio: event.data.cservicio,
         ctiposervicio: event.data.ctiposervicio,
-        ctipoagotamientoservicio: event.data.ctipoagotamientoservicio,
-        ncantidad: event.data.ncantidad,
-        pservicio: event.data.pservicio,
-        mmaximocobertura: event.data.mmaximocobertura,
-        mdeducible: event.data.mdeducible,
-        bserviciopadre: event.data.bserviciopadre,
-        coverages: event.data.coverages,
         delete: false
       };
     }else{ 
@@ -450,16 +285,7 @@ export class PlanDetailComponent implements OnInit {
         type: 2,
         create: event.data.create,
         cgrid: event.data.cgrid,
-        cservicioplan: event.data.cservicioplan,
-        cservicio: event.data.cservicio,
         ctiposervicio: event.data.ctiposervicio,
-        ctipoagotamientoservicio: event.data.ctipoagotamientoservicio,
-        ncantidad: event.data.ncantidad,
-        pservicio: event.data.pservicio,
-        mmaximocobertura: event.data.mmaximocobertura,
-        mdeducible: event.data.mdeducible,
-        bserviciopadre: event.data.bserviciopadre,
-        coverages: event.data.coverages,
         delete: false
       }; 
     }
@@ -470,46 +296,41 @@ export class PlanDetailComponent implements OnInit {
         if(result.type == 1){
           for(let i = 0; i < this.serviceList.length; i++){
             if(this.serviceList[i].cgrid == result.cgrid){
-              this.serviceList[i].cservicio = result.cservicio;
-              this.serviceList[i].xservicio = result.xservicio;
               this.serviceList[i].ctiposervicio = result.ctiposervicio;
               this.serviceList[i].xtiposervicio = result.xtiposervicio;
-              this.serviceList[i].ctipoagotamientoservicio = result.ctipoagotamientoservicio;
-              this.serviceList[i].ncantidad = result.ncantidad;
-              this.serviceList[i].pservicio = result.pservicio;
-              this.serviceList[i].mmaximocobertura = result.mmaximocobertura;
-              this.serviceList[i].mdeducible = result.mdeducible;
-              this.serviceList[i].bserviciopadre = result.bserviciopadre;
-              this.serviceList[i].coverages = result.coverages;
-              this.serviceList[i].coveragesResult = result.coveragesResult;
               this.serviceGridApi.refreshCells();
               return;
             }
           }
-        }else if(result.type == 4){
-          if(result.delete){
-            this.serviceDeletedRowList.push({ cservicioplan: result.cservicioplan, cservicio: result.cservicio });
-          }
-          this.serviceList = this.serviceList.filter((row) => { return row.cgrid != result.cgrid });
-          for(let i = 0; i < this.serviceList.length; i++){
-            this.serviceList[i].cgrid = i;
-          }
-          this.serviceGridApi.setRowData(this.serviceList);
         }
       }
     });
   }
 
-  onPaymentMethodologiesGridReady(event){
-    this.paymentMethodologyGridApi = event.api;
-  }
-
-  onInsurersGridReady(event){
-    this.insurerGridApi = event.api;
-  }
-
   onServicesGridReady(event){
     this.serviceGridApi = event.api;
+  }
+
+  changeRcv(){
+    if(this.detail_form.get('brcv').value == true){
+      let rcv = { };
+      const modalRef = this.modalService.open(PlanAmountRcvComponent, {size: 'xl'});
+      modalRef.componentInstance.rcv = rcv;
+      modalRef.result.then((result: any) => { 
+        if(result){
+          this.rcvAmout = {
+            msuma_dc: result.msuma_dc,
+            msuma_personas: result.msuma_personas,
+            msuma_exceso: result.msuma_exceso,
+            msuma_dp: result.msuma_dp,
+            msuma_muerte: result.msuma_muerte,
+            msuma_invalidez: result.msuma_invalidez,
+            msuma_gm: result.msuma_gm,
+            msuma_gf: result.msuma_gf,
+          };
+        }
+      });
+    }
   }
 
   onSubmit(form){
@@ -524,149 +345,50 @@ export class PlanDetailComponent implements OnInit {
     let params;
     let url;
     if(this.code){
-      let updatePaymentMethodologiesList = this.paymentMethodologyList.filter((row) => { return !row.create; });
-      for(let i = 0; i < updatePaymentMethodologiesList.length; i++){
-        delete updatePaymentMethodologiesList[i].cgrid;
-        delete updatePaymentMethodologiesList[i].create;
-        delete updatePaymentMethodologiesList[i].xmetodologiapago;
-      }
-      let createPaymentMethodologiesList = this.paymentMethodologyList.filter((row) => { return row.create; });
-      for(let i = 0; i < createPaymentMethodologiesList.length; i++){
-        delete createPaymentMethodologiesList[i].cgrid;
-        delete createPaymentMethodologiesList[i].create;
-        delete createPaymentMethodologiesList[i].xmetodologiapago;
-      }
-      let updateInsurerList = this.insurerList.filter((row) => { return !row.create; });
-      for(let i = 0; i < updateInsurerList.length; i++){
-        delete updateInsurerList[i].cgrid;
-        delete updateInsurerList[i].create;
-        delete updateInsurerList[i].xaseguradora;
-      }
-      let createInsurerList = this.insurerList.filter((row) => { return row.create; });
-      for(let i = 0; i < createInsurerList.length; i++){
-        delete createInsurerList[i].cgrid;
-        delete createInsurerList[i].create;
-        delete createInsurerList[i].xaseguradora;
-      }
-      let updateServiceList = this.serviceList.filter((row) => { return !row.create; });
-      for(let i = 0; i < updateServiceList.length; i++){
-        delete updateServiceList[i].cgrid;
-        delete updateServiceList[i].create;
-        delete updateServiceList[i].xservicio;
-        delete updateServiceList[i].xtiposervicio;
-        updateServiceList[i].coverages = updateServiceList[i].coveragesResult;
-        delete updateServiceList[i].coveragesResult;
-        if(updateServiceList[i].coverages && updateServiceList[i].coverages.create){
-          for(let j = 0; j < updateServiceList[i].coverages.create.length; j++){
-            delete updateServiceList[i].coverages.create[j].cgrid;
-            delete updateServiceList[i].coverages.create[j].create;
-            delete updateServiceList[i].coverages.create[j].xcobertura;
-            delete updateServiceList[i].coverages.create[j].xconceptocobertura;
-          }
-        }
-        if(updateServiceList[i].coverages && updateServiceList[i].coverages.update){
-          for(let j = 0; j < updateServiceList[i].coverages.update.length; j++){
-            delete updateServiceList[i].coverages.update[j].cgrid;
-            delete updateServiceList[i].coverages.update[j].create;
-            delete updateServiceList[i].coverages.update[j].xcobertura;
-            delete updateServiceList[i].coverages.update[j].xconceptocobertura;
-          }
-        }
-      }
       let createServiceList = this.serviceList.filter((row) => { return row.create; });
-      for(let i = 0; i < createServiceList.length; i++){
-        delete createServiceList[i].cgrid;
-        delete createServiceList[i].create;
-        delete createServiceList[i].xservicio;
-        delete createServiceList[i].xtiposervicio;
-        if(createServiceList[i].coverages){
-          for(let j = 0; j < createServiceList[i].coverages.length; j++){
-            delete createServiceList[i].coverages[j].cgrid;
-            delete createServiceList[i].coverages[j].create;
-            delete createServiceList[i].coverages[j].xcobertura;
-            delete createServiceList[i].coverages[j].xconceptocobertura;
-          }
-        }
-      }
+      let updateServiceList = this.serviceList.filter((row) => { return !row.create; });
+
       params = {
-        permissionData: {
-          cusuario: this.currentUser.data.cusuario,
-          cmodulo: 81
-        },
         cplan: this.code,
         ctipoplan: form.ctipoplan,
         xplan: form.xplan,
         paseguradora: form.paseguradora,        
         parys: form.parys,
-        mplan: form.mplan,
+        mcosto: form.mcosto,
         bactivo: form.bactivo,
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
         cusuariomodificacion: this.currentUser.data.cusuario,
-        paymentMethodologies: {
-          create: createPaymentMethodologiesList,
-          update: updatePaymentMethodologiesList,
-          delete: this.paymentMethodologyDeletedRowList
-        },
-        insurers: {
-          create: createInsurerList,
-          update: updateInsurerList,
-          delete: this.insurerDeletedRowList
-        },
         services: {
           create: createServiceList,
-          update: updateServiceList,
-          delete: this.serviceDeletedRowList
+          update: updateServiceList
         }
       };
-      url = `${environment.apiUrl}/api/v2/plan/production/update`;
+      url = `${environment.apiUrl}/api/plan/update`;
     }else{
-      let createPaymentMethodologiesList = this.paymentMethodologyList;
-      for(let i = 0; i < createPaymentMethodologiesList.length; i++){
-        delete createPaymentMethodologiesList[i].cgrid;
-        delete createPaymentMethodologiesList[i].create;
-        delete createPaymentMethodologiesList[i].xmetodologiapago;
-      }
-      let createInsurerList = this.insurerList;
-      for(let i = 0; i < createInsurerList.length; i++){
-        delete createInsurerList[i].cgrid;
-        delete createInsurerList[i].create;
-        delete createInsurerList[i].xaseguradora;
-      }
-      let createServiceList = this.serviceList;
-      for(let i = 0; i < createServiceList.length; i++){
-        delete createServiceList[i].cgrid;
-        delete createServiceList[i].create;
-        delete createServiceList[i].xservicio;
-        delete createServiceList[i].xtiposervicio;
-        if(createServiceList[i].coverages){
-          for(let j = 0; j < createServiceList[i].coverages.length; j++){
-            delete createServiceList[i].coverages[j].cgrid;
-            delete createServiceList[i].coverages[j].create;
-            delete createServiceList[i].coverages[j].xcobertura;
-            delete createServiceList[i].coverages[j].xconceptocobertura;
-          }
-        }
-      }
       params = {
-        permissionData: {
-          cusuario: this.currentUser.data.cusuario,
-          cmodulo: 81
-        },
+        cusuario: this.currentUser.data.cusuario,
         ctipoplan: form.ctipoplan,
         xplan: form.xplan,
+        paseguradora: form.paseguradora,        
+        parys: form.parys,
+        mcosto: form.mcosto,
+        brcv: form.brcv,
         bactivo: form.bactivo,
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
         cusuariocreacion: this.currentUser.data.cusuario,
-        paymentMethodologies: createPaymentMethodologiesList,
-        insurers: createInsurerList,
-        services: createServiceList
+        servicesType: this.serviceTypeList,
+        quantity: this.quantityServiceList
       };
-      url = `${environment.apiUrl}/api/v2/plan/production/create`;
+      url = `${environment.apiUrl}/api/plan/create`;
     }
+
     this.http.post(url, params, options).subscribe((response : any) => {
       if(response.data.status){
+        if(this.detail_form.get('brcv').value == true){
+          this.onSubmitRcv();
+        }
         if(this.code){
           location.reload();
         }else{
@@ -680,6 +402,50 @@ export class PlanDetailComponent implements OnInit {
           this.alert.show = true;
         }
       }
+      this.loading = false;
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ message = "HTTP.ERROR.PLANS.PLANNOTFOUND"; }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
+      this.loading = false;
+    });
+  }
+
+  onSubmitRcv(){
+    this.submitted = true;
+    this.loading = true;
+    if(this.detail_form.invalid){
+      this.loading = false;
+      return;
+    }
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params;
+    let url;
+
+    params = {
+      cusuario: this.currentUser.data.cusuario,
+      cservicio_aseg: 1,
+      ctiposervicio: 68,
+      ctipoagotamientoservicio: 3,
+      ncantidad: 0,
+      pservicio: 0,
+      mmaximocobertura: 0,
+      mdeducible: 0,
+      bserviciopadre: false,
+      bactivo: true,
+      rcv: this.rcvAmout
+    };
+    url = `${environment.apiUrl}/api/plan/create-plan-rcv`;
+    
+    this.http.post(url, params, options).subscribe((response : any) => {
+
       this.loading = false;
     },
     (err) => {
