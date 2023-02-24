@@ -322,6 +322,7 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { PlanAmountRcvComponent } from './pop-up/plan-amount-rcv/plan-amount-rcv.component';
 import { ContractServiceArysIndexComponent } from './subscription/contract-service-arys/contract-service-arys-index/contract-service-arys-index.component';
 import { ContractServiceArysDetailComponent } from './subscription/contract-service-arys/contract-service-arys-detail/contract-service-arys-detail.component';
+import { NumberOfServiceComponent } from './pop-up/number-of-service/number-of-service.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -625,7 +626,8 @@ export function HttpLoaderFactory(http: HttpClient){
     FleetContractQuotesDetailComponent,
     PlanAmountRcvComponent,
     ContractServiceArysIndexComponent,
-    ContractServiceArysDetailComponent
+    ContractServiceArysDetailComponent,
+    NumberOfServiceComponent
   ],
   imports: [
     BrowserModule,

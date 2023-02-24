@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PlanServiceCoverageComponent } from '@app/pop-up/plan-service-coverage/plan-service-coverage.component';
+import { NumberOfServiceComponent } from '@app/pop-up/number-of-service/number-of-service.component';
 
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { environment } from '@environments/environment';
@@ -31,6 +31,8 @@ export class PlanServiceComponent implements OnInit {
   alert = { show : false, type : "", message : "" }
   coverageDeletedRowList: any[] = [];
   acceptedserviceTypeList;
+  quantityList: any[] = [];
+  List: any[] = [];
 
   constructor(public activeModal: NgbActiveModal,
               private modalService: NgbModal,
@@ -86,24 +88,6 @@ export class PlanServiceComponent implements OnInit {
         arrayPerform = this.serviceTypeList;
         this.acceptedserviceTypeList = arrayPerform;
 
-      // this.http.post(`${environment.apiUrl}/api/valrep/service-depletion-type`, params, options).subscribe((response : any) => {
-      //   if(response.data.status){
-      //     for(let i = 0; i < response.data.list.length; i++){
-      //       this.serviceDepletionTypeList.push({ id: response.data.list[i].ctipoagotamientoservicio, value: response.data.list[i].xtipoagotamientoservicio });
-      //     }
-      //     this.serviceDepletionTypeList.sort((a,b) => a.value > b.value ? 1 : -1);
-      //   }
-      // },
-      // (err) => {
-      //   let code = err.error.data.code;
-      //   let message;
-      //   if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-      //   else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICEDEPLETIONTYPENOTFOUND"; }
-      //   else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-      //   this.alert.message = message;
-      //   this.alert.type = 'danger';
-      //   this.alert.show = true;
-      // });
       if(this.service){
         if(this.service.type == 3){
           this.canSave = false;
@@ -191,7 +175,34 @@ export class PlanServiceComponent implements OnInit {
       this.canSave = true;
     }
     this.acceptedServiceTypeGridApi.setRowData(this.acceptedserviceTypeList);
+    this.quantityList = [];
 }
+
+numberServiceRowClicked(event: any){
+  let quantity = { cservicio: event.data.cservicio, xservicio: event.data.xservicio };
+  const modalRef = this.modalService.open(NumberOfServiceComponent);
+  modalRef.componentInstance.quantity = quantity;
+  modalRef.result.then((result: any) => { 
+    if(result){
+      for(let i = 0; i < result.length; i++){
+        this.List.push({
+          ncantidad: result[i].ncantidad,
+          cservicio: result[i].cservicio,
+          xservicio: result[i].xservicio,
+        })
+      } 
+      this.quantityList = []
+      for(let i = 0; i < this.List.length; i++){
+        this.quantityList.push({
+          ncantidad: this.List[i].ncantidad,
+          cservicio: this.List[i].cservicio,
+          xservicio: this.List[i].xservicio,
+        })
+      } 
+    }
+  });
+}
+
 
 onServiceTypeGridReady(event){
   this.serviceTypeGridApi = event.api;
@@ -311,7 +322,14 @@ onAcceptedServiceTypeGridReady(event){
     this.submitted = true;
     this.loading = true;
 
-    this.service = this.acceptedserviceTypeList
+    let servicios = {};
+
+    servicios = {
+      acceptedservice: this.acceptedserviceTypeList,
+      quantity: this.quantityList
+    }
+
+    this.service = servicios;
 
     this.activeModal.close(this.service);
   }

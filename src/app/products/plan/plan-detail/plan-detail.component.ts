@@ -30,6 +30,9 @@ export class PlanDetailComponent implements OnInit {
   paymentMethodologyList: any[] = [];
   insurerList: any[] = [];
   serviceList: any[] = [];
+  serviceTypeList: any[] = [];
+  acceptedServiceList: any[] = [];
+  quantityServiceList: any[] = [];
   serviceInsurerList: any[] = [];
   canCreate: boolean = false;
   canDetail: boolean = false;
@@ -43,6 +46,8 @@ export class PlanDetailComponent implements OnInit {
   insurerDeletedRowList: any[] = [];
   serviceDeletedRowList: any[] = [];
   rcvAmout = {};
+  boculta_rcv: boolean = false;
+  bactiva_apov: boolean = false;
 
   constructor(private formBuilder: UntypedFormBuilder, 
               private authenticationService : AuthenticationService,
@@ -213,6 +218,16 @@ export class PlanDetailComponent implements OnInit {
     this.editStatus = true;
   }
 
+  changeApov(){
+    if(this.detail_form.get('ctipoplan').value != 1){
+      this.boculta_rcv = true;
+      this.bactiva_apov = false;
+    }else{
+      this.boculta_rcv = false;
+      this.bactiva_apov = true;
+    }
+  }
+
   cancelSave(){
     if(this.code){
       this.loading_cancel = true;
@@ -231,17 +246,26 @@ export class PlanDetailComponent implements OnInit {
     modalRef.componentInstance.service = service;
     modalRef.result.then((result: any) => { 
       if(result){
-        this.serviceList = []; 
-        for(let i = 0; i < result.length; i++){
-          // this.serviceList = [];
-          this.serviceList.push({
-            cgrid: this.serviceList.length,
+        this.serviceTypeList = []; 
+
+        for(let i = 0; i < result.acceptedservice.length; i++){
+          this.serviceTypeList.push({
+            cgrid: this.serviceTypeList.length,
             create: true,
-            ctiposervicio: result[i].ctiposervicio,
-            xtiposervicio: result[i].xtiposervicio,
+            ctiposervicio: result.acceptedservice[i].ctiposervicio,
+            xtiposervicio: result.acceptedservice[i].xtiposervicio,
           });
         }
-        //this.serviceGridApi.setRowData(this.serviceList);
+
+        for(let i = 0; i < result.quantity.length; i++){
+          this.quantityServiceList.push({
+            cgrid: this.quantityServiceList.length,
+            create: true,
+            ncantidad: result.quantity[i].ncantidad,
+            cservicio: result.quantity[i].cservicio,
+            xservicio: result.quantity[i].xservicio ,
+          });
+        }
       }
     });
   }
@@ -354,7 +378,8 @@ export class PlanDetailComponent implements OnInit {
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
         cusuariocreacion: this.currentUser.data.cusuario,
-        services: this.serviceList
+        servicesType: this.serviceTypeList,
+        quantity: this.quantityServiceList
       };
       url = `${environment.apiUrl}/api/plan/create`;
     }

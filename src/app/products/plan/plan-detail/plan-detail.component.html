@@ -35,7 +35,7 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>{{ "PRODUCTS.PLANS.PLANTYPE" | translate }}</label>
-                                    <select formControlName="ctipoplan" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipoplan').errors }">
+                                    <select formControlName="ctipoplan" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipoplan').errors }" (change)="changeApov()">
                                         <option></option>
                                         <option *ngFor="let planType of planTypeList" value="{{ planType.id }}">{{ planType.value }}</option>
                                     </select>
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12 col-md-4" *ngIf="boculta_rcv">
                                 <div class="form-check form-switch">
                                     <label style="margin-left: 78px;margin-top: 13px;">¿Posee RCV?</label>
                                     <div class="row">
@@ -148,6 +148,27 @@
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                 {{ "PRODUCTS.PLANS.ADDSERVICE" | translate }}
                             </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
+                            <ag-grid-column headerName="Código" field="ctiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo de Servicio" field="xtiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5" *ngIf="bactiva_apov">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Tasas
                         </div>
                     </div>
                 </div>
