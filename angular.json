@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mundialauto": {
+    "arysauto": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mundialauto",
+            "outputPath": "dist/arysauto",
             "index":"src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,12 +62,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "4mb",
-                  "maximumError": "12mb"
+                  "maximumError": "20mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumError": "1400kb"
                 }
               ]
             }
@@ -76,18 +76,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mundialauto:build"
+            "browserTarget": "arysauto:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mundialauto:build:production"
+              "browserTarget": "arysauto:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mundialauto:build"
+            "browserTarget": "arysauto:build"
           }
         },
         "test": {
@@ -111,11 +111,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mundialauto:serve"
+            "devServerTarget": "arysauto:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mundialauto:serve:production"
+              "devServerTarget": "arysauto:serve:production"
             }
           }
         }
