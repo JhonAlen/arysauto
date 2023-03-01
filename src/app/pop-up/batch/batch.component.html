@@ -60,7 +60,7 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 520px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="true" [paginationPageSize]="10" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onContractsGridReady($event)">
-                            <ag-grid-column headerName="N° Contrato" field="ccontratoflota" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Cédula" field="ncedula" [width]="173" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Propietario" field="xpropietario" [width]="173" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Placa" field="xplaca" [width]="173" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Marca" field="xmarca" [width]="173" [sortable]="true"></ag-grid-column>
