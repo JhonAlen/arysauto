@@ -42,11 +42,8 @@ export class SignInComponent implements OnInit {
     }
     this.authenticationService.login(form.xemail, form.xcontrasena).pipe(first()).subscribe((data : any) => {
       this.loading = false;
-   
-        if(data.data.ctipo_sistema == 1 ){ this.router.navigate(['/dahsboard']).then(() =>{ window.location.reload(); });}
-        else{ this.router.navigate(['/home']).then(() =>{ window.location.reload(); }); }
-     
-
+      if(data.data.ctipo_sistema == 1 ){ this.router.navigate(['/dashboard']).then(() =>{ window.location.reload(); });}
+      else if(data.data.ctipo_sistema){ this.router.navigate(['/home']).then(() =>{ window.location.reload(); }); }
     },
     
     (err) => {
