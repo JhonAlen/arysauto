@@ -323,6 +323,8 @@ import { PlanAmountRcvComponent } from './pop-up/plan-amount-rcv/plan-amount-rcv
 import { ContractServiceArysIndexComponent } from './subscription/contract-service-arys/contract-service-arys-index/contract-service-arys-index.component';
 import { ContractServiceArysDetailComponent } from './subscription/contract-service-arys/contract-service-arys-detail/contract-service-arys-detail.component';
 import { NumberOfServiceComponent } from './pop-up/number-of-service/number-of-service.component';
+import { PlanValuationApovComponent } from './pop-up/plan-valuation-apov/plan-valuation-apov.component';
+import { PlanValuationExcesoComponent } from './pop-up/plan-valuation-exceso/plan-valuation-exceso.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -627,7 +629,9 @@ export function HttpLoaderFactory(http: HttpClient){
     PlanAmountRcvComponent,
     ContractServiceArysIndexComponent,
     ContractServiceArysDetailComponent,
-    NumberOfServiceComponent
+    NumberOfServiceComponent,
+    PlanValuationApovComponent,
+    PlanValuationExcesoComponent
   ],
   imports: [
     BrowserModule,

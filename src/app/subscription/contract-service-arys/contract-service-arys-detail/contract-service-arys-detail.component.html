@@ -10,6 +10,9 @@
 </div>
 <section>
   <div>
+    <div style="display: grid;place-items: center;">
+      <p style="font-size: xx-large;">MEMBRESÍA ARYS</p>
+    </div>
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12">
         <!-- formulario de busqueda y -->
@@ -84,10 +87,16 @@
                   <div class="col-md-4 mb-4 pb-2">
                     <div class="form-outline">
                       <label class="form-label required" for="form3Examplev3">Correo Electrónico</label>
-                      <input type="email" formControlName="email" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('email').errors }" />
+                      <input type="email" formControlName="email" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('email').errors }" (change)="activePassword()">
                       <div *ngIf="submitted && search_form.get('email').errors" class="invalid-feedback">
                         <div *ngIf="search_form.get('email').errors.required">Se requiere completar el campo</div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4 pb-2" style="background-color: #ffbc0059;border-radius: 15px;" *ngIf="activaClave">
+                    <div class="form-outline">
+                      <p for="form3Examplev3" class="form-label">Contraseña predeterminada</p>
+                      <h5>Ar654321!</h5>
                     </div>
                   </div>
                   <div class="col-md-4 mb-4 pb-2">
@@ -135,7 +144,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-8 mb-4 pb-2">
+                  <div class="col-md-3 mb-4 pb-2">
                     <div class="form-outline form-white">
                       <label class="form-label required" for="form3Examplea2"> Zona Postal</label>
                       <input type="text" formControlName="xzona_postal" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xzona_postal').errors }" />
@@ -323,12 +332,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
+                <!-- <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev5">Monto Total</label>
                     <input type="number" formControlName="ncobro" class="form-control form-control-lg" readonly=readonly [ngClass]="{ 'is-invalid' : submitted && search_form.get('ncobro').errors }" />
                   </div>
-                </div>
+                </div> -->
                 <div class="button">
                   <button [disabled]="loading || !clear" type="button" class="btn btn-light btn-lg" data-mdb-ripple-color="dark" (click)="onSubmit(search_form.value)" *ngIf="bemitir">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

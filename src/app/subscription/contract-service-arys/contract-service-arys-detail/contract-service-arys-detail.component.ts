@@ -137,6 +137,7 @@ export class ContractServiceArysDetailComponent implements OnInit {
   fdesde_pol_place : Date ;
   fhasta_pol_place : Date ;
   xpoliza_place : string;
+  activaClave: boolean = false;
 
   
   constructor(private formBuilder: UntypedFormBuilder, 
@@ -481,6 +482,9 @@ async getModeloData(event){
         this.search_form.get('xtelefono_emp').setValue(response.data.xtelefonocasa);
         this.search_form.get('xtelefono_prop').setValue(response.data.xtelefonocelular);
         this.search_form.get('email').setValue(response.data.xemail);
+        if(this.search_form.get('email').value){
+          this.activaClave = true;
+        }
         this.search_form.get('ccorredor').setValue(response.data.ccorredor);
         this.search_form.get('xdireccionfiscal').setValue(response.data.xdireccion);
         this.CountryList.push({ id: response.data.cpais, value: response.data.xpais});
@@ -527,6 +531,12 @@ async getModeloData(event){
     this.serviceGridApi = event.api;
   }
 
+  activePassword(){
+    if(this.search_form.get('email').value){
+      this.activaClave = true;
+    }
+  }
+
   onSubmit(form){
     this.clear = false;
     this.submitted = true;
@@ -570,7 +580,7 @@ async getModeloData(event){
           // if(this.currentUser.data.crol == 18||this.currentUser.data.crol == 17||this.currentUser.data.crol == 3  || this.bpagomanual || this.search_form.get('xcobertura').value != 'RCV'){
           //   // this.getFleetContractDetail(this.ccontratoflota);
           // }
-          window.alert(`Se ha generado una cotización por el beneficiario ${response.data.xnombre + ' ' + response.data.xapellido}`)
+          window.alert(`Se ha generado un contrato Arys, por el beneficiario ${form.xnombre + ' ' + form.xapellido}`)
           this.router.navigate([`/fleet-contract-management/fleet-contract-management-index`]);
         }
       },

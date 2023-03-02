@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
       npersonas_cobradas: [''],
       npersonas_pendientes: [''],
       nnotificacion: [''],
-      xusuario: ['']
+      npersonas_arys: ['']
     })
 
     this.currentUser = this.authenticationService.currentUserValue;
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.getDataNotification();
-    this.getUser();
+    this.getCountArysService();
     this.getAmountsCharged();
     this.getAmountsOutstanding();
     this.getNotificationCount();
@@ -117,23 +117,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getUser(){
+  getCountArysService(){
     //busca usuario que inicio sesión
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
       cusuario: this.currentUser.data.cusuario
     };
-    this.http.post(`${environment.apiUrl}/api/home/user`, params, options).subscribe((response : any) => {
-      if(response.data.status){
-        if(response.data.xusuario){
-          this.home_form.get('xusuario').setValue(response.data.xusuario)
-          this.home_form.get('xusuario').disable();
-        }else{
-          this.home_form.get('xusuario').setValue(' ')
-          this.home_form.get('xusuario').disable();
-        }
-  
+    this.http.post(`${environment.apiUrl}/api/home/arys-service`, params, options).subscribe((response : any) => {
+      if(response.data.npersonas_arys){
+        this.home_form.get('npersonas_arys').setValue(response.data.npersonas_arys)
+        this.home_form.get('npersonas_arys').disable();
+      }else{
+        this.home_form.get('npersonas_arys').setValue(0)
+        this.home_form.get('npersonas_arys').disable();
       }
     });
   }
