@@ -5,7 +5,188 @@
             <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5" *ngIf="activaCorporativo">
+        <div class="col-sm-12">
+            <div  style="display: -webkit-box;width: fit-content;">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header company-card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ "PRODUCTS.PLANS.PLAN" | translate }}
+                                </div>
+                                <div class="col-6">
+                                    <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                        <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "PRODUCTS.PLANS.CANCEL" | translate }}
+                                    </button>
+                                    <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editPlan()" *ngIf="canEdit && showEditButton">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "PRODUCTS.PLANS.EDIT" | translate }}
+                                    </button>
+                                    <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        {{ "PRODUCTS.PLANS.SAVE" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "PRODUCTS.PLANS.PLANTYPE" | translate }}</label>
+                                            <select formControlName="ctipoplan" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipoplan').errors }" (change)="changeApov()">
+                                                <option></option>
+                                                <option *ngFor="let planType of planTypeList" value="{{ planType.id }}">{{ planType.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('ctipoplan').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ctipoplan').errors.required">{{ "PRODUCTS.PLANS.REQUIREDTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="form-group">
+                                            <label>{{ "PRODUCTS.PLANS.NAME" | translate }}</label>
+                                            <input type="text" formControlName="xplan" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplan').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xplan').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xplan').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3">
+                                        <div class="form-group">
+                                            <label>Costo</label>
+                                            <input type="text" formControlName="mcosto" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mcosto').errors }">
+                                            <div *ngIf="submitted && detail_form.get('mcosto').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('mcosto').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2">
+                                        <div class="form-group">
+                                            <label>Moneda</label>
+                                            <select formControlName="cmoneda" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cmoneda').errors }">
+                                                <option></option>
+                                                <option *ngFor="let coin of coinList" value="{{ coin.id }}">{{ coin.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cmoneda').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cmoneda').errors.required">{{ "PRODUCTS.PLANS.REQUIREDTYPE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   <!-- <div class="col-sm-12 col-md-2">
+                                        <div class="form-group">
+                                            <label>Porcentaje La Mundial</label>
+                                            <input type="text" formControlName="paseguradora" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('paseguradora').errors }">
+                                            <div *ngIf="submitted && detail_form.get('paseguradora').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('paseguradora').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>                            -->
+                                     <!-- <div class="col-sm-12 col-md-2">
+                                        <div class="form-group">
+                                            <label>Porcentaje Arys</label>
+                                            <input type="text" formControlName="parys" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('parys').errors }">
+                                            <div *ngIf="submitted && detail_form.get('parys').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('parys').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-sm-12 col-md-4" *ngIf="boculta_rcv">
+                                        <div class="form-check form-switch">
+                                            <label style="margin-left: 78px;margin-top: 13px;">¿Posee RCV?</label>
+                                            <div class="row">
+                                              <p class="col-sm-2 col-md-4" style="text-align: right;margin-left: -10px;">No</p>
+                                              <input type="checkbox" formControlName="brcv" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('brcv').errors }" style="margin-left: 122px;" (change)="changeRcv()"> 
+                                              <p class="col-sm-2 col-md-4" style="margin-left: 36px;">Si</p>
+                                           </div>
+                                            <div *ngIf="submitted && detail_form.get('brcv').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('brcv').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDVEHICLEDAMAGE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                            <label>{{ "PRODUCTS.PLANS.ACTIVE" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bactivo').errors.required">{{ "PRODUCTS.PLANS.REQUIREDACTIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header company-card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    Tarifas
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Tasa Casco</label>
+                                            <input type="number" formControlName="ptasa_casco" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ptasa_casco').errors }">
+                                            <div *ngIf="submitted && detail_form.get('ptasa_casco').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ptasa_casco').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Tasa Catastrófico</label>
+                                            <input type="number" formControlName="ptasa_catastrofico" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ptasa_catastrofico').errors }">
+                                            <div *ngIf="submitted && detail_form.get('ptasa_catastrofico').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('ptasa_catastrofico').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Suma Recuperación</label>
+                                            <input type="number" formControlName="msuma_recuperacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('msuma_recuperacion').errors }">
+                                            <div *ngIf="submitted && detail_form.get('msuma_recuperacion').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('msuma_recuperacion').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Prima Recuperación</label>
+                                            <input type="number" formControlName="mprima_recuperacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mprima_recuperacion').errors }">
+                                            <div *ngIf="submitted && detail_form.get('mprima_recuperacion').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('mprima_recuperacion').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Deducible</label>
+                                            <input type="number" formControlName="mdeducible" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('mdeducible').errors }">
+                                            <div *ngIf="submitted && detail_form.get('mdeducible').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('mdeducible').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5" *ngIf="ActivaPlan">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header company-card-header">
@@ -62,7 +243,19 @@
                                     </div>
                                 </div>
                             </div>
-                           <div class="col-sm-12 col-md-2">
+                            <div class="col-sm-12 col-md-2">
+                                <div class="form-group">
+                                    <label>Moneda</label>
+                                    <select formControlName="cmoneda" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cmoneda').errors }">
+                                        <option></option>
+                                        <option *ngFor="let coin of coinList" value="{{ coin.id }}">{{ coin.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cmoneda').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cmoneda').errors.required">{{ "PRODUCTS.PLANS.REQUIREDTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                           <!-- <div class="col-sm-12 col-md-2">
                                 <div class="form-group">
                                     <label>Porcentaje La Mundial</label>
                                     <input type="text" formControlName="paseguradora" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('paseguradora').errors }">
@@ -70,8 +263,8 @@
                                         <div *ngIf="detail_form.get('paseguradora').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
                                     </div>
                                 </div>
-                            </div>                           
-                             <div class="col-sm-12 col-md-2">
+                            </div>                            -->
+                             <!-- <div class="col-sm-12 col-md-2">
                                 <div class="form-group">
                                     <label>Porcentaje Arys</label>
                                     <input type="text" formControlName="parys" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('parys').errors }">
@@ -79,7 +272,7 @@
                                         <div *ngIf="detail_form.get('parys').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-sm-12 col-md-4" *ngIf="boculta_rcv">
                                 <div class="form-check form-switch">
                                     <label style="margin-left: 78px;margin-top: 13px;">¿Posee RCV?</label>
@@ -153,7 +346,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceTypeList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
                             <ag-grid-column headerName="Código" field="ctiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Tipo de Servicio" field="xtiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
@@ -168,15 +361,48 @@
                 <div class="card-header company-card-header">
                     <div class="row">
                         <div class="col-6">
-                            Tasas
+                            Tasas APOV
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
-                            <ag-grid-column headerName="Código" field="ctiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Tipo de Servicio" field="xtiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="apovList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="apovRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onApovGridReady($event)">
+                            <ag-grid-column headerName="Código Plan" field="cplan" [width]="120" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Código Cobertura" field="ccobertura" [width]="130" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Cobertura" field="xcobertura" [width]="185" [sortable]="true"></ag-grid-column>                            
+                            <ag-grid-column headerName="Suma Asegurada" field="msuma_aseg" [width]="150" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tasa Particular/Rústico" field="ptasa_par_rus" [width]="180" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Prima Particular/Rústico" field="mprima_par_rus" [width]="200" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tasa Carga" field="ptasa_carga" [width]="130" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Prima Carga" field="mprima_carga" [width]="130" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5" *ngIf="bactiva_exceso">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Tasas Exceso
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="excesoList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="excesoRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onExcesoGridReady($event)">
+                            <ag-grid-column headerName="Código Plan" field="cplan" [width]="120" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Código Tarifa" field="ctarifa" [width]="130" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo" field="xtipo" [width]="185" [sortable]="true"></ag-grid-column>                            
+                            <ag-grid-column headerName="Código Moneda" field="cmoneda" [width]="150" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Suma Defensa Penal" field="ms_defensa_penal" [width]="180" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Prima Defensa Penal" field="mp_defensa_penal" [width]="200" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Suma Exceso Limite" field="ms_exceso_limite" [width]="130" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Prima Exceso Limite" field="mp_exceso_limite" [width]="130" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>

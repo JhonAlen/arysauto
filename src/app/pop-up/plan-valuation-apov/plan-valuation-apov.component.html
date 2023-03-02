@@ -1,0 +1,100 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Tasas</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div style="display: grid;place-items: center;">
+        <form [formGroup]="popup_form">
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label>Suma Asegurada</label>
+                    <input type="number" formControlName="msuma_aseg" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('msuma_aseg').errors }" (change)="amountCalculation()">
+                    <div *ngIf="submitted && popup_form.get('msuma_aseg').errors"  class="invalid-feedback">
+                        <div *ngIf="popup_form.get('msuma_aseg').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="display: -webkit-box;width: fit-content;">
+        <div class="row" style="margin-left: 56px;">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="popup_form">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="form-group">
+                                        <label>Tasa Particular/Rustico</label>
+                                        <input type="number" formControlName="ptasa_par_rus" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ptasa_par_rus').errors }" (change)="amountCalculation1()">
+                                        <div *ngIf="submitted && popup_form.get('ptasa_par_rus').errors"  class="invalid-feedback">
+                                            <div *ngIf="popup_form.get('ptasa_par_rus').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="form-group">
+                                        <label>Prima Particular/Rustico</label>
+                                        <input type="number" formControlName="mprima_par_rus" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mprima_par_rus').errors }">
+                                        <div *ngIf="submitted && popup_form.get('mprima_par_rus').errors"  class="invalid-feedback">
+                                            <div *ngIf="popup_form.get('mprima_par_rus').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header company-card-header">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="popup_form">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="form-group">
+                                        <label>Tasa Carga</label>
+                                        <input type="number" formControlName="ptasa_carga" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ptasa_carga').errors }" (change)="amountCalculation2()">
+                                        <div *ngIf="submitted && popup_form.get('ptasa_carga').errors"  class="invalid-feedback">
+                                            <div *ngIf="popup_form.get('ptasa_carga').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="form-group">
+                                        <label>Prima Carga</label>
+                                        <input type="number" formControlName="mprima_carga" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mprima_carga').errors }">
+                                        <div *ngIf="submitted && popup_form.get('mprima_carga').errors"  class="invalid-feedback">
+                                            <div *ngIf="popup_form.get('mprima_carga').errors.required">{{ "PRODUCTS.PLANS.REQUIREDNAME" | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <div class="row">
+        <div class="col-sm-4 mt-2" style="margin-left: 370px;">
+            <button [disabled]="loading" class="btn company-detail-button btn-lg btn-block" type="button" (click)="onSubmit(popup_form.value)" *ngIf="canSave">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                {{ "ADMINISTRATION.COLLECTION.SAVE" | translate }}
+            </button>
+        </div>
+    </div>
+</div>
+
