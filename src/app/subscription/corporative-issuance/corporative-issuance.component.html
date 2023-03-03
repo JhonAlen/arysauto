@@ -42,7 +42,7 @@
                                 <div class="form-outline">
                                     <label class="form-label" for="form3Examplev5">Lote</label>
                                     <ng-autocomplete  [data]="batchList" [searchKeyword]="keyword" 
-                                                    placeholder="Seleccionar Lote"
+                                                    placeholder="Seleccionar Lote" (selected)='onSelectedBatch($event)'
                                                     [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">                                 
                                     </ng-autocomplete>
                                 
@@ -67,20 +67,13 @@
                 <div class="card-header company-card-header">
                     <div class="row">
                         <div class="col-6">
-                            Información de la Póliza
+                            Información del Certificado
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular style="width: 100%; height: 104px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="false" [paginationPageSize]="1" rowSelection="single">
-                            <ag-grid-column headerName="Póliza" field="xpoliza" [width]="90" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Cliente" field="xcliente" [width]="115" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Placa" field="xplaca" [width]="140" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Marca" field="xmarca" [width]="150" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Modelo" field="xmodelo" [width]="160" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Versión" field="xversion" [width]="274" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Estatus" field="xestatusgeneral" [width]="115" [sortable]="true" [resizable]="true"></ag-grid-column>
+                        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="true" [paginationPageSize]="9" [columnDefs]="columnDefs">
                         </ag-grid-angular>
                     </div>
                 </div>
