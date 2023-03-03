@@ -631,12 +631,9 @@ export function HttpLoaderFactory(http: HttpClient){
     ContractServiceArysIndexComponent,
     ContractServiceArysDetailComponent,
     NumberOfServiceComponent,
-<<<<<<< HEAD
-    CorporativeIssuanceComponent
-=======
+    CorporativeIssuanceComponent,
     PlanValuationApovComponent,
     PlanValuationExcesoComponent
->>>>>>> develop
   ],
   imports: [
     BrowserModule,
