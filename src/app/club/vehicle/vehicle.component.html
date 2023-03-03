@@ -1,82 +1,81 @@
 
+<div class="row d-flex justify-content-center align-items-center h-100">
+<div class="col-12">
+  <div class="card card-registration card-registration-2" style="border-radius: 15px;">           
+    <div class="card-body p-0">
+      <div>
+        <form  [formGroup]="VehicleDataUser" >
+          <div>
+            <div class="p-5">
+              <h3 class="fw-normal mb-5" style="color: #ffb700">Información del Vehiculo</h3>  
+              <div class="row">
 
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px;">           
-            <div class="card-body p-0">
-              <div>
-                <form  [formGroup]="VehicleDataUser" (ngSubmit)="onSubmit(VehicleDataUser.value)">
-                  <div>
-                    <div class="p-5">
-                      <h3 class="fw-normal mb-5" style="color: #ffb700">Información del Vehiculo</h3>  
-                      <div class="row">
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" >Marca</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xmarca"/>
 
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label" >Marca</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xmarca"/>
-
-                          </div>
-                        </div>
-
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label" >Modelo</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xmodelo"/>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label" >Versión</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xversion"/>
-
-                          </div>
-                        </div>
-
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label" >Año</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="fano"/>
-
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label" >Placa</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xplaca"/>
-
-                          </div>
-                        </div>
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label">Color</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xcolor"/>
-                          </div>
-                        </div>
-                    
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label" >Serial del Motor</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xseriamotor"/>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <label class="form-label">Serial de Carroceria</label>
-                            <input type="text"  class="form-control form-control-lg" formControlName="xserialcarroceria"/>
-                          </div>
-                        </div>
-
-
-                      </div>
-                    </div>
                   </div>
-                </form>
+                </div>
+
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" >Modelo</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xmodelo"/>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" >Versión</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xversion"/>
+
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" >Año</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="fano"/>
+
+                  </div>
+                </div>
+              
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" >Placa</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xplaca"/>
+
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label">Color</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xcolor"/>
+                  </div>
+                </div>
+            
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" >Serial del Motor</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xseriamotor"/>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label">Serial de Carroceria</label>
+                    <input type="text"  class="form-control form-control-lg" formControlName="xserialcarroceria"/>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
+    </div>
+  </div>
+</div>
+</div>

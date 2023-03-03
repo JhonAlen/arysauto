@@ -18,8 +18,8 @@ export class VehicleComponent implements OnInit {
   editClient = false
   createContrat = false
   message : any;
-  CdClient : any
   currentUser;
+  DataClient : any[] = [];
 
 
   constructor(
@@ -48,44 +48,20 @@ export class VehicleComponent implements OnInit {
       cpais: this.currentUser.data.cpais,
       cpropietario: this.currentUser.data.cpropietario
     } 
-    this.http.post(environment.apiUrl + '/api/club/Data/Client', params).subscribe((response : any) => {
-      console.log(response.data.ClientData)
-      this.VehicleDataUser.get('xmarca').setValue(response.data.ClientData[0].xmarca)
-      this.VehicleDataUser.get('xmodelo').setValue(response.data.ClientData[0].xmodelo)
-      this.VehicleDataUser.get('xversion').setValue(response.data.ClientData[0].xversion)
-      this.VehicleDataUser.get('xplaca').setValue(response.data.ClientData[0].xplaca)
-      this.VehicleDataUser.get('fano').setValue(response.data.ClientData[0].fano)
-      this.VehicleDataUser.get('xcolor').setValue(response.data.ClientData[0].xcolor)
-      this.VehicleDataUser.get('xserialcarroceria').setValue(response.data.ClientData[0].xserialcarroceria)
-      this.VehicleDataUser.get('xseriamotor').setValue(response.data.ClientData[0].xseriamotor)
-
-      console.log(this.VehicleDataUser.value)
+    this.http.post(environment.apiUrl + '/api/club/Data/Client/vehicle', params).subscribe((response : any) => {
+      this.DataClient = response
+      this.VehicleDataUser.get('xmarca').setValue(response.data.xmarca)
+      this.VehicleDataUser.get('xmodelo').setValue(response.data.xmodelo)
+      this.VehicleDataUser.get('xversion').setValue(response.data.xversion)
+      this.VehicleDataUser.get('xplaca').setValue(response.data.xplaca)
+      this.VehicleDataUser.get('fano').setValue(response.data.fano)
+      this.VehicleDataUser.get('xcolor').setValue(response.data.xcolor)
+      this.VehicleDataUser.get('xserialcarroceria').setValue(response.data.xserialcarroceria)
+      this.VehicleDataUser.get('xseriamotor').setValue(response.data.xseriamotor)
 
   },
   (error) => {
     console.log(error);
   });
   }
-
-  onSubmit(form): void {
-    this.submitted = true;
-    if (this.VehicleDataUser.invalid) {
-      return;
-    }
-    let client = this.VehicleDataUser.value
-
-    this.http.post(environment.apiUrl + '/api/v1/data/' , client).subscribe((response : any) => {
-      localStorage.setItem('xcliente', response.client.xcliente);
-      this.message = response.message;
-        window.alert(`${this.message}`)
-        this.router.navigate(['/contract',response.client.ncliente]);
-
-    },
-    (error) => {
-      window.alert(`${this.message}`)
-      console.log(error);
-
-    });
-  }
-
 }
