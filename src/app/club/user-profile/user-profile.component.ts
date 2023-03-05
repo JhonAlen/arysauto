@@ -14,8 +14,6 @@ export class UserProfileComponent implements OnInit {
 
   DataUser : FormGroup
   submitted = false;
-  editClient = false
-  createContrat = false
   message : any;
   currentUser;
   DataClient : any[] = [];
@@ -53,12 +51,28 @@ export class UserProfileComponent implements OnInit {
       this.DataUser.get('icedula').setValue(response.data.icedula)
       this.DataUser.get('xdocidentidad').setValue(response.data.xdocidentidad)
       this.DataUser.get('xemail').setValue(response.data.xemail)
-
-
-  },
-  (error) => {
-    console.log(error);
   });
+
+
+  this.currentUser = this.authenticationService.currentUserValue;
+  let plandata = {
+    cpais: this.currentUser.data.cpais,
+    cpropietario: this.currentUser.data.cpropietario
+  } 
+  this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
+      let DataServiceI = response.data.listTypeService
+
+      const DataServiceP = DataServiceI.filter((data, index, j) => 
+
+      index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
+
+      const container = document.getElementById("accordionFlushExample");
+      const html = DataServiceP.map(item => `<p> Servicio: ${item.xtiposervicio}</p>`).join('');
+
+    container.innerHTML = html;
+  },
+
+  );
   }
 }
 
