@@ -60,14 +60,34 @@ export class UserProfileComponent implements OnInit {
     cpropietario: this.currentUser.data.cpropietario
   } 
   this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
-      let DataServiceI = response.data.listTypeService
+      let DataTypeServiceI = response.data.listTypeService
 
-      const DataServiceP = DataServiceI.filter((data, index, j) => 
+      // let DataServiceI = response.data.listService
+
+
+      const DataTypeServiceP = DataTypeServiceI.filter((data, index, j) => 
 
       index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
+      
 
-      const container = document.getElementById("accordionFlushExample");
-      const html = DataServiceP.map(item => `<p> Servicio: ${item.xtiposervicio}</p>`).join('');
+      // const DataServiceP = DataServiceI.filter((data, index, j) => 
+
+      // index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xservicio === data.xservicio )))
+
+
+      // console.log(DataTypeServiceP,DataServiceP )
+
+      const container = document.getElementById("Servicios-cards");
+      const html = DataTypeServiceP.map(item => `
+      <div class="container" data-aos="fade-up" id="Servicios-cards">
+      <div class="row gy-4">
+        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+          <h3 id="titleService">${item.xtiposervicio}</h3>
+          <p>Revisión y análisis de siniestralidad para determinar causas frecuentes y tipos de daños entre otros datos, orientados a la toma de decisiones y definición de acciones a tomar.</p>
+        </div>
+      </div>
+    </div>
+      ` ).join('');
 
     container.innerHTML = html;
   },

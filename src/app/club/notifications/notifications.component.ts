@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-declare var $: any;
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, UntypedFormGroup, Validators,FormControl, FormGroup, AbstractControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthenticationService } from '@services/authentication.service';
+
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -7,36 +12,62 @@ declare var $: any;
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor() { }
-  showNotification(from, align){
-      const type = ['','info','success','warning','danger'];
+  DataUser : FormGroup
+  submitted = false;
+  message : any;
+  currentUser;
+  DataClient : any[] = [];
 
-      const color = Math.floor((Math.random() * 4) + 1);
 
-      $.notify({
-          icon: "notifications",
-          message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService : AuthenticationService,
+    private http : HttpClient,
+    private router : Router
+  ) { }
 
-      },{
-          type: type[color],
-          timer: 4000,
-          placement: {
-              from: from,
-              align: align
-          },
-          template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
-            '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-            '<i class="material-icons" data-notify="icon">notifications</i> ' +
-            '<span data-notify="title">{1}</span> ' +
-            '<span data-notify="message">{2}</span>' +
-            '<div class="progress" data-notify="progressbar">' +
-              '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-            '</div>' +
-            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-          '</div>'
-      });
-  }
   ngOnInit() {
-  }
 
+  this.currentUser = this.authenticationService.currentUserValue;
+  let plandata = {
+    cpais: this.currentUser.data.cpais,
+    cpropietario: this.currentUser.data.cpropietario
+  } 
+  this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
+      let DataTypeServiceI = response.data.listTypeService
+
+      // let DataServiceI = response.data.listService
+
+
+      const DataTypeServiceP = DataTypeServiceI.filter((data, index, j) => 
+
+      index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
+      
+
+      // const DataServiceP = DataServiceI.filter((data, index, j) => 
+
+      // index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xservicio === data.xservicio )))
+
+
+      // console.log(DataTypeServiceP,DataServiceP )    ${item.xtiposervicio}
+
+      const container = document.getElementById("titleService");
+      const html = DataTypeServiceP.map(item => `
+
+   
+         
+              <h3 >${item.xtiposervicio}</h3>
+              <p>Revisión y análisis de siniestralidad para determinar causas frecuentes y tipos de daños entre otros datos, orientados a la toma de decisiones y definición de acciones a tomar.</p>
+         
+
+
+      ` ).join('');
+
+    container.innerHTML = html;
+  },
+
+  );
+  }
 }
+
+
