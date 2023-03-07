@@ -16,7 +16,7 @@ export class NotificationsComponent implements OnInit {
   submitted = false;
   message : any;
   currentUser;
-  DataClient : any[] = [];
+  DataClient : any = [];
 
 
   constructor(
@@ -34,40 +34,43 @@ export class NotificationsComponent implements OnInit {
     cpropietario: this.currentUser.data.cpropietario
   } 
   this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
-      let DataTypeServiceI = response.data.listTypeService
-
-      // let DataServiceI = response.data.listService
-
-
-      const DataTypeServiceP = DataTypeServiceI.filter((data, index, j) => 
-
-      index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
       
-
-      // const DataServiceP = DataServiceI.filter((data, index, j) => 
-
-      // index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xservicio === data.xservicio )))
+      let DataTypeServiceI = response.data.listTypeService
+      let DataServiceI = response.data.listService
 
 
-      // console.log(DataTypeServiceP,DataServiceP )    ${item.xtiposervicio}
+      const DataTypeServiceP = DataTypeServiceI.filter
+      ((data, index, j) => index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
 
-      const container = document.getElementById("titleService");
+      const container = document.getElementById("accordionFlushExample");
+
       const html = DataTypeServiceP.map(item => `
+      <div class="accordion-item">
+        <h2 class="accordion accordion-flush" id="${item.ctiposervicio}">
+          <button class="accordion-button collapsed" 
+          type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" 
+          aria-expanded="false" aria-controls="flush-collapseOne"> ${item.xtiposervicio}
+          </button>
+        </h2>
 
-   
-         
-              <h3 >${item.xtiposervicio}</h3>
-              <p>Revisión y análisis de siniestralidad para determinar causas frecuentes y tipos de daños entre otros datos, orientados a la toma de decisiones y definición de acciones a tomar.</p>
-         
-
-
-      ` ).join('');
-
+      `).join('');
     container.innerHTML = html;
+      // const containerF = document.querySelector(".accordion-flush");
+
+      // const htmlF = DataServiceI.map(service => `
+      //   <div id="${service.ctiposervicio}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+      //     <div class="accordion-body">${service.xservicio}</div>
+      //   </div>
+      // </div>
+      // `).join('');
+      // containerF.innerHTML = htmlF;
+
   },
 
   );
   }
+
+  getdataservice(DataTypeServiceP){}
 }
 
 
