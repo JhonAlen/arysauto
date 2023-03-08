@@ -74,18 +74,6 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.ENTERPRISE" | translate }}</label>
-                                            <select formControlName="cempresa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cempresa').errors }">
-                                                <option></option>
-                                                <option *ngFor="let enterprise of enterpriseList" value="{{ enterprise.id }}">{{ enterprise.value }}</option>
-                                            </select>
-                                            <div *ngIf="submitted && detail_form.get('cempresa').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('cempresa').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDENTERPRISE" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group">
                                             <label>{{ "CLIENTS.CLIENTS.BUSINESSACTIVITY" | translate }}</label>
                                             <select formControlName="cactividadempresa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cactividadempresa').errors }">
                                                 <option></option>

@@ -581,7 +581,7 @@ async getModeloData(event){
           //   // this.getFleetContractDetail(this.ccontratoflota);
           // }
           window.alert(`Se ha generado un contrato Arys, por el beneficiario ${form.xnombre + ' ' + form.xapellido}`)
-          this.router.navigate([`/fleet-contract-management/fleet-contract-management-index`]);
+          location.reload()
         }
       },
       (err) => {
