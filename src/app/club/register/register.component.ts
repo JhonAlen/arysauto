@@ -48,8 +48,34 @@ export class RegisterComponent implements OnInit {
       xdocidentidad: ['', Validators.required],
       xdireccion: ['', Validators.required]
 
-    });
+//Holis prueba de guardado
 
+
+    });
+/*    this.currentUser = this.authenticationService.currentUserValue;
+    if(this.currentUser){
+      let params = {
+        cusuario: this.currentUser.data.cusuario,
+        cmodulo: 11
+      }
+      let request = await this.webService.securityVerifyModulePermission(params);
+      if(request.error){
+        request.condition && request.conditionMessage == 'user-dont-have-permissions' ? this.router.navigate([`/permission-error`]) : false;
+        this.alert.message = request.message;
+        this.alert.type = 'danger';
+        this.alert.show = true;
+        return;
+      }
+        if(request.data.status){
+          if(!request.data.bindice){
+            this.router.navigate([`/permission-error`]);
+          }else{
+            this.initializeDropdownDataRequest();
+          }
+          return;
+        }
+      
+    }*/
     this.initializeDropdownDataRequest();
   }
 
@@ -135,6 +161,7 @@ export class RegisterComponent implements OnInit {
         xtelefonocelular: form.xtelefonocelular
       };
       console.log(params)
+     // url = `${environment.apiUrl}/api/color/create`;
      request = await this.webService.createUserClub(params);
     
     if(request.error){
@@ -158,13 +185,5 @@ export class RegisterComponent implements OnInit {
       return;
   }
 
-
-  goToDetail(){
-    this.router.navigate([`tables/city-detail`]);
-  }
-
-  rowClicked(event: any){
-    this.router.navigate([`tables/city-detail/${event.data.cciudad}`]);
-  }
 
 }

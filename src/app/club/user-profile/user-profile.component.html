@@ -1,53 +1,64 @@
-<div class="main-content">
-  <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title">Edit Profile</h4>
-                      <p class="card-category">Complete your profile</p>
+ <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12">
+      <div class="card card-registration card-registration-2" style="border-radius: 15px;">           
+        <div class="card-body p-0">
+          <div>
+            <form  [formGroup]="DataUser" >
+              <div>
+                <div class="p-5">
+                  <h3 class="fw-normal mb-5" style="color: #ffb700">Información del Cliente</h3>  
+                  <div class="row">
+    
+                    <div class="col-md-4 mb-4 pb-2">
+                      <div class="form-outline">
+                        <label class="form-label" >Nombre</label>
+                        <input type="text"  class="form-control form-control-lg" formControlName="xnombre"/>
+    
+                      </div>
+                    </div>
+    
+                    <div class="col-md-4 mb-4 pb-2">
+                      <div class="form-outline">
+                        <label class="form-label" >Apellido</label>
+                        <input type="text"  class="form-control form-control-lg" formControlName="xapellido"/>
+                      </div>
+                    </div>
+    
+                    <div class="col-md-4 mb-4 pb-2">
+                      <div class="form-outline">
+                        <label class="form-label" >Zona Postal</label>
+                        <input type="text"  class="form-control form-control-lg" formControlName="xzona_postal"/>
+    
+                      </div>
+                    </div>
+    
+                    <div class="col-md-4 mb-4 pb-2">
+                      <div class="form-outline">
+                        <label class="form-label" ></label>
+                        <input type="text"  class="form-control form-control-lg" formControlName="icedula"/>
+    
+                      </div>
+                    </div>
+                  
+                    <div class="col-md-4 mb-4 pb-2">
+                      <div class="form-outline">
+                        <label class="form-label" >Cédula</label>
+                        <input type="text"  class="form-control form-control-lg" formControlName="xdocidentidad"/>
+    
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-4 pb-2">
+                      <div class="form-outline">
+                        <label class="form-label">Correo</label>
+                        <input type="text"  class="form-control form-control-lg" formControlName="xemail"/>
+                      </div>
+                    </div>
                   </div>
-                 
-                          <div class="row">
-                              <div class="col-md-12">
-                                <label>About Me</label>
-
-                                  <!-- <div class="form-group">
-
-                                      <div class="form-group">
-                                          <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                          <textarea class="form-control" rows="5"></textarea>
-                                      </div>
-                                  </div> -->
-                              </div>
-                          </div>
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
-                          <div class="clearfix"></div>
-                      
-                  </div>
+                </div>
               </div>
+            </form>
           </div>
-          <div class="col-md-4">
-              <div class="card card-profile">
-                  <div class="card-avatar">
-                      <a href="javascript:void(0)">
-                          <img class="img" src="./assets/img/faces/marc.jpg" />
-                      </a>
-                  </div>
-                  <div class="card-body">
-                      <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                      <h4 class="card-title">Alec Thompson</h4>
-                      <p class="card-description">
-                          Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                      </p>
-                      <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
-                  </div>
-              </div>
-          </div>
+        </div>
       </div>
-  </div>
-
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR-KEY-HERE"></script>
-  <script>window.global = window;</script> 
+    </div>
+</div> 

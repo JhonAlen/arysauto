@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { environment } from '@environments/environment';
-import { Router } from '@angular/router';
-import { WebServiceConnectionService } from '@services/web-service-connection.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, UntypedFormGroup, Validators,FormControl, FormGroup, AbstractControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '@services/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-vehicle.Component',
@@ -12,155 +12,56 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./vehicle.component.css']
 })
 export class VehicleComponent implements OnInit {
+
+  VehicleDataUser : FormGroup
+  submitted = false;
+  editClient = false
+  createContrat = false
+  message : any;
   currentUser;
-  search_form : UntypedFormGroup;
-  loading: boolean = false;
-  submitted: boolean = false;
-  alert = { show: false, type: "", message: "" };
-  stateList: any[] = [];
-  cityList: any[] = [];
-  sexList: any[] = [];
+  DataClient : any[] = [];
 
 
-  constructor(private formBuilder: UntypedFormBuilder, 
-              private authenticationService : AuthenticationService,
-              private router: Router,
-              private translate: TranslateService,
-              private webService: WebServiceConnectionService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService : AuthenticationService,
+    private http : HttpClient,
+    private router : Router
+  ) { }
 
-  async ngOnInit(): Promise<void>{
-    this.search_form = this.formBuilder.group({
-      cestado: ['', Validators.required],
-      xestado: [''],
-      cciudad: [''],
-      xciudad: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
-      fnacimiento: ['', Validators.required],
-      xcontrasena: ['', Validators.required],
-      xtelefonocelular: ['', Validators.required],
-      xemail: ['', Validators.required],
-      csexo: ['', Validators.required],
-      xsexo: [''],
-      xdocidentidad: ['', Validators.required],
-      xdireccion: ['', Validators.required]
+  ngOnInit() {
 
+    this.VehicleDataUser = this.formBuilder.group({
+      xmarca:  [''],
+      xmodelo:  [''],
+      xversion:  [''],
+      xplaca:  [''],
+      fano :  [''],
+      xcolor :  [''],
+      xserialcarroceria :  [''],
+      xseriamotor :  [''],
     });
-    this.initializeDropdownDataRequest();
-  }
 
-  async initializeDropdownDataRequest(){
-    this.getSexData();
+
+    this.currentUser = this.authenticationService.currentUserValue;
     let params = {
-      cpais: 58
-    };
+      cpais: this.currentUser.data.cpais,
+      cpropietario: this.currentUser.data.cpropietario
+    } 
+    this.http.post(environment.apiUrl + '/api/club/Data/Client/vehicle', params).subscribe((response : any) => {
+      this.DataClient = response
+      this.VehicleDataUser.get('xmarca').setValue(response.data.xmarca)
+      this.VehicleDataUser.get('xmodelo').setValue(response.data.xmodelo)
+      this.VehicleDataUser.get('xversion').setValue(response.data.xversion)
+      this.VehicleDataUser.get('xplaca').setValue(response.data.xplaca)
+      this.VehicleDataUser.get('fano').setValue(response.data.fano)
+      this.VehicleDataUser.get('xcolor').setValue(response.data.xcolor)
+      this.VehicleDataUser.get('xserialcarroceria').setValue(response.data.xserialcarroceria)
+      this.VehicleDataUser.get('xseriamotor').setValue(response.data.xseriamotor)
 
-    let request = await this.webService.mostrarListaEstados(params);
-    if(request.error){
-      this.alert.message = request.message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-      this.loading = false;
-      return;
-    }
-      if(request.data.status){
-        for(let i = 0; i < request.data.list.length; i++){
-          this.stateList.push({ id: request.data.list[i].cestado, value: request.data.list[i].xestado });
-        }
-      }
+  },
+  (error) => {
+    console.log(error);
+  });
   }
-
-  async getCityData(){
-    let params = {
-      cestado: this.search_form.get('cestado').value
-    };
-    let request = await this.webService.searchCity(params);
-    if(request.error){
-      this.alert.message = request.message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-      this.loading = false;
-      return;
-    }
-    if(request.data.list){
-      this.cityList = [];
-      for(let i = 0; i < request.data.list.length; i++){
-         this.cityList.push({ cciudad: request.data.list[i].cciudad, xciudad: request.data.list[i].xciudad });
-      }
-    }
-  }
-
-  async getSexData(){
-    let params = {
-      cpais: 58
-    };
-    let request = await this.webService.searchSex(params);
-    if(request.error){
-      this.alert.message = request.message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-      this.loading = false;
-      return;
-    }
-    if(request.data.list){
-      this.sexList = [];
-      for(let i = 0; i < request.data.list.length; i++){
-         this.sexList.push({ csexo: request.data.list[i].csexo, xsexo: request.data.list[i].xsexo });
-      }
-    }
-  }
-
-  async onSubmit(form){
-    console.log('hola')
-    this.submitted = true;
-    this.loading = true;
-    console.log('como estas')
-    let params;
-    let request;
-      params = {
-        xnombre: form.xnombre,
-        xapellido: form.xapellido,
-        csexo: this.search_form.get('csexo').value,
-        fnacimiento: form.fnacimiento,
-        xemail: form.xemail,
-        xcontrasena: form.xcontrasena,
-        cciudad: this.search_form.get('cciudad').value,
-        cestado: this.search_form.get('cestado').value,
-        xdireccion: form.xdireccion,
-        xdocidentidad: form.xdocidentidad,
-        xtelefonocelular: form.xtelefonocelular
-      };
-      console.log(params)
-     request = await this.webService.createUserClub(params);
-    
-    if(request.error){
-      this.alert.message = request.message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-      this.loading = false;
-      return;
-    }
-      if(request.data.status){
-        location.reload();
-      }else{
-        let condition = request.data.condition;
-        if(condition == "color-name-already-exist"){
-          this.alert.message = "TABLES.COLORS.NAMEALREADYEXIST";
-          this.alert.type = 'danger';
-          this.alert.show = true;
-        }
-      }
-      this.loading = false;
-      return;
-  }
-
-
-  goToDetail(){
-    this.router.navigate([`tables/city-detail`]);
-  }
-
-  rowClicked(event: any){
-    this.router.navigate([`tables/city-detail/${event.data.cciudad}`]);
-  }
-
 }

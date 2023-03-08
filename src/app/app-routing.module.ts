@@ -214,6 +214,7 @@ const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
 
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]  },
+  {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
 
   { path: 'change-password/:id', component: ChangePasswordComponent, canActivate: [SessionGuard]  },
   { path: 'permission-error', component: PermissionErrorComponent, canActivate: [AuthGuard]  },
@@ -490,8 +491,7 @@ const routes: Routes = [
   { path: 'subscription/contract-service-arys-index', component: ContractServiceArysIndexComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-detail', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-detail/:id', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
-
-  {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
+  { path: 'sign-in', component: SignInComponent },
 
 ];
 
