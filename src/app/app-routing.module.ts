@@ -95,6 +95,7 @@ import { ProviderIndexComponent } from './providers/provider/provider-index/prov
 import { ProviderDetailComponent } from './providers/provider/provider-detail/provider-detail.component';
 import { ClientIndexComponent } from './clients/client/client-index/client-index.component';
 import { ClientDetailComponent } from './clients/client/client-detail/client-detail.component';
+import { ClientDetailV2Component } from './clients/client/client-detail-v2/client-detail-v2.component';
 import { CoverageIndexComponent } from './tables/coverage/coverage-index/coverage-index.component';
 import { CoverageDetailComponent } from './tables/coverage/coverage-detail/coverage-detail.component';
 import { CoverageConceptIndexComponent } from './tables/coverage-concept/coverage-concept-index/coverage-concept-index.component';
@@ -213,6 +214,7 @@ const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
 
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]  },
+  {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
 
   { path: 'change-password/:id', component: ChangePasswordComponent, canActivate: [SessionGuard]  },
   { path: 'permission-error', component: PermissionErrorComponent, canActivate: [AuthGuard]  },
@@ -489,8 +491,7 @@ const routes: Routes = [
   { path: 'subscription/contract-service-arys-index', component: ContractServiceArysIndexComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-detail', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-detail/:id', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
-
-  {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
+  { path: 'sign-in', component: SignInComponent },
 
 ];
 

@@ -1,15 +1,22 @@
 mat-toolbar {
-  background: #002b5c;
+  background: #ffefa9;
 }
 
 mat-sidenav {
   margin: 16px;
   width: 200px;
   border-right: none;
-  background: #002b5c;
-  border-radius: 10px;
+  background: #ffefa9;
+
   padding: 16px;
   text-align: center;
+
+}
+
+mat-sidenav-content{
+  margin-left: 60px;
+  width: 77%;
+  overflow: inherit;
 }
 
 .content {
@@ -49,7 +56,7 @@ mat-sidenav-container {
   margin-top: 16px;
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+
 }
 
 .name {
@@ -90,5 +97,4 @@ body{
   background: linear-gradient(to bottom, #2e34be 0%,#70a8ff 100%);
 
 }
-
 

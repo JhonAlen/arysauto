@@ -48,20 +48,17 @@
                           </div>
                           </div>
                         </div>
-
-                        <div class="col-md-6 mb-4 pb-2">
-                          <div class="form-outline">
-                           <label class="form-label" for="form3Examplev4">fecha de nacimiento</label>
-                           <input type="date" formControlName="fnacimiento" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fnacimiento').errors }"/>
-                           <div *ngIf="submitted && search_form.get('fnacimiento').errors"  class="invalid-feedback">
-                             <div *ngIf="search_form.get('fnacimiento').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
-                           </div>
-                         </div>
-                       </div>
-                       
                       </div>
 
-
+                     <div class="col-md-6 mb-4 pb-2">
+                       <div class="form-outline">
+                        <label class="form-label" for="form3Examplev4">fecha de nacimiento</label>
+                        <input type="date" formControlName="fnacimiento" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fnacimiento').errors }"/>
+                        <div *ngIf="submitted && search_form.get('fnacimiento').errors"  class="invalid-feedback">
+                          <div *ngIf="search_form.get('fnacimiento').errors.required">{{ "THIRDPARTIES.ASSOCIATES.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
 
                     
 

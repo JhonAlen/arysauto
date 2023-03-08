@@ -1,13 +1,15 @@
 .btn-secondary{
-    background-color:#77bbfd
+    background-color:#ffb700
 }
 
 .dropdown-toggle{
-    background-color:#77bbfd
+    background-color:#ffb700
 }
 
 .card-registration{
     margin-top: -155px;
+    width: 57%;
+    text-align-last: center
 
 }
 
@@ -35,7 +37,7 @@ background-color: rgba(0, 0, 0, 0.7);
 }
 
 .bg-indigo {
-background-color: #77bbfd;
+background-color: #ffb700;
 float: right;
 
 }

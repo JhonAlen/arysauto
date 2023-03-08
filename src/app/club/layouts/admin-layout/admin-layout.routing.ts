@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
-// import { FleetContractBrokerIndexComponent } from '@app/subscription/fleet-contract-broker/fleet-contract-broker-index/fleet-contract-broker-index.component';
-// import { FleetContractBrokerDetailComponent } from '@app/subscription/fleet-contract-broker/fleet-contract-broker-detail/fleet-contract-broker-detail.component'
+import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { VehicleComponent } from '../../vehicle/vehicle.component';
+import { NotificationsComponent } from '../../notifications/notifications.component';
 
 export const AdminLayoutRoutes: Routes = [
    
-    // { path: 'subscription/fleet-contract-broker-detail',  component: FleetContractBrokerDetailComponent },
-    // { path: 'subscription/fleet-contract-broker-index', component: FleetContractBrokerIndexComponent},
-
+    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'user-profile',   component: UserProfileComponent },
+    { path: 'vehicle',       component: VehicleComponent }, 
+    { path: 'notifications',  component: NotificationsComponent },
 ];
