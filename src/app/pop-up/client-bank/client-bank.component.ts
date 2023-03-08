@@ -34,7 +34,6 @@ export class ClientBankComponent implements OnInit {
       cbanco: ['', Validators.required],
       ctipocuentabancaria: ['', Validators.required],
       xnumerocuenta: ['', Validators.required],
-      xcontrato: ['', Validators.required],
       bprincipal: [false, Validators.required]
     });
     this.currentUser = this.authenticationService.currentUserValue;
@@ -90,8 +89,6 @@ export class ClientBankComponent implements OnInit {
           this.popup_form.get('ctipocuentabancaria').disable();
           this.popup_form.get('xnumerocuenta').setValue(this.bank.xnumerocuenta);
           this.popup_form.get('xnumerocuenta').disable();
-          this.popup_form.get('xcontrato').setValue(this.bank.xcontrato);
-          this.popup_form.get('xcontrato').disable();
           this.popup_form.get('bprincipal').setValue(this.bank.bprincipal);
           this.popup_form.get('bprincipal').disable();
           this.canSave = false;
@@ -99,7 +96,6 @@ export class ClientBankComponent implements OnInit {
           this.popup_form.get('cbanco').setValue(this.bank.cbanco);
           this.popup_form.get('ctipocuentabancaria').setValue(this.bank.ctipocuentabancaria);
           this.popup_form.get('xnumerocuenta').setValue(this.bank.xnumerocuenta);
-          this.popup_form.get('xcontrato').setValue(this.bank.xcontrato);
           this.popup_form.get('bprincipal').setValue(this.bank.bprincipal);
           this.canSave = true;
           this.isEdit = true;
@@ -122,7 +118,6 @@ export class ClientBankComponent implements OnInit {
     this.bank.ctipocuentabancaria = form.ctipocuentabancaria;
     this.bank.xtipocuentabancaria = bankAccountTypeFilter[0].value;
     this.bank.xnumerocuenta = form.xnumerocuenta;
-    this.bank.xcontrato = form.xcontrato;
     this.bank.bprincipal = form.bprincipal;
     this.activeModal.close(this.bank);
   }

@@ -37,31 +37,31 @@ export class ClientDocumentComponent implements OnInit {
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
-      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      let options = { headers: headers };
-      let params = {
-        cpais: this.currentUser.data.cpais,
-        ccompania: this.currentUser.data.ccompania,
-        cmodulo: 59
-      };
-      this.http.post(`${environment.apiUrl}/api/valrep/process/document`, params, options).subscribe((response : any) => {
-        if(response.data.status){
-          for(let i = 0; i < response.data.list.length; i++){
-            this.documentList.push({ id: response.data.list[i].cdocumento, value: response.data.list[i].xdocumento });
-          }
-          this.documentList.sort((a,b) => a.value > b.value ? 1 : -1);
-        }
-      },
-      (err) => {
-        let code = err.error.data.code;
-        let message;
-        if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-        else if(code == 404){ message = "HTTP.ERROR.VALREP.DOCUMENTNOTFOUND"; }
-        else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-        this.alert.message = message;
-        this.alert.type = 'danger';
-        this.alert.show = true;
-      });
+      // let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      // let options = { headers: headers };
+      // let params = {
+      //   cpais: this.currentUser.data.cpais,
+      //   ccompania: this.currentUser.data.ccompania,
+      //   cmodulo: 59
+      // };
+      // this.http.post(`${environment.apiUrl}/api/valrep/process/document`, params, options).subscribe((response : any) => {
+      //   if(response.data.status){
+      //     for(let i = 0; i < response.data.list.length; i++){
+      //       this.documentList.push({ id: response.data.list[i].cdocumento, value: response.data.list[i].xdocumento });
+      //     }
+      //     this.documentList.sort((a,b) => a.value > b.value ? 1 : -1);
+      //   }
+      // },
+      // (err) => {
+      //   let code = err.error.data.code;
+      //   let message;
+      //   if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      //   else if(code == 404){ message = "HTTP.ERROR.VALREP.DOCUMENTNOTFOUND"; }
+      //   else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      //   this.alert.message = message;
+      //   this.alert.type = 'danger';
+      //   this.alert.show = true;
+      // });
       if(this.document){
         if(this.document.type == 3){
           this.canSave = true;
@@ -88,10 +88,10 @@ export class ClientDocumentComponent implements OnInit {
   onSubmit(form){
     this.submitted = true;
     this.loading = true;
-    if (this.popup_form.invalid) {
-      this.loading = false;
-      return;
-    }
+    // if (this.popup_form.invalid) {
+    //   this.loading = false;
+    //   return;
+    // }
     if(!this.popup_form.get('xarchivo').value){
       this.savePopUpForm(form);
     }else{
@@ -119,8 +119,8 @@ export class ClientDocumentComponent implements OnInit {
 
   savePopUpForm(form){
     let documentFilter = this.documentList.filter((option) => { return option.id == form.cdocumento; });
-    this.document.cdocumento = form.cdocumento;
-    this.document.xdocumento = documentFilter[0].value;
+    // this.document.cdocumento = form.cdocumento;
+    // this.document.xdocumento = documentFilter[0].value;
     this.document.xrutaarchivo = this.xrutaarchivo ? this.xrutaarchivo : "n/a";
     this.activeModal.close(this.document);
   }

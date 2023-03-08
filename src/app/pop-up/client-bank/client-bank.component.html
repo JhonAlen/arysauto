@@ -41,15 +41,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <label>{{ "CLIENTS.CLIENTS.CONTRACTNUMBER" | translate }}</label>
-                    <input type="text" formControlName="xcontrato" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xcontrato').errors }">
-                    <div *ngIf="submitted && popup_form.get('xcontrato').errors" class="invalid-feedback">
-                        <div *ngIf="popup_form.get('xcontrato').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCONTRACTNUMBER" | translate }}</div>
-                    </div>
-                </div>
-            </div>
             <div class="col-sm-12 col-md-4">
                 <div class="form-group form-check">
                     <input type="checkbox" formControlName="bprincipal" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bprincipal').errors }">

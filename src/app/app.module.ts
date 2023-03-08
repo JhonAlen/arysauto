@@ -325,6 +325,7 @@ import { ContractServiceArysDetailComponent } from './subscription/contract-serv
 import { NumberOfServiceComponent } from './pop-up/number-of-service/number-of-service.component';
 import { PlanValuationApovComponent } from './pop-up/plan-valuation-apov/plan-valuation-apov.component';
 import { PlanValuationExcesoComponent } from './pop-up/plan-valuation-exceso/plan-valuation-exceso.component';
+import { ClientDetailV2Component } from './clients/client/client-detail-v2/client-detail-v2.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -631,7 +632,8 @@ export function HttpLoaderFactory(http: HttpClient){
     ContractServiceArysDetailComponent,
     NumberOfServiceComponent,
     PlanValuationApovComponent,
-    PlanValuationExcesoComponent
+    PlanValuationExcesoComponent,
+    ClientDetailV2Component
   ],
   imports: [
     BrowserModule,

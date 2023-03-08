@@ -26,16 +26,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-12">
                 <div class="form-group">
-                    <label>{{ "CLIENTS.CLIENTS.DOCUMENTTYPE" | translate }}</label>
-                    <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('ctipodocidentidad').errors }">
-                        <option></option>
-                        <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
-                    </select>
-                    <div *ngIf="submitted && popup_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
-                        <div *ngIf="popup_form.get('ctipodocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDDOCUMENTTYPE" | translate }}</div>
-                    </div>
+                  <label class="form-label required" for="form3Examplev2">Tipo Documento de Identidad</label>
+                  <select formControlName="icedula" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('icedula').errors } " >
+                    <option value="V">V</option>
+                    <option value="P">P</option>
+                    <option value="E">E</option>
+                    <option value="J">J</option>
+                    <option value="C">C</option>
+                    <option value="G">G</option>
+                  </select>                      
+                  <div *ngIf="submitted && popup_form.get('icedula').errors" class="invalid-feedback">
+                    <div *ngIf="popup_form.get('icedula').errors.required">Se requiere completar el campo</div>
+                  </div>
                 </div>
             </div>
             <div class="col-12">
@@ -87,23 +91,6 @@
                     <label>{{ "CLIENTS.CLIENTS.HOMEPHONE" | translate }}</label>
                     <input type="tel" formControlName="xtelefonocasa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xtelefonocasa').errors }">
                     <div *ngIf="submitted && popup_form.get('xtelefonocasa').errors" class="invalid-feedback">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <label>{{ "CLIENTS.CLIENTS.FAX" | translate }}</label>
-                    <input type="text" formControlName="xfax" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xfax').errors }">
-                    <div *ngIf="submitted && popup_form.get('xfax').errors" class="invalid-feedback">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="form-group form-check">
-                    <input type="checkbox" formControlName="bnotificacion" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bnotificacion').errors }">
-                    <label>{{ "CLIENTS.CLIENTS.NOTIFICATION" | translate }}</label>
-                    <div *ngIf="submitted && popup_form.get('bnotificacion').errors"  class="invalid-feedback">
-                        <div *ngIf="popup_form.get('bnotificacion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDNOTIFICATION" | translate }}</div>
                     </div>
                 </div>
             </div>

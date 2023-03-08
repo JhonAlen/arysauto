@@ -1,0 +1,266 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.CLIENT" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="editClient()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)" *ngIf="showSaveButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <img [src]="xrutaimagen" width="100%"> 
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>{{ "CLIENTS.CLIENTS.UPLOADIMAGE" | translate }}</label>
+                                        <input type="file" name="ximagen" class="form-control"  accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" #Ximagen>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <form [formGroup]="detail_form">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.NAME" | translate }}</label>
+                                            <input type="text" formControlName="xcliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcliente').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xcliente').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xcliente').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDNAME" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.REPRESENTATIVE" | translate }}</label>
+                                            <input type="text" formControlName="xrepresentante" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xrepresentante').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xrepresentante').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xrepresentante').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDREPRESENTATIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                          <label class="form-label required" for="form3Examplev2">Tipo Documento de Identidad</label>
+                                          <select formControlName="icedula" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('icedula').errors } " >
+                                            <option value="V">V</option>
+                                            <option value="P">P</option>
+                                            <option value="E">E</option>
+                                            <option value="J">J</option>
+                                            <option value="C">C</option>
+                                            <option value="G">G</option>
+                                          </select>                      
+                                          <div *ngIf="submitted && detail_form.get('icedula').errors" class="invalid-feedback">
+                                            <div *ngIf="detail_form.get('icedula').errors.required">Se requiere completar el campo</div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.IDENTIFICATIONDOCUMENT" | translate }}</label>
+                                            <input type="text" formControlName="xdocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdocidentidad').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xdocidentidad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xdocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.EMAIL" | translate }}</label>
+                                            <input type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xemail').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xemail').errors" class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xemail').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDEMAIL" | translate }}</div>
+                                                <div *ngIf="detail_form.get('xemail').errors.pattern">{{ "CLIENTS.CLIENTS.EMAILPATTERNERROR" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.PHONENUMBER" | translate }}</label>
+                                            <input type="tel" formControlName="xtelefono" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtelefono').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xtelefono').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.STATE" | translate }}</label>
+                                            <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestado').errors }" (change)="getCityData()">
+                                                <option></option>
+                                                <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cestado').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cestado').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.CITY" | translate }}</label>
+                                            <select formControlName="cciudad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cciudad').errors }">
+                                                <option></option>
+                                                <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
+                                            </select>
+                                            <div *ngIf="submitted && detail_form.get('cciudad').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('cciudad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.TAXADDRESS" | translate }}</label>
+                                            <textarea type="text" formControlName="xdireccionfiscal" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccionfiscal').errors }" cols="30" rows="2"></textarea>
+                                            <div *ngIf="submitted && detail_form.get('xdireccionfiscal').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('xdireccionfiscal').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXADDRESS" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.STARTDATE" | translate }}</label>
+                                            <input type="date" formControlName="finicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('finicio').errors }">
+                                            <div *ngIf="submitted && detail_form.get('finicio').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('finicio').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTARTDATE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ "CLIENTS.CLIENTS.WEBPAGE" | translate }}</label>
+                                            <input type="text" formControlName="xpaginaweb" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xpaginaweb').errors }">
+                                            <div *ngIf="submitted && detail_form.get('xpaginaweb').errors"  class="invalid-feedback">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
+                                            <label>{{ "CLIENTS.CLIENTS.ACTIVE" | translate }}</label>
+                                            <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
+                                                <div *ngIf="detail_form.get('bactivo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDACTIVE" | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.BANKSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addBank()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDBANK" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="bankList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bankRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBanksGridReady($event)">
+                            <ag-grid-column headerName="Banco" field="xbanco" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo Cuenta Bancaria Type" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Numero de Cuenta" field="xnumerocuenta" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Principal" field="xprincipal" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.CONTACTSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addContact()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDCONTACT" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="contactList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="contactRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onContactsGridReady($event)">
+                            <ag-grid-column headerName="Nombre" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Apellido" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Telefono" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Correo" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "CLIENTS.CLIENTS.DOCUMENTSLIST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addDocument()" *ngIf="canEdit || canCreate">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "CLIENTS.CLIENTS.ADDDOCUMENT" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="documentList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="documentRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDocumentsGridReady($event)">
+                            <ag-grid-column headerName="Ruta" field="xrutaarchivo" [width]="800" [sortable]="false"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>
+
+
