@@ -108,7 +108,7 @@ export class ServiceRequestIndexComponent implements OnInit {
         cusuario: this.currentUser.data.cusuario,
         cmodulo: 87
       },
-      cpais: this.currentUser.data.cpais,
+      isolicitante:  form.isolicitante ? form.isolicitante : undefined,
       ccompania: this.currentUser.data.ccompania,
       ctipodocidentidad: form.ctipodocidentidad ? form.ctipodocidentidad : undefined,
       xnombre: form.xnombre ? form.xnombre : undefined,
@@ -117,6 +117,7 @@ export class ServiceRequestIndexComponent implements OnInit {
     }
     this.http.post(`${environment.apiUrl}/api/v2/service-request/production/search`, params, options).subscribe((response : any) => {
       if(response.data.status){
+
         this.serviceRequestList = [];
         for(let i = 0; i < response.data.list.length; i++){
           this.serviceRequestList.push({ 

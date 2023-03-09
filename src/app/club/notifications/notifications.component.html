@@ -1,55 +1,97 @@
 
-  <div class="container-fluid mt--7">
-    <div class="row">
-      <div class="col-6">
-        <div class="card shadow">
-          <div class="table-responsive" *ngIf="ListTypeService.length !== 0">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Tipo de Servicio</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let Data of ListTypeService">
-                  <td>{{ Data.xtiposervicio }}</td>
-                  <button class="delete" (click)="getdataservice(Data.ctiposervicio)"
-                  >Solicitar</button
-                >
-                </tr>
-              </tbody>
-            </table>
+<div class="container" style="padding:50px">
+  <div class="row"> 
+
+        <div class="col-6">
+          <div class="card shadow">
+            <div class="table-responsive" *ngIf="ListTypeService.length !== 0">
+              <table class="table align-items-center table-flush">
+                <thead  style="background-color: #ffefa9;">
+                  <tr>
+                    <th scope="col">Tipo de Servicio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let Data of ListTypeService">
+                    <td>{{ Data.xtiposervicio }}</td>
+                    <i class="bi bi-plus-lg" (click)="getdataservice(Data.ctiposervicio)"></i>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div> 
 
-  <div class="container-fluid mt--7">
-    <div class="row">
-      <div class="col-6">
-        <div class="card shadow">
-          <div class="table-responsive" *ngIf="ListService.length !== 0">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Tipo de Servicio</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let Data of ListService">
-                  <td>{{ Data.xservicio }}</td>
-                  <button class="delete" (click)="Solicitud(Data.cservicio)"
-                  >Solicitar</button
-                >
-                </tr>
-              </tbody>
-            </table>
+        <div class="col-6" *ngIf="service">
+          <div class="card shadow">
+            <div class="table-responsive" *ngIf="ListService.length !== 0">
+              <table class="table align-items-center table-flush">
+                <thead  style="background-color: #ffefa9;">
+                  <tr>
+                    <th scope="col">Servicios</th>
+                    <td scope="col"></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let Data of ListService">
+                    <td>{{ Data.xservicio }}</td>
+                    <td>
+                    <button type="button" class="btn btn-primary"  (click)="Solicitud(Data.cservicio)"
+                    >Solicitar
+                    </button 
+                  ></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div> 
+
+    <form [formGroup]="servicePlanContract">
+        <div  *ngIf="solicitud">
+          <div class="card shadow">      
+            <h3>Infomación de la Solicitud</h3>
+            <div class="row">
+            <div class="col-md-4 mb-4 pb-2">
+              <div class="form-outline">
+                <label class="form-label required" for="form3Examplev3">Estado</label>
+                <select formControlName="cestado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cestado').errors } " (change)="getCity()">
+                  <option></option>
+                  <option *ngFor="let estado of StateList" value="{{ estado.id }}">{{ estado.value }}</option>
+                </select>                     
+                <div *ngIf="submitted && servicePlanContract.get('cestado').errors" class="invalid-feedback">
+                  <div *ngIf="servicePlanContract.get('cestado').errors.required">Se requiere completar el campo</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4 pb-2">
+              <div class="form-outline">
+                <label class="form-label required" for="form3Examplev3">Ciudad</label>
+                    <select formControlName="cciudad" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cciudad').errors } " (change)="getProveedor()">
+                      <option></option>
+                      <option *ngFor="let ciudad of CityList" value="{{ ciudad.id }}">{{ ciudad.value }}</option>
+                    </select>                     
+                    <div *ngIf="submitted && servicePlanContract.get('cciudad').errors" class="invalid-feedback">
+                  <div *ngIf="servicePlanContract.get('cciudad').errors.required">Se requiere completar el campo</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4 pb-2" *ngIf="proveedor">
+              <div class="form-outline">
+                <label class="form-label required" for="form3Examplev3">Proveedor</label>
+                    <select formControlName="cproveedor" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cproveedor').errors } " (change)="GetSolicitud()">
+                      <option></option>
+                      <option *ngFor="let proveedor of ListProveedor" value="{{ proveedor.id }}">{{ proveedor.value }}</option>
+                    </select>                     
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+    </form>
+      
+  </div>
 
 
+</div>
 
