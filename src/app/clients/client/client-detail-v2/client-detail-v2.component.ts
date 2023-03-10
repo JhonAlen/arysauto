@@ -5,8 +5,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientBankComponent } from '@app/pop-up/client-bank/client-bank.component';
+import { ClientAssociateComponent } from '@app/pop-up/client-associate/client-associate.component';
+import { ClientBondComponent } from '@app/pop-up/client-bond/client-bond.component';
 import { ClientContactComponent } from '@app/pop-up/client-contact/client-contact.component';
+import { ClientBrokerComponent } from '@app/pop-up/client-broker/client-broker.component';
+import { ClientDepreciationComponent } from '@app/pop-up/client-depreciation/client-depreciation.component';
+import { ClientRelationshipComponent } from '@app/pop-up/client-relationship/client-relationship.component';
+import { ClientPenaltyComponent } from '@app/pop-up/client-penalty/client-penalty.component';
+import { ClientExcludedProviderComponent } from '@app/pop-up/client-excluded-provider/client-excluded-provider.component';
+import { ClientExcludedModelComponent } from '@app/pop-up/client-excluded-model/client-excluded-model.component';
+import { ClientWorkerComponent } from '@app/pop-up/client-worker/client-worker.component';
 import { ClientDocumentComponent } from '@app/pop-up/client-document/client-document.component';
+import { ClientGrouperComponent } from '@app/pop-up/client-grouper/client-grouper.component';
+import { ClientPlanComponent } from '@app/pop-up/client-plan/client-plan.component';
 import { AuthenticationService } from '@services/authentication.service';
 import { environment } from '@environments/environment';
 
@@ -20,8 +31,19 @@ export class ClientDetailV2Component implements OnInit {
 
   @ViewChild('Ximagen', { static: false }) ximagen: ElementRef;
   private bankGridApi;
+  private associateGridApi;
+  private bondGridApi;
   private contactGridApi;
+  private brokerGridApi;
+  private depreciationGridApi;
+  private relationshipGridApi;
+  private penaltyGridApi;
+  private providerGridApi;
+  private modelGridApi;
+  private workerGridApi;
   private documentGridApi;
+  private grouperGridApi;
+  private planGridApi;
   sub;
   currentUser;
   detail_form: UntypedFormGroup;
@@ -42,9 +64,24 @@ export class ClientDetailV2Component implements OnInit {
   xrutaimagen: string;
   stateList: any[] = [];
   cityList: any[] = [];
+  documentTypeList: any[] = [];
+  businessActivityList: any[] = [];
+  enterpriseList: any[] = [];
+  paymentTypeList: any[] = [];
   bankList: any[] = [];
+  associateList: any[] = [];
+  brokerList: any[] = [];
+  depreciationList: any[] = [];
+  relationshipList: any[] = [];
+  penaltyList: any[] = [];
+  providerList: any[] = [];
+  bondList: any[] = [];
   contactList: any[] = [];
+  modelList: any[] = [];
+  workerList: any[] = [];
   documentList: any[] = [];
+  grouperList: any[] = [];
+  planList: any[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder,
               private authenticationService: AuthenticationService, 
@@ -223,6 +260,17 @@ export class ClientDetailV2Component implements OnInit {
             });
           }
         }
+        this.associateList = [];
+        if(response.data.associates){
+          for(let i =0; i < response.data.associates.length; i++){
+            this.associateList.push({
+              cgrid: i,
+              create: false,
+              casociado: response.data.associates[i].casociado,
+              xasociado: response.data.associates[i].xasociado
+            });
+          }
+        }
         this.contactList = [];
         if(response.data.contacts){
           for(let i =0; i < response.data.contacts.length; i++){
@@ -248,6 +296,7 @@ export class ClientDetailV2Component implements OnInit {
             this.documentList.push({
               cgrid: i,
               create: false,
+              xdocumento: response.data.documents[i].xdocumento,
               xrutaarchivo: response.data.documents[i].xrutaarchivo
             });
           }
@@ -415,6 +464,62 @@ export class ClientDetailV2Component implements OnInit {
     });
   }
 
+  addAssociate(){
+    let associate = { type: 3 };
+    const modalRef = this.modalService.open(ClientAssociateComponent);
+    modalRef.componentInstance.associate = associate;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.associateList.push({
+            cgrid: this.associateList.length,
+            create: true,
+            casociado: result.casociado,
+            xasociado: result.xasociado
+          });
+          this.associateGridApi.setRowData(this.associateList);
+        }
+      }
+    });
+  }
+
+  associateRowClicked(event: any){
+    let associate = {};
+    if(this.editStatus){ 
+      associate = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        casociado: event.data.casociado,
+        delete: false
+      };
+    }else{ 
+      associate = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        casociado: event.data.casociado,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientAssociateComponent);
+    modalRef.componentInstance.associate = associate;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.associateList.length; i++){
+            if(this.associateList[i].cgrid == result.cgrid){
+              this.associateList[i].casociado = result.casociado;
+              this.associateList[i].xasociado = result.xasociado;
+              this.associateGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
   addDocument(){
     let document = { type: 3 };
     const modalRef = this.modalService.open(ClientDocumentComponent);
@@ -425,6 +530,7 @@ export class ClientDetailV2Component implements OnInit {
           this.documentList.push({
             cgrid: this.documentList.length,
             create: true,
+            cdocumento: result.cdocumento,
             xdocumento: result.xdocumento,
             xrutaarchivo: result.xrutaarchivo
           });
@@ -475,16 +581,844 @@ export class ClientDetailV2Component implements OnInit {
     });
   }
 
+  addGrouper(){
+    let grouper = { type: 3 };
+    const modalRef = this.modalService.open(ClientGrouperComponent, { size: 'xl' });
+    modalRef.componentInstance.grouper = grouper;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.grouperList.push({
+            cgrid: this.grouperList.length,
+            create: true,
+            xcontratoalternativo: result.xcontratoalternativo,
+            xnombre: result.xnombre,
+            xrazonsocial: result.xrazonsocial,
+            cestado: result.cestado,
+            cciudad: result.cciudad,
+            xdireccionfiscal: result.xdireccionfiscal,
+            ctipodocidentidad: result.ctipodocidentidad,
+            xdocidentidad: result.xdocidentidad,
+            bfacturar: result.bfacturar,
+            bcontribuyente: result.bcontribuyente,
+            bimpuesto: result.bimpuesto,
+            xtelefono: result.xtelefono,
+            xfax: result.xfax,
+            xemail: result.xemail,
+            xrutaimagen: result.xrutaimagen,
+            bactivo: result.bactivo,
+            banks: result.banks
+          });
+          this.grouperGridApi.setRowData(this.grouperList);
+        }
+      }
+    });
+  }
+
+  addPlan(){
+    let plan = { type: 3, associates: this.associateList };
+    const modalRef = this.modalService.open(ClientPlanComponent);
+    modalRef.componentInstance.plan = plan;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.planList.push({
+            cgrid: this.planList.length,
+            create: true,
+            cplan: result.cplan,
+            xplan: result.xplan,
+            casociado: result.casociado,
+            xasociado: result.xasociado,
+            ctipoplan: result.ctipoplan,
+            xtipoplan: result.xtipoplan,
+            fdesde: result.fdesde,
+            fhasta: result.fhasta
+          });
+          this.planGridApi.setRowData(this.planList);
+        }
+      }
+    });
+  }
+
+  addBroker(){
+    let broker = { type: 3 };
+    const modalRef = this.modalService.open(ClientBrokerComponent);
+    modalRef.componentInstance.broker = broker;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.brokerList.push({
+            cgrid: this.brokerList.length,
+            create: true,
+            ccorredor: result.ccorredor,
+            xcorredor: result.xcorredor,
+            pcorredor: result.pcorredor,
+            mcorredor: result.mcorredor,
+            fefectiva: result.fefectiva
+          });
+          this.brokerGridApi.setRowData(this.brokerList);
+        }
+      }
+    });
+  }
+
+  addDepreciation(){
+    let depreciation = { type: 3 };
+    const modalRef = this.modalService.open(ClientDepreciationComponent);
+    modalRef.componentInstance.depreciation = depreciation;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.depreciationList.push({
+            cgrid: this.depreciationList.length,
+            create: true,
+            cdepreciacion: result.cdepreciacion,
+            xdepreciacion: result.xdepreciacion,
+            pdepreciacion: result.pdepreciacion,
+            mdepreciacion: result.mdepreciacion,
+            fefectiva: result.fefectiva
+          });
+          this.depreciationGridApi.setRowData(this.depreciationList);
+        }
+      }
+    });
+  }
+
+  addRelationship(){
+    let relationship = { type: 3 };
+    const modalRef = this.modalService.open(ClientRelationshipComponent);
+    modalRef.componentInstance.relationship = relationship;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.relationshipList.push({
+            cgrid: this.relationshipList.length,
+            create: true,
+            cparentesco: result.cparentesco,
+            xparentesco: result.xparentesco,
+            xobservacion: result.xobservacion,
+            fefectiva: result.fefectiva
+          });
+          this.relationshipGridApi.setRowData(this.relationshipList);
+        }
+      }
+    });
+  }
+
+  addPenalty(){
+    let penalty = { type: 3 };
+    const modalRef = this.modalService.open(ClientPenaltyComponent);
+    modalRef.componentInstance.penalty = penalty;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.penaltyList.push({
+            cgrid: this.penaltyList.length,
+            create: true,
+            cpenalizacion: result.cpenalizacion,
+            xpenalizacion: result.xpenalizacion,
+            ppenalizacion: result.ppenalizacion,
+            mpenalizacion: result.mpenalizacion,
+            fefectiva: result.fefectiva
+          });
+          this.penaltyGridApi.setRowData(this.penaltyList);
+        }
+      }
+    });
+  }
+
+  addProvider(){
+    let provider = { type: 3 };
+    const modalRef = this.modalService.open(ClientExcludedProviderComponent);
+    modalRef.componentInstance.provider = provider;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.providerList.push({
+            cgrid: this.providerList.length,
+            create: true,
+            cproveedor: result.cproveedor,
+            xproveedor: result.xproveedor,
+            xobservacion: result.xobservacion,
+            fefectiva: result.fefectiva
+          });
+          this.providerGridApi.setRowData(this.providerList);
+        }
+      }
+    });
+  }
+
+  addModel(){
+    let model = { type: 3 };
+    const modalRef = this.modalService.open(ClientExcludedModelComponent);
+    modalRef.componentInstance.model = model;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.modelList.push({
+            cgrid: this.modelList.length,
+            create: true,
+            cmodelo: result.cmodelo,
+            xmodelo: result.xmodelo,
+            cmarca: result.cmarca,
+            xmarca: result.xmarca,
+            xobservacion: result.xobservacion
+          });
+          this.modelGridApi.setRowData(this.modelList);
+        }
+      }
+    });
+  }
+
+  addWorker(){
+    let worker = { type: 3, relationships: this.relationshipList };
+    const modalRef = this.modalService.open(ClientWorkerComponent);
+    modalRef.componentInstance.worker = worker;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.workerList.push({
+            cgrid: this.contactList.length,
+            create: true,
+            xnombre: result.xnombre,
+            xapellido: result.xapellido,
+            ctipodocidentidad: result.ctipodocidentidad,
+            xdocidentidad: result.xdocidentidad,
+            xtelefonocelular: result.xtelefonocelular,
+            xemail: result.xemail,
+            xprofesion: result.xprofesion,
+            xfax: result.xfax,
+            xocupacion: result.xocupacion,
+            xtelefonocasa: result.xtelefonocasa,
+            cparentesco: result.cparentesco,
+            cciudad: result.cciudad,
+            cestado: result.cestado,
+            xdireccion: result.xdireccion,
+            fnacimiento: result.fnacimiento,
+            cestadocivil: result.cestadocivil
+          });
+          this.workerGridApi.setRowData(this.workerList);
+        }
+      }
+    });
+  }
+
+  addBond(){
+    let bond = { type: 3 };
+    const modalRef = this.modalService.open(ClientBondComponent);
+    modalRef.componentInstance.bond = bond;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        if(result.type == 3){
+          this.bondList.push({
+            cgrid: this.bondList.length,
+            create: true,
+            pbono: result.pbono,
+            mbono: result.mbono,
+            fefectiva: result.fefectiva
+          });
+          this.bondGridApi.setRowData(this.bondList);
+        }
+      }
+    });
+  }
+
+  bondRowClicked(event: any){
+    let bond = {};
+    if(this.editStatus){ 
+      bond = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cbono: event.data.cbono,
+        pbono: event.data.pbono,
+        mbono: event.data.mbono,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      };
+    }else{ 
+      bond = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cbono: event.data.cbono,
+        pbono: event.data.pbono,
+        mbono: event.data.mbono,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientBondComponent);
+    modalRef.componentInstance.bond = bond;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.bondList.length; i++){
+            if(this.bondList[i].cgrid == result.cgrid){
+              this.bondList[i].pbono = result.pbono;
+              this.bondList[i].mbono = result.mbono;
+              this.bondList[i].fefectiva = result.fefectiva;
+              this.bondGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  brokerRowClicked(event: any){
+    let broker = {};
+    if(this.editStatus){ 
+      broker = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        ccorredor: event.data.ccorredor,
+        pcorredor: event.data.pcorredor,
+        mcorredor: event.data.mcorredor,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      };
+    }else{ 
+      broker = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        ccorredor: event.data.ccorredor,
+        pcorredor: event.data.pcorredor,
+        mcorredor: event.data.mcorredor,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientBrokerComponent);
+    modalRef.componentInstance.broker = broker;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.brokerList.length; i++){
+            if(this.brokerList[i].cgrid == result.cgrid){
+              this.brokerList[i].ccorredor = result.ccorredor;
+              this.brokerList[i].xcorredor = result.xcorredor;
+              this.brokerList[i].pcorredor = result.pcorredor;
+              this.brokerList[i].mcorredor = result.mcorredor;
+              this.brokerList[i].fefectiva = result.fefectiva;
+              this.brokerGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  depreciationRowClicked(event: any){
+    let depreciation = {};
+    if(this.editStatus){ 
+      depreciation = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cdepreciacion: event.data.cdepreciacion,
+        pdepreciacion: event.data.pdepreciacion,
+        mdepreciacion: event.data.mdepreciacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      };
+    }else{ 
+      depreciation = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cdepreciacion: event.data.cdepreciacion,
+        pdepreciacion: event.data.pdepreciacion,
+        mdepreciacion: event.data.mdepreciacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientDepreciationComponent);
+    modalRef.componentInstance.depreciation = depreciation;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.depreciationList.length; i++){
+            if(this.depreciationList[i].cgrid == result.cgrid){
+              this.depreciationList[i].cdepreciacion = result.cdepreciacion;
+              this.depreciationList[i].xdepreciacion = result.xdepreciacion;
+              this.depreciationList[i].pdepreciacion = result.pdepreciacion;
+              this.depreciationList[i].mdepreciacion = result.mdepreciacion;
+              this.depreciationList[i].fefectiva = result.fefectiva;
+              this.depreciationGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  relationshipRowClicked(event: any){
+    let relationship = {};
+    if(this.editStatus){ 
+      relationship = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cparentesco: event.data.cparentesco,
+        xobservacion: event.data.xobservacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      };
+    }else{ 
+      relationship = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cparentesco: event.data.cparentesco,
+        xobservacion: event.data.xobservacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientRelationshipComponent);
+    modalRef.componentInstance.relationship = relationship;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.relationshipList.length; i++){
+            if(this.relationshipList[i].cgrid == result.cgrid){
+              this.relationshipList[i].cparentesco = result.cparentesco;
+              this.relationshipList[i].xparentesco = result.xparentesco;
+              this.relationshipList[i].xobservacion = result.xobservacion;
+              this.relationshipList[i].fefectiva = result.fefectiva;
+              this.relationshipGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  penaltyRowClicked(event: any){
+    let penalty = {};
+    if(this.editStatus){ 
+      penalty = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cpenalizacion: event.data.cpenalizacion,
+        ppenalizacion: event.data.ppenalizacion,
+        mpenalizacion: event.data.mpenalizacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      };
+    }else{ 
+      penalty = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cpenalizacion: event.data.cpenalizacion,
+        ppenalizacion: event.data.ppenalizacion,
+        mpenalizacion: event.data.mpenalizacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientPenaltyComponent);
+    modalRef.componentInstance.penalty = penalty;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.penaltyList.length; i++){
+            if(this.penaltyList[i].cgrid == result.cgrid){
+              this.penaltyList[i].cpenalizacion = result.cpenalizacion;
+              this.penaltyList[i].xpenalizacion = result.xpenalizacion;
+              this.penaltyList[i].ppenalizacion = result.ppenalizacion;
+              this.penaltyList[i].mpenalizacion = result.mpenalizacion;
+              this.penaltyList[i].fefectiva = result.fefectiva;
+              this.penaltyGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  providerRowClicked(event: any){
+    let provider = {};
+    if(this.editStatus){ 
+      provider = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cproveedor: event.data.cproveedor,
+        xobservacion: event.data.xobservacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      };
+    }else{ 
+      provider = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cproveedor: event.data.cproveedor,
+        xobservacion: event.data.xobservacion,
+        fefectiva: event.data.fefectiva,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientExcludedProviderComponent);
+    modalRef.componentInstance.provider = provider;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.providerList.length; i++){
+            if(this.providerList[i].cgrid == result.cgrid){
+              this.providerList[i].cproveedor = result.cproveedor;
+              this.providerList[i].xproveedor = result.xproveedor;
+              this.providerList[i].xobservacion = result.xobservacion;
+              this.providerList[i].fefectiva = result.fefectiva;
+              this.providerGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  modelRowClicked(event: any){
+    let model = {};
+    if(this.editStatus){ 
+      model = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cmodelo: event.data.cmodelo,
+        cmarca: event.data.cmarca,
+        xobservacion: event.data.xobservacion,
+        delete: false
+      };
+    }else{ 
+      model = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cmodelo: event.data.cmodelo,
+        cmarca: event.data.cmarca,
+        xobservacion: event.data.xobservacion,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientExcludedModelComponent);
+    modalRef.componentInstance.model = model;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.modelList.length; i++){
+            if(this.modelList[i].cgrid == result.cgrid){
+              this.modelList[i].cmodelo = result.cmodelo;
+              this.modelList[i].xmodelo = result.xmodelo;
+              this.modelList[i].cmarca = result.cmarca;
+              this.modelList[i].xmarca = result.xmarca;
+              this.modelList[i].xobservacion = result.xobservacion;
+              this.modelGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  workerRowClicked(event: any){
+    let worker = {};
+    if(this.editStatus){ 
+      worker = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        ctrabajador: event.data.ctrabajador,
+        xnombre: event.data.xnombre,
+        xapellido: event.data.xapellido,
+        ctipodocidentidad: event.data.ctipodocidentidad,
+        xdocidentidad: event.data.xdocidentidad,
+        xtelefonocelular: event.data.xtelefonocelular,
+        xemail: event.data.xemail,
+        xprofesion: event.data.xprofesion,
+        xtelefonocasa: event.data.xtelefonocasa,
+        xocupacion: event.data.xocupacion,
+        xfax: event.data.xfax,
+        cparentesco: event.data.cparentesco,
+        cciudad: event.data.cciudad,
+        cestado: event.data.cestado,
+        xdireccion: event.data.xdireccion,
+        fnacimiento: event.data.fnacimiento,
+        cestadocivil: event.data.cestadocivil,
+        relationships: this.relationshipList,
+        delete: false
+      };
+    }else{ 
+      worker = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        ctrabajador: event.data.ctrabajador,
+        xnombre: event.data.xnombre,
+        xapellido: event.data.xapellido,
+        ctipodocidentidad: event.data.ctipodocidentidad,
+        xdocidentidad: event.data.xdocidentidad,
+        xtelefonocelular: event.data.xtelefonocelular,
+        xemail: event.data.xemail,
+        xprofesion: event.data.xprofesion,
+        xtelefonocasa: event.data.xtelefonocasa,
+        xocupacion: event.data.xocupacion,
+        xfax: event.data.xfax,
+        cparentesco: event.data.cparentesco,
+        cciudad: event.data.cciudad,
+        cestado: event.data.cestado,
+        xdireccion: event.data.xdireccion,
+        fnacimiento: event.data.fnacimiento,
+        cestadocivil: event.data.cestadocivil,
+        relationships: this.relationshipList,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientWorkerComponent);
+    modalRef.componentInstance.worker = worker;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.workerList.length; i++){
+            if(this.workerList[i].cgrid == result.cgrid){
+              this.workerList[i].ctrabajador = result.ctrabajador;
+              this.workerList[i].xnombre = result.xnombre;
+              this.workerList[i].xapellido = result.xapellido;
+              this.workerList[i].ctipodocidentidad = result.ctipodocidentidad;
+              this.workerList[i].xdocidentidad = result.xdocidentidad;
+              this.workerList[i].xtelefonocelular = result.xtelefonocelular;
+              this.workerList[i].xemail = result.xemail;
+              this.workerList[i].xprofesion = result.xprofesion;
+              this.workerList[i].xtelefonocasa = result.xtelefonocasa;
+              this.workerList[i].xocupacion = result.xocupacion;
+              this.workerList[i].xfax = result.xfax;
+              this.workerList[i].cparentesco = result.cparentesco;
+              this.workerList[i].cciudad = result.cciudad;
+              this.workerList[i].cestado = result.cestado;
+              this.workerList[i].xdireccion = result.xdireccion;
+              this.workerList[i].fnacimiento = result.fnacimiento;
+              this.workerList[i].cestadocivil = result.cestadocivil;
+              this.workerGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  grouperRowClicked(event: any){
+    let grouper = {};
+    if(this.editStatus){ 
+      grouper = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cagrupador: event.data.cagrupador,
+        xcontratoalternativo: event.data.xcontratoalternativo,
+        xnombre: event.data.xnombre,
+        xrazonsocial: event.data.xrazonsocial,
+        cestado: event.data.cestado,
+        cciudad: event.data.cciudad,
+        xdireccionfiscal: event.data.xdireccionfiscal,
+        ctipodocidentidad: event.data.ctipodocidentidad,
+        xdocidentidad: event.data.xdocidentidad,
+        bfacturar: event.data.bfacturar,
+        bcontribuyente: event.data.bcontribuyente,
+        bimpuesto: event.data.bimpuesto,
+        xtelefono: event.data.xtelefono,
+        xfax: event.data.xfax,
+        xemail: event.data.xemail,
+        xrutaimagen: event.data.xrutaimagen,
+        bactivo: event.data.bactivo,
+        banks: event.data.banks,
+        delete: false
+      };
+    }else{ 
+      grouper = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cagrupador: event.data.cagrupador,
+        xcontratoalternativo: event.data.xcontratoalternativo,
+        xnombre: event.data.xnombre,
+        xrazonsocial: event.data.xrazonsocial,
+        cestado: event.data.cestado,
+        cciudad: event.data.cciudad,
+        xdireccionfiscal: event.data.xdireccionfiscal,
+        ctipodocidentidad: event.data.ctipodocidentidad,
+        xdocidentidad: event.data.xdocidentidad,
+        bfacturar: event.data.bfacturar,
+        bcontribuyente: event.data.bcontribuyente,
+        bimpuesto: event.data.bimpuesto,
+        xtelefono: event.data.xtelefono,
+        xfax: event.data.xfax,
+        xemail: event.data.xemail,
+        xrutaimagen: event.data.xrutaimagen,
+        bactivo: event.data.bactivo,
+        banks: event.data.banks,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientGrouperComponent, { size: 'xl' });
+    modalRef.componentInstance.grouper = grouper;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.grouperList.length; i++){
+            if(this.grouperList[i].cgrid == result.cgrid){
+              this.grouperList[i].xcontratoalternativo = result.xcontratoalternativo;
+              this.grouperList[i].xnombre = result.xnombre;
+              this.grouperList[i].xrazonsocial = result.xrazonsocial;
+              this.grouperList[i].cestado = result.cestado;
+              this.grouperList[i].cciudad = result.cciudad;
+              this.grouperList[i].xdireccionfiscal = result.xdireccionfiscal;
+              this.grouperList[i].ctipodocidentidad = result.ctipodocidentidad;
+              this.grouperList[i].xdocidentidad = result.xdocidentidad;
+              this.grouperList[i].bfacturar = result.bfacturar;
+              this.grouperList[i].bcontribuyente = result.bcontribuyente;
+              this.grouperList[i].bimpuesto = result.bimpuesto;
+              this.grouperList[i].xtelefono = result.xtelefono;
+              this.grouperList[i].xfax = result.xfax;
+              this.grouperList[i].xemail = result.xemail;
+              this.grouperList[i].xrutaimagen = result.xrutaimagen;
+              this.grouperList[i].bactivo = result.bactivo;
+              this.grouperList[i].banks = result.banks;
+              this.grouperList[i].banksResult = result.banksResult;
+              this.documentGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  planRowClicked(event: any){
+    let plan = {};
+    if(this.editStatus){ 
+      plan = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        cplancliente: event.data.cplancliente,
+        cplan: event.data.cplan,
+        xplan: event.data.xplan,
+        casociado: event.data.casociado,
+        ctipoplan: event.data.ctipoplan,
+        fdesde: event.data.fdesde,
+        fhasta: event.data.fhasta,
+        associates: this.associateList,
+        delete: false
+      };
+    }else{ 
+      plan = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        cplancliente: event.data.cplancliente,
+        cplan: event.data.cplan,
+        xplan: event.data.xplan,
+        casociado: event.data.casociado,
+        ctipoplan: event.data.ctipoplan,
+        fdesde: event.data.fdesde,
+        fhasta: event.data.fhasta,
+        associates: this.associateList,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ClientPlanComponent);
+    modalRef.componentInstance.plan = plan;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.planList.length; i++){
+            if(this.planList[i].cgrid == result.cgrid){
+              this.planList[i].cplan = result.cplan;
+              this.planList[i].xplan = result.xplan;
+              this.planList[i].casociado = result.casociado;
+              this.planList[i].xasociado = result.xasociado;
+              this.planList[i].ctipoplan = result.ctipoplan;
+              this.planList[i].xtipoplan = result.xtipoplan;
+              this.planList[i].fdesde = result.fdesde;
+              this.planList[i].fhasta = result.fhasta;
+              this.planGridApi.refreshCells();
+              return;
+            }
+          }
+        }
+      }
+    });
+  }
+
   onBanksGridReady(event){
     this.bankGridApi = event.api;
+  }
+
+  onAssociatesGridReady(event){
+    this.associateGridApi = event.api;
+  }
+
+  onBondsGridReady(event){
+    this.bondGridApi = event.api;
   }
 
   onContactsGridReady(event){
     this.contactGridApi = event.api;
   }
 
+  onBrokersGridReady(event){
+    this.brokerGridApi = event.api;
+  }
+
+  onDepreciationsGridReady(event){
+    this.depreciationGridApi = event.api;
+  }
+
+  onRelationshipsGridReady(event){
+    this.relationshipGridApi = event.api;
+  }
+
+  onPenaltiesGridReady(event){
+    this.penaltyGridApi = event.api;
+  }
+
+  onProvidersGridReady(event){
+    this.providerGridApi = event.api;
+  }
+
+  onModelsGridReady(event){
+    this.modelGridApi = event.api;
+  }
+
+  onWorkersGridReady(event){
+    this.workerGridApi = event.api;
+  }
+
   onDocumentsGridReady(event){
     this.documentGridApi = event.api;
+  }
+
+  onGroupersGridReady(event){
+    this.grouperGridApi = event.api;
+  }
+
+  onPlansGridReady(event){
+    this.planGridApi = event.api;
   }
 
   onFileSelect(event){
@@ -565,7 +1499,7 @@ export class ClientDetailV2Component implements OnInit {
           create: createContactList,
           update: updateContactList
         },
-        Documents: {
+        documents: {
           create: createDocumentsList,
           update: updateDocumentsList
         },
