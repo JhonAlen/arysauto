@@ -91,10 +91,7 @@ export class ClientContactComponent implements OnInit {
   onSubmit(form){
     this.submitted = true;
     this.loading = true;
-    if (this.popup_form.invalid) {
-      this.loading = false;
-      return;
-    }
+
     this.contact.xnombre = form.xnombre;
     this.contact.xapellido = form.xapellido;
     this.contact.icedula = form.icedula;

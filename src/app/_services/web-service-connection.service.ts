@@ -378,7 +378,7 @@ export class WebServiceConnectionService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     try {
-      let response = await this.http.post(`${environment.apiUrl}/api/client/search`, params, options).toPromise();
+      let response = await this.http.post(`${environment.apiUrl}/api/v2/client/production/search`, params, options).toPromise();
       return response;
     }
     catch (err) {

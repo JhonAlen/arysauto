@@ -309,18 +309,17 @@ export class ClientDetailV2Component implements OnInit {
     modalRef.componentInstance.bank = bank;
     modalRef.result.then((result: any) => {
       if(result){
-        if(result.type == 1){
-          for(let i = 0; i < this.bankList.length; i++){
-            if(this.bankList[i].cgrid == result.cgrid){
-              this.bankList[i].cbanco = result.cbanco;
-              this.bankList[i].xbanco = result.xbanco;
-              this.bankList[i].ctipocuentabancaria = result.ctipocuentabancaria;
-              this.bankList[i].xnumerocuenta = result.xnumerocuenta;
-              this.bankList[i].bprincipal = result.bprincipal;
-              this.bankList[i].xprincipal = result.bprincipal ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO");
-              this.bankGridApi.refreshCells();
-              return;
-            }
+        for(let i = 0; i < this.bankList.length; i++){
+          if(this.bankList[i].cgrid == result.cgrid){
+            this.bankList[i].cbanco = result.cbanco;
+            this.bankList[i].xbanco = result.xbanco;
+            this.bankList[i].ctipocuentabancaria = result.ctipocuentabancaria;
+            this.bankList[i].xtipocuentabancaria = result.xtipocuentabancaria;
+            this.bankList[i].xnumerocuenta = result.xnumerocuenta;
+            this.bankList[i].bprincipal = result.bprincipal;
+            this.bankList[i].xprincipal = result.bprincipal ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO");
+            this.bankGridApi.refreshCells();
+            return;
           }
         }
       }
