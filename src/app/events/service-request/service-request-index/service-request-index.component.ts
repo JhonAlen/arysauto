@@ -109,8 +109,6 @@ export class ServiceRequestIndexComponent implements OnInit {
         cmodulo: 87
       },
       isolicitante:  form.isolicitante ? form.isolicitante : undefined,
-      ccompania: this.currentUser.data.ccompania,
-      ctipodocidentidad: form.ctipodocidentidad ? form.ctipodocidentidad : undefined,
       xnombre: form.xnombre ? form.xnombre : undefined,
       xapellido: form.xapellido ? form.xapellido : undefined,
       xdocidentidad: form.xdocidentidad ? form.xdocidentidad : undefined
@@ -128,7 +126,6 @@ export class ServiceRequestIndexComponent implements OnInit {
             xtiposervicio: response.data.list[i].xtiposervicio,
             xservicio: response.data.list[i].xservicio,
             xproveedor: response.data.list[i].xproveedor,
-            xactivo: response.data.list[i].bactivo ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO")
           });
         }
       }
