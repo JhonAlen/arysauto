@@ -70,10 +70,10 @@ export class BatchComponent implements OnInit {
   parseCSV(file) {
 
     const csvHeaders: any[] = [
-      "No", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL_CARROCERIA", 
+      "No", "POLIZA", "CERTIFICADO", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL_CARROCERIA", 
       "SERIAL_MOTOR", "PLACA", "CMARCA", "CMODELO", "CVERSION", "XMARCA", "XMODELO", "XVERSION", "AÑO", "COLOR", 
       "Tipo_Vehiculo", "CLASE", "PTOS", "XTELEFONO1", "XTELEFONO2", "XDIRECCION", "EMAIL", "FEMISION", "FPOLIZA_DES", "FPOLIZA_HAS", 
-      "CASEGURADORA", "SUMA_ASEGURADA", "SUMA_ASEGURADA_OTROS", "MONTO_DEDUCIBLE", "XTIPO_DEDUCIBLE", "FCREACION", "CUSUARIOCREACION"
+      "CASEGURADORA", "SUMA ASEGURADA", "SUMA ASEGURADA OTROS", "MONTO DEDUCIBLE", "XTIPO_DEDUCIBLE", "FCREACION", "CUSUARIOCREACION"
     ]
 
     return new Promise <any[]>((resolve, reject) => {
