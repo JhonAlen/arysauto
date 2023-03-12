@@ -215,7 +215,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                         <div class="form-group" style="margin-left: 15px;">
-                            <label>{{ "EVENTS.SERVICEORDER.SINCE" | translate }}</label>
+                            <label>Punto de Inicio</label>
                             <textarea type="text" formControlName="xdesde" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdesde').errors }"></textarea>
                             <div *ngIf="submitted && popup_form.get('xdesde').errors"  class="invalid-feedback">
                                 <div *ngIf="popup_form.get('xdesde').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
@@ -224,7 +224,7 @@
                         </div>
                         <div class="col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>{{ "EVENTS.SERVICEORDER.TOWARDS" | translate }}</label>
+                            <label>Punto Final</label>
                             <textarea type="text" formControlName="xhacia" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xhacia').errors }"></textarea>
                             <div *ngIf="submitted && popup_form.get('xhacia').errors"  class="invalid-feedback">
                                 <div *ngIf="popup_form.get('xhacia').errors.required">{{ "EVENTS.SERVICEORDER.REQUIREDIDENTIFICATIONDOCUMENT" | translate }}</div>
@@ -271,7 +271,7 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>{{ "EVENTS.SERVICEORDER.ADITIONALSERVICE" | translate }}</label>
-                                    <select formControlName="cservicioadicional" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cservicio').errors }" (change)="changeAditionalService()">
+                                    <select formControlName="cservicioadicional" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cservicioadicional').errors }" (change)="changeAditionalService()">
                                         <option></option>
                                         <option *ngFor="let service of aditionalServiceList" value="{{ service.servicio }}">{{ service.value }}</option>
                                     </select>
