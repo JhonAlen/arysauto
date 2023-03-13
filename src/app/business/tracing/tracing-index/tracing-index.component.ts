@@ -31,7 +31,7 @@ export class TracingIndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.search_form = this.formBuilder.group({
-      btodos: [false]
+      btodos: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
