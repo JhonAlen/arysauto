@@ -298,25 +298,6 @@ export class NotificationServiceOrderComponent implements OnInit {
       cestado: this.notificacion.cestado,
       cservicio: servicio
     }
-    this.http.post(`${environment.apiUrl}/api/valrep/notification-services`, params, options).subscribe((response: any) => {
-      this.serviceList = [];
-      if(response.data.status){
-        for(let i = 0; i < response.data.list.length; i++){
-          this.serviceList.push({ servicio: response.data.list[i].cservicio, value: response.data.list[i].xservicio, ccontratoflota: response.data.list[i].ccontratoflota, ccarga: response.data.list[i].ccarga});
-        }
-        this.serviceList.sort((a,b) => a.value > b.value ? 1 : -1);
-      }
-    },
-    (err) => {
-      let code = err.error.data.code;
-      let message;
-      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-      else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICENOTFOUND"; }
-      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-      this.alert.message = message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-    });
     this.http.post(`${environment.apiUrl}/api/valrep/aditional-service`, params, options).subscribe((response: any) => {
       if(response.data.status){
         for(let i = 0; i < response.data.list.length; i++){
@@ -424,6 +405,9 @@ export class NotificationServiceOrderComponent implements OnInit {
       cusuario: this.currentUser.data.cusuario
     }
     this.http.post(`${environment.apiUrl}/api/notification/search-service`, params, options).subscribe((response: any) => {
+      if(response.data.status){
+        this.getService()
+      }
     },
     (err) => {
       let code = err.error.data.code;
@@ -433,6 +417,33 @@ export class NotificationServiceOrderComponent implements OnInit {
       else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
       this.alert.message = message;
       this.alert.type = 'primary';
+      this.alert.show = true;
+    });
+  }
+
+  getService(){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      cnotificacion: this.popup_form.get('cnotificacion').value
+    }
+    this.http.post(`${environment.apiUrl}/api/valrep/notification-services`, params, options).subscribe((response: any) => {
+      this.serviceList = [];
+      if(response.data.status){
+        for(let i = 0; i < response.data.list.length; i++){
+          this.serviceList.push({ servicio: response.data.list[i].cservicio, value: response.data.list[i].xservicio, ccontratoflota: response.data.list[i].ccontratoflota, ccarga: response.data.list[i].ccarga});
+        }
+        this.serviceList.sort((a,b) => a.value > b.value ? 1 : -1);
+      }
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ message = "HTTP.ERROR.VALREP.SERVICENOTFOUND"; }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
       this.alert.show = true;
     });
   }
