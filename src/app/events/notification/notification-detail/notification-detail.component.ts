@@ -276,7 +276,8 @@ export class NotificationDetailComponent implements OnInit {
       cnotificacion: this.code
     };
     this.http.post(`${environment.apiUrl}/api/notification/detail`, params, options).subscribe((response: any) => {
-      if(response.data.status){
+      
+        console.log(response)
         this.detail_form.get('cnotificacion').setValue(response.data.cnotificacion);
         this.detail_form.get('ccontratoflota').setValue(response.data.ccontratoflota);
         this.detail_form.get('ccontratoflota').disable();
@@ -638,7 +639,7 @@ export class NotificationDetailComponent implements OnInit {
             });
           }
         }
-      }
+      
       this.loading_cancel = false;
     }, 
     (err) => {
