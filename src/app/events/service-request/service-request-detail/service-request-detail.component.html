@@ -86,18 +86,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label>{{ "EVENTS.SERVICEREQUESTS.ORIGIN" | translate }}</label>
-                                    <select formControlName="cprocedencia" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cprocedencia').errors }">
-                                        <option></option>
-                                        <option value="API">{{ "DROPDOWN.API" | translate }}</option>
-                                        <option value="PRO">{{ "DROPDOWN.PRODUCTION" | translate }}</option>
-                                    </select>
-                                    <div *ngIf="submitted && detail_form.get('cprocedencia').errors"  class="invalid-feedback">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,6 +135,38 @@
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
+                                    <label>Marca</label>
+                                    <input type="text" formControlName="xmarca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmarca').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmarca').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Modelo</label>
+                                    <input type="text" formControlName="xmodelo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmodelo').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xmodelo').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Versión</label>
+                                    <input type="text" formControlName="xversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xversion').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xversion').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Año</label>
+                                    <input type="text" formControlName="fano" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fano').errors }">
+                                    <div *ngIf="submitted && detail_form.get('fano').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
                                     <label>{{ "EVENTS.SERVICEREQUESTS.PLATE" | translate }}</label>
                                     <input type="text" formControlName="xplaca" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xplaca').errors }">
                                     <div *ngIf="submitted && detail_form.get('xplaca').errors"  class="invalid-feedback">
@@ -172,6 +192,22 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
+                                    <label>Tipo Servicio</label>
+                                    <input type="text" formControlName="xtiposervicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xtiposervicio').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xtiposervicio').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Servicio</label>
+                                    <input type="text" formControlName="xservicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xservicio').errors }">
+                                    <div *ngIf="submitted && detail_form.get('xservicio').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
                                     <label>{{ "EVENTS.SERVICEREQUESTS.SERVICETYPE" | translate }}</label>
                                     <select formControlName="ctiposervicio" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctiposervicio').errors }" (change)="serviceDropdownDataRequest()">
                                         <option></option>
@@ -193,7 +229,7 @@
                                         <div *ngIf="detail_form.get('cservicio').errors.required">{{ "EVENTS.SERVICEREQUESTS.REQUIREDSERVICE" | translate }}</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

@@ -46,6 +46,7 @@ export class NotificationsComponent implements OnInit {
       cestado:  [''],
       cciudad :  [''],
       cproveedor :  [''],
+      ccontratoflota :  [''],
     });
 
   this.currentUser = this.authenticationService.currentUserValue;
@@ -55,6 +56,7 @@ export class NotificationsComponent implements OnInit {
   } 
   this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
       let DataTypeServiceI = response.data.listTypeService
+      this.servicePlanContract.get('ccontratoflota').setValue(response.data.ccontratoflota);
       const DataTypeServiceP = DataTypeServiceI.filter
       ((data, index, j) => index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
       this.ListTypeService = DataTypeServiceP
@@ -152,8 +154,8 @@ export class NotificationsComponent implements OnInit {
       cservicio: this.codeservice,
       ctiposervicio: this.codetypeservice,
       cproveedor: this.servicePlanContract.get('cproveedor').value,
-      cpropietario: this.currentUser.data.cpropietario
-
+      cpropietario: this.currentUser.data.cpropietario,
+      ccontratoflota: this.servicePlanContract.get('ccontratoflota').value
     }
 //guardar insert  from evsolicitudservicio
     this.http.post(environment.apiUrl + '/api/club/Data/Solicitud',params).subscribe((response : any) => {

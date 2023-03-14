@@ -1424,6 +1424,9 @@ export class ClientDetailV2Component implements OnInit {
   onFileSelect(event){
     const file = event.target.files[0];
     this.detail_form.get('ximagen').setValue(file);
+    if(this.detail_form.get('ximagen').value){
+      this.onSaveImages()
+    }
   }
 
   editClient(){
@@ -1454,6 +1457,17 @@ export class ClientDetailV2Component implements OnInit {
     }else{
       this.router.navigate([`/clients/client-index`]);
     }
+  }
+
+  onSaveImages(){
+    const formData = new FormData();
+    formData.append('ximagen', this.detail_form.get('ximagen').value);
+    formData.append('agentId', '007');
+    this.http.post<any>(`${environment.apiUrl}/api/upload/image`, formData).subscribe(response => {
+      if(response.data.status){
+        this.xrutaimagen = `${environment.apiUrl}/images/${response.data.uploadedFile.filename}`;
+      }
+    });
   }
 
   onSubmit(form){
