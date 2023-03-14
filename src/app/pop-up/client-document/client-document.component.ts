@@ -32,7 +32,8 @@ export class ClientDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cdocumento: ['', Validators.required],
+      cdocumento: [''],
+      xdocumento: [''],
       xarchivo: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
@@ -119,8 +120,12 @@ export class ClientDocumentComponent implements OnInit {
 
   savePopUpForm(form){
     let documentFilter = this.documentList.filter((option) => { return option.id == form.cdocumento; });
-    // this.document.cdocumento = form.cdocumento;
-    // this.document.xdocumento = documentFilter[0].value;
+    this.document.cdocumento = form.cdocumento;
+    if(form.xdocumento){
+      this.document.xdocumento = form.xdocumento.toUpperCase();
+    }else{
+      this.document.xdocumento = "SIN DESCRIPCIÓN"
+    }
     this.document.xrutaarchivo = this.xrutaarchivo ? this.xrutaarchivo : "n/a";
     this.activeModal.close(this.document);
   }

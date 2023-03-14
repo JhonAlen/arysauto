@@ -10,6 +10,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
+                    <label>Descripción del Documento</label>
+                    <input type="text" formControlName="xdocumento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocumento').errors }">
+                    <div *ngIf="submitted && popup_form.get('xdocumento').errors"  class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
                     <label>{{ "CLIENTS.CLIENTS.DOCUMENTROUTE" | translate }}</label>
                     <div class="mt-1"></div>
                     <a href="{{ xrutaarchivo }}" target="_blank">{{ xrutaarchivo }}</a>
