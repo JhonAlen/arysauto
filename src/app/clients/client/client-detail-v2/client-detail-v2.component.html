@@ -11,7 +11,7 @@
                 <div class="card-header company-card-header">
                     <div class="row">
                         <div class="col-6">
-                            {{ "CLIENTS.CLIENTS.CLIENT" | translate }}
+                            HOLARSGDFHRTJ
                         </div>
                         <div class="col-6">
                             <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
@@ -38,8 +38,25 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
+                                        <label>Cargar imagen</label>
+                                        <input type="file" class="file-input"
+                                        (change)="onFileSelected($event)" #fileUpload>
+                                 
+                                 <div class="file-upload">
+                                 
+                                    {{fileName || "No file uploaded yet."}}
+                                 
+                                     <button mat-mini-fab color="primary" class="upload-btn"
+                                       (click)="fileUpload.click()">
+                                         <mat-icon>attach_file</mat-icon>
+                                     </button>
+                                 </div>                                   
+                                 </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
                                         <label>{{ "CLIENTS.CLIENTS.UPLOADIMAGE" | translate }}</label>
-                                        <input type="file" name="ximagen" class="form-control"  accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" #Ximagen>
+                                        <input type="file" formControlName="ximagen" class="form-control"  accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelect($event)" #Ximagen>
                                     </div>
                                 </div>
                             </div>

@@ -11,12 +11,15 @@ import { AuthenticationService } from '@services/authentication.service';
 import { environment } from '@environments/environment';
 
 
+
 @Component({
   selector: 'app-client-detail-v2',
   templateUrl: './client-detail-v2.component.html',
   styleUrls: ['./client-detail-v2.component.css']
 })
 export class ClientDetailV2Component implements OnInit {
+  fileName = '';
+
 
   @ViewChild('Ximagen', { static: false }) ximagen: ElementRef;
   private bankGridApi;
@@ -24,6 +27,7 @@ export class ClientDetailV2Component implements OnInit {
   private documentGridApi;
   sub;
   currentUser;
+  imageUrl: string
   detail_form: UntypedFormGroup;
   upload_form: UntypedFormGroup;
   loading: boolean = false;
@@ -102,6 +106,24 @@ export class ClientDetailV2Component implements OnInit {
         this.alert.type = 'danger';
         this.alert.show = true;
       });
+    }
+  }
+
+  onFileSelected(event) {
+
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+        this.fileName = file.name;
+
+        const formData = new FormData();
+
+        formData.append("thumbnail", file);
+
+        const upload$ = this.http.post(environment.apiUrl + '/api/upload/image', formData);
+
+        upload$.subscribe();
     }
   }
 
@@ -487,9 +509,12 @@ export class ClientDetailV2Component implements OnInit {
     this.documentGridApi = event.api;
   }
 
+
   onFileSelect(event){
     const file = event.target.files[0];
+    console.log(file);
     this.detail_form.get('ximagen').setValue(file);
+
   }
 
   editClient(){
@@ -523,6 +548,8 @@ export class ClientDetailV2Component implements OnInit {
   }
 
   onSubmit(form){
+    console.log(this.imageUrl)
+
     this.submitted = true;
     this.loading = true;
     if(this.detail_form.invalid){
