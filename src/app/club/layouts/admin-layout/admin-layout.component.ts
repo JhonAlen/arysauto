@@ -38,27 +38,27 @@ constructor(public translate : TranslateService,
       let params = {
         cusuario: this.currentUser.data.cusuario
       }
-      this.http.post(`${environment.apiUrl}/api/security/get-user-modules`, params, options).subscribe((response : any) => {
-        if(response.data.status){
-          let nameArray = [];
-          for(let i = 0; i < response.data.list.length; i++){
-            if(!nameArray.includes(response.data.list[i].xgrupo)){ nameArray.push(response.data.list[i].xgrupo); }
-          }
-          for(let i = 0; i < nameArray.length; i++){
-            let testObjectFilter = response.data.list.filter(function(group) {
-              return group.xgrupo == nameArray[i];
-            });
-            this.groupList.push({ xgrupo: nameArray[i], modules: testObjectFilter });
-          }
-        }
-      },
-      (err) => {
-        let code = err.error.data.code;
-        let message;
-        if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-        else if(code == 404){ message = "HTTP.ERROR.TOOLBAR.MODULESNOTFOUND"; }
-        else if(code == 500){ message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-      });
+    //   this.http.post(`${environment.apiUrl}/api/security/get-user-modules`, params, options).subscribe((response : any) => {
+    //     if(response.data.status){
+    //       let nameArray = [];
+    //       for(let i = 0; i < response.data.list.length; i++){
+    //         if(!nameArray.includes(response.data.list[i].xgrupo)){ nameArray.push(response.data.list[i].xgrupo); }
+    //       }
+    //       for(let i = 0; i < nameArray.length; i++){
+    //         let testObjectFilter = response.data.list.filter(function(group) {
+    //           return group.xgrupo == nameArray[i];
+    //         });
+    //         this.groupList.push({ xgrupo: nameArray[i], modules: testObjectFilter });
+    //       }
+    //     }
+    //   },
+    //   (err) => {
+    //     let code = err.error.data.code;
+    //     let message;
+    //     if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+    //     else if(code == 404){ message = "HTTP.ERROR.TOOLBAR.MODULESNOTFOUND"; }
+    //     else if(code == 500){ message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+    //   });
  
     this.lang_form = this.formBuilder.group({
       langselect: ['']

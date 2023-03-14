@@ -117,11 +117,11 @@ export class ClientIndexComponent implements OnInit {
   }
 
   goToDetail(){
-    this.router.navigate([`clients/client-detail`]);
+    this.router.navigate([`clients/client-detail-v2`]);
   }
 
   rowClicked(event: any){
-    this.router.navigate([`clients/client-detail/${event.data.ccliente}`]);
+    this.router.navigate([`clients/client-detail-v2/${event.data.ccliente}`]);
   }
 
 }

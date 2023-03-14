@@ -58,13 +58,6 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.CONTRACTNUMBER" | translate }}</label>
-                                            <input type="text" formControlName="xcontrato" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xcontrato').errors }">
-                                            <div *ngIf="submitted && detail_form.get('xcontrato').errors"  class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group">
                                             <label>{{ "CLIENTS.CLIENTS.REPRESENTATIVE" | translate }}</label>
                                             <input type="text" formControlName="xrepresentante" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xrepresentante').errors }">
                                             <div *ngIf="submitted && detail_form.get('xrepresentante').errors"  class="invalid-feedback">
@@ -74,26 +67,18 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.BUSINESSACTIVITY" | translate }}</label>
-                                            <select formControlName="cactividadempresa" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cactividadempresa').errors }">
-                                                <option></option>
-                                                <option *ngFor="let businessActivity of businessActivityList" value="{{ businessActivity.id }}">{{ businessActivity.value }}</option>
-                                            </select>
-                                            <div *ngIf="submitted && detail_form.get('cactividadempresa').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('cactividadempresa').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBUSINESSACTIVITY" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.DOCUMENTTYPE" | translate }}</label>
-                                            <select formControlName="ctipodocidentidad" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipodocidentidad').errors }">
-                                                <option></option>
-                                                <option *ngFor="let documentType of documentTypeList" value="{{ documentType.id }}">{{ documentType.value }}</option>
-                                            </select>
-                                            <div *ngIf="submitted && detail_form.get('ctipodocidentidad').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('ctipodocidentidad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDDOCUMENTTYPE" | translate }}</div>
-                                            </div>
+                                          <label class="form-label required" for="form3Examplev2">Tipo Documento de Identidad</label>
+                                          <select formControlName="icedula" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('icedula').errors } " >
+                                            <option value="V">V</option>
+                                            <option value="P">P</option>
+                                            <option value="E">E</option>
+                                            <option value="J">J</option>
+                                            <option value="C">C</option>
+                                            <option value="G">G</option>
+                                          </select>                      
+                                          <div *ngIf="submitted && detail_form.get('icedula').errors" class="invalid-feedback">
+                                            <div *ngIf="detail_form.get('icedula').errors.required">Se requiere completar el campo</div>
+                                          </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
@@ -126,7 +111,7 @@
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
                                             <label>{{ "CLIENTS.CLIENTS.STATE" | translate }}</label>
-                                            <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestado').errors }" (change)="cityDropdownDataRequest()">
+                                            <select formControlName="cestado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestado').errors }" (change)="getCityData()">
                                                 <option></option>
                                                 <option *ngFor="let state of stateList" value="{{ state.id }}">{{ state.value }}</option>
                                             </select>
@@ -143,7 +128,7 @@
                                                 <option *ngFor="let city of cityList" value="{{ city.id }}">{{ city.value }}</option>
                                             </select>
                                             <div *ngIf="submitted && detail_form.get('cciudad').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('cciudad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCITY" | translate }}</div>
+                                                <div *ngIf="detail_form.get('cciudad').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSTATE" | translate }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -153,15 +138,6 @@
                                             <textarea type="text" formControlName="xdireccionfiscal" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xdireccionfiscal').errors }" cols="30" rows="2"></textarea>
                                             <div *ngIf="submitted && detail_form.get('xdireccionfiscal').errors"  class="invalid-feedback">
                                                 <div *ngIf="detail_form.get('xdireccionfiscal').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXADDRESS" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.MAXYEAR" | translate }}</label>
-                                            <input type="number" formControlName="fanomaximo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('fanomaximo').errors }">
-                                            <div *ngIf="submitted && detail_form.get('fanomaximo').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('fanomaximo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDMAXYEAR" | translate }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -179,85 +155,6 @@
                                             <label>{{ "CLIENTS.CLIENTS.WEBPAGE" | translate }}</label>
                                             <input type="text" formControlName="xpaginaweb" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xpaginaweb').errors }">
                                             <div *ngIf="submitted && detail_form.get('xpaginaweb').errors"  class="invalid-feedback">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.PAYMENTTYPE" | translate }}</label>
-                                            <select formControlName="ctipopago" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ctipopago').errors }">
-                                                <option></option>
-                                                <option *ngFor="let paymentType of paymentTypeList" value="{{ paymentType.id }}">{{ paymentType.value }}</option>
-                                            </select>
-                                            <div *ngIf="submitted && detail_form.get('ctipopago').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('ctipopago').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDPAYMENTTYPE" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" formControlName="bcolectivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcolectivo').errors }">
-                                            <label>{{ "CLIENTS.CLIENTS.COLECTIVE" | translate }}</label>
-                                            <div *ngIf="submitted && detail_form.get('bcolectivo').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('bcolectivo').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCOLECTIVE" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" formControlName="bfacturar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bfacturar').errors }">
-                                            <label>{{ "CLIENTS.CLIENTS.CHECKIN" | translate }}</label>
-                                            <div *ngIf="submitted && detail_form.get('bfacturar').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('bfacturar').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCHECKIN" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" formControlName="bfinanciar" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bfinanciar').errors }">
-                                            <label>{{ "CLIENTS.CLIENTS.TOFINANCE" | translate }}</label>
-                                            <div *ngIf="submitted && detail_form.get('bfinanciar').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('bfinanciar').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTOFINANCE" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" formControlName="bcontribuyente" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcontribuyente').errors }">
-                                            <label>{{ "CLIENTS.CLIENTS.TAXPAYER" | translate }}</label>
-                                            <div *ngIf="submitted && detail_form.get('bcontribuyente').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('bcontribuyente').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDTAXPAYER" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" formControlName="bimpuesto" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bimpuesto').errors }">
-                                            <label>{{ "CLIENTS.CLIENTS.COVERSTAXES" | translate }}</label>
-                                            <div *ngIf="submitted && detail_form.get('bimpuesto').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('bimpuesto').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDCOVERSTAXES" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" formControlName="bnotificacionsms" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bnotificacionsms').errors }">
-                                            <label>{{ "CLIENTS.CLIENTS.SMSNOTIFICATIONS" | translate }}</label>
-                                            <div *ngIf="submitted && detail_form.get('bnotificacionsms').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('bnotificacionsms').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDSMSNOTIFICATIONS" | translate }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <div class="form-group">
-                                            <label>{{ "CLIENTS.CLIENTS.BILLINGTYPE" | translate }}</label>
-                                            <select formControlName="ifacturacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ifacturacion').errors }">
-                                                <option></option>
-                                                <option value="G">{{ "DROPDOWN.GLOBAL" | translate }}</option>
-                                                <option value="I">{{ "DROPDOWN.INDIVIDUAL" | translate }}</option>
-                                            </select>
-                                            <div *ngIf="submitted && detail_form.get('ifacturacion').errors"  class="invalid-feedback">
-                                                <div *ngIf="detail_form.get('ifacturacion').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDBILLINGTYPE" | translate }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -296,10 +193,10 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="bankList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bankRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBanksGridReady($event)">
-                            <ag-grid-column headerName="Bank" field="xbanco" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Account Type" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Account Number" field="xnumerocuenta" [width]="259" [sortable]="false"></ag-grid-column>
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="bankList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bankRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBanksGridReady($event)">
+                            <ag-grid-column headerName="Banco" field="xbanco" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo Cuenta Bancaria Type" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Numero de Cuenta" field="xnumerocuenta" [width]="259" [sortable]="false"></ag-grid-column>
                             <ag-grid-column headerName="Principal" field="xprincipal" [width]="259" [sortable]="false"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
@@ -325,7 +222,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="associateList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="associateRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAssociatesGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="associateList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="associateRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAssociatesGridReady($event)">
                             <ag-grid-column headerName="Name" field="xasociado" [width]="1036" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
@@ -351,7 +248,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="bondList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bondRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBondsGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="bondList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bondRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBondsGridReady($event)">
                             <ag-grid-column headerName="Code" field="cbono" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Percentage" field="pbono" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Ammount" field="mbono" [width]="346" [sortable]="true"></ag-grid-column>
@@ -379,11 +276,11 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="contactList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="contactRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onContactsGridReady($event)">
-                            <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Lastname" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Cellphone" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
-                            <ag-grid-column headerName="Email" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="contactList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="contactRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onContactsGridReady($event)">
+                            <ag-grid-column headerName="Nombre" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Apellido" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Telefono" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Correo" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -408,7 +305,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="brokerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="brokerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBrokersGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="brokerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="brokerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBrokersGridReady($event)">
                             <ag-grid-column headerName="Broker" field="xcorredor" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Percentage" field="pcorredor" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Ammount" field="mcorredor" [width]="346" [sortable]="true"></ag-grid-column>
@@ -436,7 +333,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="depreciationList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="depreciationRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDepreciationsGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="depreciationList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="depreciationRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDepreciationsGridReady($event)">
                             <ag-grid-column headerName="Depreciation" field="xdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Percentage" field="pdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Ammount" field="mdepreciacion" [width]="346" [sortable]="true"></ag-grid-column>
@@ -464,7 +361,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="relationshipList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="relationshipRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onRelationshipsGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="relationshipList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="relationshipRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onRelationshipsGridReady($event)">
                             <ag-grid-column headerName="Relationship" field="xparentesco" [width]="518" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
@@ -491,7 +388,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="penaltyList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="penaltyRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPenaltiesGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="penaltyList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="penaltyRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPenaltiesGridReady($event)">
                             <ag-grid-column headerName="Penalty" field="xpenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Percentage" field="ppenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Ammount" field="mpenalizacion" [width]="346" [sortable]="true"></ag-grid-column>
@@ -519,7 +416,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="providerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="providerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onProvidersGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="providerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="providerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onProvidersGridReady($event)">
                             <ag-grid-column headerName="Provider" field="xproveedor" [width]="518" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
@@ -546,7 +443,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="modelList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="modelRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onModelsGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="modelList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="modelRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onModelsGridReady($event)">
                             <ag-grid-column headerName="Brand" field="xmarca" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Model" field="xmodelo" [width]="344" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Observation" field="xobservacion" [width]="346" [sortable]="true"></ag-grid-column>
@@ -574,7 +471,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="workerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="workerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onWorkersGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="workerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="workerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onWorkersGridReady($event)">
                             <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Lastname" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Cellphone" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
@@ -603,9 +500,9 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="documentList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="documentRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDocumentsGridReady($event)">
-                            <ag-grid-column headerName="Document" field="xdocumento" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Route" field="xrutaarchivo" [width]="518" [sortable]="false"></ag-grid-column>
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="documentList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="documentRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDocumentsGridReady($event)">
+                            <ag-grid-column headerName="Documento" field="xdocumento" [width]="400" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Ruta" field="xrutaarchivo" [width]="400" [sortable]="false"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -630,7 +527,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="grouperList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="grouperRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGroupersGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="grouperList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="grouperRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGroupersGridReady($event)">
                             <ag-grid-column headerName="Code" field="cagrupador" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Phone Number" field="xtelefono" [width]="259" [sortable]="false"></ag-grid-column>
@@ -659,7 +556,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="planList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="planRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPlansGridReady($event)">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="planList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="planRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPlansGridReady($event)">
                             <ag-grid-column headerName="Code" field="cplancliente" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Name" field="xplan" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Type" field="xtipoplan" [width]="259" [sortable]="true"></ag-grid-column>

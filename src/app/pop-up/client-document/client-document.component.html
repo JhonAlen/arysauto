@@ -10,13 +10,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
-                    <label>{{ "CLIENTS.CLIENTS.DOCUMENT" | translate }}</label>
-                    <select formControlName="cdocumento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cdocumento').errors }">
-                        <option></option>
-                        <option *ngFor="let document of documentList" value="{{ document.id }}">{{ document.value }}</option>
-                    </select>
-                    <div *ngIf="submitted && popup_form.get('cdocumento').errors"  class="invalid-feedback">
-                        <div *ngIf="popup_form.get('cdocumento').errors.required">{{ "CLIENTS.CLIENTS.REQUIREDDOCUMENT" | translate }}</div>
+                    <label>Descripción del Documento</label>
+                    <input type="text" formControlName="xdocumento" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xdocumento').errors }">
+                    <div *ngIf="submitted && popup_form.get('xdocumento').errors"  class="invalid-feedback">
                     </div>
                 </div>
             </div>

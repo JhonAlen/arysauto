@@ -95,6 +95,7 @@ import { ProviderIndexComponent } from './providers/provider/provider-index/prov
 import { ProviderDetailComponent } from './providers/provider/provider-detail/provider-detail.component';
 import { ClientIndexComponent } from './clients/client/client-index/client-index.component';
 import { ClientDetailComponent } from './clients/client/client-detail/client-detail.component';
+import { ClientDetailV2Component } from './clients/client/client-detail-v2/client-detail-v2.component';
 import { CoverageIndexComponent } from './tables/coverage/coverage-index/coverage-index.component';
 import { CoverageDetailComponent } from './tables/coverage/coverage-detail/coverage-detail.component';
 import { CoverageConceptIndexComponent } from './tables/coverage-concept/coverage-concept-index/coverage-concept-index.component';
@@ -214,6 +215,7 @@ const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
 
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]  },
+  {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
 
   { path: 'change-password/:id', component: ChangePasswordComponent, canActivate: [SessionGuard]  },
   { path: 'permission-error', component: PermissionErrorComponent, canActivate: [AuthGuard]  },
@@ -362,8 +364,8 @@ const routes: Routes = [
   { path: 'providers/provider-detail', component: ProviderDetailComponent, canActivate: [AuthGuard] },
   { path: 'providers/provider-detail/:id', component: ProviderDetailComponent, canActivate: [AuthGuard] },
   { path: 'clients/client-index', component: ClientIndexComponent, canActivate: [AuthGuard] },
-  { path: 'clients/client-detail', component: ClientDetailComponent, canActivate: [AuthGuard] },
-  { path: 'clients/client-detail/:id', component: ClientDetailComponent, canActivate: [AuthGuard] },
+  { path: 'clients/client-detail-v2', component: ClientDetailV2Component, canActivate: [AuthGuard] },
+  { path: 'clients/client-detail-v2/:id', component: ClientDetailV2Component, canActivate: [AuthGuard] },
   { path: 'tables/coverage-index', component: CoverageIndexComponent, canActivate: [AuthGuard] },
   { path: 'tables/coverage-detail', component: CoverageDetailComponent, canActivate: [AuthGuard] },
   { path: 'tables/coverage-detail/:id', component: CoverageDetailComponent, canActivate: [AuthGuard] },
@@ -493,6 +495,7 @@ const routes: Routes = [
   { path: 'subscription/corporative-issuance', component: CorporativeIssuanceComponent, canActivate: [AuthGuard] },
 
   {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
+  { path: 'sign-in', component: SignInComponent },
 
 ];
 

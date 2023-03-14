@@ -108,15 +108,14 @@ export class ServiceRequestIndexComponent implements OnInit {
         cusuario: this.currentUser.data.cusuario,
         cmodulo: 87
       },
-      cpais: this.currentUser.data.cpais,
-      ccompania: this.currentUser.data.ccompania,
-      ctipodocidentidad: form.ctipodocidentidad ? form.ctipodocidentidad : undefined,
+      isolicitante:  form.isolicitante ? form.isolicitante : undefined,
       xnombre: form.xnombre ? form.xnombre : undefined,
       xapellido: form.xapellido ? form.xapellido : undefined,
       xdocidentidad: form.xdocidentidad ? form.xdocidentidad : undefined
     }
     this.http.post(`${environment.apiUrl}/api/v2/service-request/production/search`, params, options).subscribe((response : any) => {
       if(response.data.status){
+
         this.serviceRequestList = [];
         for(let i = 0; i < response.data.list.length; i++){
           this.serviceRequestList.push({ 
@@ -127,7 +126,6 @@ export class ServiceRequestIndexComponent implements OnInit {
             xtiposervicio: response.data.list[i].xtiposervicio,
             xservicio: response.data.list[i].xservicio,
             xproveedor: response.data.list[i].xproveedor,
-            xactivo: response.data.list[i].bactivo ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO")
           });
         }
       }
