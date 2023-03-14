@@ -149,7 +149,10 @@ export class NotificationProviderComponent implements OnInit {
       this.loading = false;
       return;
     }
+    console.log(this.popup_form.get('cproveedor').value)
+    
     let providerFilter = this.providerList.filter((option) => { return option.id == this.popup_form.get('cproveedor').value });
+    console.log(providerFilter[0].value)
     this.provider.cproveedor = this.popup_form.get('cproveedor').value;
     this.provider.xnombre = providerFilter[0].value;
     console.log(this.provider.xnombre)
