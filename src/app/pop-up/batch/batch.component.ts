@@ -70,9 +70,9 @@ export class BatchComponent implements OnInit {
   parseCSV(file) {
 
     const csvHeaders: any[] = [
-      "No", "POLIZA", "CERTIFICADO", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL_CARROCERIA", 
-      "SERIAL_MOTOR", "PLACA", "CMARCA", "CMODELO", "CVERSION", "XMARCA", "XMODELO", "XVERSION", "AÑO", "COLOR", 
-      "Tipo_Vehiculo", "CLASE", "PTOS", "XTELEFONO1", "XTELEFONO2", "XDIRECCION", "EMAIL", "FEMISION", "FPOLIZA_DES", "FPOLIZA_HAS", 
+      "No", "POLIZA", "CERTIFICADO", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL CARROCERIA", 
+      "SERIAL MOTOR", "PLACA", "CMARCA", "CMODELO", "CVERSION", "XMARCA", "XMODELO", "XVERSION", "AÑO", "COLOR", 
+      "Tipo Vehiculo", "CLASE", "PTOS", "XTELEFONO1", "XTELEFONO2", "XDIRECCION", "EMAIL", "FEMISION", "FPOLIZA_DES", "FPOLIZA_HAS", 
       "CASEGURADORA", "SUMA ASEGURADA", "SUMA ASEGURADA OTROS", "MONTO DEDUCIBLE", "XTIPO_DEDUCIBLE", "FCREACION", "CUSUARIOCREACION"
     ]
 
@@ -91,6 +91,9 @@ export class BatchComponent implements OnInit {
             console.log('e: ', csvHeaders);
             if (JSON.stringify(csvAttributesNames) !== JSON.stringify(csvHeaders)) {
               error = `Error en la línea ${i + 1}, no incluye todos los atributos necesarios`;
+              let secondArray = []
+              secondArray  = csvHeaders.filter(o=> !csvAttributesNames.some(i=> i === o));
+              console.log(secondArray);
               break;
             }
           }
