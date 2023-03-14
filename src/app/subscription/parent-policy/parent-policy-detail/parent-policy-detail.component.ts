@@ -197,15 +197,20 @@ export class ParentPolicyDetailComponent implements OnInit {
   }
 
   createNewBatch() {
+    console.log(this.batchList);
+    let batch = this.batchList.filter(batch => !batch.clote);
+    console.log(batch);
     this.submitted = true;
     this.loading = true;
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
-      ccarga: this.code
+      ccarga: this.code,
+      parsedData: batch[0].contratosCSV
     }
-    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/batch`, params, options).subscribe((response : any) => {
+    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
       console.log(response);
+      this.loading = false;
     },
     (err) => {
       let code = err.error.data.code;
