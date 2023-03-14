@@ -65,10 +65,10 @@ export class ParentPolicyIndexComponent implements OnInit {
       cpais: this.currentUser.data.cpais,
       ccompania: this.currentUser.data.ccompania,
     };
-    this.http.post(`${environment.apiUrl}/api/valrep/parent-policy`, params, options).subscribe((response : any) => {
+    this.http.post(`${environment.apiUrl}/api/valrep/corporative-charge`, params, options).subscribe((response : any) => {
       if(response.data.status){
         for(let i = 0; i < response.data.list.length; i++){
-          this.parentPolicyList.push({ id: response.data.list[i].ccarga, value: `Póliza Matriz #${response.data.list[i].xpoliza} ${response.data.list[i].xdescripcion} ${response.data.list[i].fcreacion}`});
+          this.parentPolicyList.push({ id: response.data.list[i].ccarga, value: `${response.data.list[i].xcliente} Póliza Nro. ${response.data.list[i].xpoliza}`});
         }
       }
     },
@@ -98,7 +98,7 @@ export class ParentPolicyIndexComponent implements OnInit {
       cpais: this.currentUser.data.cpais,
       ccompania: this.currentUser.data.ccompania
     }
-    this.http.post(`${environment.apiUrl}/api/parent-policy/search`, params, options).subscribe((response : any) => {
+    this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/search-corporative-charge`, params, options).subscribe((response : any) => {
       if(response.data.status){
         this.parentPolicyResultList = [];
         for(let i = 0; i < response.data.list.length; i++){

@@ -1,0 +1,13 @@
+footer{
+    background-color: #132646;
+    border-top-style: solid;
+    border-color: white;
+}
+
+h3,h6{
+    color: white;
+}
+
+ng-autocomplete, ng-template {
+    background: fixed;
+}

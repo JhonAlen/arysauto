@@ -196,37 +196,21 @@ export class ParentPolicyDetailComponent implements OnInit {
     });
   }
 
-  onSubmit(form) {
+  createNewBatch() {
+    console.log(this.batchList);
+    let batch = this.batchList.filter(batch => !batch.clote);
+    console.log(batch);
     this.submitted = true;
     this.loading = true;
-    if (this.detail_form.invalid) {
-      this.loading = false;
-      return;
-    }
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
-      cusuario: this.currentUser.data.cusuario,
-      cpais: this.currentUser.data.cpais,
-      ccompania: this.currentUser.data.ccompania,
-      polizaMatriz: {
-        ccarga: this.code,
-        ccliente: form.ccliente,
-        ccorredor: form.ccorredor,
-        xpoliza: this.xpoliza,
-        xdescripcion_l: this.clientList.filter((cli) => { return cli.id == form.ccliente})[0].value,
-        lotes: this.batchList
-      }
+      ccarga: this.code,
+      parsedData: batch[0].contratosCSV
     }
-    this.http.post(`${environment.apiUrl}/api/parent-policy/create`, params, options).subscribe((response : any) => {
-      if(response.data.status){
-        if(this.code){
-          location.reload();
-        }else{
-          this.router.navigate([`/subscription/parent-policy-detail/${response.data.ccarga}`]);
-        }
-      }
-      this.loading = false
+    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
+      console.log(response);
+      this.loading = false;
     },
     (err) => {
       let code = err.error.data.code;
@@ -241,6 +225,59 @@ export class ParentPolicyDetailComponent implements OnInit {
       this.alert.show = true;
       this.loading = false;
     });
+  }
+
+  onSubmit(form) {
+
+    if (this.editStatus) {
+      this.createNewBatch();
+    }
+    else {
+      this.submitted = true;
+      this.loading = true;
+      if (this.detail_form.invalid) {
+        this.loading = false;
+        return;
+      }
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      let options = { headers: headers };
+      let params = {
+        cusuario: this.currentUser.data.cusuario,
+        cpais: this.currentUser.data.cpais,
+        ccompania: this.currentUser.data.ccompania,
+        polizaMatriz: {
+          ccarga: this.code,
+          ccliente: form.ccliente,
+          ccorredor: form.ccorredor,
+          xpoliza: this.xpoliza,
+          xdescripcion_l: this.clientList.filter((cli) => { return cli.id == form.ccliente})[0].value,
+          lotes: this.batchList
+        }
+      }
+      this.http.post(`${environment.apiUrl}/api/parent-policy/create`, params, options).subscribe((response : any) => {
+        if(response.data.status){
+          if(this.code){
+            location.reload();
+          }else{
+            this.router.navigate([`/subscription/parent-policy-detail/${response.data.ccarga}`]);
+          }
+        }
+        this.loading = false
+      },
+      (err) => {
+        let code = err.error.data.code;
+        let message;
+        if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+        else if(code == 404){ 
+          message = "No se encontraron contratos que cumplan con los parámetros de búsqueda"; 
+        }
+        else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+        this.alert.message = message;
+        this.alert.type = 'danger';
+        this.alert.show = true;
+        this.loading = false;
+      });
+  }
   }
 
   editParentPolicy() {

@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@app/_services/authentication.service';
-import { environment } from '@environments/environment';
 import { Papa } from 'ngx-papaparse';
 
 @Component({
@@ -70,12 +69,38 @@ export class BatchComponent implements OnInit {
 
   parseCSV(file) {
 
+    const csvHeaders: any[] = [
+      "No", "POLIZA", "CERTIFICADO", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL CARROCERIA", 
+      "SERIAL MOTOR", "PLACA", "CMARCA", "CMODELO", "CVERSION", "XMARCA", "XMODELO", "XVERSION", "AÑO", "COLOR", 
+      "Tipo Vehiculo", "CLASE", "PTOS", "XTELEFONO1", "XTELEFONO2", "XDIRECCION", "EMAIL", "FEMISION", "FPOLIZA_DES", "FPOLIZA_HAS", 
+      "CASEGURADORA", "SUMA ASEGURADA", "SUMA ASEGURADA OTROS", "MONTO DEDUCIBLE", "XTIPO_DEDUCIBLE", "FCREACION", "CUSUARIOCREACION"
+    ]
+
     return new Promise <any[]>((resolve, reject) => {
       let papa = new Papa();
       papa.parse(file, {
         delimiter: ";",
         header: true,
+        skipEmptyLines: true,
         complete: function(results) {
+          let error = "";
+          console.log(results.data);
+          for (let i = 0; i < results.data.length; i++) {
+            let csvAttributesNames = Object.keys(results.data[i]);
+            console.log('a: ', csvAttributesNames);
+            console.log('e: ', csvHeaders);
+            if (JSON.stringify(csvAttributesNames) !== JSON.stringify(csvHeaders)) {
+              error = `Error en la línea ${i + 1}, no incluye todos los atributos necesarios`;
+              let secondArray = []
+              secondArray  = csvHeaders.filter(o=> !csvAttributesNames.some(i=> i === o));
+              console.log(secondArray);
+              break;
+            }
+          }
+          if (error) {
+            console.log(error);
+            reject(error);
+          }
           return resolve(results.data);
         }
       });
@@ -91,20 +116,14 @@ export class BatchComponent implements OnInit {
     this.fleetContractList = [];
     this.parsedData = [];
     this.parsedData = await this.parseCSV(file);
-    for (let i = 0; i < (this.parsedData.length -1); i++){
-      let nombrePropietario = '';
-      if (this.parsedData[i].APELLIDO) {
-        nombrePropietario = this.parsedData[i].NOMBRE + ' ' + this.parsedData[i].APELLIDO
-      } else {
-        nombrePropietario = this.parsedData[i].NOMBRE
-      }
+    for (let i = 0; i < (this.parsedData.length); i++){
       fixedData.push({
-        ccontratoflota: parseInt(this.parsedData[i].ID),
-        xmarca: this.parsedData[i].MARCA,
-        xmodelo: this.parsedData[i].MODELO,
+        ncedula: this.parsedData[i].CEDULA,
+        xmarca: this.parsedData[i].XMARCA,
+        xmodelo: this.parsedData[i].XMODELO,
         xplaca: this.parsedData[i].PLACA,
-        xversion: this.parsedData[i].VERSION,
-        xpropietario: nombrePropietario
+        xversion: this.parsedData[i].XVERSION,
+        xpropietario: this.parsedData[i].PROPIETARIO
       })
     }
     this.fleetContractList = fixedData;

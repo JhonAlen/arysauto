@@ -323,6 +323,7 @@ import { PlanAmountRcvComponent } from './pop-up/plan-amount-rcv/plan-amount-rcv
 import { ContractServiceArysIndexComponent } from './subscription/contract-service-arys/contract-service-arys-index/contract-service-arys-index.component';
 import { ContractServiceArysDetailComponent } from './subscription/contract-service-arys/contract-service-arys-detail/contract-service-arys-detail.component';
 import { NumberOfServiceComponent } from './pop-up/number-of-service/number-of-service.component';
+import { CorporativeIssuanceComponent } from './subscription/corporative-issuance/corporative-issuance.component';
 import { PlanValuationApovComponent } from './pop-up/plan-valuation-apov/plan-valuation-apov.component';
 import { PlanValuationExcesoComponent } from './pop-up/plan-valuation-exceso/plan-valuation-exceso.component';
 import { ClientDetailV2Component } from './clients/client/client-detail-v2/client-detail-v2.component';
@@ -631,6 +632,7 @@ export function HttpLoaderFactory(http: HttpClient){
     ContractServiceArysIndexComponent,
     ContractServiceArysDetailComponent,
     NumberOfServiceComponent,
+    CorporativeIssuanceComponent,
     PlanValuationApovComponent,
     PlanValuationExcesoComponent,
     ClientDetailV2Component
