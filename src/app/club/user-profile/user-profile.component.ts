@@ -16,7 +16,8 @@ export class UserProfileComponent implements OnInit {
   submitted = false;
   message : any;
   currentUser;
-  DataClient : any[] = [];
+  DataClient : any = [];
+  DataVehicle : any = [];
 
 
   constructor(
@@ -51,15 +52,7 @@ export class UserProfileComponent implements OnInit {
       cpropietario: this.currentUser.data.cpropietario
     } 
     this.http.post(environment.apiUrl + '/api/club/Data/Client/vehicle', params).subscribe((response : any) => {
-      this.DataClient = response
-      this.DataUser.get('xmarca').setValue(response.data.xmarca)
-      this.DataUser.get('xmodelo').setValue(response.data.xmodelo)
-      this.DataUser.get('xversion').setValue(response.data.xversion)
-      this.DataUser.get('xplaca').setValue(response.data.xplaca)
-      this.DataUser.get('fano').setValue(response.data.fano)
-      this.DataUser.get('xcolor').setValue(response.data.xcolor)
-      this.DataUser.get('xserialcarroceria').setValue(response.data.xserialcarroceria)
-      this.DataUser.get('xseriamotor').setValue(response.data.xseriamotor)
+        this.DataVehicle = response.data.listdatavehicle;
 
   },
   (error) => {
@@ -72,55 +65,9 @@ export class UserProfileComponent implements OnInit {
       cpropietario: this.currentUser.data.cpropietario
     } 
     this.http.post(environment.apiUrl + '/api/club/Data/Client', data).subscribe((response : any) => {
-      this.DataClient = response
-      this.DataUser.get('xnombre').setValue(response.data.xnombre)
-      this.DataUser.get('xapellido').setValue(response.data.xapellido)
-      this.DataUser.get('xzona_postal').setValue(response.data.xzona_postal)
-      this.DataUser.get('icedula').setValue(response.data.icedula)
-      this.DataUser.get('xdocidentidad').setValue(response.data.xdocidentidad)
-      this.DataUser.get('xemail').setValue(response.data.xemail)
+      this.DataClient = response.data.UserProfile
   });
 
-
-  this.currentUser = this.authenticationService.currentUserValue;
-  let plandata = {
-    cpais: this.currentUser.data.cpais,
-    cpropietario: this.currentUser.data.cpropietario
-  } 
-  this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
-      let DataTypeServiceI = response.data.listTypeService
-
-      // let DataServiceI = response.data.listService
-
-
-      const DataTypeServiceP = DataTypeServiceI.filter((data, index, j) => 
-
-      index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
-      
-
-      // const DataServiceP = DataServiceI.filter((data, index, j) => 
-
-      // index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xservicio === data.xservicio )))
-
-
-      // console.log(DataTypeServiceP,DataServiceP )
-
-      const container = document.getElementById("Servicios-cards");
-      const html = DataTypeServiceP.map(item => `
-      <div class="container" data-aos="fade-up" id="Servicios-cards">
-      <div class="row gy-4">
-        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-          <h3 id="titleService">${item.xtiposervicio}</h3>
-          <p>Revisión y análisis de siniestralidad para determinar causas frecuentes y tipos de daños entre otros datos, orientados a la toma de decisiones y definición de acciones a tomar.</p>
-        </div>
-      </div>
-    </div>
-      ` ).join('');
-
-    container.innerHTML = html;
-  },
-
-  );
   }
 }
 

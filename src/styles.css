@@ -16,7 +16,7 @@
 /* Colores y logos de las paginas */
 
 .form-outline .form-control {
-    border: groove;
+    background-color: #e8e8e86e;
 }
 
 
@@ -26,9 +26,11 @@
 .company-detail-button{
     background-color:#fff0ad;
     color: #4e4e4e;
+    text-transform: capitalize;
 }
 button{
     background-color:#fff0ad;
+    text-transform: capitalize;
 }
 .navbar{
     position: initial;
