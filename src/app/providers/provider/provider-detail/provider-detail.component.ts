@@ -944,7 +944,10 @@ export class ProviderDetailComponent implements OnInit {
         }
       };
       // url = `${environment.apiUrl}/api/v2/provider/production/update`;
+      console.log(params)
+
       request = await this.webService.updateProvider(params);
+      console.log(request.data.condition)
     } else {
       let createBankList = this.bankList;
       for (let i = 0; i < createBankList.length; i++) {

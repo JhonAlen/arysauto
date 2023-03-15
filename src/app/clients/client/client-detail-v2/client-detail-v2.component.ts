@@ -22,12 +22,15 @@ import { AuthenticationService } from '@services/authentication.service';
 import { environment } from '@environments/environment';
 
 
+
 @Component({
   selector: 'app-client-detail-v2',
   templateUrl: './client-detail-v2.component.html',
   styleUrls: ['./client-detail-v2.component.css']
 })
 export class ClientDetailV2Component implements OnInit {
+  fileName = '';
+
 
   @ViewChild('Ximagen', { static: false }) ximagen: ElementRef;
   private bankGridApi;
@@ -46,6 +49,7 @@ export class ClientDetailV2Component implements OnInit {
   private planGridApi;
   sub;
   currentUser;
+  imageUrl: string
   detail_form: UntypedFormGroup;
   upload_form: UntypedFormGroup;
   loading: boolean = false;
@@ -140,6 +144,25 @@ export class ClientDetailV2Component implements OnInit {
         this.alert.show = true;
       });
     }
+  }
+
+  onFileSelected(event) {
+
+    const file:File = event.target.files[0];
+
+    if (file) {
+
+        this.fileName = file.name;
+
+        const formData = new FormData();
+
+        formData.append("thumbnail", file);
+
+        const upload$ = this.http.post(environment.apiUrl + '/api/upload/image', formData);
+
+        upload$.subscribe();
+    }
+    console.log(file)
   }
 
   initializeDropdownDataRequest(){
@@ -1423,6 +1446,7 @@ export class ClientDetailV2Component implements OnInit {
 
   onFileSelect(event){
     const file = event.target.files[0];
+    console.log(file);
     this.detail_form.get('ximagen').setValue(file);
     if(this.detail_form.get('ximagen').value){
       this.onSaveImages()
@@ -1471,6 +1495,8 @@ export class ClientDetailV2Component implements OnInit {
   }
 
   onSubmit(form){
+    console.log(this.imageUrl)
+
     this.submitted = true;
     this.loading = true;
     if(this.detail_form.invalid){

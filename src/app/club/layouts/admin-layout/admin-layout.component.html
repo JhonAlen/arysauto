@@ -22,21 +22,22 @@ Arys Auto
         <mat-icon>home</mat-icon>
         <span>Inicio</span>
       </button>
+      
+      <button mat-button class="menu-button" routerLink="/user-profile">
+        <mat-icon>account_circle</mat-icon>
+        <span>Usuario</span>
+      </button>
 
       <button mat-button class="menu-button" routerLink="/notifications">
         <mat-icon>account_circle</mat-icon>
         <span>Solicitud de servicio</span>
       </button>
-  
+<!--   
       <button mat-button class="menu-button" routerLink="/vehicle">
         <mat-icon>directions_car</mat-icon>
         <span>Vehiculo</span>
-      </button>
+      </button> -->
 
-      <button mat-button class="menu-button" routerLink="/user-profile">
-        <mat-icon>account_circle</mat-icon>
-        <span>Usuario</span>
-      </button>
 
       <button mat-button class="menu-button" routerLink="/user-profile" (click)="logOut()">
         <mat-icon>reply_all</mat-icon>
