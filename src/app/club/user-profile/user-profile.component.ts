@@ -35,15 +35,43 @@ export class UserProfileComponent implements OnInit {
       icedula:  [''],
       xdocidentidad :  [''],
       xemail :  [''],
+      xmarca:  [''],
+      xmodelo:  [''],
+      xversion:  [''],
+      xplaca:  [''],
+      fano :  [''],
+      xcolor :  [''],
+      xserialcarroceria :  [''],
+      xseriamotor :  [''],
     });
-
 
     this.currentUser = this.authenticationService.currentUserValue;
     let params = {
       cpais: this.currentUser.data.cpais,
       cpropietario: this.currentUser.data.cpropietario
     } 
-    this.http.post(environment.apiUrl + '/api/club/Data/Client', params).subscribe((response : any) => {
+    this.http.post(environment.apiUrl + '/api/club/Data/Client/vehicle', params).subscribe((response : any) => {
+      this.DataClient = response
+      this.DataUser.get('xmarca').setValue(response.data.xmarca)
+      this.DataUser.get('xmodelo').setValue(response.data.xmodelo)
+      this.DataUser.get('xversion').setValue(response.data.xversion)
+      this.DataUser.get('xplaca').setValue(response.data.xplaca)
+      this.DataUser.get('fano').setValue(response.data.fano)
+      this.DataUser.get('xcolor').setValue(response.data.xcolor)
+      this.DataUser.get('xserialcarroceria').setValue(response.data.xserialcarroceria)
+      this.DataUser.get('xseriamotor').setValue(response.data.xseriamotor)
+
+  },
+  (error) => {
+    console.log(error);
+  });
+
+    this.currentUser = this.authenticationService.currentUserValue;
+    let data = {
+      cpais: this.currentUser.data.cpais,
+      cpropietario: this.currentUser.data.cpropietario
+    } 
+    this.http.post(environment.apiUrl + '/api/club/Data/Client', data).subscribe((response : any) => {
       this.DataClient = response
       this.DataUser.get('xnombre').setValue(response.data.xnombre)
       this.DataUser.get('xapellido').setValue(response.data.xapellido)

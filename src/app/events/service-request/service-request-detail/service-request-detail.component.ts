@@ -53,24 +53,30 @@ export class ServiceRequestDetailComponent implements OnInit {
       fcreacion: [{ value: false, disabled: true }],
       fdiagestion: [''],
       fhoragestion: [''],
-      isolicitante: ['', Validators.required],
+      isolicitante: [''],
       bcubierto: [{ value: false, disabled: true }],
-      bactivo: [false, Validators.required],
+      bactivo: [false],
       cprocedencia: [{ value: '', disabled: true }],
-      ccontratoclub: ['', Validators.required],
+      ccontratoflota: [''],
       cplan: [''],
       xnombre: [{ value: '', disabled: true }],
       xapellido: [{ value: '', disabled: true }],
       xdocidentidad: [{ value: '', disabled: true }],
       xplaca: [{ value: '', disabled: true }],
-      cservicio: ['', Validators.required],
-      ctiposervicio: ['', Validators.required],
-      cproveedor: ['', Validators.required],
+      cservicio: [''],
+      xservicio: [''],
+      ctiposervicio: [''],
+      xtiposervicio: [''],
+      cproveedor: [''],
       xproveedor: [{ value: '', disabled: true }],
       xrazonsocial: [{ value: '', disabled: true }],
       xdireccion: [{ value: '', disabled: true }],
       xestado: [{ value: '', disabled: true }],
-      xciudad: [{ value: '', disabled: true }]
+      xciudad: [{ value: '', disabled: true }],
+      xmarca: [''],
+      xmodelo: [''],
+      xversion: [''],
+      fano: [''],
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
@@ -130,15 +136,11 @@ export class ServiceRequestDetailComponent implements OnInit {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
-      permissionData: {
-        cusuario: this.currentUser.data.cusuario,
-        cmodulo: 87
-      },
       cpais: this.currentUser.data.cpais,
       ccompania: this.currentUser.data.ccompania,
       csolicitudservicio: this.code
     };
-    this.http.post(`${environment.apiUrl}/api/v2/service-request/production/detail`, params, options).subscribe((response: any) => {
+    this.http.post(`${environment.apiUrl}/api/service-request/detail`, params, options).subscribe((response: any) => {
       if(response.data.status){
         if(response.data.fcreacion){
           let dateFormat = new Date(response.data.fcreacion);
@@ -157,24 +159,41 @@ export class ServiceRequestDetailComponent implements OnInit {
         this.detail_form.get('bactivo').setValue(response.data.bactivo);
         this.detail_form.get('bactivo').disable();
         this.detail_form.get('cprocedencia').setValue(response.data.cprocedencia);
-        this.detail_form.get('ccontratoclub').setValue(response.data.ccontratoclub);
-        this.detail_form.get('ccontratoclub').disable();
+        this.detail_form.get('ccontratoflota').setValue(response.data.ccontratoflota);
+        this.detail_form.get('ccontratoflota').disable();
         this.detail_form.get('cplan').setValue(response.data.cplan);
         this.detail_form.get('cplan').disable();
         this.detail_form.get('xnombre').setValue(response.data.xnombre);
         this.detail_form.get('xapellido').setValue(response.data.xapellido);
         this.detail_form.get('xdocidentidad').setValue(response.data.xdocidentidad);
+        this.detail_form.get('xmarca').setValue(response.data.xmarca);
+        this.detail_form.get('xmarca').disable();
+        this.detail_form.get('xmodelo').setValue(response.data.xmodelo);
+        this.detail_form.get('xmodelo').disable();
+        this.detail_form.get('xversion').setValue(response.data.xversion);
+        this.detail_form.get('xversion').disable();
+        this.detail_form.get('fano').setValue(response.data.fano);
+        this.detail_form.get('fano').disable();
         this.detail_form.get('xplaca').setValue(response.data.xplaca);
         this.serviceTypeDropdownDataRequest();
         this.detail_form.get('ctiposervicio').setValue(response.data.ctiposervicio);
         this.detail_form.get('ctiposervicio').disable();
+        this.detail_form.get('xtiposervicio').setValue(response.data.xtiposervicio);
+        this.detail_form.get('xtiposervicio').disable();
+        console.log(this.detail_form.get('ctiposervicio').value)
         this.serviceDropdownDataRequest();
         this.detail_form.get('cservicio').setValue(response.data.cservicio);
         this.detail_form.get('cservicio').disable();
+        this.detail_form.get('xservicio').setValue(response.data.xservicio);
+        this.detail_form.get('xservicio').disable();
         this.detail_form.get('cproveedor').setValue(response.data.cproveedor);
         this.detail_form.get('cproveedor').disable();
         this.detail_form.get('xproveedor').setValue(response.data.xproveedor);
-        this.detail_form.get('xrazonsocial').setValue(response.data.xrazonsocial);
+        if(response.data.xrazonsocial){
+          this.detail_form.get('xrazonsocial').setValue(response.data.xrazonsocial);
+        }else{
+          this.detail_form.get('xrazonsocial').setValue(response.data.xproveedor);
+        }
         this.detail_form.get('xestado').setValue(response.data.xestado);
         this.detail_form.get('xciudad').setValue(response.data.xciudad);
         this.detail_form.get('xdireccion').setValue(response.data.xdireccion);
@@ -279,7 +298,7 @@ export class ServiceRequestDetailComponent implements OnInit {
     this.detail_form.get('fdiagestion').enable();
     this.detail_form.get('fhoragestion').enable();
     this.detail_form.get('bactivo').enable();
-    this.detail_form.get('ccontratoclub').enable();
+    this.detail_form.get('ccontratoflota').enable();
     this.detail_form.get('cplan').enable();
     this.detail_form.get('cservicio').enable();
     this.detail_form.get('ctiposervicio').enable();
@@ -309,7 +328,7 @@ export class ServiceRequestDetailComponent implements OnInit {
     modalRef.componentInstance.contract = contract;
     modalRef.result.then((result: any) => { 
       if(result){
-        this.detail_form.get('ccontratoclub').setValue(result.ccontratoclub);
+        this.detail_form.get('ccontratoflota').setValue(result.ccontratoflota);
         this.detail_form.get('cplan').setValue(result.cplan);
         this.detail_form.get('xnombre').setValue(result.xnombre);
         this.detail_form.get('xapellido').setValue(result.xapellido);
@@ -483,7 +502,7 @@ export class ServiceRequestDetailComponent implements OnInit {
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
         fgestion: fgestion ? fgestion : undefined,
-        ccontratoclub: form.ccontratoclub,
+        ccontratoflota: form.ccontratoflota,
         cproveedor: form.cproveedor,
         ctiposervicio: form.ctiposervicio,
         cservicio: form.cservicio,
@@ -511,7 +530,7 @@ export class ServiceRequestDetailComponent implements OnInit {
               cusuariocreacion: this.currentUser.data.cusuario,
               fgestion: fgestion? fgestion : undefined,
               isolicitante: form.isolicitante,
-              ccontratoclub: form.ccontratoclub,
+              ccontratoflota: form.ccontratoflota,
               cproveedor: form.cproveedor,
               ctiposervicio: form.ctiposervicio,
               cservicio: form.cservicio,
