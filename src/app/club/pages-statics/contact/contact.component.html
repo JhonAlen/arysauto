@@ -136,25 +136,3 @@
   <script src="./styles_Club/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="./styles_Club/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="./styles_Club/js/main.js"></script>
-
-
-
-
-  <h1>Angular material select dropdown with search Example - ItSolutionStuff.com</h1>
-      
-  <p>
-    <mat-form-field>
-      <mat-select [formControl]="websiteCtrl" placeholder="Bank" #singleSelect>
-        <mat-option>
-          <ngx-mat-select-search [formControl]="websiteFilterCtrl"></ngx-mat-select-search>
-        </mat-option>
-    
-        <mat-option *ngFor="let website of filteredWebsites | async" [value]="website">
-          {{website.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </p>
-  <p>
-    Selected Bank: {{websiteCtrl.value?.name}}
-  </p> 

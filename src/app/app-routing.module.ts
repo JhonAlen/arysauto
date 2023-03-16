@@ -201,6 +201,7 @@ import { FleetContractQuotesDetailComponent } from './subscription/fleet-contrac
 import { ContractServiceArysIndexComponent } from './subscription/contract-service-arys/contract-service-arys-index/contract-service-arys-index.component';
 import { ContractServiceArysDetailComponent } from './subscription/contract-service-arys/contract-service-arys-detail/contract-service-arys-detail.component';
 import { CorporativeIssuanceComponent } from './subscription/corporative-issuance/corporative-issuance.component';
+import { ReportsComponent } from './administration/reports/reports.component';
 
 const routes: Routes = [
  
@@ -493,6 +494,7 @@ const routes: Routes = [
   { path: 'subscription/contract-service-arys-detail', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-detail/:id', component: ContractServiceArysDetailComponent, canActivate: [AuthGuard] },
   { path: 'subscription/corporative-issuance', component: CorporativeIssuanceComponent, canActivate: [AuthGuard] },
+  { path: 'administration/reports', component: ReportsComponent, canActivate: [AuthGuard] },
 
   {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
   { path: 'sign-in', component: SignInComponent },
