@@ -206,6 +206,8 @@ export class ParentPolicyDetailComponent implements OnInit {
     let options = { headers: headers };
     let params = {
       ccarga: this.code,
+      cusuario: this.currentUser.data.cusuario,
+      xobservacion: batch[0].xobservacion,
       parsedData: batch[0].contratosCSV
     }
     this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
