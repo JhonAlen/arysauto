@@ -567,7 +567,8 @@ export class CorporativeIssuanceComponent implements OnInit {
       }
     }
     let pdf = pdfMake.createPdf(pdfDefinition);
-    pdf.download(`Certificado N° ${this.xcertificado} - ${this.xpropietario}`);
+    let nombreArchivo = `Certificado N° ${this.xcertificado} - ${this.xpropietario}`
+    pdf.download(nombreArchivo.replace(/\./g, " "));
     pdf.open();
   }
 
