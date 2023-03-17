@@ -86,18 +86,29 @@ export class BatchComponent implements OnInit {
         complete: function(results) {
           let error = "";
           let csvHeaders = Object.keys(results.data[0]);
-            if (JSON.stringify(csvHeaders) !== JSON.stringify(requiredHeaders)) {
-              let missingAttributes = []
-              missingAttributes  = requiredHeaders.filter(requiredHeader => !csvHeaders.some(csvHeader => csvHeader === requiredHeader));
-              if (missingAttributes.length > 0) {
-                error = `Error: El archivo suministrado no incluye todos los atributos necesarios. Se necesita incluir la/s columna/s: ${missingAttributes}`;
-              }
-              else {
-                let additionalAttributes = [];
-                additionalAttributes = csvHeaders.filter(csvHeader => !requiredHeaders.some(requiredHeader => requiredHeader === csvHeader));
-                error = `Error: El archivo suministrado incluye atributos adicionales, elimine la/s siguiente/s columna/s: ${additionalAttributes}`;
-              }
+          let lastRow = results.data[results.data.length - 1];
+          let isEmpty = true;
+          for (let key in lastRow) {
+            if (lastRow[key]) {
+              isEmpty = false;
+              break;
             }
+          }
+          if (isEmpty) {
+            results.data.pop();
+          }
+          if (JSON.stringify(csvHeaders) !== JSON.stringify(requiredHeaders)) {
+            let missingAttributes = []
+            missingAttributes  = requiredHeaders.filter(requiredHeader => !csvHeaders.some(csvHeader => csvHeader === requiredHeader));
+            if (missingAttributes.length > 0) {
+              error = `Error: El archivo suministrado no incluye todos los atributos necesarios. Se necesita incluir la/s columna/s: ${missingAttributes}`;
+            }
+            else {
+              let additionalAttributes = [];
+              additionalAttributes = csvHeaders.filter(csvHeader => !requiredHeaders.some(requiredHeader => requiredHeader === csvHeader));
+              error = `Error: El archivo suministrado incluye atributos adicionales, elimine la/s siguiente/s columna/s: ${additionalAttributes}`;
+            }
+          }
           if (error) {
             results.data = [];
             alert(error);
