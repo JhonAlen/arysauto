@@ -20,6 +20,7 @@ export class BatchComponent implements OnInit {
   loading: boolean = false;
   canSave: boolean = false;
   canReadFile: boolean = false;
+  activateSave: boolean = false;
   isEdit: boolean = false;
   fleetContractList: any[] = [];
   parsedData: any[] = [];
@@ -69,7 +70,7 @@ export class BatchComponent implements OnInit {
 
   parseCSV(file) {
 
-    const csvHeaders: any[] = [
+    const requiredHeaders: any[] = [
       "No", "POLIZA", "CERTIFICADO", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL CARROCERIA", 
       "SERIAL MOTOR", "PLACA", "CMARCA", "CMODELO", "CVERSION", "XMARCA", "XMODELO", "XVERSION", "AÑO", "COLOR", 
       "Tipo Vehiculo", "CLASE", "PTOS", "XTELEFONO1", "XTELEFONO2", "XDIRECCION", "EMAIL", "FEMISION", "FPOLIZA_DES", "FPOLIZA_HAS", 
@@ -84,27 +85,37 @@ export class BatchComponent implements OnInit {
         skipEmptyLines: true,
         complete: function(results) {
           let error = "";
-          console.log(results.data);
-          for (let i = 0; i < results.data.length; i++) {
-            let csvAttributesNames = Object.keys(results.data[i]);
-            console.log('a: ', csvAttributesNames);
-            console.log('e: ', csvHeaders);
-            if (JSON.stringify(csvAttributesNames) !== JSON.stringify(csvHeaders)) {
-              error = `Error en la línea ${i + 1}, no incluye todos los atributos necesarios`;
-              let secondArray = []
-              secondArray  = csvHeaders.filter(o=> !csvAttributesNames.some(i=> i === o));
-              console.log(secondArray);
+          let csvHeaders = Object.keys(results.data[0]);
+          let lastRow = results.data[results.data.length - 1];
+          let isEmpty = true;
+          for (let key in lastRow) {
+            if (lastRow[key]) {
+              isEmpty = false;
               break;
             }
           }
-          if (error) {
-            console.log(error);
-            reject(error);
+          if (isEmpty) {
+            results.data.pop();
           }
-          return resolve(results.data);
+          if (JSON.stringify(csvHeaders) !== JSON.stringify(requiredHeaders)) {
+            let missingAttributes = []
+            missingAttributes  = requiredHeaders.filter(requiredHeader => !csvHeaders.some(csvHeader => csvHeader === requiredHeader));
+            if (missingAttributes.length > 0) {
+              error = `Error: El archivo suministrado no incluye todos los atributos necesarios. Se necesita incluir la/s columna/s: ${missingAttributes}`;
+            }
+            else {
+              let additionalAttributes = [];
+              additionalAttributes = csvHeaders.filter(csvHeader => !requiredHeaders.some(requiredHeader => requiredHeader === csvHeader));
+              error = `Error: El archivo suministrado incluye atributos adicionales, elimine la/s siguiente/s columna/s: ${additionalAttributes}`;
+            }
+          }
+          if (error) {
+            results.data = [];
+            alert(error);
+          }
+          resolve(results.data);
         }
       });
-      
     });
   }
 
@@ -115,22 +126,37 @@ export class BatchComponent implements OnInit {
     let file = event.target.files[0];
     this.fleetContractList = [];
     this.parsedData = [];
-    this.parsedData = await this.parseCSV(file);
-    for (let i = 0; i < (this.parsedData.length); i++){
-      fixedData.push({
-        ncedula: this.parsedData[i].CEDULA,
-        xmarca: this.parsedData[i].XMARCA,
-        xmodelo: this.parsedData[i].XMODELO,
-        xplaca: this.parsedData[i].PLACA,
-        xversion: this.parsedData[i].XVERSION,
-        xpropietario: this.parsedData[i].PROPIETARIO
-      })
+    let parsedCSV = await this.parseCSV(file);
+    if (parsedCSV.length > 0) {
+      this.parsedData = parsedCSV;
+      for (let i = 0; i < (this.parsedData.length); i++){
+        fixedData.push({
+          ncedula: this.parsedData[i].CEDULA,
+          xmarca: this.parsedData[i].XMARCA,
+          xmodelo: this.parsedData[i].XMODELO,
+          xplaca: this.parsedData[i].PLACA,
+          xversion: this.parsedData[i].XVERSION,
+          xpropietario: this.parsedData[i].PROPIETARIO
+        })
+      }
+      this.fleetContractList = fixedData;
+      if (this.popup_form.get('xobservacion').value) {
+        this.activateSave = true;
+      }
     }
-    this.fleetContractList = fixedData;
+    else {
+      event.target.value = null;
+      this.activateSave = false;
+    }
   }
 
-  addContract() {
-
+  onObservationsChange() {
+    if (this.popup_form.get('xobservacion').value && this.parsedData.length > 0) {
+      this.activateSave = true;
+    } 
+    else {
+      this.activateSave = false;
+    }
   }
 
   onContractsGridReady(event) {

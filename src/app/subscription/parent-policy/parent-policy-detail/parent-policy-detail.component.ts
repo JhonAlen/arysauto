@@ -39,6 +39,7 @@ export class ParentPolicyDetailComponent implements OnInit {
   canDelete: boolean = false;
   editStatus: boolean = false;
   isEditing: boolean = false;
+  saveStatus: boolean = false;
   batchDeletedRowList: any[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder, 
@@ -197,20 +198,22 @@ export class ParentPolicyDetailComponent implements OnInit {
   }
 
   createNewBatch() {
-    console.log(this.batchList);
     let batch = this.batchList.filter(batch => !batch.clote);
-    console.log(batch);
     this.submitted = true;
     this.loading = true;
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
       ccarga: this.code,
+      cusuario: this.currentUser.data.cusuario,
+      xobservacion: batch[0].xobservacion,
       parsedData: batch[0].contratosCSV
     }
     this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
-      console.log(response);
-      this.loading = false;
+      if (response.data.status) {
+        this.loading = false;
+        location.reload();
+      }
     },
     (err) => {
       let code = err.error.data.code;
@@ -305,6 +308,8 @@ export class ParentPolicyDetailComponent implements OnInit {
     modalRef.result.then((result: any) => {
       if(result){
         if(result.type == 3){
+          this.saveStatus = true;
+          this.editStatus = false;
           this.batchList.push({
             cgrid: this.batchList.length,
             create: true,
