@@ -12,7 +12,13 @@
 @import url(./styles_Club/vendor/bootstrap-icons/bootstrap-icons.css);
 @import url(./styles_Club/vendor/bootstrap/css/bootstrap.min.css);
 @import url(./styles_Club/vendor/swiper/swiper-bundle.min.css); 
+
 /* Colores y logos de las paginas */
+
+.form-outline .form-control {
+    background-color: #e8e8e86e;
+}
+
 
 .card-header{
     background-color:#fdd213;
@@ -20,9 +26,11 @@
 .company-detail-button{
     background-color:#fff0ad;
     color: #4e4e4e;
+    text-transform: capitalize;
 }
 button{
     background-color:#fff0ad;
+    text-transform: capitalize;
 }
 .navbar{
     position: initial;
