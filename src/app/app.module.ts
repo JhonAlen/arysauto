@@ -326,6 +326,8 @@ import { NumberOfServiceComponent } from './pop-up/number-of-service/number-of-s
 import { PlanValuationApovComponent } from './pop-up/plan-valuation-apov/plan-valuation-apov.component';
 import { PlanValuationExcesoComponent } from './pop-up/plan-valuation-exceso/plan-valuation-exceso.component';
 import { ClientDetailV2Component } from './clients/client/client-detail-v2/client-detail-v2.component';
+import { IndividualRenovationIndexComponent } from './renovation/individual-renovation/individual-renovation-index/individual-renovation-index.component';
+import { IndividualRenovationDetailComponent } from './renovation/individual-renovation/individual-renovation-detail/individual-renovation-detail.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -633,7 +635,9 @@ export function HttpLoaderFactory(http: HttpClient){
     NumberOfServiceComponent,
     PlanValuationApovComponent,
     PlanValuationExcesoComponent,
-    ClientDetailV2Component
+    ClientDetailV2Component,
+    IndividualRenovationIndexComponent,
+    IndividualRenovationDetailComponent
   ],
   imports: [
     BrowserModule,
