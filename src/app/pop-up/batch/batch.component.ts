@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@app/_services/authentication.service';
-import { environment } from '@environments/environment';
 import { Papa } from 'ngx-papaparse';
 
 @Component({
@@ -21,6 +20,7 @@ export class BatchComponent implements OnInit {
   loading: boolean = false;
   canSave: boolean = false;
   canReadFile: boolean = false;
+  activateSave: boolean = false;
   isEdit: boolean = false;
   fleetContractList: any[] = [];
   parsedData: any[] = [];
@@ -70,16 +70,52 @@ export class BatchComponent implements OnInit {
 
   parseCSV(file) {
 
+    const requiredHeaders: any[] = [
+      "No", "POLIZA", "CERTIFICADO", "Rif_Cliente", "PROPIETARIO", "letra", "CEDULA", "FNAC", "CPLAN", "SERIAL CARROCERIA", 
+      "SERIAL MOTOR", "PLACA", "CMARCA", "CMODELO", "CVERSION", "XMARCA", "XMODELO", "XVERSION", "AÑO", "COLOR", 
+      "Tipo Vehiculo", "CLASE", "PTOS", "XTELEFONO1", "XTELEFONO2", "XDIRECCION", "EMAIL", "FEMISION", "FPOLIZA_DES", "FPOLIZA_HAS", 
+      "CASEGURADORA", "SUMA ASEGURADA", "SUMA ASEGURADA OTROS", "MONTO DEDUCIBLE", "XTIPO_DEDUCIBLE", "FCREACION", "CUSUARIOCREACION"
+    ]
+
     return new Promise <any[]>((resolve, reject) => {
       let papa = new Papa();
       papa.parse(file, {
         delimiter: ";",
         header: true,
+        skipEmptyLines: true,
         complete: function(results) {
-          return resolve(results.data);
+          let error = "";
+          let csvHeaders = Object.keys(results.data[0]);
+          let lastRow = results.data[results.data.length - 1];
+          let isEmpty = true;
+          for (let key in lastRow) {
+            if (lastRow[key]) {
+              isEmpty = false;
+              break;
+            }
+          }
+          if (isEmpty) {
+            results.data.pop();
+          }
+          if (JSON.stringify(csvHeaders) !== JSON.stringify(requiredHeaders)) {
+            let missingAttributes = []
+            missingAttributes  = requiredHeaders.filter(requiredHeader => !csvHeaders.some(csvHeader => csvHeader === requiredHeader));
+            if (missingAttributes.length > 0) {
+              error = `Error: El archivo suministrado no incluye todos los atributos necesarios. Se necesita incluir la/s columna/s: ${missingAttributes}`;
+            }
+            else {
+              let additionalAttributes = [];
+              additionalAttributes = csvHeaders.filter(csvHeader => !requiredHeaders.some(requiredHeader => requiredHeader === csvHeader));
+              error = `Error: El archivo suministrado incluye atributos adicionales, elimine la/s siguiente/s columna/s: ${additionalAttributes}`;
+            }
+          }
+          if (error) {
+            results.data = [];
+            alert(error);
+          }
+          resolve(results.data);
         }
       });
-      
     });
   }
 
@@ -90,28 +126,37 @@ export class BatchComponent implements OnInit {
     let file = event.target.files[0];
     this.fleetContractList = [];
     this.parsedData = [];
-    this.parsedData = await this.parseCSV(file);
-    for (let i = 0; i < (this.parsedData.length -1); i++){
-      let nombrePropietario = '';
-      if (this.parsedData[i].APELLIDO) {
-        nombrePropietario = this.parsedData[i].NOMBRE + ' ' + this.parsedData[i].APELLIDO
-      } else {
-        nombrePropietario = this.parsedData[i].NOMBRE
+    let parsedCSV = await this.parseCSV(file);
+    if (parsedCSV.length > 0) {
+      this.parsedData = parsedCSV;
+      for (let i = 0; i < (this.parsedData.length); i++){
+        fixedData.push({
+          ncedula: this.parsedData[i].CEDULA,
+          xmarca: this.parsedData[i].XMARCA,
+          xmodelo: this.parsedData[i].XMODELO,
+          xplaca: this.parsedData[i].PLACA,
+          xversion: this.parsedData[i].XVERSION,
+          xpropietario: this.parsedData[i].PROPIETARIO
+        })
       }
-      fixedData.push({
-        ccontratoflota: parseInt(this.parsedData[i].ID),
-        xmarca: this.parsedData[i].MARCA,
-        xmodelo: this.parsedData[i].MODELO,
-        xplaca: this.parsedData[i].PLACA,
-        xversion: this.parsedData[i].VERSION,
-        xpropietario: nombrePropietario
-      })
+      this.fleetContractList = fixedData;
+      if (this.popup_form.get('xobservacion').value) {
+        this.activateSave = true;
+      }
     }
-    this.fleetContractList = fixedData;
+    else {
+      event.target.value = null;
+      this.activateSave = false;
+    }
   }
 
-  addContract() {
-
+  onObservationsChange() {
+    if (this.popup_form.get('xobservacion').value && this.parsedData.length > 0) {
+      this.activateSave = true;
+    } 
+    else {
+      this.activateSave = false;
+    }
   }
 
   onContractsGridReady(event) {

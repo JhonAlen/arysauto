@@ -1,0 +1,91 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="container">
+                            <label>Buscar Primas</label>
+<!-- {                            <button [disabled]="loading " class="btn company-detail-button float-right mr-1" type="button" (click)="onSearch(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Buscar
+                            </button> -->
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="createPDF()" *ngIf="generarReporte">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Generar Reporte
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-md-3 mb-4 pb-2">
+                                <div class="form-outline">                        
+                                  <label class="form-label required" for="form3Examplev4">Primas</label>
+                                  <select formControlName="xprima" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xprima').errors } ">
+                                    <option value="PENDIENTES">PENDIENTES</option>
+                                    <option value="COBRADAS">COBRADAS</option>
+                                  </select>                         
+                                  <div *ngIf="submitted && search_form.get('xprima').errors"  class="invalid-feedback">
+                                    <div *ngIf="search_form.get('xprima').errors.required">Se requiere completar el campo</div>
+                                  </div>
+                                </div>
+                              </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label>Desde</label>
+                                    <input type="date" formControlName="fdesde" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fdesde').errors }">
+                                    <div *ngIf="submitted && search_form.get('fdesde').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label>Hasta</label>
+                                    <input type="date" formControlName="fhasta" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fhasta').errors }" (change)="getTitulo()">
+                                    <div *ngIf="submitted && search_form.get('fhasta').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div css="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+             la       <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Listado de Recibos <input formControlName="xtitulo" style="background-color:transparent;background: inherit;border: 0px;font-weight: 500;margin-right: -167px;"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 416px;" class="ag-theme-alpine" [rowData]="receiptList" [pagination]="false" [paginationPageSize]="9" [columnDefs]="columnDefs">
+                            <!--<ag-grid-column headerName="N°" field="nconsecutivo" [width]="55" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Recibo" field="xrecibo" [width]="115" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Contrato" field="ccontratoflota" [width]="115" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Placa" field="xplaca" [width]="140" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Inicio Vigencia" field="fdesde_rec" [width]="150" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Fin Vigencia" field="fhasta_rec" [width]="160" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Prima Total Recibo (USD)" field="mprima_anual" [width]="220" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Estatus" field="xstatus" [width]="140" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Descargar" cellClass="ag-download-column" field="xdescargar" [width]="130" [sortable]="true" [resizable]="true" [onCellClicked]="downloadReceipt"></ag-grid-column> -->
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>
+

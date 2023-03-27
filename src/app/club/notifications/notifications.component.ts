@@ -20,11 +20,12 @@ export class NotificationsComponent implements OnInit {
   message : any;
   currentUser;
   ListTypeService : any = [];
-  ListService : any = []
+  ListService: any = [];;
   ListSolicitud : any = []
   ListProveedor : any = []
   StateList: any = [];
   CityList:  any = [];
+  serviceList:  any = [];
 
   codeservice : any 
   codetypeservice : any 
@@ -47,19 +48,40 @@ export class NotificationsComponent implements OnInit {
       cciudad :  [''],
       cproveedor :  [''],
       ccontratoflota :  [''],
+      cplan :  [''],
     });
 
   this.currentUser = this.authenticationService.currentUserValue;
+
   let plandata = {
     cpais: this.currentUser.data.cpais,
     cpropietario: this.currentUser.data.cpropietario
   } 
   this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan', plandata).subscribe((response : any) => {
+
+      // for(let i = 0; i < response.data.listTypeService.length; i++){
+      //   this.serviceTypeList.push({
+      //     ctiposervicio: response.data.listTypeService[i].ctiposervcicio
+      //   })
+      // }
+
       let DataTypeServiceI = response.data.listTypeService
       this.servicePlanContract.get('ccontratoflota').setValue(response.data.ccontratoflota);
+      this.servicePlanContract.get('cplan').setValue(response.data.cplan);
       const DataTypeServiceP = DataTypeServiceI.filter
       ((data, index, j) => index === j.findIndex((t) => (t.ctiposervicio === data.ctiposervicio && t.xtiposervicio === data.xtiposervicio)))
       this.ListTypeService = DataTypeServiceP
+
+      if(this.currentUser){
+        let params =  {
+          ccontratoflota: this.servicePlanContract.get('ccontratoflota').value,
+          cplan: this.servicePlanContract.get('cplan').value,
+          cusuariocreacion: this.currentUser.data.cusuario,
+          ctiposervicio: this.ListTypeService,
+        };
+        this.http.post(`${environment.apiUrl}/api/club/Data/store-procedure/service`, params).subscribe((response: any) => {
+        });
+      }
   }
 
   );
@@ -87,10 +109,20 @@ export class NotificationsComponent implements OnInit {
     this.service = true;
     this.codetypeservice = ctiposervicio
     let ctiposervici = ctiposervicio
-    this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan/service', {ctiposervici}).subscribe((response : any) => {
-      this.ListService = response.data.DataService
-  }
-  );
+
+    let params = {
+      ctiposervicio: ctiposervici,
+      ccontratoflota: this.servicePlanContract.get('ccontratoflota').value
+    }
+    this.http.post(environment.apiUrl + '/api/club/Data/Client/Plan/service', params).subscribe((response : any) => {
+      this.ListService = [];
+      for(let i = 0; i < response.data.DataService.length; i++){
+        this.ListService.push({
+          cservicio: response.data.DataService[i].cservicio,
+          xservicio: response.data.DataService[i].xservicio
+        }) 
+      }
+    });
   }
 
   Solicitud(cservicio:any){

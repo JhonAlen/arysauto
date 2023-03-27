@@ -1,0 +1,85 @@
+<app-toolbar ></app-toolbar>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Buscar Póliza Corporativa
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || !searchStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(search_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="search_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form3Examplev5">Póliza Matriz</label>
+                                    <div style="background: fixed">
+                                    <ng-autocomplete  [data]="chargeList" [searchKeyword]="keyword" 
+                                                    placeholder="Seleccionar Póliza" (selected)='batchDropdownDataRequest($event)'
+                                                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">                                 
+                                    </ng-autocomplete>
+                                
+                                    <ng-template #itemTemplate let-item  [ngStyle]="{'background': 'fixed'}">
+                                        <a [innerHTML]="item.value" value="{{ item.id }}"></a>
+                                    </ng-template>
+                                
+                                    <ng-template #notFoundTemplate let-notFound  [ngStyle]="{'background': 'fixed'}">
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                  </div>
+                                </div>
+                            </div> 
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form3Examplev5">Lote</label>
+                                    <ng-autocomplete  [data]="batchList" [searchKeyword]="keyword" 
+                                                    placeholder="Seleccionar Lote" (selected)='onSelectedBatch($event)'
+                                                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">                                 
+                                    </ng-autocomplete>
+                                
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.value" value="{{ item.id }}"></a>
+                                    </ng-template>
+                                
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+                            </div> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Información del Certificado
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="true" [paginationPageSize]="9" [columnDefs]="columnDefs">
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>
