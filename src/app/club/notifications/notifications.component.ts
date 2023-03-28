@@ -49,6 +49,7 @@ export class NotificationsComponent implements OnInit {
       cproveedor :  [''],
       ccontratoflota :  [''],
       cplan :  [''],
+      fsolicitud:[''],
     });
 
   this.currentUser = this.authenticationService.currentUserValue;

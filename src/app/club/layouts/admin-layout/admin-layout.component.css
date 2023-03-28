@@ -15,7 +15,20 @@ mat-sidenav-content{
   width: 98%;
   overflow: inherit;
 }
+.mat-toolbar-row,.mat-toolbar-single-row {
+  height: 64px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 16px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
 
+}
+.mat-elevation-z8 {
+  box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+}
 .content {
   height: calc(100vh - 130px);
   border-radius: 10px;

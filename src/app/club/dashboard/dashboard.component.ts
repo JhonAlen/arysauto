@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '@services/authentication.service';
+import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction'; // for selectable
+import dayGridPlugin from '@fullcalendar/daygrid'; // fo
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +16,23 @@ import { AuthenticationService } from '@services/authentication.service';
 
 export class DashboardComponent implements OnInit {
 
+  calendarOptions: CalendarOptions = {
+    plugins: [ interactionPlugin, dayGridPlugin ],
+    initialView: 'dayGridMonth',
+    weekends: true,
+    selectable: true,
+    editable: true,
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth'
+    },
+    dateClick: function(info) {
+      const date = info.dateStr
+      
+    },
+
+  };
 
   User : FormGroup
   submitted = false;
