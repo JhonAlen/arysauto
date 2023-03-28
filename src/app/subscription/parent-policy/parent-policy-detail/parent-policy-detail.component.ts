@@ -395,7 +395,7 @@ export class ParentPolicyDetailComponent implements OnInit {
   }
 
   checkIfCanCreateParentPolicy(form) {
-    if (form.ccliente && form.ccorredor) {
+    if (form.ccliente && form.ccorredor && !this.code) {
       this.saveStatus = true;
     }
     else {
