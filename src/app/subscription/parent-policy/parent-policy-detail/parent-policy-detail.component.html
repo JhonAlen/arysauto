@@ -35,7 +35,7 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Cliente</label>
-                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }">
+                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }" (change)="checkIfCanCreateParentPolicy(detail_form.value)">
                                         <option></option>
                                         <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
                                     </select>
@@ -47,7 +47,7 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Corredor</label>
-                                    <select formControlName="ccorredor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccorredor').errors }">
+                                    <select formControlName="ccorredor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccorredor').errors }" (change)="checkIfCanCreateParentPolicy(detail_form.value)">
                                         <option></option>
                                         <option *ngFor="let broker of brokerList" value="{{ broker.id }}">{{ broker.value }}</option>
                                     </select>

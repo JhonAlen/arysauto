@@ -40,6 +40,7 @@ export class ParentPolicyDetailComponent implements OnInit {
   editStatus: boolean = false;
   isEditing: boolean = false;
   saveStatus: boolean = false;
+  createBatch: boolean = false;
   batchDeletedRowList: any[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder, 
@@ -214,6 +215,7 @@ export class ParentPolicyDetailComponent implements OnInit {
         this.showSaveButton = false;
         this.saveStatus = false;
         this.showEditButton = true;
+        this.createBatch = false;
         this.getParentPolicyData();
         alert(response.data.message);
         this.loading = false;
@@ -224,6 +226,7 @@ export class ParentPolicyDetailComponent implements OnInit {
       this.showSaveButton = false;
       this.saveStatus = false;
       this.showEditButton = true;
+      this.createBatch = false;
       this.getParentPolicyData();
       alert(message);
       this.loading = false;
@@ -231,8 +234,7 @@ export class ParentPolicyDetailComponent implements OnInit {
   }
 
   onSubmit(form) {
-
-    if (this.saveStatus) {
+    if (this.saveStatus && this.createBatch) {
       this.createNewBatch();
     }
     else {
@@ -308,6 +310,7 @@ export class ParentPolicyDetailComponent implements OnInit {
     modalRef.result.then((result: any) => {
       if(result){
         if(result.type == 3){
+          this.createBatch = true;
           this.saveStatus = true;
           this.editStatus = false;
           this.batchList.push({
@@ -389,6 +392,15 @@ export class ParentPolicyDetailComponent implements OnInit {
 
   onBatchesGridReady(event){
     this.batchGridApi = event.api;
+  }
+
+  checkIfCanCreateParentPolicy(form) {
+    if (form.ccliente && form.ccorredor) {
+      this.saveStatus = true;
+    }
+    else {
+      this.saveStatus = false;
+    }
   }
 
 }
