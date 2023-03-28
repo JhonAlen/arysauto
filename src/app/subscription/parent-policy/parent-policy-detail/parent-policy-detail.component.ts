@@ -40,6 +40,7 @@ export class ParentPolicyDetailComponent implements OnInit {
   editStatus: boolean = false;
   isEditing: boolean = false;
   saveStatus: boolean = false;
+  createBatch: boolean = false;
   batchDeletedRowList: any[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder, 
@@ -211,28 +212,29 @@ export class ParentPolicyDetailComponent implements OnInit {
     }
     this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
       if (response.data.status) {
+        this.showSaveButton = false;
+        this.saveStatus = false;
+        this.showEditButton = true;
+        this.createBatch = false;
+        this.getParentPolicyData();
+        alert(response.data.message);
         this.loading = false;
-        location.reload();
       }
     },
     (err) => {
-      let code = err.error.data.code;
-      let message;
-      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-      else if(code == 404){ 
-        message = "No se encontraron contratos que cumplan con los parámetros de búsqueda"; 
-      }
-      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-      this.alert.message = message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
+      let message = err.error.data.message;
+      this.showSaveButton = false;
+      this.saveStatus = false;
+      this.showEditButton = true;
+      this.createBatch = false;
+      this.getParentPolicyData();
+      alert(message);
       this.loading = false;
     });
   }
 
   onSubmit(form) {
-
-    if (this.editStatus) {
+    if (this.saveStatus && this.createBatch) {
       this.createNewBatch();
     }
     else {
@@ -308,6 +310,7 @@ export class ParentPolicyDetailComponent implements OnInit {
     modalRef.result.then((result: any) => {
       if(result){
         if(result.type == 3){
+          this.createBatch = true;
           this.saveStatus = true;
           this.editStatus = false;
           this.batchList.push({
@@ -389,6 +392,15 @@ export class ParentPolicyDetailComponent implements OnInit {
 
   onBatchesGridReady(event){
     this.batchGridApi = event.api;
+  }
+
+  checkIfCanCreateParentPolicy(form) {
+    if (form.ccliente && form.ccorredor) {
+      this.saveStatus = true;
+    }
+    else {
+      this.saveStatus = false;
+    }
   }
 
 }
