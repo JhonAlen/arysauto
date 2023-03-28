@@ -1,0 +1,45 @@
+<app-toolbar ></app-toolbar>
+<div css="row mt-5 mb-5">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header company-card-header">
+             <form [formGroup]="search_form">
+                    <div class="row">
+                        <div class="col-6">
+                            <p>hola</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <mat-form-field>
+                        <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="applyFilter()" [(ngModel)]="filterValue">
+                      </mat-form-field>
+                    
+                    <mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="name">
+                          <mat-header-cell *matHeaderCellDef> name </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                        </ng-container>
+                      
+                        <ng-container matColumnDef="age">
+                          <mat-header-cell *matHeaderCellDef> age  </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
+                        </ng-container>
+                      
+                        <ng-container matColumnDef="city">
+                          <mat-header-cell *matHeaderCellDef> city </mat-header-cell>
+                          <mat-cell *matCellDef="let element"> {{element.city}} </mat-cell>
+                        </ng-container>
+                      
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+                      </mat-table>
+                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

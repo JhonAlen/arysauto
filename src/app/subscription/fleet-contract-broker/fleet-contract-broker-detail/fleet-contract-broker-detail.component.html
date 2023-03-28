@@ -128,7 +128,7 @@
                       </div>
                     </div>
                     <div class="col-md-6 pb-2">
-                      <div class="form-outline form-white">
+                      <div class="form-outline ">
                         <label class="form-label required" for="form3Examplea2">Dirección Fiscal</label>
                         <input type="text" formControlName="xdireccionfiscal" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xdireccionfiscal').errors }" />
                         <div *ngIf="submitted && search_form.get('xdireccionfiscal').errors" class="invalid-feedback">
@@ -180,7 +180,7 @@
                       </div>
                     </div>
                     <div class="col-md-4 mb-4 pb-2">
-                      <div class="form-outline form-white">
+                      <div class="form-outline ">
                         <label class="form-label required " for="form3Examplea7">Versión</label>
                         <select formControlName="cversion" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('cversion').errors }"  (change)="searchVersion()">
                           <option></option>
@@ -231,7 +231,7 @@
                       </div>
                     </div>
                     <div class="col-md-4 mb-4 pb-2">
-                      <div class="form-outline form-white">
+                      <div class="form-outline ">
                         <label class="form-label required" for="form3Examplea8">Serial de Motor</label>
                         <input type="text" formControlName="xserialmotor" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('xserialmotor').errors }" />
                         <div *ngIf="submitted && search_form.get('xserialmotor').errors" class="invalid-feedback">
@@ -300,7 +300,7 @@
                       </div>
                     </div>
                     <div class="col-md-4 mb-4 pb-2">
-                      <div class="form-outline form-white">
+                      <div class="form-outline ">
                         <label class="form-label required" for="form3Examplea8">Kilometraje</label>
                         <input type="number" formControlName="nkilometraje" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && search_form.get('nkilometraje').errors }" />
                         <div *ngIf="submitted && search_form.get('nkilometraje').errors" class="invalid-feedback">

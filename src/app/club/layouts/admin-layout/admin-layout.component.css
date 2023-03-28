@@ -3,30 +3,33 @@ mat-toolbar {
 }
 
 mat-sidenav {
-  margin: 16px;
   width: 200px;
   border-right: none;
   background: #ffefa9;
-
-  padding: 16px;
   text-align: center;
 
 }
 
 mat-sidenav-content{
-  margin-left: 60px;
-  width: 77%;
+  margin-left: 45px;
+  width: 98%;
   overflow: inherit;
 }
 
 .content {
   height: calc(100vh - 130px);
   border-radius: 10px;
+  margin: 16px;
+  margin-left: 32px;
+
+  padding: 16px;
+
+  overflow: auto;
 
 }
-.container{
+/* .container{
   max-width: 94%;
-}
+} */
 mat-sidenav-container {
   height: calc(100vh - 65px);
 }
