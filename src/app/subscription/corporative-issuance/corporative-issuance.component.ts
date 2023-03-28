@@ -6,6 +6,7 @@ import { AuthenticationService } from '@app/_services/authentication.service';
 import { environment } from '@environments/environment';
 import { ColDef} from 'ag-grid-community'
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-corporative-issuance',
@@ -68,6 +69,10 @@ export class CorporativeIssuanceComponent implements OnInit {
   mtotal: number;
   fdesde_pol;
   fhasta_pol;
+  bAgregarPropi = false;
+  ccliente;
+  fhasta_poliza;
+  planList: any[] = [];
 
   columnDefs: ColDef[] = [
     { headerName: 'Id', field: 'id', width: 65, resizable: true },
@@ -84,7 +89,8 @@ export class CorporativeIssuanceComponent implements OnInit {
   constructor(private formBuilder: UntypedFormBuilder,
               private authenticationService : AuthenticationService,
               private http: HttpClient,
-              private router: Router) { }
+              private router: Router,
+              private toast: MatSnackBar) { }
 
   ngOnInit(): void {
     this.search_form = this.formBuilder.group({
@@ -186,6 +192,7 @@ export class CorporativeIssuanceComponent implements OnInit {
         this.alert.show = true;
       });
       this.search_form.get('clote').enable();
+      this.bAgregarPropi = true;
     } else {
       this.search_form.get('clote').disable();
     }
@@ -199,6 +206,43 @@ export class CorporativeIssuanceComponent implements OnInit {
       this.searchStatus = true;
     } else {
       this.searchStatus = false;
+    }
+  }
+
+  openInclusionContract(){
+    if(this.search_form.get('ccarga').value){
+      let params = {
+        ccarga: this.search_form.get('ccarga').value
+      }
+      this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/search-receipt`, params).subscribe((response : any) => {
+        if(response.data.status){
+          this.ccliente = response.data.ccliente;
+          this.fhasta_poliza = response.data.fhasta_pol;
+          if(response.data.plan){
+            for(let i = 0; i < response.data.plan.length; i++){
+              this.planList.push({
+                  cplan: response.data.plan[i].cplan
+              })
+          }
+          let data = {
+            ccliente: this.ccliente,
+            ccarga: this.search_form.get('ccarga').value,
+            fhasta_pol: this.fhasta_poliza,
+            cplan: this.planList,
+          }
+          this.router.navigate([`subscription/inclusion-contract/`], {state: data});
+          }
+        }
+      },
+      (err) => {
+        let code = err.error.data.code;
+        console.log(code)
+        this.toast.open(`${code}`, '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['error-toast']
+        });
+      });
     }
   }
 

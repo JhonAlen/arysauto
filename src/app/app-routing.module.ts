@@ -203,6 +203,8 @@ import { ContractServiceArysDetailComponent } from './subscription/contract-serv
 import { CorporativeIssuanceComponent } from './subscription/corporative-issuance/corporative-issuance.component';
 import { ReportsComponent } from './administration/reports/reports.component';
 import { ContractServiceArysAdministrationComponent } from './subscription/contract-service-arys-administration/contract-service-arys-administration.component';
+import { InclusionContractComponent } from './subscription/inclusion-contract/inclusion-contract.component';
+
 
 const routes: Routes = [
  
@@ -497,6 +499,7 @@ const routes: Routes = [
   { path: 'subscription/corporative-issuance', component: CorporativeIssuanceComponent, canActivate: [AuthGuard] },
   { path: 'administration/reports', component: ReportsComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-administration', component: ContractServiceArysAdministrationComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/inclusion-contract', component: InclusionContractComponent, canActivate: [AuthGuard] },
 
   {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
   { path: 'sign-in', component: SignInComponent },
