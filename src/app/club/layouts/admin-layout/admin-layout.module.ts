@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction'; // for selectable
+import dayGridPlugin from '@fullcalendar/daygrid'; // fo
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    FullCalendarModule
+    FullCalendarModule,
+    
+    
   ],
   declarations: [
     DashboardComponent,

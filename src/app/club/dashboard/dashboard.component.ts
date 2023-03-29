@@ -25,11 +25,37 @@ export class DashboardComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth'
+      right: 'addEventButton'
     },
     dateClick: function(info) {
-      const date = info.dateStr
-      
+      var action = prompt('¿Qué actividad desea realizar?');
+      const DateSelect = info.dateStr
+      var date = new Date(DateSelect + 'T00:00:00');
+
+      let data ={
+        title : action,
+        start : date
+      }
+      this.http
+      .post(environment.apiUrl + '/api/club/client-agenda' , data)
+      .subscribe((res: any) => {
+
+        
+
+      });
+
+      // if (!isNaN(date.valueOf())) { // valid?
+      //   calendar.addEvent({
+      //     title: action,
+      //     start: date,
+      //     allDay: true
+      //   });
+      //   alert('Great. Now, update your database...');
+      // } else {
+      //   alert('Invalid date.');
+      // }
+
+
     },
 
   };

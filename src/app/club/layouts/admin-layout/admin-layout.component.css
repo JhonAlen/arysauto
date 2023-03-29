@@ -1,3 +1,5 @@
+@import '~mdb-ui-kit/css/mdb.min.css';
+
 mat-toolbar {
   background: #ffefa9;
 }
@@ -113,4 +115,3 @@ body{
   background: linear-gradient(to bottom, #2e34be 0%,#70a8ff 100%);
 
 }
-

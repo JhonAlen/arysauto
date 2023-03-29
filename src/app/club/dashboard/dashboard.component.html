@@ -7,8 +7,8 @@
                         <div class="card-icon">
                             <i class="material-icons">content_copy</i>
                         </div>
-                        <p class="card-category">Incidentes en Curso</p>
-                        <h4 class="card-title">Ninguno Actualmente</h4>
+                        <p class="card-category">Ninguno Actualmente</p>
+                        <h4 class="card-title">Incidentes en Curso</h4>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -75,11 +75,14 @@
                     <div class="card-body">
                         <h4 class="card-title">Monitor de Eventos Mensual</h4>
                             <div>
-                                <full-calendar [options]="calendarOptions">
-                                    <ng-template #eventContent  >
-                                    </ng-template>
-                                  </full-calendar>
+                            <full-calendar [options]="calendarOptions">
+                                <ng-template #eventContent  >
+                                </ng-template>
+                            </full-calendar>
                             </div>
+                            <!-- Button trigger modal -->
+
+
                     </div>
                 </div>
             </div>
