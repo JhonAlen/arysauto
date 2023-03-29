@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit {
         title : action,
         start : date
       }
+      console.log(data);
       this.http
       .post(environment.apiUrl + '/api/club/client-agenda' , data)
       .subscribe((res: any) => {
