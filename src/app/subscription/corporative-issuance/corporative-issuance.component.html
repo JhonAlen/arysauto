@@ -13,6 +13,10 @@
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                 Buscar
                             </button>
+                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="openInclusionContract()" *ngIf="bAgregarPropi">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Incluir Propietario
+                            </button>
                         </div>
                     </div>
                 </div>

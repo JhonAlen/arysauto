@@ -35,33 +35,12 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>{{ "QUOTATION.FEESREGISTERS.CLIENT" | translate }}</label>
-                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }" (change)="associateDropdownDataRequest()">
+                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }">
                                         <option></option>
                                         <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
                                     </select>
                                     <div *ngIf="submitted && detail_form.get('ccliente').errors"  class="invalid-feedback">
                                         <div *ngIf="detail_form.get('ccliente').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDCLIENT" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label>{{ "QUOTATION.FEESREGISTERS.ASSOCIATE" | translate }}</label>
-                                    <select formControlName="casociado" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('casociado').errors }">
-                                        <option></option>
-                                        <option *ngFor="let associate of associateList" value="{{ associate.id }}">{{ associate.value }}</option>
-                                    </select>
-                                    <div *ngIf="submitted && detail_form.get('casociado').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('casociado').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDASSOCIATE" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
-                                    <label>{{ "QUOTATION.FEESREGISTERS.ACTIVE" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "QUOTATION.FEESREGISTERS.REQUIREDACTIVE" | translate }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -77,23 +56,26 @@
                 <div class="card-header company-card-header">
                     <div class="row">
                         <div class="col-6">
-                            {{ "QUOTATION.FEESREGISTERS.VEHICLETYPESLIST" | translate }}
+                            Lista de Tasas
                         </div>
                         <div class="col-6">
-                            <button [disabled]="loading || loading_cancel || !editStatus" class="btn company-detail-button float-right mr-1" type="button" (click)="addVehicleType()" *ngIf="canEdit || canCreate">
-                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                                {{ "QUOTATION.FEESREGISTERS.ADDVEHICLETYPE" | translate }}
-                            </button>
+                            <input type="file" name="xdocumento" class="form-control"  accept=" .csv" (change)="onFileSelect($event)" *ngIf="canReadFile" #Ximagen>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="vehicleTypeList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="vehicleTypeRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onVehicleTypesGridReady($event)">
-                            <ag-grid-column headerName="Name" field="xtipovehiculo" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Amount Interval Start" field="miniciointervalo" [width]="259" [sortable]="false"></ag-grid-column>
-                            <ag-grid-column headerName="Amount Interval End" field="mfinalintervalo" [width]="259" [sortable]="false"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="ptasa" [width]="259" [sortable]="false"></ag-grid-column>
+                        <ag-grid-angular #agGrid style="width: 100%; height: 520px;" class="ag-theme-alpine" [rowData]="ratesList" [pagination]="true" [paginationPageSize]="10" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onContractsGridReady($event)">
+                            <ag-grid-column headerName="Clase" field="xclase" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Intervalo" field="xintervalo" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tasa" field="xtasa" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2024 - 2020" field="f2024" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2019 - 2018" field="f2019" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2017 - 2015" field="f2017" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2014 - 2012" field="f2014" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2011 - 2007" field="f2011" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2006 - 2004" field="f2006" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="2003 o Anterior" field="f2003" [width]="173" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>

@@ -1,0 +1,145 @@
+section{
+    padding: 0px 0px;
+}
+
+h2{
+    color: #364d59;
+}
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+  }
+
+.col-lg-4{
+    padding: 10px;
+}
+
+form{
+    padding: 40px;
+}
+
+footer{
+    background-color: #132646;
+    border-top-style: solid;
+    border-color: white;
+}
+
+h3,h6{
+    color: white;
+}
+
+.g-0{
+    border-radius: 0px 0px 5px 5px;
+}
+
+
+button{
+    background-color: #fdd213;
+    color: black;
+}
+
+.button{
+    text-align-last: center;
+    /* margin-top:-90px */
+}
+
+.card-header{
+padding: 2px;
+border-radius: 5px 5px 0px 0px;
+text-align-last: center;
+}
+
+option{
+    font-size: 17px;
+
+}
+select{
+    font-size: 15px;
+
+}
+
+.card{
+    width: 49%;
+    position: initial;
+    margin: 6px;
+}
+.cards{
+    --bs-card-spacer-y: 1rem;
+    --bs-card-spacer-x: 1rem;
+    --bs-card-title-spacer-y: 0.5rem;
+    --bs-card-border-color: var(--bs-border-color-translucent);
+    --bs-card-border-radius: 0.375rem;
+    --bs-card-box-shadow:  ;
+    --bs-card-inner-border-radius: calc(0.375rem - 1px);
+    --bs-card-cap-padding-y: 0.5rem;
+    --bs-card-cap-padding-x: 1rem;
+    --bs-card-cap-bg: rgba(0, 0, 0, 0.03);
+    --bs-card-cap-color:  ;
+    --bs-card-height:  ;
+    --bs-card-color:  ;
+    --bs-card-bg: #fff;
+    --bs-card-img-overlay-padding: 1rem;
+    --bs-card-group-margin: 0.75rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0px;
+    height: var(--bs-card-height);
+    overflow-wrap: break-word;
+    background-color: var(--bs-card-bg);
+    background-clip: border-box;
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: var(--bs-card-border-radius);
+    margin-top: 5px;
+}
+
+input{
+    font-size: 15px;
+}
+
+
+.example-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  
+  .example-right-align {
+    text-align: right;
+  }
+  
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  input.example-right-align {
+    -moz-appearance: textfield;
+  }
+
+.buton{
+    padding: 29px;
+    width: 41%;
+}
+hr{
+    width: 98%;
+}
+.required:after {
+    content:" *";
+    color: red;
+  }
+  .ng-autocomplete {
+    border-radius: 5px;
+}
+.pricing6 {
+    font-family: "Montserrat", sans-serif;
+    color: #FFF;
+    font-weight: 300;
+}
+.pricing6 .card.card-shadow {
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}

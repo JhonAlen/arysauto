@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FeesRegisterVehicleTypeComponent } from '@app/pop-up/fees-register-vehicle-type/fees-register-vehicle-type.component';
+import { Papa } from 'ngx-papaparse';
 
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { environment } from '@environments/environment';
@@ -37,6 +37,9 @@ export class FeesRegisterDetailComponent implements OnInit {
   showEditButton: boolean = false;
   editStatus: boolean = false;
   vehicleTypeDeletedRowList: any[] = [];
+  ratesList: any[] = [];
+  parsedData: any[] = [];
+  canReadFile: boolean = true;
 
   constructor(private formBuilder: UntypedFormBuilder, 
               private authenticationService : AuthenticationService,
@@ -48,9 +51,7 @@ export class FeesRegisterDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      casociado: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ccliente: [''],
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
@@ -141,37 +142,7 @@ export class FeesRegisterDetailComponent implements OnInit {
       if(response.data.status){
         this.detail_form.get('ccliente').setValue(response.data.ccliente);
         this.detail_form.get('ccliente').disable();
-        this.associateDropdownDataRequest();
-        this.detail_form.get('casociado').setValue(response.data.casociado);
-        this.detail_form.get('casociado').disable();
-        this.detail_form.get('bactivo').setValue(response.data.bactivo);
-        this.detail_form.get('bactivo').disable();
         this.vehicleTypeList = [];
-        if(response.data.vehicleTypes){
-          for(let i =0; i < response.data.vehicleTypes.length; i++){
-            let intervals = [];
-            for(let j =0; j < response.data.vehicleTypes[i].intervals.length; j++){
-              intervals.push({
-                create: false,
-                crangoanotipovehiculo: response.data.vehicleTypes[i].intervals[j].crangoanotipovehiculo,
-                fanoinicio: response.data.vehicleTypes[i].intervals[j].fanoinicio,
-                fanofinal: response.data.vehicleTypes[i].intervals[j].fanofinal,
-                ptasainterna: response.data.vehicleTypes[i].intervals[j].ptasainterna
-              });
-            }
-            this.vehicleTypeList.push({
-              cgrid: i,
-              create: false,
-              ctipovehiculo: response.data.vehicleTypes[i].ctipovehiculo,
-              xtipovehiculo: response.data.vehicleTypes[i].xtipovehiculo,
-              ctipovehiculoregistrotasa: response.data.vehicleTypes[i].ctipovehiculoregistrotasa,
-              miniciointervalo: response.data.vehicleTypes[i].miniciointervalo,
-              mfinalintervalo: response.data.vehicleTypes[i].mfinalintervalo,
-              ptasa: response.data.vehicleTypes[i].ptasa,
-              intervals: intervals
-            });
-          }
-        }
       }
       this.loading_cancel = false;
     }, 
@@ -187,41 +158,8 @@ export class FeesRegisterDetailComponent implements OnInit {
     });
   }
 
-  associateDropdownDataRequest(){
-    if(this.detail_form.get('ccliente').value){
-      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      let options = { headers: headers };
-      let params = {
-        cpais: this.currentUser.data.cpais,
-        ccompania: this.currentUser.data.ccompania,
-        ccliente: this.detail_form.get('ccliente').value
-      }
-      this.http.post(`${environment.apiUrl}/api/valrep/client/associate`, params, options).subscribe((response : any) => {
-        if(response.data.status){
-          this.associateList = [];
-          for(let i = 0; i < response.data.list.length; i++){
-            this.associateList.push({ id: response.data.list[i].casociado, value: response.data.list[i].xasociado });
-          }
-          this.associateList.sort((a,b) => a.value > b.value ? 1 : -1);
-        }
-      },
-      (err) => {
-        let code = err.error.data.code;
-        let message;
-        if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-        else if(code == 404){ message = "HTTP.ERROR.VALREP.ASSOCIATENOTFOUND"; }
-        else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-        this.alert.message = message;
-        this.alert.type = 'danger';
-        this.alert.show = true;
-      });
-    }
-  }
-
   editFeesRegister(){
     this.detail_form.get('ccliente').enable();
-    this.detail_form.get('casociado').enable();
-    this.detail_form.get('bactivo').enable();
     this.showEditButton = false;
     this.showSaveButton = true;
     this.editStatus = true;
@@ -239,92 +177,85 @@ export class FeesRegisterDetailComponent implements OnInit {
     }
   }
 
-  addVehicleType(){
-    let vehicleType = { type: 3 };
-    const modalRef = this.modalService.open(FeesRegisterVehicleTypeComponent, {size: 'xl'});
-    modalRef.componentInstance.vehicleType = vehicleType;
-    modalRef.result.then((result: any) => { 
-      if(result){
-        if(result.type == 3){
-          this.vehicleTypeList.push({
-            cgrid: this.vehicleTypeList.length,
-            create: true,
-            ctipovehiculo: result.ctipovehiculo,
-            xtipovehiculo: result.xtipovehiculo,
-            miniciointervalo: result.miniciointervalo,
-            mfinalintervalo: result.mfinalintervalo,
-            ptasa: result.ptasa,
-            intervals: result.intervals
-          });
-          this.vehicleTypeGridApi.setRowData(this.vehicleTypeList);
-        }
+  async onFileSelect(event){
+    let fixedData: any[] = [];
+    let file = event.target.files[0];
+    this.ratesList = [];
+    this.parsedData = [];
+    let parsedCSV = await this.parseCSV(file);
+    if (parsedCSV.length > 0) {
+      this.parsedData = parsedCSV;
+      for (let i = 0; i < (this.parsedData.length); i++){
+        fixedData.push({
+          xclase: this.parsedData[i].TIPOVEHICULOCLASE,
+          xintervalo: this.parsedData[i].INTERVALO,
+          xtasa: this.parsedData[i].TASA,
+          f2024: this.parsedData[i].F20242020,
+          f2019: this.parsedData[i].F20192018,
+          f2017: this.parsedData[i].F20172015,
+          f2014: this.parsedData[i].F20142012,
+          f2011: this.parsedData[i].F20112007,
+          f2006: this.parsedData[i].F20062004,
+          f2003: this.parsedData[i].F2003OANTERIOR,
+        })
       }
-    });
+      this.ratesList = fixedData;
+      if (this.detail_form.get('xobservacion').value) {
+       
+      }
+    }
+    else {
+      event.target.value = null;
+      
+    }
   }
 
-  vehicleTypeRowClicked(event: any){
-    let vehicleType = {};
-    if(this.editStatus){ 
-      vehicleType = { 
-        type: 1,
-        create: event.data.create, 
-        cgrid: event.data.cgrid,
-        ctipovehiculoregistrotasa: event.data.ctipovehiculoregistrotasa,
-        ctipovehiculo: event.data.ctipovehiculo,
-        miniciointervalo: event.data.miniciointervalo,
-        mfinalintervalo: event.data.mfinalintervalo,
-        ptasa: event.data.ptasa,
-        intervals: event.data.intervals,
-        delete: false
-      };
-    }else{ 
-      vehicleType = { 
-        type: 2,
-        create: event.data.create,
-        cgrid: event.data.cgrid,
-        ctipovehiculoregistrotasa: event.data.ctipovehiculoregistrotasa,
-        ctipovehiculo: event.data.ctipovehiculo,
-        miniciointervalo: event.data.miniciointervalo,
-        mfinalintervalo: event.data.mfinalintervalo,
-        ptasa: event.data.ptasa,
-        intervals: event.data.intervals,
-        delete: false
-      }; 
-    }
-    const modalRef = this.modalService.open(FeesRegisterVehicleTypeComponent, {size: 'xl'});
-    modalRef.componentInstance.vehicleType = vehicleType;
-    modalRef.result.then((result: any) => {
-      if(result){
-        if(result.type == 1){
-          for(let i = 0; i < this.vehicleTypeList.length; i++){
-            if(this.vehicleTypeList[i].cgrid == result.cgrid){
-              this.vehicleTypeList[i].ctipovehiculo = result.ctipovehiculo;
-              this.vehicleTypeList[i].xtipovehiculo = result.xtipovehiculo;
-              this.vehicleTypeList[i].miniciointervalo = result.miniciointervalo;
-              this.vehicleTypeList[i].mfinalintervalo = result.mfinalintervalo;
-              this.vehicleTypeList[i].ptasa = result.ptasa;
-              this.vehicleTypeList[i].intervals = result.intervals;
-              this.vehicleTypeList[i].intervalsResult = result.intervalsResult;
-              this.vehicleTypeGridApi.refreshCells();
-              return;
+  parseCSV(file) {
+
+    const requiredHeaders: any[] = [
+      "TIPOVEHICULOCLASE", "INTERVALO", "TASA", "F20242020", "F20192018", "F20172015", "F20142012", "F20112007", "F20062004", "F2003OANTERIOR"
+    ]
+
+    return new Promise <any[]>((resolve, reject) => {
+      let papa = new Papa();
+      papa.parse(file, {
+        delimiter: ";",
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          let error = "";
+          let csvHeaders = Object.keys(results.data[0]);
+          let lastRow = results.data[results.data.length - 1];
+          let isEmpty = true;
+          for (let key in lastRow) {
+            if (lastRow[key]) {
+              isEmpty = false;
+              break;
             }
           }
-        }else if(result.type == 4){
-          if(result.delete){
-            this.vehicleTypeDeletedRowList.push({ ctipovehiculoregistrotasa: result.ctipovehiculoregistrotasa, ctipovehiculo: result.ctipovehiculo });
+          if (isEmpty) {
+            results.data.pop();
           }
-          this.vehicleTypeList = this.vehicleTypeList.filter((row) => { return row.cgrid != result.cgrid });
-          for(let i = 0; i < this.vehicleTypeList.length; i++){
-            this.vehicleTypeList[i].cgrid = i;
+          if (JSON.stringify(csvHeaders) !== JSON.stringify(requiredHeaders)) {
+            let missingAttributes = []
+            missingAttributes  = requiredHeaders.filter(requiredHeader => !csvHeaders.some(csvHeader => csvHeader === requiredHeader));
+            if (missingAttributes.length > 0) {
+              error = `Error: El archivo suministrado no incluye todos los atributos necesarios. Se necesita incluir la/s columna/s: ${missingAttributes}`;
+            }
+            else {
+              let additionalAttributes = [];
+              additionalAttributes = csvHeaders.filter(csvHeader => !requiredHeaders.some(requiredHeader => requiredHeader === csvHeader));
+              error = `Error: El archivo suministrado incluye atributos adicionales, elimine la/s siguiente/s columna/s: ${additionalAttributes}`;
+            }
           }
-          this.vehicleTypeGridApi.setRowData(this.vehicleTypeList);
+          if (error) {
+            results.data = [];
+            alert(error);
+          }
+          resolve(results.data);
         }
-      }
+      });
     });
-  }
-
-  onVehicleTypesGridReady(event){
-    this.vehicleTypeGridApi = event.api;
   }
 
   onSubmit(form){
@@ -361,10 +292,8 @@ export class FeesRegisterDetailComponent implements OnInit {
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
         ccliente: form.ccliente,
-        casociado: form.casociado,
-        bactivo: form.bactivo,
         cusuariocreacion: this.currentUser.data.cusuario,
-        vehicleTypes: this.vehicleTypeList
+        rates: this.ratesList
       };
       url = `${environment.apiUrl}/api/fees-register/create`;
     }
@@ -399,4 +328,7 @@ export class FeesRegisterDetailComponent implements OnInit {
     });
   }
 
+  onContractsGridReady(event){
+
+  }
 }
