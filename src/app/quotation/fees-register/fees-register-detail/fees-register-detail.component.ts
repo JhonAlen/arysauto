@@ -187,16 +187,24 @@ export class FeesRegisterDetailComponent implements OnInit {
       this.parsedData = parsedCSV;
       for (let i = 0; i < (this.parsedData.length); i++){
         fixedData.push({
-          xclase: this.parsedData[i].TIPOVEHICULOCLASE,
-          xintervalo: this.parsedData[i].INTERVALO,
-          xtasa: this.parsedData[i].TASA,
-          f2024: this.parsedData[i].F20242020,
-          f2019: this.parsedData[i].F20192018,
-          f2017: this.parsedData[i].F20172015,
-          f2014: this.parsedData[i].F20142012,
-          f2011: this.parsedData[i].F20112007,
-          f2006: this.parsedData[i].F20062004,
-          f2003: this.parsedData[i].F2003OANTERIOR,
+          cano: this.parsedData[i].CANO,
+          particular1: this.parsedData[i].PARTICULAR1,
+          particular2: this.parsedData[i].PARTICULAR2,
+          rustico1: this.parsedData[i].RUSTICO1,
+          rustico2: this.parsedData[i].RUSTICO2,
+          pickup1: this.parsedData[i].PICKUP1,
+          pickup2: this.parsedData[i].PICKUP2,
+          carga2_1: this.parsedData[i].CARGA2_1,
+          carga2_2: this.parsedData[i].CARGA2_2,
+          carga5_1: this.parsedData[i].CARGA5_1,
+          carga5_2: this.parsedData[i].CARGA5_2,
+          carga8_1: this.parsedData[i].CARGA8_1,
+          carga8_2: this.parsedData[i].CARGA8_2,
+          carga12_1: this.parsedData[i].CARGA12_1,
+          carga12_2: this.parsedData[i].CARGA12_2,
+          moto1: this.parsedData[i].MOTO1,
+          moto2: this.parsedData[i].MOTO2,
+          iestado: this.parsedData[i].IESTADO,
         })
       }
       this.ratesList = fixedData;
@@ -213,7 +221,8 @@ export class FeesRegisterDetailComponent implements OnInit {
   parseCSV(file) {
 
     const requiredHeaders: any[] = [
-      "TIPOVEHICULOCLASE", "INTERVALO", "TASA", "F20242020", "F20192018", "F20172015", "F20142012", "F20112007", "F20062004", "F2003OANTERIOR"
+      "CANO", "PARTICULAR1", "PARTICULAR2", "RUSTICO1", "RUSTICO2", "PICKUP1", "PICKUP2", "CARGA2_1", "CARGA2_2", "CARGA5_1",
+      "CARGA5_2", "CARGA8_1", "CARGA8_2", "CARGA12_1", "CARGA12_2", "MOTO1", "MOTO2", "IESTADO"
     ]
 
     return new Promise <any[]>((resolve, reject) => {
@@ -302,17 +311,19 @@ export class FeesRegisterDetailComponent implements OnInit {
         if(this.code){
           location.reload();
         }else{
-          this.router.navigate([`/quotation/fees-register-detail/${response.data.cregistrotasa}`]);
-        }
-      }else{
-        let condition = response.data.condition;
-        if(condition == "associate-already-exist"){
-          this.alert.message = "QUOTATION.FEESREGISTERS.ASSOCIATEALREADYHAVECONFIGURATION";
-          this.alert.type = 'danger';
+          let message = 'Se ha registrado exitosamente';
+          this.alert.message = message;
+          this.alert.type = 'success';
           this.alert.show = true;
+      
+          setTimeout(() => {
+            this.alert.show = false;
+          }, 3000);
+    
+          location.reload();
+          this.loading = false;
         }
       }
-      this.loading = false;
     },
     (err) => {
       let code = err.error.data.code;
@@ -326,6 +337,10 @@ export class FeesRegisterDetailComponent implements OnInit {
       this.alert.show = true;
       this.loading = false;
     });
+  }
+
+  alertSuccess(){
+
   }
 
   onContractsGridReady(event){

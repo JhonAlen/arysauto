@@ -1,9 +1,7 @@
 <app-toolbar ></app-toolbar>
 <div class="container">
-    <div class="row mt-5" *ngIf="alert.show">
-        <div class="col-sm-12 col-md-6 mx-auto">
-            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
-        </div>
+    <div data-aos="fade-in-down" data-aos-delay="200" *ngIf="alert.show" class="alert-container">
+        <ngb-alert *ngIf="alert.show" [type]="alert.type">{{ alert.message | translate }}</ngb-alert>
     </div>
     <div class="row mt-5">
         <div class="col-sm-12">
@@ -66,16 +64,24 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 520px;" class="ag-theme-alpine" [rowData]="ratesList" [pagination]="true" [paginationPageSize]="10" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onContractsGridReady($event)">
-                            <ag-grid-column headerName="Clase" field="xclase" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Intervalo" field="xintervalo" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Tasa" field="xtasa" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2024 - 2020" field="f2024" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2019 - 2018" field="f2019" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2017 - 2015" field="f2017" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2014 - 2012" field="f2014" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2011 - 2007" field="f2011" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2006 - 2004" field="f2006" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="2003 o Anterior" field="f2003" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Año" field="cano" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Particular 1" field="particular1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Particular 2" field="particular2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Rustico 1" field="rustico1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Rustico 2" field="rustico2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Pick-up 1" field="pickup1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Pick-up 2" field="pickup2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 2 Toneladas 1" field="carga2_1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 2 Toneladas 2" field="carga2_2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 5 Toneladas 2" field="carga5_1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 5 Toneladas 2" field="carga5_2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 8 Toneladas 2" field="carga8_1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 8 Toneladas 2" field="carga8_2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 12 Toneladas 2" field="carga12_1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Carga 12 Toneladas 2" field="carga12_2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Moto 1" field="moto1" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Moto 2" field="moto2" [width]="173" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Estado" field="iestado" [width]="173" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>

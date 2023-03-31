@@ -7,7 +7,7 @@ import { PlanServiceComponent } from '@app/pop-up/plan-service/plan-service.comp
 import { PlanAmountRcvComponent } from '@app/pop-up/plan-amount-rcv/plan-amount-rcv.component';
 import { PlanValuationApovComponent } from '@app/pop-up/plan-valuation-apov/plan-valuation-apov.component';
 import { PlanValuationExcesoComponent } from '@app/pop-up/plan-valuation-exceso/plan-valuation-exceso.component';
-
+import { Papa } from 'ngx-papaparse';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { environment } from '@environments/environment';
 
@@ -57,6 +57,8 @@ export class PlanDetailComponent implements OnInit {
   ActivaPlan: boolean = true;
   bactiva_exceso: boolean = false;
   excesoList: any[] = [];
+  ratesList: any[] = [];
+  parsedData: any[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder, 
               private authenticationService : AuthenticationService,
@@ -545,6 +547,93 @@ export class PlanDetailComponent implements OnInit {
     }
   }
 
+  async onFileSelect(event){
+    let fixedData: any[] = [];
+    let file = event.target.files[0];
+    this.ratesList = [];
+    this.parsedData = [];
+    let parsedCSV = await this.parseCSV(file);
+    if (parsedCSV.length > 0) {
+      this.parsedData = parsedCSV;
+      for (let i = 0; i < (this.parsedData.length); i++){
+        fixedData.push({
+          cano: this.parsedData[i].CANO,
+          particular1: this.parsedData[i].PARTICULAR1,
+          particular2: this.parsedData[i].PARTICULAR2,
+          rustico1: this.parsedData[i].RUSTICO1,
+          rustico2: this.parsedData[i].RUSTICO2,
+          pickup1: this.parsedData[i].PICKUP1,
+          pickup2: this.parsedData[i].PICKUP2,
+          carga2_1: this.parsedData[i].CARGA2_1,
+          carga2_2: this.parsedData[i].CARGA2_2,
+          carga5_1: this.parsedData[i].CARGA5_1,
+          carga5_2: this.parsedData[i].CARGA5_2,
+          carga8_1: this.parsedData[i].CARGA8_1,
+          carga8_2: this.parsedData[i].CARGA8_2,
+          carga12_1: this.parsedData[i].CARGA12_1,
+          carga12_2: this.parsedData[i].CARGA12_2,
+          moto1: this.parsedData[i].MOTO1,
+          moto2: this.parsedData[i].MOTO2,
+          iestado: this.parsedData[i].IESTADO,
+        })
+      }
+      this.ratesList = fixedData;
+    }
+    else {
+      event.target.value = null;
+      
+    }
+  }
+
+  parseCSV(file) {
+
+    const requiredHeaders: any[] = [
+      "CANO", "PARTICULAR1", "PARTICULAR2", "RUSTICO1", "RUSTICO2", "PICKUP1", "PICKUP2", "CARGA2_1", "CARGA2_2", "CARGA5_1",
+      "CARGA5_2", "CARGA8_1", "CARGA8_2", "CARGA12_1", "CARGA12_2", "MOTO1", "MOTO2", "IESTADO"
+    ]
+
+    return new Promise <any[]>((resolve, reject) => {
+      let papa = new Papa();
+      papa.parse(file, {
+        delimiter: ";",
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          let error = "";
+          let csvHeaders = Object.keys(results.data[0]);
+          let lastRow = results.data[results.data.length - 1];
+          let isEmpty = true;
+          for (let key in lastRow) {
+            if (lastRow[key]) {
+              isEmpty = false;
+              break;
+            }
+          }
+          if (isEmpty) {
+            results.data.pop();
+          }
+          if (JSON.stringify(csvHeaders) !== JSON.stringify(requiredHeaders)) {
+            let missingAttributes = []
+            missingAttributes  = requiredHeaders.filter(requiredHeader => !csvHeaders.some(csvHeader => csvHeader === requiredHeader));
+            if (missingAttributes.length > 0) {
+              error = `Error: El archivo suministrado no incluye todos los atributos necesarios. Se necesita incluir la/s columna/s: ${missingAttributes}`;
+            }
+            else {
+              let additionalAttributes = [];
+              additionalAttributes = csvHeaders.filter(csvHeader => !requiredHeaders.some(requiredHeader => requiredHeader === csvHeader));
+              error = `Error: El archivo suministrado incluye atributos adicionales, elimine la/s siguiente/s columna/s: ${additionalAttributes}`;
+            }
+          }
+          if (error) {
+            results.data = [];
+            alert(error);
+          }
+          resolve(results.data);
+        }
+      });
+    });
+  }
+
   onSubmit(form){
     this.submitted = true;
     this.loading = true;
@@ -576,6 +665,7 @@ export class PlanDetailComponent implements OnInit {
         mdeducible: this.detail_form.get('mdeducible').value,
         apov: this.apovList,
         exceso: this.excesoList,
+        rates: this.ratesList,
         services: {
           create: createServiceList,
           update: updateServiceList
@@ -613,7 +703,17 @@ export class PlanDetailComponent implements OnInit {
           this.onSubmitRcv();
         }
         if(this.code){
+          let message = 'Se ha modificado exitosamente';
+          this.alert.message = message;
+          this.alert.type = 'success';
+          this.alert.show = true;
+      
+          setTimeout(() => {
+            this.alert.show = false;
+          }, 3000);
+    
           location.reload();
+          this.loading = false;
         }else{
           this.router.navigate([`/products/plan-detail/${response.data.cplan}`]);
         }
