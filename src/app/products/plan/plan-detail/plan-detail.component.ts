@@ -259,6 +259,31 @@ export class PlanDetailComponent implements OnInit {
             })
           }
         }
+        this.ratesList = [];
+        if(response.data.ratesArys){
+          this.activaTasasArys = true;
+          for(let i =0; i < response.data.ratesArys.length; i++){
+            this.ratesList.push({
+              cano: response.data.ratesArys[i].cano,
+              particular1: response.data.ratesArys[i].particular1,
+              particular2: response.data.ratesArys[i].particular2,
+              rustico1: response.data.ratesArys[i].rustico1,
+              rustico2: response.data.ratesArys[i].rustico2,
+              pickup1: response.data.ratesArys[i].pickup1,
+              pickup2: response.data.ratesArys[i].pickup2,
+              carga2_1: response.data.ratesArys[i].carga2_1,
+              carga2_2: response.data.ratesArys[i].carga2_2,
+              carga5_1: response.data.ratesArys[i].carga5_1,
+              carga5_2: response.data.ratesArys[i].carga5_2,
+              carga8_1: response.data.ratesArys[i].carga8_1,
+              carga8_2: response.data.ratesArys[i].carga8_2,
+              carga12_1: response.data.ratesArys[i].carga12_1,
+              carga12_2: response.data.ratesArys[i].carga12_2,
+              moto1: response.data.ratesArys[i].moto1,
+              moto2: response.data.ratesArys[i].moto2,
+            })
+          }
+        }
       }
       this.loading_cancel = false;
     }, 
