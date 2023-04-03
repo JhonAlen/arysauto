@@ -59,6 +59,8 @@ export class PlanDetailComponent implements OnInit {
   excesoList: any[] = [];
   ratesList: any[] = [];
   parsedData: any[] = [];
+  activaTasasArys: boolean = false;
+  canReadFile: boolean = false;
 
   constructor(private formBuilder: UntypedFormBuilder, 
               private authenticationService : AuthenticationService,
@@ -172,6 +174,8 @@ export class PlanDetailComponent implements OnInit {
         this.getPlanData();
         if(this.canEdit){ this.showEditButton = true; }
       }else{
+        this.activaTasasArys = true;
+        this.canReadFile = true;
         if(!this.canCreate){
           this.router.navigate([`/permission-error`]);
           return;
@@ -416,6 +420,8 @@ export class PlanDetailComponent implements OnInit {
     this.showEditButton = false;
     this.showSaveButton = true;
     this.editStatus = true;
+    this.activaTasasArys = true;
+    this.canReadFile = true;
   }
 
   changeApov(){
@@ -573,8 +579,7 @@ export class PlanDetailComponent implements OnInit {
           carga12_1: this.parsedData[i].CARGA12_1,
           carga12_2: this.parsedData[i].CARGA12_2,
           moto1: this.parsedData[i].MOTO1,
-          moto2: this.parsedData[i].MOTO2,
-          iestado: this.parsedData[i].IESTADO,
+          moto2: this.parsedData[i].MOTO2
         })
       }
       this.ratesList = fixedData;
@@ -589,7 +594,7 @@ export class PlanDetailComponent implements OnInit {
 
     const requiredHeaders: any[] = [
       "CANO", "PARTICULAR1", "PARTICULAR2", "RUSTICO1", "RUSTICO2", "PICKUP1", "PICKUP2", "CARGA2_1", "CARGA2_2", "CARGA5_1",
-      "CARGA5_2", "CARGA8_1", "CARGA8_2", "CARGA12_1", "CARGA12_2", "MOTO1", "MOTO2", "IESTADO"
+      "CARGA5_2", "CARGA8_1", "CARGA8_2", "CARGA12_1", "CARGA12_2", "MOTO1", "MOTO2" 
     ]
 
     return new Promise <any[]>((resolve, reject) => {
@@ -692,7 +697,8 @@ export class PlanDetailComponent implements OnInit {
         ccompania: this.currentUser.data.ccompania,
         cusuariocreacion: this.currentUser.data.cusuario,
         servicesType: this.serviceTypeList,
-        quantity: this.quantityServiceList
+        quantity: this.quantityServiceList,
+        rates: this.ratesList
       };
       url = `${environment.apiUrl}/api/plan/create`;
     }

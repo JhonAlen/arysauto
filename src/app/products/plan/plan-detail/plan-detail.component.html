@@ -409,13 +409,13 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5 mb-5" *ngIf="showEditButton">
+    <div class="row mt-5 mb-5" *ngIf="activaTasasArys">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header company-card-header">
                     <div class="row">
                         <div class="col-6">
-                            Lista de Tasas
+                            Lista de Tasas Arys
                         </div>
                         <div class="col-6">
                             <input type="file" name="xdocumento" class="form-control"  accept=" .csv" (change)="onFileSelect($event)" *ngIf="canReadFile" #Ximagen>
@@ -442,7 +442,6 @@
                             <ag-grid-column headerName="Carga 12 Toneladas 2" field="carga12_2" [width]="173" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Moto 1" field="moto1" [width]="173" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Moto 2" field="moto2" [width]="173" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Estado" field="iestado" [width]="173" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
