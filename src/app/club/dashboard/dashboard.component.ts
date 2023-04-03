@@ -1,12 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, UntypedFormGroup, Validators,FormControl, FormGroup, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ChangeDetectorRef , OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@services/authentication.service';
-import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction'; // for selectable
 import dayGridPlugin from '@fullcalendar/daygrid'; // fo
+import listPlugin from '@fullcalendar/list';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { createEventId } from './event-utils';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,70 +16,98 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // fo
 })
 
 export class DashboardComponent implements OnInit {
-
+  Events: any[] = [];
+  calendarVisible = true;
   calendarOptions: CalendarOptions = {
-    plugins: [ interactionPlugin, dayGridPlugin ],
+    plugins: [
+      interactionPlugin,
+      dayGridPlugin,
+      timeGridPlugin,
+      listPlugin,
+    ],
+    headerToolbar: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'dayGridMonth'
+    },
     initialView: 'dayGridMonth',
     weekends: true,
-    selectable: true,
     editable: true,
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'addEventButton'
-    },
-    dateClick: function(info) {
-      var action = prompt('¿Qué actividad desea realizar?');
-      const DateSelect = info.dateStr
-      var date = new Date(DateSelect + 'T00:00:00');
-
-      let data ={
-        title : action,
-        start : date
-      }
-      console.log(data);
-      this.http
-      .post(environment.apiUrl + '/api/club/client-agenda' , data)
-      .subscribe((res: any) => {
-
-        
-
-      });
-
-      // if (!isNaN(date.valueOf())) { // valid?
-      //   calendar.addEvent({
-      //     title: action,
-      //     start: date,
-      //     allDay: true
-      //   });
-      //   alert('Great. Now, update your database...');
-      // } else {
-      //   alert('Invalid date.');
-      // }
-
-
-    },
-
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true,
+    select: this.handleDateSelect.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    eventsSet: this.handleEvents.bind(this)
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
   };
-
-  User : FormGroup
-  submitted = false;
+  currentEvents: EventApi[] = [];
   message : any;
   currentUser;
-  DataTypeService : any[] = [];
-  DataService : any[] = [];
-
-
   constructor(
-    private formBuilder: FormBuilder,
     private authenticationService : AuthenticationService,
     private http : HttpClient,
-    private router : Router
+    private changeDetector: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
-
-
+  handleCalendarToggle() {
+    this.calendarVisible = !this.calendarVisible;
+  }
+  handleWeekendsToggle() {
+    const { calendarOptions } = this;
+    calendarOptions.weekends = !calendarOptions.weekends;
+  }
+  handleDateSelect(selectInfo: DateSelectArg) {
+    const title = prompt('¿Qué actividad planea realizar?');
+    const calendarApi = selectInfo.view.calendar;
+    this.currentUser = this.authenticationService.currentUserValue;
+    let params = {
+      id:createEventId(),
+      title: title,
+      start: selectInfo.startStr,
+      end: selectInfo.endStr,
+      allDay: selectInfo.allDay,
+      cpropietario: this.currentUser.data.cpropietario
+    }
+    this.http
+    .post(environment.apiUrl + '/api/club/client-agenda' ,params)
+    .subscribe((res: any) => {
+      console.log(res.data.list)
+      this.Events = res.data.list
+      this.calendarOptions = {
+        initialView: 'dayGridMonth',
+        events: this.Events,
+      };
+    });
+  }
+  handleEventClick(clickInfo: EventClickArg) {
+    if (confirm(`¿Seguro de que deseas elminar '${clickInfo.event.title}'?`)) {
+      clickInfo.event.remove();
+    }
+  }
+  handleEvents(events: EventApi[]) {
+    this.currentEvents = events;
+    this.changeDetector.detectChanges();
+  }
+  ngOnInit(){
+    this.currentUser = this.authenticationService.currentUserValue;
+    let params = {
+      cpropietario: this.currentUser.data.cpropietario
+    }
+    this.http
+    .post(environment.apiUrl + '/api/club/search/client-agenda' ,params)
+    .subscribe((res: any) => {
+      console.log(res.data.list)
+      this.Events = res.data.list
+      this.calendarOptions = {
+        initialView: 'dayGridMonth',
+        events: this.Events,
+      };
+    });    
   }
 
 }

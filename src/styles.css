@@ -68,3 +68,7 @@ nav{
     --color-primary: #fff0ad;
     --color-secondary: #52565e;
 }
+
+a{
+    text-decoration: none;
+}
