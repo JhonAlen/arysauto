@@ -36,10 +36,12 @@ export class InclusionContractComponent implements OnInit {
   canEdit: boolean = false;
   canDelete: boolean = false;
   keyword = 'value';
+  fdesde_pol;
   fhasta_pol;
   ccliente;
   ccarga;
-  cplan;
+  clote;
+  xplan;
   xdocidentidad : string;
   fdesde_pol_place : Date ;
   fhasta_pol_place : Date ;
@@ -55,15 +57,17 @@ export class InclusionContractComponent implements OnInit {
                 if(this.router.getCurrentNavigation().extras.state){
                   this.ccarga = this.router.getCurrentNavigation().extras.state.ccarga;
                   this.ccliente = this.router.getCurrentNavigation().extras.state.ccliente;
+                  this.fdesde_pol = this.router.getCurrentNavigation().extras.state.fdesde_pol;
                   this.fhasta_pol = this.router.getCurrentNavigation().extras.state.fhasta_pol;
-                  this.cplan = this.router.getCurrentNavigation().extras.state.cplan;
+                  this.clote = this.router.getCurrentNavigation().extras.state.lote;
+                }else{
+                  this.router.navigate([`subscription/corporative-issuance`]);
                 }
               }
 
   ngOnInit(): void {
     this.inclusion_form = this.formBuilder.group({
       xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
       cano: ['', Validators.required],
       xcolor: ['', Validators.required],
       cmarca: ['', Validators.required],
@@ -77,12 +81,9 @@ export class InclusionContractComponent implements OnInit {
       xserialcarroceria: ['', Validators.required],
       xplaca: ['', Validators.required],
       cplan: ['', Validators.required],
-      cestado:['', Validators.required],
-      cciudad:['', Validators.required],
       icedula:['', Validators.required],
       femision:['', Validators.required],
       ivigencia:[''],
-      cpais:['', Validators.required],
       xcedula: [''],
       cuso: [''],
       cclase: [''],
@@ -90,8 +91,36 @@ export class InclusionContractComponent implements OnInit {
       xzona_postal:[''],
       nkilometraje: [''],
       xmoneda: [''],
+      fdesde_pol: [''],
+      fhasta_pol: [''],
+      ncobro:[''],
+      msuma_a_casco: [''], 
+      mdeducible: [''], 
+      xpoliza: [''], 
+      xcertificado: [''], 
     });
 
+
+    if(this.fdesde_pol){
+      let dateFormat = new Date(this.fdesde_pol);
+      let dd = dateFormat.getDate();
+      let mm = dateFormat.getMonth() + 1;
+      let yyyy = dateFormat.getFullYear();
+      this.fdesde_pol = yyyy + '-' + mm + '-' + dd;
+      this.inclusion_form.get('fdesde_pol').setValue(this.fdesde_pol);
+      this.inclusion_form.get('fdesde_pol').disable();
+    }
+
+    if(this.fhasta_pol){
+      let dateFormat = new Date(this.fhasta_pol);
+      let dd = String(dateFormat.getDate()).padStart(2, '0');
+      let mm = String(dateFormat.getMonth() + 1).padStart(2, '0');
+      let yyyy = dateFormat.getFullYear();
+      this.fhasta_pol = yyyy + '-' + mm + '-' + dd;
+      this.inclusion_form.get('fhasta_pol').setValue(this.fhasta_pol);
+      this.inclusion_form.get('fhasta_pol').disable();
+    }
+   
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
       let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -127,7 +156,7 @@ export class InclusionContractComponent implements OnInit {
   initializeDropdownDataRequest(){
     this.getPlanData();
     this.getColor();
-    this.getCountry();
+    // this.getCountry();
 
     let params = {
       cpais: this.currentUser.data.cpais,
@@ -157,12 +186,30 @@ export class InclusionContractComponent implements OnInit {
   }
 
   getPlanData(){
-    for(let i = 0; i < this.cplan.length; i++){
-      this.planList.push({ 
-        value: this.cplan[i].cplan,
-      });
-    }
-    this.planList.sort((a, b) => a.id > b.id ? 1 : -1)
+
+    let params =  {
+      cpais: this.currentUser.data.cpais,
+      ccompania: this.currentUser.data.ccompania,
+      ctipoplan: 1
+   
+    };
+  
+    this.http.post(`${environment.apiUrl}/api/valrep/plan-contract`, params).subscribe((response: any) => {
+      if(response.data.status){
+        this.planList = [];
+        for(let i = 0; i < response.data.list.length; i++){
+          this.planList.push({ 
+            id: response.data.list[i].cplan,
+            value: response.data.list[i].xplan,
+            control: response.data.list[i].control,
+            binternacional: response.data.list[i].binternacional,
+            mcosto: response.data.list[i].mcosto,
+            xmoneda: response.data.list[i].xmoneda,
+          });
+        }
+        this.planList.sort((a, b) => a.id > b.id ? 1 : -1)
+      }
+      },);
   }
 
   getColor(){
@@ -186,60 +233,60 @@ export class InclusionContractComponent implements OnInit {
       },);
   }
 
-  getCountry(){
-    let params =  {
-      cusuario: this.currentUser.data.cusuario
-    };
-     this.http.post(`${environment.apiUrl}/api/valrep/country`, params).subscribe((response: any) => {
-      if(response.data.status){
-        this.countryList = [];
-        for(let i = 0; i < response.data.list.length; i++){
-          this.countryList.push({ 
-            id: response.data.list[i].cpais,
-            value: response.data.list[i].xpais,
-          });
-        }
-        this.countryList.sort((a, b) => a.value > b.value ? 1 : -1)
-      }
-      },);
-  }
+  // getCountry(){
+  //   let params =  {
+  //     cusuario: this.currentUser.data.cusuario
+  //   };
+  //    this.http.post(`${environment.apiUrl}/api/valrep/country`, params).subscribe((response: any) => {
+  //     if(response.data.status){
+  //       this.countryList = [];
+  //       for(let i = 0; i < response.data.list.length; i++){
+  //         this.countryList.push({ 
+  //           id: response.data.list[i].cpais,
+  //           value: response.data.list[i].xpais,
+  //         });
+  //       }
+  //       this.countryList.sort((a, b) => a.value > b.value ? 1 : -1)
+  //     }
+  //     },);
+  // }
 
-  getState(){
-    let params =  {
-      cpais: this.inclusion_form.get('cpais').value 
-    };
-    this.http.post(`${environment.apiUrl}/api/valrep/state`, params).subscribe((response: any) => {
-      if(response.data.status){
-        this.stateList = [];
-        for(let i = 0; i < response.data.list.length; i++){
-          this.stateList.push({ 
-            id: response.data.list[i].cestado,
-            value: response.data.list[i].xestado,
-          });
-        }
-        this.stateList.sort((a, b) => a.value > b.value ? 1 : -1)
-      }
-      },);
-  } 
+  // getState(){
+  //   let params =  {
+  //     cpais: this.inclusion_form.get('cpais').value 
+  //   };
+  //   this.http.post(`${environment.apiUrl}/api/valrep/state`, params).subscribe((response: any) => {
+  //     if(response.data.status){
+  //       this.stateList = [];
+  //       for(let i = 0; i < response.data.list.length; i++){
+  //         this.stateList.push({ 
+  //           id: response.data.list[i].cestado,
+  //           value: response.data.list[i].xestado,
+  //         });
+  //       }
+  //       this.stateList.sort((a, b) => a.value > b.value ? 1 : -1)
+  //     }
+  //     },);
+  // } 
 
-  getCity(){
-    let params =  {
-      cpais: this.inclusion_form.get('cpais').value,  
-      cestado: this.inclusion_form.get('cestado').value
-    };
-    this.http.post(`${environment.apiUrl}/api/valrep/city`, params).subscribe((response: any) => {
-      if(response.data.status){
-        this.cityList = [];
-        for(let i = 0; i < response.data.list.length; i++){
-          this.cityList.push({ 
-            id: response.data.list[i].cciudad,
-            value: response.data.list[i].xciudad,
-          });
-          this.cityList.sort((a, b) => a.value > b.value ? 1 : -1)
-        }
-      }
-      },);
-  } 
+  // getCity(){
+  //   let params =  {
+  //     cpais: this.inclusion_form.get('cpais').value,  
+  //     cestado: this.inclusion_form.get('cestado').value
+  //   };
+  //   this.http.post(`${environment.apiUrl}/api/valrep/city`, params).subscribe((response: any) => {
+  //     if(response.data.status){
+  //       this.cityList = [];
+  //       for(let i = 0; i < response.data.list.length; i++){
+  //         this.cityList.push({ 
+  //           id: response.data.list[i].cciudad,
+  //           value: response.data.list[i].xciudad,
+  //         });
+  //         this.cityList.sort((a, b) => a.value > b.value ? 1 : -1)
+  //       }
+  //     }
+  //     },);
+  // } 
 
   getModeloData(event){
     this.keyword;
@@ -249,16 +296,17 @@ export class InclusionContractComponent implements OnInit {
       cpais: this.currentUser.data.cpais,
       cmarca: marca.id
     };
+    console.log(params)
     this.http.post(`${environment.apiUrl}/api/valrep/model`, params).subscribe((response: any) => {
       if(response.data.status){
-        this.cityList = [];
+        this.modelList = [];
         for(let i = 0; i < response.data.list.length; i++){
-          this.cityList.push({ 
-            id: response.data.list[i].cciudad,
-            value: response.data.list[i].xciudad,
+          this.modelList.push({ 
+            id: response.data.list[i].cversion,
+            value: response.data.list[i].xversion,
             control: response.data.list[i].control
           });
-          this.cityList.sort((a, b) => a.value > b.value ? 1 : -1)
+          this.modelList.sort((a, b) => a.value > b.value ? 1 : -1)
         }
       }
       },);
@@ -333,14 +381,7 @@ export class InclusionContractComponent implements OnInit {
         if(this.inclusion_form.get('email').value){
           this.activaClave = true;
         }
-        this.inclusion_form.get('ccorredor').setValue(response.data.ccorredor);
         this.inclusion_form.get('xdireccionfiscal').setValue(response.data.xdireccion);
-        this.countryList.push({ id: response.data.cpais, value: response.data.xpais});
-        this.stateList.push({ id: response.data.cestado, value: response.data.xestado});
-        this.cityList.push({ id: response.data.cciudad, value: response.data.xciudad});
-        this.inclusion_form.get('cpais').setValue(response.data.cpais);
-        this.inclusion_form.get('cestado').setValue(response.data.cestado);
-        this.inclusion_form.get('cciudad').setValue(response.data.cciudad);
       } 
     },);
   }
@@ -350,6 +391,7 @@ export class InclusionContractComponent implements OnInit {
     let params =  {
       cplan: plan.id,
     };
+    console.log(params)
     this.http.post(`${environment.apiUrl}/api/contract-arys/service-type-plan`, params).subscribe((response: any) => {
       if(response.data.list){
         this.serviceList = [];
@@ -402,9 +444,6 @@ export class InclusionContractComponent implements OnInit {
         xtelefono_emp: form.xtelefono_emp,
         xtelefono_prop: form.xtelefono_prop,
         email: form.email,
-        cpais:this.inclusion_form.get('cpais').value,
-        cestado: this.inclusion_form.get('cestado').value,
-        cciudad: this.inclusion_form.get('cciudad').value,
         xdireccionfiscal: form.xdireccionfiscal,
         xplaca: form.xplaca,
         cmarca: marca.id,
@@ -413,20 +452,27 @@ export class InclusionContractComponent implements OnInit {
         cano:form.cano,
         cplan: plan.id,
         ncapacidad_p: form.ncapacidad_p,
-        xcolor:this.inclusion_form.get('xcolor').value,    
+        xcolor: this.inclusion_form.get('xcolor').value,    
         xserialcarroceria: form.xserialcarroceria,
         xserialmotor: form.xserialmotor,  
         xcedula: form.xrif_cliente,
         femision: form.femision,
-        xzona_postal: form.xzona_postal,
+        msuma_a_casco: form.msuma_a_casco,
+        mdeducible: form.mdeducible,
+        xpoliza: form.xpoliza,
+        xcertificado: form.xcertificado,
+        fdesde_pol: form.fdesde_pol,
+        fhasta_pol: form.fhasta_pol,
+        ccarga: this.ccarga,
+        clote: this.clote,
         cusuario: this.currentUser.data.cusuario,
       };
-      this.http.post( `${environment.apiUrl}/api/contract-arys/create`,params).subscribe((response : any) => {
+      this.http.post( `${environment.apiUrl}/api/corporative-issuance-management/create-inclusion-contract`,params).subscribe((response : any) => {
         if (response.data.status) {
           // if(this.currentUser.data.crol == 18||this.currentUser.data.crol == 17||this.currentUser.data.crol == 3  || this.bpagomanual || this.search_form.get('xcobertura').value != 'RCV'){
           //   // this.getFleetContractDetail(this.ccontratoflota);
           // }
-          window.alert(`Se ha generado un contrato Arys, por el beneficiario ${form.xnombre + ' ' + form.xapellido}`)
+          window.alert(`Se ha generado un contrato Arys, por el beneficiario ${form.xnombre}`)
           location.reload()
         }
       },

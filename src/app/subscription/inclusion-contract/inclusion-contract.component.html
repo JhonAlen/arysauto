@@ -11,7 +11,7 @@
 <section>
   <div>
     <div style="display: grid;place-items: center;">
-      <p style="font-size: xx-large;">MEMBRESÍA ARYS</p>
+      <p style="font-size: xx-large;">INCLUSIÓN A LA FLOTA</p>
     </div>
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12">
@@ -50,19 +50,10 @@
                   </div>
                   <div class="col-md-4 mb-4 pb-2">
                     <div class="form-outline">
-                      <label class="form-label required">Nombre del Cliente</label>
+                      <label class="form-label required">Nombre y Apellido del Cliente</label>
                       <input type="text" formControlName="xnombre" class="form-control form-control-lg" required [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xnombre').errors }" />
                       <div *ngIf="submitted && inclusion_form.get('xnombre').errors" class="invalid-feedback">
                         <div *ngIf="inclusion_form.get('xnombre').errors.required">Se requiere completar el campo</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4 mb-4 pb-2">
-                    <div class="form-outline">
-                      <label class="form-label required" for="form3Examplev3">Apellido del Cliente</label>
-                      <input type="text" formControlName="xapellido" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xapellido').errors }" />
-                      <div *ngIf="submitted && inclusion_form.get('xapellido').errors" class="invalid-feedback">
-                        <div *ngIf="inclusion_form.get('xapellido').errors.required">Se requiere completar el campo</div>
                       </div>
                     </div>
                   </div>
@@ -99,57 +90,12 @@
                       <h5>Ar654321!</h5>
                     </div>
                   </div>
-                  <div class="col-md-4 mb-4 pb-2">
-                    <div class="form-outline">
-                      <label class="form-label required" for="form3Examplev3">País</label>
-                      <select formControlName="cpais" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('cpais').errors }" (change)="getState()">
-                        <option></option>
-                        <option *ngFor="let country of countryList" value="{{ country.id }}">{{ country.value }}</option>
-                      </select>                     
-                      <div *ngIf="submitted && inclusion_form.get('cpais').errors" class="invalid-feedback">
-                        <div *ngIf="inclusion_form.get('cpais').errors.required">Se requiere completar el campo</div>
-                      </div>
-                    </div>
-                  </div> 
-                  <div class="col-md-4 mb-4 pb-2">
-                    <div class="form-outline">
-                      <label class="form-label required" for="form3Examplev3">Estado</label>
-                      <select formControlName="cestado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('cestado').errors } " (change)="getCity()">
-                        <option></option>
-                        <option *ngFor="let estado of stateList" value="{{ estado.id }}">{{ estado.value }}</option>
-                      </select>                     
-                      <div *ngIf="submitted && inclusion_form.get('cestado').errors" class="invalid-feedback">
-                        <div *ngIf="inclusion_form.get('cestado').errors.required">Se requiere completar el campo</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4 mb-4 pb-2">
-                    <div class="form-outline">
-                      <label class="form-label required" for="form3Examplev3">Ciudad</label>
-                          <select formControlName="cciudad" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('cciudad').errors } " >
-                            <option></option>
-                            <option *ngFor="let ciudad of cityList" value="{{ ciudad.id }}">{{ ciudad.value }}</option>
-                          </select>                     
-                          <div *ngIf="submitted && inclusion_form.get('cciudad').errors" class="invalid-feedback">
-                        <div *ngIf="inclusion_form.get('cciudad').errors.required">Se requiere completar el campo</div>
-                      </div>
-                    </div>
-                  </div>
                   <div class="col-md-8 mb-4 pb-2">
                     <div class="form-outline ">
                       <label class="form-label required" for="form3Examplea2">Dirección Fiscal</label>
                       <input type="text" formControlName="xdireccionfiscal" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xdireccionfiscal').errors }" />
                       <div *ngIf="submitted && inclusion_form.get('xdireccionfiscal').errors" class="invalid-feedback">
                         <div *ngIf="inclusion_form.get('xdireccionfiscal').errors.required">Se requiere completar el campo</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 mb-4 pb-2">
-                    <div class="form-outline ">
-                      <label class="form-label required" for="form3Examplea2"> Zona Postal</label>
-                      <input type="text" formControlName="xzona_postal" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xzona_postal').errors }" />
-                      <div *ngIf="submitted && inclusion_form.get('xzona_postal').errors" class="invalid-feedback">
-                        <div *ngIf="inclusion_form.get('xzona_postal').errors.required">Se requiere completar el campo</div>
                       </div>
                     </div>
                   </div>
@@ -278,6 +224,42 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-4 mb-4 pb-2">
+                    <div class="form-outline ">
+                      <label class="form-label required" for="form3Examplea8">Suma Asegurada</label>
+                      <input type="text" formControlName="msuma_a_casco" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('msuma_a_casco').errors }" />
+                      <div *ngIf="submitted && inclusion_form.get('msuma_a_casco').errors" class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('msuma_a_casco').errors.required">Se requiere completar el campo</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4 pb-2">
+                    <div class="form-outline ">
+                      <label class="form-label required" for="form3Examplea8">Deducible</label>
+                      <input type="text" formControlName="mdeducible" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('mdeducible').errors }" />
+                      <div *ngIf="submitted && inclusion_form.get('mdeducible').errors" class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('mdeducible').errors.required">Se requiere completar el campo</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4 pb-2">
+                    <div class="form-outline ">
+                      <label class="form-label required" for="form3Examplea8">Póliza</label>
+                      <input type="text" formControlName="xpoliza" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xpoliza').errors }" />
+                      <div *ngIf="submitted && inclusion_form.get('xpoliza').errors" class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('xpoliza').errors.required">Se requiere completar el campo</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4 pb-2">
+                    <div class="form-outline ">
+                      <label class="form-label required" for="form3Examplea8">Certificado</label>
+                      <input type="text" formControlName="xcertificado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xcertificado').errors }" />
+                      <div *ngIf="submitted && inclusion_form.get('xcertificado').errors" class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('xcertificado').errors.required">Se requiere completar el campo</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -291,31 +273,13 @@
                   <div class="form-outline">
                     <label class="form-label required" for="form3Examplev4">Planes</label>
                     <select formControlName="cplan" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('cplan').errors }" (change)="searchService()">
+                      <option></option>
                       <option *ngFor="let plan of planList" value="{{ plan.control }}">{{ plan.value }}</option>
                     </select>
                     <div *ngIf="submitted && inclusion_form.get('cplan').errors" class="invalid-feedback">
                       <div *ngIf="inclusion_form.get('cplan').errors.required">Se requiere completar el campo</div>
                     </div>
                   </div>
-                </div>
-                <div class="card" style= "width: 489px;margin-left: 59px;box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);-webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);" *ngIf="bactivarservicios">      
-                    <div class="card-body" style="display: -webkit-box; width: fit-content;">
-                        <div class="col-2">
-                          <div class="form-group">
-                            <h5>
-                              <input formControlName="ncobro" style="background-color:transparent;background: inherit;border: 0px;font-weight: bolder;margin-right: -167px;font-size: xxx-large;margin-top: 84px;">
-                              <input formControlName="xmoneda" style="background-color:transparent;border: 0px;font-size: xx-large;">
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="container">
-                            <h5 class="font-weight-medium mb-0" style="font-family: revert;">Servicios que presta el plan</h5>
-                            <h5 style="font-family: revert;">seleccionado</h5>
-                            <ag-grid-angular #agGrid style="width: 42%; height: 250px;text-align: center;margin-top: 26px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
-                                <ag-grid-column headerName="" field="xtiposervicio" [width]="280" [sortable]="false"></ag-grid-column>
-                            </ag-grid-angular>
-                        </div>
-                    </div>
                 </div>
               </div>
             </div>
@@ -325,19 +289,30 @@
               <div class="row" style="padding: 10px;">
                 <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
                   <div class="form-outline">
-                    <label class="form-label required" for="form3Examplev5">Fecha de inicio</label>
+                    <label for="form3Examplev5">Fecha de Inicio del Contrato</label>
+                    <input type="date" formControlName="fdesde_pol" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('fdesde_pol').errors }" />
+                    <div *ngIf="submitted && inclusion_form.get('fdesde_pol').errors" class="invalid-feedback">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
+                  <div class="form-outline">
+                    <label for="form3Examplev5">Fecha Final del Contrato</label>
+                    <input type="date" formControlName="fhasta_pol" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('fhasta_pol').errors }" />
+                    <div *ngIf="submitted && inclusion_form.get('fhasta_pol').errors" class="invalid-feedback">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
+                  <div class="form-outline">
+                    <label class="form-label required" for="form3Examplev5">Fecha de Inclusión al Contrato</label>
                     <input type="date" formControlName="femision" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('femision').errors }" />
                     <div *ngIf="submitted && inclusion_form.get('femision').errors" class="invalid-feedback">
                       <div *ngIf="inclusion_form.get('femision').errors.required">Se requiere completar el campo</div>
                     </div>
                   </div>
                 </div>
-                <!-- <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
-                  <div class="form-outline">
-                    <label class="form-label required" for="form3Examplev5">Monto Total</label>
-                    <input type="number" formControlName="ncobro" class="form-control form-control-lg" readonly=readonly [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('ncobro').errors }" />
-                  </div>
-                </div> -->
+                <br>
                 <div class="button">
                   <button [disabled]="loading" type="button" class="btn btn-light btn-lg" data-mdb-ripple-color="dark" (click)="onSubmit(inclusion_form.value)">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
