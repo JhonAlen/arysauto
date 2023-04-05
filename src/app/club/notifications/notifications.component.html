@@ -53,6 +53,15 @@
             <h3>Infomación de la Solicitud</h3>
             <div class="row">
             <div class="col-md-4 mb-4 pb-2">
+                <div class="form-outline">                    
+                    <label class="form-label required" for="form3Examplev3">Fecha estimada de atención</label>
+                    <input formControlName="fsolicitud" type="date" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('fsolicitud').errors } " >
+                    <div *ngIf="submitted && servicePlanContract.get('fsolicitud').errors" class="invalid-feedback">
+                        <div *ngIf="servicePlanContract.get('cestado').errors.required">Se requiere completar el campo</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 pb-2">
               <div class="form-outline">
                 <label class="form-label required" for="form3Examplev3">Estado</label>
                 <select formControlName="cestado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cestado').errors } " (change)="getCity()">

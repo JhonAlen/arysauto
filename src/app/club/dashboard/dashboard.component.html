@@ -7,8 +7,8 @@
                         <div class="card-icon">
                             <i class="material-icons">content_copy</i>
                         </div>
-                        <p class="card-category">Incidentes en Curso</p>
-                        <h4 class="card-title">Ninguno Actualmente</h4>
+                        <p class="card-category">Ninguno Actualmente</p>
+                        <h4 class="card-title">Incidentes en Curso</h4>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -69,25 +69,27 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-5">
                 <div class="card card-chart">
-                    <div class="card-header card-header-success">
-                        <div class="ct-chart" id="dailySalesChart"></div>
-                    </div>
                     <div class="card-body">
                         <h4 class="card-title">Monitor de Eventos Mensual</h4>
-                        <p class="card-category">
-                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> Eventos Mensuales</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">access_time</i> 
-                        </div>
+                            <div>
+                                <div class='demo-app'>
+                                    <div class='demo-app-main'>
+                                      <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
+                                        <ng-template #eventContent let-arg>
+                                          <b>{{ arg.timeText }}</b>
+                                          <i>{{ arg.event.title }}</i>
+                                        </ng-template>
+                                      </full-calendar>
+                                    </div>
+                                  </div>
+                            </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="card card-chart">
                     <div class="card-header card-header-warning">
                         <div class="ct-chart" id="websiteViewsChart"></div>
@@ -102,7 +104,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-4">
                 <div class="card card-chart">
                     <div class="card-header card-header-danger">

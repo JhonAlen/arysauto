@@ -134,7 +134,7 @@ section {
 }
 
 .breadcrumbs ol a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .breadcrumbs ol li+li {

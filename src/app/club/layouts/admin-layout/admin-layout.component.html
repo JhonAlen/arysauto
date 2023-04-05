@@ -7,7 +7,7 @@
       <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
       <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
     </button>
-Arys Auto
+<h5>Arys Auto</h5>
   </mat-toolbar>
   
   <mat-sidenav-container style="overflow: inherit;">
@@ -15,6 +15,7 @@ Arys Auto
       <img
         class="avatar mat-elevation-z8 logocompany-system"
         href="/dashboard"
+        style=" box-shadow: none;"
       />
   
       <mat-divider></mat-divider>
@@ -46,7 +47,7 @@ Arys Auto
 
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="content mat-elevation-z8">
+      <div class="py-5 mat-elevation-z8" style="background-color: white;">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
