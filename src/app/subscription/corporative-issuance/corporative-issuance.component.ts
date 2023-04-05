@@ -72,6 +72,7 @@ export class CorporativeIssuanceComponent implements OnInit {
   bAgregarPropi = false;
   ccliente;
   fhasta_poliza;
+  fdesde_poliza;
   planList: any[] = [];
 
   columnDefs: ColDef[] = [
@@ -217,18 +218,24 @@ export class CorporativeIssuanceComponent implements OnInit {
       this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/search-receipt`, params).subscribe((response : any) => {
         if(response.data.status){
           this.ccliente = response.data.ccliente;
+          this.xcliente = response.data.xcliente;
           this.fhasta_poliza = response.data.fhasta_pol;
+          this.fdesde_poliza = response.data.fdesde_pol;
           if(response.data.plan){
             for(let i = 0; i < response.data.plan.length; i++){
               this.planList.push({
-                  cplan: response.data.plan[i].cplan
+                  cplan: response.data.plan[i].cplan,
+                  xplan: response.data.plan[i].xplan
               })
           }
           let data = {
             ccliente: this.ccliente,
+            xcliente: this.xcliente,
             ccarga: this.search_form.get('ccarga').value,
+            fdesde_pol: this.fdesde_poliza,
             fhasta_pol: this.fhasta_poliza,
-            cplan: this.planList,
+            plan: this.planList,
+            lote: this.search_form.get('clote').value
           }
           this.router.navigate([`subscription/inclusion-contract/`], {state: data});
           }

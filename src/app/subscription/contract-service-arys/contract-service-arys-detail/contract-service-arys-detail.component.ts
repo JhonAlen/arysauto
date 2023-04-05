@@ -289,7 +289,7 @@ export class ContractServiceArysDetailComponent implements OnInit {
     let params =  {
       cpais: this.currentUser.data.cpais,
       ccompania: this.currentUser.data.ccompania,
-      ctipoplan: 1
+      ctipoplan: 2
    
     };
   
