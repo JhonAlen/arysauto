@@ -1,13 +1,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
 <app-toolbar></app-toolbar>
-<div class="container">
-  <div class="row mt-5" *ngIf="alert.show">
-      <div class="col-sm-12 col-md-6 mx-auto">
-          <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
-      </div>
+  <div data-aos="fade-in-down" data-aos-delay="200" *ngIf="alert.show" class="alert-container">
+    <ngb-alert *ngIf="alert.show" [type]="alert.type">{{ alert.message | translate }}</ngb-alert>
   </div>
-</div>
 <section>
   <div>
     <div style="display: grid;place-items: center;">
@@ -257,6 +253,30 @@
                       <input type="text" formControlName="xcertificado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xcertificado').errors }" />
                       <div *ngIf="submitted && inclusion_form.get('xcertificado').errors" class="invalid-feedback">
                         <div *ngIf="inclusion_form.get('xcertificado').errors.required">Se requiere completar el campo</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 mb-4 pb-2">
+                    <div class="form-outline">                        
+                      <label class="form-label required" for="form3Examplev4">Tipo de Vehículo</label>
+                      <select formControlName="xtipo" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xtipo').errors } ">
+                        <option></option>
+                        <option *ngFor="let vehicle of vehicleTypeList" value="{{ vehicle.value }}">{{ vehicle.value }}</option>
+                      </select>                      
+                      <div *ngIf="submitted && inclusion_form.get('xtipo').errors"  class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('xtipo').errors.required">Se requiere completar el campo</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 mb-4 pb-2">
+                    <div class="form-outline">                        
+                      <label class="form-label required" for="form3Examplev4">Clase</label>
+                      <select formControlName="xclase" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xclase').errors } ">
+                        <option></option>
+                        <option *ngFor="let clase of classList" value="{{ clase.value }}">{{ clase.value }}</option>
+                      </select>                                             
+                      <div *ngIf="submitted && inclusion_form.get('xclase').errors"  class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('xclase').errors.required">Se requiere completar el campo</div>
                       </div>
                     </div>
                   </div>

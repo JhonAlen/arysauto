@@ -39,6 +39,7 @@ export class InclusionContractComponent implements OnInit {
   fdesde_pol;
   fhasta_pol;
   ccliente;
+  xcliente;
   ccarga;
   clote;
   xplan;
@@ -48,6 +49,8 @@ export class InclusionContractComponent implements OnInit {
   xpoliza_place : string;
   activaClave: boolean = false;
   bactivarservicios: boolean = false;
+  vehicleTypeList: any[] = []; 
+  classList: any[] = []; 
 
   constructor(private formBuilder: UntypedFormBuilder, 
               private authenticationService : AuthenticationService,
@@ -57,6 +60,7 @@ export class InclusionContractComponent implements OnInit {
                 if(this.router.getCurrentNavigation().extras.state){
                   this.ccarga = this.router.getCurrentNavigation().extras.state.ccarga;
                   this.ccliente = this.router.getCurrentNavigation().extras.state.ccliente;
+                  this.xcliente = this.router.getCurrentNavigation().extras.state.xcliente;
                   this.fdesde_pol = this.router.getCurrentNavigation().extras.state.fdesde_pol;
                   this.fhasta_pol = this.router.getCurrentNavigation().extras.state.fhasta_pol;
                   this.clote = this.router.getCurrentNavigation().extras.state.lote;
@@ -86,7 +90,7 @@ export class InclusionContractComponent implements OnInit {
       ivigencia:[''],
       xcedula: [''],
       cuso: [''],
-      cclase: [''],
+      xclase: [''],
       ctipovehiculo: [''],
       xzona_postal:[''],
       nkilometraje: [''],
@@ -98,7 +102,9 @@ export class InclusionContractComponent implements OnInit {
       mdeducible: [''], 
       xpoliza: [''], 
       xcertificado: [''], 
-      ncapacidad_p: ['']
+      ncapacidad_p: [''],
+      xtipo: [''],
+      xtelefono_emp: ['']
     });
 
 
@@ -157,6 +163,8 @@ export class InclusionContractComponent implements OnInit {
   initializeDropdownDataRequest(){
     this.getPlanData();
     this.getColor();
+    this.vehicleTypeData();
+    this.classData();
     // this.getCountry();
 
     let params = {
@@ -374,8 +382,7 @@ export class InclusionContractComponent implements OnInit {
     };
     this.http.post(`${environment.apiUrl}/api/fleet-contract-management/validationexistingcustomer`, params).subscribe((response: any) => {
       if(response.data.status){
-        this.inclusion_form.get('xnombre').setValue(response.data.xnombre);
-        this.inclusion_form.get('xapellido').setValue(response.data.xapellido);
+        this.inclusion_form.get('xnombre').setValue(response.data.xnombre + ' ' + response.data.xapellido);
         this.inclusion_form.get('xtelefono_emp').setValue(response.data.xtelefonocasa);
         this.inclusion_form.get('xtelefono_prop').setValue(response.data.xtelefonocelular);
         this.inclusion_form.get('email').setValue(response.data.xemail);
@@ -427,6 +434,45 @@ export class InclusionContractComponent implements OnInit {
     }
   }
 
+  async vehicleTypeData(){
+    let params =  {
+      cpais: this.currentUser.data.cpais,
+      ccompania: this.currentUser.data.ccompania,
+    
+    };
+  
+    this.http.post(`${environment.apiUrl}/api/valrep/vehicle/data`, params).subscribe((response: any) => {
+      if(response.data.status){
+        this.vehicleTypeList = [];
+        for(let i = 0; i < response.data.list.length; i++){
+          this.vehicleTypeList.push({ 
+            id: response.data.list[i].ctipovehiculo,
+            value: response.data.list[i].xtipovehiculo,
+          });
+        }
+      }
+      },);
+  }
+
+  async classData(){
+    let params =  {
+      cpais: this.currentUser.data.cpais,
+      ccompania: this.currentUser.data.ccompania,
+    };
+  
+    this.http.post(`${environment.apiUrl}/api/valrep/clase/data`, params).subscribe((response: any) => {
+      if(response.data.status){
+        this.classList = [];
+        for(let i = 0; i < response.data.list.length; i++){
+          this.classList.push({ 
+            id: response.data.list[i].cclase,
+            value: response.data.list[i].xclase,
+          });
+        }
+      }
+      },);
+  }
+
   onSubmit(form){
     this.submitted = true;
   
@@ -462,18 +508,18 @@ export class InclusionContractComponent implements OnInit {
         mdeducible: form.mdeducible,
         xpoliza: form.xpoliza,
         xcertificado: form.xcertificado,
-        fdesde_pol: form.fdesde_pol,
-        fhasta_pol: form.fhasta_pol,
+        fdesde_pol: this.fdesde_pol,
+        fhasta_pol: this.fhasta_pol,
         ccarga: this.ccarga,
         clote: this.clote,
+        xtipo: form.xtipo,
+        xclase: form.xclase,
         cusuario: this.currentUser.data.cusuario,
       };
+      console.log(params)
       this.http.post( `${environment.apiUrl}/api/corporative-issuance-management/create-inclusion-contract`,params).subscribe((response : any) => {
         if (response.data.status) {
-          // if(this.currentUser.data.crol == 18||this.currentUser.data.crol == 17||this.currentUser.data.crol == 3  || this.bpagomanual || this.search_form.get('xcobertura').value != 'RCV'){
-          //   // this.getFleetContractDetail(this.ccontratoflota);
-          // }
-          window.alert(`Se ha generado un contrato Arys, por el beneficiario ${form.xnombre}`)
+          window.alert(`Se ha incluido el beneficiario ${form.xnombre} con la Póliza ${form.xpoliza} al cliente ${this.xcliente}`)
           location.reload()
         }
       },

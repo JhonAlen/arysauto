@@ -218,6 +218,7 @@ export class CorporativeIssuanceComponent implements OnInit {
       this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/search-receipt`, params).subscribe((response : any) => {
         if(response.data.status){
           this.ccliente = response.data.ccliente;
+          this.xcliente = response.data.xcliente;
           this.fhasta_poliza = response.data.fhasta_pol;
           this.fdesde_poliza = response.data.fdesde_pol;
           if(response.data.plan){
@@ -229,6 +230,7 @@ export class CorporativeIssuanceComponent implements OnInit {
           }
           let data = {
             ccliente: this.ccliente,
+            xcliente: this.xcliente,
             ccarga: this.search_form.get('ccarga').value,
             fdesde_pol: this.fdesde_poliza,
             fhasta_pol: this.fhasta_poliza,
