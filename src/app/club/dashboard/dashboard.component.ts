@@ -16,6 +16,7 @@ import { createEventId } from './event-utils';
 })
 
 export class DashboardComponent implements OnInit {
+  code
   Events: any[] = [];
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
@@ -28,7 +29,7 @@ export class DashboardComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next',
       center: 'title',
-      right: 'dayGridMonth'
+      right: 'dayGridMonth,dayGridWeek,dayGridDay'
     },
     initialView: 'dayGridMonth',
     weekends: true,
@@ -66,7 +67,6 @@ export class DashboardComponent implements OnInit {
     const calendarApi = selectInfo.view.calendar;
     this.currentUser = this.authenticationService.currentUserValue;
     let params = {
-      id:createEventId(),
       title: title,
       start: selectInfo.startStr,
       end: selectInfo.endStr,
@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
     this.http
     .post(environment.apiUrl + '/api/club/client-agenda' ,params)
     .subscribe((res: any) => {
-      console.log(res.data.list)
+      this.Events = []
       this.Events = res.data.list
       this.calendarOptions = {
         initialView: 'dayGridMonth',
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
     this.http
     .post(environment.apiUrl + '/api/club/search/client-agenda' ,params)
     .subscribe((res: any) => {
-      console.log(res.data.list)
+      this.Events = []
       this.Events = res.data.list
       this.calendarOptions = {
         initialView: 'dayGridMonth',

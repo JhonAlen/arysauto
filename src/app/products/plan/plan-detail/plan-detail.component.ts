@@ -34,6 +34,8 @@ export class PlanDetailComponent implements OnInit {
   insurerList: any[] = [];
   serviceList: any[] = [];
   coinList: any[] = [];
+  metodologiaList:any[] = [];
+  countryList: any[] = [];
   serviceTypeList: any[] = [];
   acceptedServiceList: any[] = [];
   quantityServiceList: any[] = [];
@@ -70,8 +72,11 @@ export class PlanDetailComponent implements OnInit {
       ctipoplan: ['', Validators.required],
       xplan: ['', Validators.required],
       mcosto: ['', Validators.required],
-      parys:[''],
-      paseguradora:[''],
+      cmetodologia:[''],
+      cpais:[''],
+      caseguradora:[''],
+      fdesde:[''],
+      fhasta:[''],
       bactivo: [true, Validators.required],
       brcv: [false],
       cmoneda:[''],
@@ -178,6 +183,55 @@ export class PlanDetailComponent implements OnInit {
         this.showSaveButton = true;
       }
     });
+
+    this.http.post(`${environment.apiUrl}/api/valrep/country`, params).subscribe((response : any) => {
+      if(response.data.status){
+        for(let i = 0; i < response.data.list.length; i++){
+          this.countryList.push({ id: response.data.list[i].cpais, value: response.data.list[i].xpais });
+        }
+        this.countryList.sort((a,b) => a.value > b.value ? 1 : -1);
+      }
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ message = "HTTP.ERROR.VALREP.COUNTRYNOTFOUND"; }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
+    });
+       
+    this.http.post(`${environment.apiUrl}/api/valrep/metodologia-pago`, params).subscribe((response: any) => {
+      if(response.data.status){
+        this.metodologiaList = [];
+        
+        for(let i = 0; i < response.data.list.length; i++){
+          this.metodologiaList.push( { 
+            id: response.data.list[i].cmetodologiapago,
+            value: response.data.list[i].xmetodologiapago,
+          });
+        }
+
+        this.metodologiaList.sort((a, b) => a.value > b.value ? 1 : -1)
+      }
+    },);
+
+      this.http.post(`${environment.apiUrl}/api/valrep/insurer`, params).subscribe((response: any) => {
+        if(response.data.status){
+          this.insurerList = [];
+          
+          for(let i = 0; i < response.data.list.length; i++){
+            this.insurerList.push( { 
+              id: response.data.list[i].caseguradora,
+              value: response.data.list[i].xaseguradora,
+            });
+          }
+  
+          this.insurerList.sort((a, b) => a.value > b.value ? 1 : -1)
+        }
+    },);
   }
 
   getPlanData(){
@@ -267,7 +321,7 @@ export class PlanDetailComponent implements OnInit {
       this.alert.show = true;
     });
   }
-
+  
   getStoreProcedure(){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
@@ -403,7 +457,6 @@ export class PlanDetailComponent implements OnInit {
       }
     });
   }
-
 
   editPlan(){
     this.detail_form.get('ctipoplan').enable();
@@ -598,7 +651,11 @@ export class PlanDetailComponent implements OnInit {
         msuma_recuperacion: this.detail_form.get('msuma_recuperacion').value,
         mprima_recuperacion: this.detail_form.get('mprima_recuperacion').value,
         mdeducible: this.detail_form.get('mdeducible').value,
-        cpais: this.currentUser.data.cpais,
+        cpais: this.detail_form.get('cpais').value,
+        cmetodologia: this.detail_form.get('cmetodologia').value,
+        fdesde: this.detail_form.get('fdesde').value,
+        fhasta: this.detail_form.get('fhasta').value,
+        caseguradora: this.detail_form.get('caseguradora').value,
         ccompania: this.currentUser.data.ccompania,
         cusuariocreacion: this.currentUser.data.cusuario,
         servicesType: this.serviceTypeList,
