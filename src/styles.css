@@ -68,7 +68,6 @@ nav{
     --color-primary: #fff0ad;
     --color-secondary: #52565e;
 }
-<<<<<<< HEAD
 .success-toast {
     background-color: green;
     color: white;
@@ -77,9 +76,7 @@ nav{
   background-color: red;
   color: white;
 }
-=======
 
 a{
     text-decoration: none;
 }
->>>>>>> origin/fran
