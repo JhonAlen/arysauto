@@ -324,6 +324,19 @@ export class ClientDetailV2Component implements OnInit {
             });
           }
         }
+        this.bondList = [];
+        if(response.data.bonds){
+          for(let i =0; i < response.data.bonds.length; i++){
+            this.bondList.push({
+              cgrid: i,
+              create: false,
+              cbono: response.data.bonds[i].cbono,
+              pbono: response.data.bonds[i].pbono,
+              mbono: response.data.bonds[i].mbono,
+              fefectiva: new Date(response.data.bonds[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
       }
       },);
   }
@@ -1513,11 +1526,15 @@ export class ClientDetailV2Component implements OnInit {
       let createContactList = this.contactList.filter((row) => { return row.create; });
       let updateDocumentsList = this.documentList.filter((row) => { return !row.create; });
       let createDocumentsList = this.documentList.filter((row) => { return row.create; });
+      let updateAssociateList = this.associateList.filter((row) => { return !row.create; });
+      let createAssociateList = this.associateList.filter((row) => { return row.create; });
+      let updateBondsList = this.bondList.filter((row) => { return !row.create; });
+      let createBondsList = this.bondList.filter((row) => { return row.create; });
       params = {
         ccliente: this.code,
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
-        cusuariomodificacion: this.currentUser.data.cusuario,
+        cusuario: this.currentUser.data.cusuario,
         xcliente: form.xcliente,
         xrepresentante: form.xrepresentante,
         icedula: form.icedula,
@@ -1543,6 +1560,14 @@ export class ClientDetailV2Component implements OnInit {
           create: createDocumentsList,
           update: updateDocumentsList
         },
+        associates: {
+          create: createAssociateList,
+          update: updateAssociateList
+        },
+        bonds: {
+          create: createBondsList,
+          update: updateBondsList
+        },
       };
       url = `${environment.apiUrl}/api/client/update`;
       this.sendFormData(params, url);
@@ -1567,6 +1592,8 @@ export class ClientDetailV2Component implements OnInit {
         banks: this.bankList,
         contacts: this.contactList,
         documents: this.documentList,
+        associates: this.associateList,
+        bonds: this.bondList,
       };
       url = `${environment.apiUrl}/api/client/create`;
       this.sendFormData(params, url);
