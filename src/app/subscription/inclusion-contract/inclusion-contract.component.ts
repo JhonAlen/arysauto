@@ -98,6 +98,7 @@ export class InclusionContractComponent implements OnInit {
       mdeducible: [''], 
       xpoliza: [''], 
       xcertificado: [''], 
+      ncapacidad_p: ['']
     });
 
 
@@ -302,8 +303,8 @@ export class InclusionContractComponent implements OnInit {
         this.modelList = [];
         for(let i = 0; i < response.data.list.length; i++){
           this.modelList.push({ 
-            id: response.data.list[i].cversion,
-            value: response.data.list[i].xversion,
+            id: response.data.list[i].cmodelo,
+            value: response.data.list[i].xmodelo,
             control: response.data.list[i].control
           });
           this.modelList.sort((a, b) => a.value > b.value ? 1 : -1)
