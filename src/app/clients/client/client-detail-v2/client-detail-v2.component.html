@@ -327,9 +327,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="brokerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="brokerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBrokersGridReady($event)">
-                            <ag-grid-column headerName="Broker" field="xcorredor" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="pcorredor" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mcorredor" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Corredor" field="xcorredor" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="pcorredor" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mcorredor" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -355,9 +355,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="depreciationList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="depreciationRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDepreciationsGridReady($event)">
-                            <ag-grid-column headerName="Depreciation" field="xdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="pdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mdepreciacion" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Depreciación" field="xdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="pdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mdepreciacion" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -383,8 +383,8 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="relationshipList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="relationshipRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onRelationshipsGridReady($event)">
-                            <ag-grid-column headerName="Relationship" field="xparentesco" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Parentesco" field="xparentesco" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observación" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -410,9 +410,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="penaltyList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="penaltyRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPenaltiesGridReady($event)">
-                            <ag-grid-column headerName="Penalty" field="xpenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="ppenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mpenalizacion" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Penalización" field="xpenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="ppenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mpenalizacion" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -438,8 +438,8 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="providerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="providerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onProvidersGridReady($event)">
-                            <ag-grid-column headerName="Provider" field="xproveedor" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Proveedor" field="xproveedor" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observacion" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>

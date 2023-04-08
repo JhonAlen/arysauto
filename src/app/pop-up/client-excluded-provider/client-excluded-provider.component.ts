@@ -42,10 +42,10 @@ export class ClientExcludedProviderComponent implements OnInit {
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania
       };
-      this.http.post(`${environment.apiUrl}/api/valrep/provider`, params, options).subscribe((response : any) => {
+      this.http.post(`${environment.apiUrl}/api/valrep/provider-excluded`, params, options).subscribe((response : any) => {
         if(response.data.status){
           for(let i = 0; i < response.data.list.length; i++){
-            this.providerList.push({ id: response.data.list[i].cproveedor, value: response.data.list[i].xproveedor });
+            this.providerList.push({ id: response.data.list[i].cproveedor, value: response.data.list[i].xnombre });
           }
           this.providerList.sort((a,b) => a.value > b.value ? 1 : -1);
         }

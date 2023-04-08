@@ -337,6 +337,74 @@ export class ClientDetailV2Component implements OnInit {
             });
           }
         }
+        this.brokerList = [];
+        if(response.data.brokers){
+          for(let i =0; i < response.data.brokers.length; i++){
+            this.brokerList.push({
+              cgrid: i,
+              create: false,
+              ccorredor: response.data.brokers[i].ccorredor,
+              xcorredor: response.data.brokers[i].xcorredor,
+              pcorredor: response.data.brokers[i].pcorredor,
+              mcorredor: response.data.brokers[i].mcorredor,
+              fefectiva: new Date(response.data.brokers[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.depreciationList = [];
+        if(response.data.depreciations){
+          for(let i =0; i < response.data.depreciations.length; i++){
+            this.depreciationList.push({
+              cgrid: i,
+              create: false,
+              cdepreciacion: response.data.depreciations[i].cdepreciacion,
+              xdepreciacion: response.data.depreciations[i].xdepreciacion,
+              pdepreciacion: response.data.depreciations[i].pdepreciacion,
+              mdepreciacion: response.data.depreciations[i].mdepreciacion,
+              fefectiva: new Date(response.data.depreciations[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.relationshipList = [];
+        if(response.data.relationships){
+          for(let i =0; i < response.data.relationships.length; i++){
+            this.relationshipList.push({
+              cgrid: i,
+              create: false,
+              cparentesco: response.data.relationships[i].cparentesco,
+              xparentesco: response.data.relationships[i].xparentesco,
+              xobservacion: response.data.relationships[i].xobservacion,
+              fefectiva: new Date(response.data.depreciations[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.penaltyList = [];
+        if(response.data.penalties){
+          for(let i =0; i < response.data.penalties.length; i++){
+            this.penaltyList.push({
+              cgrid: i,
+              create: false,
+              cpenalizacion: response.data.penalties[i].cpenalizacion,
+              xpenalizacion: response.data.penalties[i].xpenalizacion,
+              ppenalizacion: response.data.penalties[i].ppenalizacion,
+              mpenalizacion: response.data.penalties[i].mpenalizacion,
+              fefectiva: new Date(response.data.penalties[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.providerList = [];
+        if(response.data.providers){
+          for(let i =0; i < response.data.providers.length; i++){
+            this.providerList.push({
+              cgrid: i,
+              create: false,
+              cproveedor: response.data.providers[i].cproveedor,
+              xproveedor: response.data.providers[i].xnombre,
+              xobservacion: response.data.providers[i].xobservacion,
+              fefectiva: new Date(response.data.providers[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
       }
       },);
   }
@@ -1530,6 +1598,16 @@ export class ClientDetailV2Component implements OnInit {
       let createAssociateList = this.associateList.filter((row) => { return row.create; });
       let updateBondsList = this.bondList.filter((row) => { return !row.create; });
       let createBondsList = this.bondList.filter((row) => { return row.create; });
+      let updateBrokersList = this.brokerList.filter((row) => { return !row.create; });
+      let createBrokersList = this.brokerList.filter((row) => { return row.create; });
+      let updateDepreciationsList = this.depreciationList.filter((row) => { return !row.create; });
+      let createDepreciationsList = this.depreciationList.filter((row) => { return row.create; });
+      let updateRelationshipList = this.relationshipList.filter((row) => { return !row.create; });
+      let createRelationshipList = this.relationshipList.filter((row) => { return row.create; });
+      let updatePenaltyList = this.penaltyList.filter((row) => { return !row.create; });
+      let createPenaltyList = this.penaltyList.filter((row) => { return row.create; });
+      let updateProvidersList = this.providerList.filter((row) => { return !row.create; });
+      let createProvidersList = this.providerList.filter((row) => { return row.create; });
       params = {
         ccliente: this.code,
         cpais: this.currentUser.data.cpais,
@@ -1568,6 +1646,26 @@ export class ClientDetailV2Component implements OnInit {
           create: createBondsList,
           update: updateBondsList
         },
+        brokers: {
+          create: createBrokersList,
+          update: updateBrokersList
+        },
+        depreciations: {
+          create: createDepreciationsList,
+          update: updateDepreciationsList
+        },
+        relationships: {
+          create: createRelationshipList,
+          update: updateRelationshipList
+        },
+        penalties: {
+          create: createPenaltyList,
+          update: updatePenaltyList
+        },
+        providers: {
+          create: createProvidersList,
+          update: updateProvidersList
+        },
       };
       url = `${environment.apiUrl}/api/client/update`;
       this.sendFormData(params, url);
@@ -1594,6 +1692,11 @@ export class ClientDetailV2Component implements OnInit {
         documents: this.documentList,
         associates: this.associateList,
         bonds: this.bondList,
+        brokers: this.brokerList,
+        depreciations: this.depreciationList,
+        relationships: this.relationshipList,
+        penalties: this.penaltyList,
+        providers: this.providerList
       };
       url = `${environment.apiUrl}/api/client/create`;
       this.sendFormData(params, url);
