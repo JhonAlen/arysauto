@@ -405,6 +405,105 @@ export class ClientDetailV2Component implements OnInit {
             });
           }
         }
+        this.modelList = [];
+        if(response.data.models){
+          for(let i =0; i < response.data.models.length; i++){
+            this.modelList.push({
+              cgrid: i,
+              create: false,
+              cmarca: response.data.models[i].cmarca,
+              xmarca: response.data.models[i].xmarca,
+              cmodelo: response.data.models[i].cmodelo,
+              xmodelo: response.data.models[i].xmodelo,
+              xobservacion: response.data.models[i].xobservacion,
+            });
+          }
+        }
+        this.workerList = [];
+        if(response.data.workers){
+          for(let i =0; i < response.data.workers.length; i++){
+            this.workerList.push({
+              cgrid: i,
+              create: false,
+              ctrabajador: response.data.workers[i].ctrabajador,
+              xnombre: response.data.workers[i].xnombre,
+              xapellido: response.data.workers[i].xapellido,
+              ctipodocidentidad: response.data.workers[i].ctipodocidentidad,
+              xdocidentidad: response.data.workers[i].xdocidentidad,
+              xtelefonocelular: response.data.workers[i].xtelefonocelular,
+              xemail: response.data.workers[i].xemail,
+              xprofesion: response.data.workers[i].xprofesion,
+              xocupacion: response.data.workers[i].xocupacion,
+              xtelefonocasa: response.data.workers[i].xtelefonocasa,
+              xfax: response.data.workers[i].xfax,
+              cparentesco: response.data.workers[i].cparentesco,
+              xdireccion: response.data.workers[i].xdireccion,
+              cestado: response.data.workers[i].cestado,
+              cciudad: response.data.workers[i].cciudad,
+              cestadocivil: response.data.workers[i].cestadocivil,
+              fnacimiento: new Date(response.data.workers[i].fnacimiento).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.grouperList = [];
+        if(response.data.groupers){
+          for(let i =0; i < response.data.groupers.length; i++){
+            let banks = [];
+            for(let j =0; j < response.data.groupers[i].banks.length; j++){
+              banks.push({
+                create: false,
+                cbanco: response.data.groupers[i].banks[j].cbanco,
+                xbanco: response.data.groupers[i].banks[j].xbanco,
+                ctipocuentabancaria: response.data.groupers[i].banks[j].ctipocuentabancaria,
+                xtipocuentabancaria: response.data.groupers[i].banks[j].xtipocuentabancaria,
+                xnumerocuenta: response.data.groupers[i].banks[j].xnumerocuenta,
+                xcontrato: response.data.groupers[i].banks[j].xcontrato,
+                bprincipal: response.data.groupers[i].banks[j].bprincipal,
+                xprincipal: response.data.groupers[i].banks[j].bprincipal ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO")
+              });
+            }
+            this.grouperList.push({
+              cgrid: i,
+              create: false,
+              cagrupador: response.data.groupers[i].cagrupador,
+              xcontratoalternativo: response.data.groupers[i].xcontratoalternativo,
+              xnombre: response.data.groupers[i].xnombre,
+              xrazonsocial: response.data.groupers[i].xrazonsocial,
+              cestado: response.data.groupers[i].cestado,
+              cciudad: response.data.groupers[i].cciudad,
+              xdireccionfiscal: response.data.groupers[i].xdireccionfiscal,
+              ctipodocidentidad: response.data.groupers[i].ctipodocidentidad,
+              xdocidentidad: response.data.groupers[i].xdocidentidad,
+              bfacturar: response.data.groupers[i].bfacturar,
+              bcontribuyente: response.data.groupers[i].bcontribuyente,
+              bimpuesto: response.data.groupers[i].bimpuesto,
+              xtelefono: response.data.groupers[i].xtelefono,
+              xfax: response.data.groupers[i].xfax ? response.data.groupers[i].xfax : undefined,
+              xemail: response.data.groupers[i].xemail,
+              xrutaimagen: response.data.groupers[i].xrutaimagen ? response.data.groupers[i].xrutaimagen : undefined,
+              bactivo: response.data.groupers[i].bactivo,
+              banks: banks
+            });
+          }
+        }
+        this.planList = [];
+        if(response.data.plans){
+          for(let i =0; i < response.data.plans.length; i++){
+            this.planList.push({
+              cgrid: i,
+              create: false,
+              cplancliente: response.data.plans[i].cplancliente,
+              cplan: response.data.plans[i].cplan,
+              xplan: response.data.plans[i].xplan,
+              casociado: response.data.plans[i].casociado,
+              xasociado: response.data.plans[i].xasociado,
+              ctipoplan: response.data.plans[i].ctipoplan,
+              xtipoplan: response.data.plans[i].xtipoplan,
+              fdesde: new Date(response.data.plans[i].fdesde).toISOString().substring(0, 10),
+              fhasta: new Date(response.data.plans[i].fhasta).toISOString().substring(0, 10)
+            });
+          }
+        }
       }
       },);
   }
@@ -876,7 +975,7 @@ export class ClientDetailV2Component implements OnInit {
 
   addWorker(){
     let worker = { type: 3, relationships: this.relationshipList };
-    const modalRef = this.modalService.open(ClientWorkerComponent);
+    const modalRef = this.modalService.open(ClientWorkerComponent, { size: 'xl' });
     modalRef.componentInstance.worker = worker;
     modalRef.result.then((result: any) => { 
       if(result){
@@ -1608,6 +1707,14 @@ export class ClientDetailV2Component implements OnInit {
       let createPenaltyList = this.penaltyList.filter((row) => { return row.create; });
       let updateProvidersList = this.providerList.filter((row) => { return !row.create; });
       let createProvidersList = this.providerList.filter((row) => { return row.create; });
+      let updateModelsList = this.modelList.filter((row) => { return !row.create; });
+      let createModelsList = this.modelList.filter((row) => { return row.create; });
+      let updateWorkersList = this.workerList.filter((row) => { return !row.create; });
+      let createWorkersList = this.workerList.filter((row) => { return row.create; });
+      let updateGroupersList = this.grouperList.filter((row) => { return !row.create; });
+      let createGroupersList = this.grouperList.filter((row) => { return row.create; });
+      let updatePlansList = this.planList.filter((row) => { return !row.create; });
+      let createPlansList = this.planList.filter((row) => { return row.create; });
       params = {
         ccliente: this.code,
         cpais: this.currentUser.data.cpais,
@@ -1666,6 +1773,22 @@ export class ClientDetailV2Component implements OnInit {
           create: createProvidersList,
           update: updateProvidersList
         },
+        models: {
+          create: createModelsList,
+          update: updateModelsList
+        },
+        workers: {
+          create: createWorkersList,
+          update: updateWorkersList
+        },
+        groupers: {
+          create: createGroupersList,
+          update: updateGroupersList
+        },
+        plans: {
+          create: createPlansList,
+          update: updatePlansList
+        },
       };
       url = `${environment.apiUrl}/api/client/update`;
       this.sendFormData(params, url);
@@ -1696,7 +1819,11 @@ export class ClientDetailV2Component implements OnInit {
         depreciations: this.depreciationList,
         relationships: this.relationshipList,
         penalties: this.penaltyList,
-        providers: this.providerList
+        providers: this.providerList,
+        models: this.modelList,
+        workers: this.workerList,
+        groupers: this.grouperList,
+        plans: this.planList,
       };
       url = `${environment.apiUrl}/api/client/create`;
       this.sendFormData(params, url);
