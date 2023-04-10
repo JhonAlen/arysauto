@@ -324,6 +324,186 @@ export class ClientDetailV2Component implements OnInit {
             });
           }
         }
+        this.bondList = [];
+        if(response.data.bonds){
+          for(let i =0; i < response.data.bonds.length; i++){
+            this.bondList.push({
+              cgrid: i,
+              create: false,
+              cbono: response.data.bonds[i].cbono,
+              pbono: response.data.bonds[i].pbono,
+              mbono: response.data.bonds[i].mbono,
+              fefectiva: new Date(response.data.bonds[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.brokerList = [];
+        if(response.data.brokers){
+          for(let i =0; i < response.data.brokers.length; i++){
+            this.brokerList.push({
+              cgrid: i,
+              create: false,
+              ccorredor: response.data.brokers[i].ccorredor,
+              xcorredor: response.data.brokers[i].xcorredor,
+              pcorredor: response.data.brokers[i].pcorredor,
+              mcorredor: response.data.brokers[i].mcorredor,
+              fefectiva: new Date(response.data.brokers[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.depreciationList = [];
+        if(response.data.depreciations){
+          for(let i =0; i < response.data.depreciations.length; i++){
+            this.depreciationList.push({
+              cgrid: i,
+              create: false,
+              cdepreciacion: response.data.depreciations[i].cdepreciacion,
+              xdepreciacion: response.data.depreciations[i].xdepreciacion,
+              pdepreciacion: response.data.depreciations[i].pdepreciacion,
+              mdepreciacion: response.data.depreciations[i].mdepreciacion,
+              fefectiva: new Date(response.data.depreciations[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.relationshipList = [];
+        if(response.data.relationships){
+          for(let i =0; i < response.data.relationships.length; i++){
+            this.relationshipList.push({
+              cgrid: i,
+              create: false,
+              cparentesco: response.data.relationships[i].cparentesco,
+              xparentesco: response.data.relationships[i].xparentesco,
+              xobservacion: response.data.relationships[i].xobservacion,
+              fefectiva: new Date(response.data.depreciations[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.penaltyList = [];
+        if(response.data.penalties){
+          for(let i =0; i < response.data.penalties.length; i++){
+            this.penaltyList.push({
+              cgrid: i,
+              create: false,
+              cpenalizacion: response.data.penalties[i].cpenalizacion,
+              xpenalizacion: response.data.penalties[i].xpenalizacion,
+              ppenalizacion: response.data.penalties[i].ppenalizacion,
+              mpenalizacion: response.data.penalties[i].mpenalizacion,
+              fefectiva: new Date(response.data.penalties[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.providerList = [];
+        if(response.data.providers){
+          for(let i =0; i < response.data.providers.length; i++){
+            this.providerList.push({
+              cgrid: i,
+              create: false,
+              cproveedor: response.data.providers[i].cproveedor,
+              xproveedor: response.data.providers[i].xnombre,
+              xobservacion: response.data.providers[i].xobservacion,
+              fefectiva: new Date(response.data.providers[i].fefectiva).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.modelList = [];
+        if(response.data.models){
+          for(let i =0; i < response.data.models.length; i++){
+            this.modelList.push({
+              cgrid: i,
+              create: false,
+              cmarca: response.data.models[i].cmarca,
+              xmarca: response.data.models[i].xmarca,
+              cmodelo: response.data.models[i].cmodelo,
+              xmodelo: response.data.models[i].xmodelo,
+              xobservacion: response.data.models[i].xobservacion,
+            });
+          }
+        }
+        this.workerList = [];
+        if(response.data.workers){
+          for(let i =0; i < response.data.workers.length; i++){
+            this.workerList.push({
+              cgrid: i,
+              create: false,
+              ctrabajador: response.data.workers[i].ctrabajador,
+              xnombre: response.data.workers[i].xnombre,
+              xapellido: response.data.workers[i].xapellido,
+              ctipodocidentidad: response.data.workers[i].ctipodocidentidad,
+              xdocidentidad: response.data.workers[i].xdocidentidad,
+              xtelefonocelular: response.data.workers[i].xtelefonocelular,
+              xemail: response.data.workers[i].xemail,
+              xprofesion: response.data.workers[i].xprofesion,
+              xocupacion: response.data.workers[i].xocupacion,
+              xtelefonocasa: response.data.workers[i].xtelefonocasa,
+              xfax: response.data.workers[i].xfax,
+              cparentesco: response.data.workers[i].cparentesco,
+              xdireccion: response.data.workers[i].xdireccion,
+              cestado: response.data.workers[i].cestado,
+              cciudad: response.data.workers[i].cciudad,
+              cestadocivil: response.data.workers[i].cestadocivil,
+              fnacimiento: new Date(response.data.workers[i].fnacimiento).toISOString().substring(0, 10)
+            });
+          }
+        }
+        this.grouperList = [];
+        if(response.data.groupers){
+          for(let i =0; i < response.data.groupers.length; i++){
+            let banks = [];
+            for(let j =0; j < response.data.groupers[i].banks.length; j++){
+              banks.push({
+                create: false,
+                cbanco: response.data.groupers[i].banks[j].cbanco,
+                xbanco: response.data.groupers[i].banks[j].xbanco,
+                ctipocuentabancaria: response.data.groupers[i].banks[j].ctipocuentabancaria,
+                xtipocuentabancaria: response.data.groupers[i].banks[j].xtipocuentabancaria,
+                xnumerocuenta: response.data.groupers[i].banks[j].xnumerocuenta,
+                xcontrato: response.data.groupers[i].banks[j].xcontrato,
+                bprincipal: response.data.groupers[i].banks[j].bprincipal,
+                xprincipal: response.data.groupers[i].banks[j].bprincipal ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO")
+              });
+            }
+            this.grouperList.push({
+              cgrid: i,
+              create: false,
+              cagrupador: response.data.groupers[i].cagrupador,
+              xcontratoalternativo: response.data.groupers[i].xcontratoalternativo,
+              xnombre: response.data.groupers[i].xnombre,
+              xrazonsocial: response.data.groupers[i].xrazonsocial,
+              cestado: response.data.groupers[i].cestado,
+              cciudad: response.data.groupers[i].cciudad,
+              xdireccionfiscal: response.data.groupers[i].xdireccionfiscal,
+              ctipodocidentidad: response.data.groupers[i].ctipodocidentidad,
+              xdocidentidad: response.data.groupers[i].xdocidentidad,
+              bfacturar: response.data.groupers[i].bfacturar,
+              bcontribuyente: response.data.groupers[i].bcontribuyente,
+              bimpuesto: response.data.groupers[i].bimpuesto,
+              xtelefono: response.data.groupers[i].xtelefono,
+              xfax: response.data.groupers[i].xfax ? response.data.groupers[i].xfax : undefined,
+              xemail: response.data.groupers[i].xemail,
+              xrutaimagen: response.data.groupers[i].xrutaimagen ? response.data.groupers[i].xrutaimagen : undefined,
+              bactivo: response.data.groupers[i].bactivo,
+              banks: banks
+            });
+          }
+        }
+        this.planList = [];
+        if(response.data.plans){
+          for(let i =0; i < response.data.plans.length; i++){
+            this.planList.push({
+              cgrid: i,
+              create: false,
+              cplancliente: response.data.plans[i].cplancliente,
+              cplan: response.data.plans[i].cplan,
+              xplan: response.data.plans[i].xplan,
+              casociado: response.data.plans[i].casociado,
+              xasociado: response.data.plans[i].xasociado,
+              ctipoplan: response.data.plans[i].ctipoplan,
+              xtipoplan: response.data.plans[i].xtipoplan,
+              fdesde: new Date(response.data.plans[i].fdesde).toISOString().substring(0, 10),
+              fhasta: new Date(response.data.plans[i].fhasta).toISOString().substring(0, 10)
+            });
+          }
+        }
       }
       },);
   }
@@ -795,7 +975,7 @@ export class ClientDetailV2Component implements OnInit {
 
   addWorker(){
     let worker = { type: 3, relationships: this.relationshipList };
-    const modalRef = this.modalService.open(ClientWorkerComponent);
+    const modalRef = this.modalService.open(ClientWorkerComponent, { size: 'xl' });
     modalRef.componentInstance.worker = worker;
     modalRef.result.then((result: any) => { 
       if(result){
@@ -1513,11 +1693,33 @@ export class ClientDetailV2Component implements OnInit {
       let createContactList = this.contactList.filter((row) => { return row.create; });
       let updateDocumentsList = this.documentList.filter((row) => { return !row.create; });
       let createDocumentsList = this.documentList.filter((row) => { return row.create; });
+      let updateAssociateList = this.associateList.filter((row) => { return !row.create; });
+      let createAssociateList = this.associateList.filter((row) => { return row.create; });
+      let updateBondsList = this.bondList.filter((row) => { return !row.create; });
+      let createBondsList = this.bondList.filter((row) => { return row.create; });
+      let updateBrokersList = this.brokerList.filter((row) => { return !row.create; });
+      let createBrokersList = this.brokerList.filter((row) => { return row.create; });
+      let updateDepreciationsList = this.depreciationList.filter((row) => { return !row.create; });
+      let createDepreciationsList = this.depreciationList.filter((row) => { return row.create; });
+      let updateRelationshipList = this.relationshipList.filter((row) => { return !row.create; });
+      let createRelationshipList = this.relationshipList.filter((row) => { return row.create; });
+      let updatePenaltyList = this.penaltyList.filter((row) => { return !row.create; });
+      let createPenaltyList = this.penaltyList.filter((row) => { return row.create; });
+      let updateProvidersList = this.providerList.filter((row) => { return !row.create; });
+      let createProvidersList = this.providerList.filter((row) => { return row.create; });
+      let updateModelsList = this.modelList.filter((row) => { return !row.create; });
+      let createModelsList = this.modelList.filter((row) => { return row.create; });
+      let updateWorkersList = this.workerList.filter((row) => { return !row.create; });
+      let createWorkersList = this.workerList.filter((row) => { return row.create; });
+      let updateGroupersList = this.grouperList.filter((row) => { return !row.create; });
+      let createGroupersList = this.grouperList.filter((row) => { return row.create; });
+      let updatePlansList = this.planList.filter((row) => { return !row.create; });
+      let createPlansList = this.planList.filter((row) => { return row.create; });
       params = {
         ccliente: this.code,
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
-        cusuariomodificacion: this.currentUser.data.cusuario,
+        cusuario: this.currentUser.data.cusuario,
         xcliente: form.xcliente,
         xrepresentante: form.xrepresentante,
         icedula: form.icedula,
@@ -1543,6 +1745,50 @@ export class ClientDetailV2Component implements OnInit {
           create: createDocumentsList,
           update: updateDocumentsList
         },
+        associates: {
+          create: createAssociateList,
+          update: updateAssociateList
+        },
+        bonds: {
+          create: createBondsList,
+          update: updateBondsList
+        },
+        brokers: {
+          create: createBrokersList,
+          update: updateBrokersList
+        },
+        depreciations: {
+          create: createDepreciationsList,
+          update: updateDepreciationsList
+        },
+        relationships: {
+          create: createRelationshipList,
+          update: updateRelationshipList
+        },
+        penalties: {
+          create: createPenaltyList,
+          update: updatePenaltyList
+        },
+        providers: {
+          create: createProvidersList,
+          update: updateProvidersList
+        },
+        models: {
+          create: createModelsList,
+          update: updateModelsList
+        },
+        workers: {
+          create: createWorkersList,
+          update: updateWorkersList
+        },
+        groupers: {
+          create: createGroupersList,
+          update: updateGroupersList
+        },
+        plans: {
+          create: createPlansList,
+          update: updatePlansList
+        },
       };
       url = `${environment.apiUrl}/api/client/update`;
       this.sendFormData(params, url);
@@ -1567,6 +1813,17 @@ export class ClientDetailV2Component implements OnInit {
         banks: this.bankList,
         contacts: this.contactList,
         documents: this.documentList,
+        associates: this.associateList,
+        bonds: this.bondList,
+        brokers: this.brokerList,
+        depreciations: this.depreciationList,
+        relationships: this.relationshipList,
+        penalties: this.penaltyList,
+        providers: this.providerList,
+        models: this.modelList,
+        workers: this.workerList,
+        groupers: this.grouperList,
+        plans: this.planList,
       };
       url = `${environment.apiUrl}/api/client/create`;
       this.sendFormData(params, url);
