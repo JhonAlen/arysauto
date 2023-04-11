@@ -332,6 +332,7 @@ import { IndividualRenovationDetailComponent } from './renovation/individual-ren
 import { ReportsComponent } from './administration/reports/reports.component';
 import { ContractServiceArysAdministrationComponent } from './subscription/contract-service-arys-administration/contract-service-arys-administration.component';
 import { InclusionContractComponent } from './subscription/inclusion-contract/inclusion-contract.component';
+import { NgbPaginationModule, NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -671,6 +672,7 @@ export function HttpLoaderFactory(http: HttpClient){
     HttpClientModule,
     NgbModule,
     AutocompleteLibModule,
+    NgbPaginationModule,
     TranslateModule.forRoot({
       loader:{
         provide: TranslateLoader,
