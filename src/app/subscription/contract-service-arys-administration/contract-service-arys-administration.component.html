@@ -12,33 +12,27 @@
                 </form>
             </div>
             <div class="card-body">
-                <div class="container">
-                    <mat-form-field>
-                        <mat-label>Buscar</mat-label>
-                        <input matInput (keyup)="applyFilter()" [(ngModel)]="filterValue">
-                      </mat-form-field>
-                    
-                    <mat-table [dataSource]="dataSource">
-                        <ng-container matColumnDef="name">
-                          <mat-header-cell *matHeaderCellDef> name </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="age">
-                          <mat-header-cell *matHeaderCellDef> age  </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="city">
-                          <mat-header-cell *matHeaderCellDef> city </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.city}} </mat-cell>
-                        </ng-container>
-                      
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
-                      </mat-table>
-                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                </div>
+              <div class="container">
+                <input type="text" class="form-control" placeholder="Buscar..." (input)="filterData($event.target.value)">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Nombre y Apellido</th>
+                      <th>Identificación</th>
+                      <th>Vehículo</th>
+                      <th>Año</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of filteredData">
+                      <td>{{ item.xnombres }}</td>
+                      <td>{{ item.identificacion }}</td>
+                      <td>{{ item.xvehiculo }}</td>
+                      <td>{{ item.fano }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
         </div>
     </div>
