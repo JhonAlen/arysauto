@@ -517,7 +517,7 @@ export class ContractServiceArysAdministrationComponent implements OnInit {
           table: {
             widths: [40, 310, '*'],
             body: [
-              [{text: 'DOMICILIO:', bold: true, border: [true, false, false, false]}, {text: this.xdireccionpropietario, border: [false, false, false, false]}, {border: [false, false, true, false]}]
+              [{text: 'DOMICILIO:', bold: true, border: [true, false, false, false]}, {text: this.xdireccionpropietario, border: [false, false, false, false]}, {text: '', border: [false, false, true, false]}]
             ]
           }
         },
@@ -548,33 +548,33 @@ export class ContractServiceArysAdministrationComponent implements OnInit {
             ]
           }
         },
-        // {
-        //   style: 'data',
-        //   table: {
-        //     widths: [60, 30, 30, 50, 30, 50, 60, '*'],
-        //     body: [
-        //       [{text: 'N° DE PUESTOS:', bold: true, border: [true, false, false, true]}, {text: '', border: [false, false, false, true]}, {text: 'CLASE:', bold: true, border: [false, false, false, true]}, {text: ' ', border: [false, false, false, true]}, {text: ' ', border: [false, false, false, true]},{text: 'PLACA:', bold: true, border: [false, false, false, true]}, {text: ' ', border: [false, false, false, true]}, {text: 'TRANSMISIÓN:', bold: true, border: [false, false, false, true]}, {text: ' ', border: [false, false, true, true]}]
-        //     ]
-        //   }
-        // },
-        // {
-        //   style: 'data',
-        //   table: {
-        //     widths: [20, 45, 80, 75, 70, 70, 50, '*'],
-        //     body: [
-        //       [{text: 'USO:', bold: true, border: [true, false, false, true]}, {text: ' ', border: [false, false, false, true]}, {text: 'SERIAL CARROCERIA:', bold: true, border: [false, false, false, true]}, {text: ' ', border: [false, false, false, true]}, {text: 'SERIAL DEL MOTOR:', bold: true, border: [false, false, false, true]}, {text: ' ', border: [false, false, false, true]}, {text: 'KILOMETRAJE:', bold: true, border: [false, false, false, true]},  {text: ' ', border: [false, false, true, true]}]
-        //     ]
-        //   }
-        // },
-        // {
-        //   style: 'data',
-        //   table: {
-        //     widths: [20, 45, 30, 50, 50, 140, '*'],
-        //     body: [
-        //       [{text: 'TIPO:', bold: true, border: [true, false, false, false]}, {text: ' ', border: [false, false, false, false]}, {text: 'AÑO:', bold: true, border: [false, false, false, false]}, {text: ' ', border: [false, false, false, false]}, {text: 'COLOR:', bold: true, border: [false, false, false, false]}, {text: ' ', border: [false, false, false, false]}, {text: ' ', border: [false, false, true, false]}]
-        //     ]
-        //   }
-        // },
+        {
+          style: 'data',
+          table: {
+            widths: [20, 45, 80, 75, 70, 70, 50, '*'],
+            body: [
+              [{text: 'Año:', bold: true, border: [true, false, false, true]}, {text: this.fano, border: [false, false, false, true]}, {text: 'SERIAL CARROCERIA:', bold: true, border: [false, false, false, true]}, {text: this.xserialcarroceria, border: [false, false, false, true]}, {text: 'SERIAL DEL MOTOR:', bold: true, border: [false, false, false, true]}, {text: this.xserialmotor, border: [false, false, false, true]}, {text: 'Color:', bold: true, border: [false, false, false, true]}, {text: this.xcolor, border: [false, false, true, true]}]
+            ]
+          }
+        },
+        {
+          style: 'data',
+          table: {
+            widths: [60, 30, 30, 50, 30, 90, 60, '*'],
+            body: [
+              [{text: 'N° DE PUESTOS:', bold: true, border: [true, false, false, false]}, {text: this.ncapacidadpasajeros, border: [false, false, false, false]}, {text: 'CLASE:', bold: true, border: [false, false, false, false]}, {text: this.xclase, border: [false, false, false, false]}, {text: 'TIPO:', bold: true, border: [false, false, false, false]}, {text: this.xtipovehiculo, border: [false, false, false, false]}, {text: 'PLACA:', bold: true, border: [false, false, false, false]}, {text: this.xplaca, border: [false, false, true, false]}]
+            ]
+          }
+        },
+        {
+          style: 'data',
+          table: {
+            widths: ['*'],
+            body: [
+              [{text: 'DESCRIPCIÓN DE LOS SERVICIOS', alignment: 'center', fillColor: '#ababab', bold: true}]
+            ]
+          }
+        },
         // /*{
         //   style: 'data',
         //   table: {
