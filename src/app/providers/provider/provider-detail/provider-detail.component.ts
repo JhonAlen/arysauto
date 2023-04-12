@@ -271,7 +271,8 @@ export class ProviderDetailComponent implements OnInit {
             cgrid: i,
             create: false,
             cestado: request.data.states[i].cestado,
-            xestado: request.data.states[i].xestado
+            xestado: request.data.states[i].xestado,
+            xpais: request.data.states[i].xpais
           });
         }
       }
@@ -294,6 +295,7 @@ export class ProviderDetailComponent implements OnInit {
             create: false,
             cservicio: request.data.services[i].cservicio,
             xservicio: request.data.services[i].xservicio,
+            xtiposervicio: request.data.services[i].xtiposervicio
           });
         }
       }
@@ -480,6 +482,7 @@ export class ProviderDetailComponent implements OnInit {
     modalRef.componentInstance.service = service;
     modalRef.result.then((result: any) => {
       if (result) {
+        console.log(result);
         if (result.type == 3) {
           this.serviceList.push({
             cgrid: this.serviceList.length,
@@ -822,6 +825,7 @@ export class ProviderDetailComponent implements OnInit {
     let params;
     let request;
     if (this.code) {
+      console.log(this.serviceList);
       let updateBankList = this.bankList.filter((row) => { return !row.create; });
       for (let i = 0; i < updateBankList.length; i++) {
         delete updateBankList[i].cgrid;
@@ -947,7 +951,6 @@ export class ProviderDetailComponent implements OnInit {
       console.log(params)
 
       request = await this.webService.updateProvider(params);
-      console.log(request.data.condition)
     } else {
       let createBankList = this.bankList;
       for (let i = 0; i < createBankList.length; i++) {
