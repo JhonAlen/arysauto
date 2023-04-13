@@ -94,6 +94,7 @@ export class ProviderBankComponent implements OnInit {
           this.canSave = false;
         }else if(this.bank.type == 1){
           this.popup_form.get('cbanco').setValue(this.bank.cbanco);
+          this.popup_form.get('cbanco').disable();
           this.popup_form.get('ctipocuentabancaria').setValue(this.bank.ctipocuentabancaria);
           this.popup_form.get('xnumerocuenta').setValue(this.bank.xnumerocuenta);
           this.popup_form.get('bprincipal').setValue(this.bank.bprincipal);

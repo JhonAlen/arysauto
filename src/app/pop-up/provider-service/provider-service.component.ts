@@ -30,6 +30,7 @@ export class ProviderServiceComponent implements OnInit {
               private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
+    console.log('xddd ' + this.service);
     this.popup_form = this.formBuilder.group({
       ctiposervicio: ['', Validators.required],
       cservicio: ['', Validators.required]
@@ -60,22 +61,14 @@ export class ProviderServiceComponent implements OnInit {
       //   this.alert.type = 'danger';
       //   this.alert.show = true;
       // });
-      this.serviceDropdownDataRequest();
       if(this.service){
         if(this.service.type == 3){
+          this.serviceDropdownDataRequest();
           this.canSave = true;
-        }else if(this.service.type == 2){
-          this.popup_form.get('ctiposervicio').setValue(this.service.ctiposervicio);
-          this.popup_form.get('ctiposervicio').disable();
+        }else if(this.service.type == 1){
           this.serviceDropdownDataRequest();
           this.popup_form.get('cservicio').setValue(this.service.cservicio);
           this.popup_form.get('cservicio').disable();
-          this.canSave = false;
-        }else if(this.service.type == 1){
-          this.popup_form.get('ctiposervicio').setValue(this.service.ctiposervicio);
-          this.serviceDropdownDataRequest();
-          this.popup_form.get('cservicio').setValue(this.service.cservicio);
-          this.canSave = true;
           this.isEdit = true;
         }
       }

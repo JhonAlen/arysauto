@@ -60,13 +60,9 @@ export class ProviderStateComponent implements OnInit {
       if(this.state){
         if(this.state.type == 3){
           this.canSave = true;
-        }else if(this.state.type == 2){
-          this.popup_form.get('cestado').setValue(this.state.cestado);
-          this.popup_form.get('cestado').disable();
-          this.canSave = false;
         }else if(this.state.type == 1){
           this.popup_form.get('cestado').setValue(this.state.cestado);
-          this.canSave = true;
+          this.popup_form.get('cestado').disable();
           this.isEdit = true;
         }
       }
