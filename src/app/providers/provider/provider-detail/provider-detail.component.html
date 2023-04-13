@@ -243,7 +243,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row mt-5">
+    <div class="row mt-5">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header company-card-header">
@@ -262,14 +262,15 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 267px;" class="ag-theme-alpine" [rowData]="stateProviderList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="stateRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onStatesGridReady($event)">
-                            <ag-grid-column headerName="Name" field="xestado" [width]="1036" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="País" field="xpais" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Estado" field="xestado" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mt-5">
+    <!-- <div class="row mt-5">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header company-card-header">
@@ -318,8 +319,8 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="serviceList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="serviceRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onServicesGridReady($event)">
-                            <ag-grid-column headerName="Servicio" field="xservicio" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Tipo" field="xtiposervicio" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo de Servicio" field="xtiposervicio" [width]="540" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Servicio" field="xservicio" [width]="540" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
