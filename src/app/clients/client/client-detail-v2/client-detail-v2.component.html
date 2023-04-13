@@ -215,7 +215,7 @@
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="bankList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bankRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBanksGridReady($event)">
                             <ag-grid-column headerName="Banco" field="xbanco" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Tipo Cuenta Bancaria Type" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo Cuenta Bancaria" field="xtipocuentabancaria" [width]="259" [sortable]="true"></ag-grid-column>
                             <ag-grid-column headerName="Numero de Cuenta" field="xnumerocuenta" [width]="259" [sortable]="false"></ag-grid-column>
                             <ag-grid-column headerName="Principal" field="xprincipal" [width]="259" [sortable]="false"></ag-grid-column>
                         </ag-grid-angular>
@@ -243,7 +243,7 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="associateList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="associateRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onAssociatesGridReady($event)">
-                            <ag-grid-column headerName="Name" field="xasociado" [width]="1036" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Nombre del Asociado" field="xasociado" [width]="1036" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -269,9 +269,10 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="bondList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="bondRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBondsGridReady($event)">
-                            <ag-grid-column headerName="Code" field="cbono" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="pbono" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mbono" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Código" field="cbono" [width]="200" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="pbono" [width]="200" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mbono" [width]="200" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Fecha Efectiva" field="fefectiva" [width]="200" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -326,9 +327,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="brokerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="brokerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onBrokersGridReady($event)">
-                            <ag-grid-column headerName="Broker" field="xcorredor" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="pcorredor" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mcorredor" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Corredor" field="xcorredor" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="pcorredor" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mcorredor" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -354,9 +355,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="depreciationList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="depreciationRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onDepreciationsGridReady($event)">
-                            <ag-grid-column headerName="Depreciation" field="xdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="pdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mdepreciacion" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Depreciación" field="xdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="pdepreciacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mdepreciacion" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -382,8 +383,8 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="relationshipList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="relationshipRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onRelationshipsGridReady($event)">
-                            <ag-grid-column headerName="Relationship" field="xparentesco" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Parentesco" field="xparentesco" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observación" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -409,9 +410,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="penaltyList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="penaltyRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPenaltiesGridReady($event)">
-                            <ag-grid-column headerName="Penalty" field="xpenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Percentage" field="ppenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Ammount" field="mpenalizacion" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Penalización" field="xpenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Porcentaje" field="ppenalizacion" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto" field="mpenalizacion" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -437,8 +438,8 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="providerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="providerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onProvidersGridReady($event)">
-                            <ag-grid-column headerName="Provider" field="xproveedor" [width]="518" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Proveedor" field="xproveedor" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observacion" field="xobservacion" [width]="518" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -464,9 +465,9 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="modelList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="modelRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onModelsGridReady($event)">
-                            <ag-grid-column headerName="Brand" field="xmarca" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Model" field="xmodelo" [width]="344" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Observation" field="xobservacion" [width]="346" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Marca" field="xmarca" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Modelo" field="xmodelo" [width]="344" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Observación" field="xobservacion" [width]="346" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -492,10 +493,10 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="workerList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="workerRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onWorkersGridReady($event)">
-                            <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Lastname" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Cellphone" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
-                            <ag-grid-column headerName="Email" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Nombre" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Apellido" field="xapellido" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Teléfono" field="xtelefonocelular" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Correo" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -548,10 +549,10 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="grouperList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="grouperRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onGroupersGridReady($event)">
-                            <ag-grid-column headerName="Code" field="cagrupador" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Name" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Phone Number" field="xtelefono" [width]="259" [sortable]="false"></ag-grid-column>
-                            <ag-grid-column headerName="Email" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Código" field="cagrupador" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Nombre" field="xnombre" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Teléfono" field="xtelefono" [width]="259" [sortable]="false"></ag-grid-column>
+                            <ag-grid-column headerName="Correo" field="xemail" [width]="259" [sortable]="false"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
@@ -577,10 +578,10 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="planList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="planRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onPlansGridReady($event)">
-                            <ag-grid-column headerName="Code" field="cplancliente" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Name" field="xplan" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Type" field="xtipoplan" [width]="259" [sortable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Associate" field="xasociado" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Código" field="cplancliente" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Plan" field="xplan" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Tipo de Plan" field="xtipoplan" [width]="259" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Asociado" field="xasociado" [width]="259" [sortable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
