@@ -333,6 +333,8 @@ import { ReportsComponent } from './administration/reports/reports.component';
 import { ContractServiceArysAdministrationComponent } from './subscription/contract-service-arys-administration/contract-service-arys-administration.component';
 import { InclusionContractComponent } from './subscription/inclusion-contract/inclusion-contract.component';
 import { NgbPaginationModule, NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationQuoteRequestIndexComponent } from './pop-up/notification-quote-request-index/notification-quote-request-index.component';
+import { NotificationQuoteRequestDetailComponent } from './pop-up/notification-quote-request-detail/notification-quote-request-detail.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -646,7 +648,9 @@ export function HttpLoaderFactory(http: HttpClient){
     IndividualRenovationDetailComponent,
     ReportsComponent,
     ContractServiceArysAdministrationComponent,
-    InclusionContractComponent
+    InclusionContractComponent,
+    NotificationQuoteRequestIndexComponent,
+    NotificationQuoteRequestDetailComponent
   ],
   imports: [
     BrowserModule,

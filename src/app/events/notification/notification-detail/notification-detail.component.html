@@ -777,14 +777,32 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header company-card-header">
-                        <div class="row">
+                        <div class="row" *ngIf="bactiva_cotizacion">
+                            <div class="col-6" style="margin-top: 23px;">
+                                {{ "EVENTS.NOTIFICATIONS.QUOTESLIST" | translate }}
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check form-switch">
+                                  <label style="margin-left: 270px;">Desea registrar la cotización?</label>
+                                  <div class="row">
+                                    <p class="col-2" [ngStyle]="{ 'opacity': canEdit ? 1 : 0.5 }" style="text-align: right;margin-left: 263px;">No</p>
+                                    <input type="checkbox" formControlName="bcotizacion" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bcotizacion').errors }" style="margin-left: 365px;" [disabled]="!showEditButton" (change)="changeQuoteRequest()">
+                                    <p class="col-2" style="margin-left: 36px;">Si</p>
+                                  </div>
+                                  <div *ngIf="submitted && detail_form.get('bcotizacion').errors" class="invalid-feedback">
+                                    <div *ngIf="detail_form.get('bcotizacion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDINJURED" | translate }}</div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="bactiva_etiqueta">
                             <div class="col-6">
                                 {{ "EVENTS.NOTIFICATIONS.QUOTESLIST" | translate }}
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="container">
+                        <div class="container ">
                             <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="quoteList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="quoteRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onQuotesGridReady($event)">
                                 <ag-grid-column headerName="Proveedor" field="xnombre" [width]="518" [sortable]="true"></ag-grid-column>
                                 <ag-grid-column headerName="Cotización Total" field="mtotalcotizacion" [width]="518" [sortable]="false"></ag-grid-column>

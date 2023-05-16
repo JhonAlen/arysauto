@@ -1,0 +1,94 @@
+<div class="modal-header">
+    <h4 class="modal-tittle">Cotización</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="container">
+    <div class="row mt-5" *ngIf="alert.show">
+        <div class="col-sm-12 col-md-6 mx-auto">
+            <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">{{ alert.message | translate }}</ngb-alert>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "PROVIDERS.QUOTEREQUESTS.QUOTEREQUEST" | translate }}
+                        </div>
+                        <div class="col-6">
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right" type="button" (click)="cancelSave()" *ngIf="showSaveButton">
+                                <span *ngIf="loading_cancel" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "PROVIDERS.QUOTEREQUESTS.CANCEL" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel || this.popup_form.get('bcerrada').value" class="btn company-detail-button float-right mr-1" type="button" (click)="editQuoteRequest()" *ngIf="canEdit && showEditButton">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "PROVIDERS.QUOTEREQUESTS.EDIT" | translate }}
+                            </button>
+                            <button [disabled]="loading || loading_cancel" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(popup_form.value)">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ "PROVIDERS.QUOTEREQUESTS.SAVE" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="popup_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "PROVIDERS.QUOTEREQUESTS.OBSERVATION" | translate }}</label>
+                                    <textarea type="text" formControlName="xobservacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xobservacion').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && popup_form.get('xobservacion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xobservacion').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDOBSERVATION" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>{{ "PROVIDERS.QUOTEREQUESTS.QUOTETOTALAMOUNT" | translate }}</label>
+                                    <input type="number" formControlName="mtotalcotizacion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('mtotalcotizacion').errors }">
+                                    <div *ngIf="submitted && popup_form.get('mtotalcotizacion').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('mtotalcotizacion').errors.required">{{ "PROVIDERS.QUOTEREQUESTS.REQUIREDTOTALAMOUNT" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="bcerrada" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('bcerrada').errors }">
+                                    <label>{{ "PROVIDERS.QUOTEREQUESTS.CLOSED" | translate }}</label>
+                                    <div *ngIf="submitted && popup_form.get('bcerrada').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('bcerrada').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDVEHICLEDAMAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ "PROVIDERS.QUOTEREQUESTS.REPLACEMENTSLIST" | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="replacementList" [pagination]="true" [paginationAutoPageSize]="true" rowSelection="single" (rowClicked)="replacementRowClicked($event)" [enableCellChangeFlash]="true" (gridReady)="onReplacementsGridReady($event)">
+                            <ag-grid-column headerName="Replacement" field="xrepuesto" [width]="518" [sortable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Quantity" field="ncantidad" [width]="518" [sortable]="true"></ag-grid-column>
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
