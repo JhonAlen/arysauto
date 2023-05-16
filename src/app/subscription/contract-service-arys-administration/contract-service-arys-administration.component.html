@@ -1,45 +1,54 @@
 <app-toolbar ></app-toolbar>
-<div css="row mt-5 mb-5">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header company-card-header">
-             <form [formGroup]="search_form">
-                    <div class="row">
-                        <div class="col-6">
-                            <p>hola</p>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="card-body">
+
+<div class="container"> 
+  <div css="row mt-5 mb-5">
+      <div class="col-sm-12">
+          <div class="card">
+              <div class="card-header company-card-header">
+              <form [formGroup]="search_form">
+                      <div class="row">
+                          <div class="col-6">
+                              <p>Contratos de Servicios Arys</p>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="card-body">
                 <div class="container">
-                    <mat-form-field>
-                        <mat-label>Buscar</mat-label>
-                        <input matInput (keyup)="applyFilter()" [(ngModel)]="filterValue">
-                      </mat-form-field>
-                    
-                    <mat-table [dataSource]="dataSource">
-                        <ng-container matColumnDef="name">
-                          <mat-header-cell *matHeaderCellDef> name </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="age">
-                          <mat-header-cell *matHeaderCellDef> age  </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="city">
-                          <mat-header-cell *matHeaderCellDef> city </mat-header-cell>
-                          <mat-cell *matCellDef="let element"> {{element.city}} </mat-cell>
-                        </ng-container>
-                      
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
-                      </mat-table>
-                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                  <div style="display: grid;place-items: center;">
+                    <div class="col-sm-12 col-md-4">
+                        <input type="text" class="form-control" placeholder="Buscar..." (input)="filterData($event.target.value)">
+                    </div>
+                  </div>
+                  <br>
+                  <table class="table table-hover">
+                    <thead class="table-borderless">
+                      <tr>
+                        <th class="border-bottom">Código</th>
+                        <th class="border-bottom">Nombre y Apellido</th>
+                        <th class="border-bottom">Identificación</th>
+                        <th class="border-bottom">Vehículo</th>
+                        <th class="border-bottom">Año</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of filteredData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
+                        <td>{{ item.ccodigo_serv }}</td>
+                        <td>{{ item.xnombres }}</td>
+                        <td>{{ item.identificacion }}</td>
+                        <td>{{ item.xvehiculo }}</td>
+                        <td>{{ item.fano }}</td>
+                        <td><button class="btn btn-success" (click)="getContractArysFromCertificate(item.ccodigo_serv)" data-name="{{item.xnombres}}">Descargar Certificado</button></td>
+                        <td><button class="btn btn-secondary" (click)="editContract(item)">Descargar Recibo</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div style="display: grid;place-items: center;">
+                  <ngb-pagination [collectionSize]="filteredData.length" [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
+                  </div>
                 </div>
-            </div>
-        </div>
-    </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>

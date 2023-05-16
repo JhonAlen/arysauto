@@ -6,7 +6,7 @@
           <div class="card shadow">
             <div class="table-responsive" *ngIf="ListTypeService.length !== 0">
               <table class="table align-items-center table-flush">
-                <thead  style="background-color: #ffefa9;">
+                <thead  style="background-color: #72b6ff;">
                   <tr>
                     <th scope="col">Tipo de Servicio</th>
                   </tr>
@@ -26,7 +26,7 @@
           <div class="card shadow">
             <div class="table-responsive" *ngIf="ListService.length !== 0">
               <table class="table align-items-center table-flush">
-                <thead  style="background-color: #ffefa9;">
+                <thead  style="background-color: #72b6ff;">
                   <tr>
                     <th scope="col">Servicios</th>
                     <td scope="col"></td>
@@ -49,51 +49,51 @@
 
     <form [formGroup]="servicePlanContract">
         <div  *ngIf="solicitud">
-          <div class="card shadow">      
+          <div class="card shadow" style="margin-top: 15px;">      
             <h3>Infomación de la Solicitud</h3>
             <div class="row">
-            <div class="col-md-4 mb-4 pb-2">
-                <div class="form-outline">                    
-                    <label class="form-label required" for="form3Examplev3">Fecha estimada de atención</label>
-                    <input formControlName="fsolicitud" type="date" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('fsolicitud').errors } " >
-                    <div *ngIf="submitted && servicePlanContract.get('fsolicitud').errors" class="invalid-feedback">
-                        <div *ngIf="servicePlanContract.get('cestado').errors.required">Se requiere completar el campo</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4 pb-2">
-              <div class="form-outline">
-                <label class="form-label required" for="form3Examplev3">Estado</label>
-                <select formControlName="cestado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cestado').errors } " (change)="getCity()">
-                  <option></option>
-                  <option *ngFor="let estado of StateList" value="{{ estado.id }}">{{ estado.value }}</option>
-                </select>                     
-                <div *ngIf="submitted && servicePlanContract.get('cestado').errors" class="invalid-feedback">
-                  <div *ngIf="servicePlanContract.get('cestado').errors.required">Se requiere completar el campo</div>
-                </div>
+              <div class="col-md-4 mb-4 pb-2">
+                  <div class="form-outline">                    
+                      <label class="form-label required" for="form3Examplev3">Fecha estimada de atención</label>
+                      <input formControlName="fsolicitud" type="date" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('fsolicitud').errors } " >
+                      <div *ngIf="submitted && servicePlanContract.get('fsolicitud').errors" class="invalid-feedback">
+                          <div *ngIf="servicePlanContract.get('cestado').errors.required">Se requiere completar el campo</div>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <div class="col-md-4 mb-4 pb-2">
-              <div class="form-outline">
-                <label class="form-label required" for="form3Examplev3">Ciudad</label>
-                    <select formControlName="cciudad" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cciudad').errors } " (change)="getProveedor()">
-                      <option></option>
-                      <option *ngFor="let ciudad of CityList" value="{{ ciudad.id }}">{{ ciudad.value }}</option>
-                    </select>                     
-                    <div *ngIf="submitted && servicePlanContract.get('cciudad').errors" class="invalid-feedback">
-                  <div *ngIf="servicePlanContract.get('cciudad').errors.required">Se requiere completar el campo</div>
+              <div class="col-md-4 mb-4 pb-2">
+                <div class="form-outline">
+                  <label class="form-label required" for="form3Examplev3">Provincia</label>
+                  <select formControlName="cestado" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cestado').errors } " (change)="getCity()">
+                    <option></option>
+                    <option *ngFor="let estado of StateList" value="{{ estado.id }}">{{ estado.value }}</option>
+                  </select>                     
+                  <div *ngIf="submitted && servicePlanContract.get('cestado').errors" class="invalid-feedback">
+                    <div *ngIf="servicePlanContract.get('cestado').errors.required">Se requiere completar el campo</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-4 mb-4 pb-2" *ngIf="proveedor">
-              <div class="form-outline">
-                <label class="form-label required" for="form3Examplev3">Proveedor</label>
-                    <select formControlName="cproveedor" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cproveedor').errors } " (change)="GetSolicitud()">
-                      <option></option>
-                      <option *ngFor="let proveedor of ListProveedor" value="{{ proveedor.id }}">{{ proveedor.value }}</option>
-                    </select>                     
+              <div class="col-md-4 mb-4 pb-2">
+                <div class="form-outline">
+                  <label class="form-label required" for="form3Examplev3">Distrito</label>
+                      <select formControlName="cciudad" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cciudad').errors } " (change)="getProveedor()">
+                        <option></option>
+                        <option *ngFor="let ciudad of CityList" value="{{ ciudad.id }}">{{ ciudad.value }}</option>
+                      </select>                     
+                      <div *ngIf="submitted && servicePlanContract.get('cciudad').errors" class="invalid-feedback">
+                    <div *ngIf="servicePlanContract.get('cciudad').errors.required">Se requiere completar el campo</div>
+                  </div>
+                </div>
               </div>
-            </div>
+              <!-- <div class="col-md-4 mb-4 pb-2" *ngIf="proveedor">
+                <div class="form-outline">
+                  <label class="form-label required" for="form3Examplev3">Proveedor</label>
+                      <select formControlName="cproveedor" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && servicePlanContract.get('cproveedor').errors } " (change)="GetSolicitud()">
+                        <option></option>
+                        <option *ngFor="let proveedor of ListProveedor" value="{{ proveedor.id }}">{{ proveedor.value }}</option>
+                      </select>                     
+                </div>
+              </div> -->
           </div>
           </div>
         </div>

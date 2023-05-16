@@ -41,7 +41,7 @@ export class QuoteRequestReplacementComponent implements OnInit {
       munitariorepuesto: ['', Validators.required],
       bdescuento: [false, Validators.required],
       mtotalrepuesto: ['', Validators.required],
-      cmoneda: ['', Validators.required],
+      cmoneda: [''],
       xmoneda: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
@@ -125,6 +125,10 @@ export class QuoteRequestReplacementComponent implements OnInit {
           this.popup_form.get('cniveldano').disable();
           this.popup_form.get('bdisponible').setValue(this.replacement.bdisponible);
           this.popup_form.get('munitariorepuesto').setValue(this.replacement.munitariorepuesto);
+          this.popup_form.get('cmoneda').setValue(this.replacement.cmoneda);
+          this.popup_form.get('cmoneda').disable();
+          this.popup_form.get('xmoneda').setValue(this.replacement.xmoneda);
+          this.popup_form.get('xmoneda').disable();
           this.searchCoin();
           this.popup_form.get('bdescuento').setValue(this.replacement.bdescuento);
           this.popup_form.get('mtotalrepuesto').setValue(this.replacement.mtotalrepuesto);
@@ -151,10 +155,12 @@ export class QuoteRequestReplacementComponent implements OnInit {
       this.popup_form.get('bdescuento').disable();
       this.popup_form.get('mtotalrepuesto').setValue('');
       this.popup_form.get('mtotalrepuesto').disable();
+      this.popup_form.get('cmoneda').disable();
     }else{
       this.popup_form.get('munitariorepuesto').enable();
       this.popup_form.get('bdescuento').enable();
       this.popup_form.get('mtotalrepuesto').enable();
+      this.popup_form.get('cmoneda').enable();
     }
   }
 
