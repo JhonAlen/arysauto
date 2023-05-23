@@ -204,9 +204,7 @@ import { CorporativeIssuanceComponent } from './subscription/corporative-issuanc
 import { ReportsComponent } from './administration/reports/reports.component';
 import { ContractServiceArysAdministrationComponent } from './subscription/contract-service-arys-administration/contract-service-arys-administration.component';
 import { InclusionContractComponent } from './subscription/inclusion-contract/inclusion-contract.component';
-
-import { IndividualRenovationIndexComponent } from './renovation/individual-renovation/individual-renovation-index/individual-renovation-index.component';
-import { IndividualRenovationDetailComponent } from './renovation/individual-renovation/individual-renovation-detail/individual-renovation-detail.component';
+import { RenewalIndividualContractsComponent } from './subscription/renewal-individual-contracts/renewal-individual-contracts.component';
 
 const routes: Routes = [
  
@@ -502,8 +500,7 @@ const routes: Routes = [
   { path: 'administration/reports', component: ReportsComponent, canActivate: [AuthGuard] },
   { path: 'subscription/contract-service-arys-administration', component: ContractServiceArysAdministrationComponent, canActivate: [AuthGuard] },
   { path: 'subscription/inclusion-contract', component: InclusionContractComponent, canActivate: [AuthGuard] },
-  { path: 'renovation/individual-renovation-index', component: IndividualRenovationIndexComponent, canActivate: [AuthGuard] },
-  { path: 'renovation/individual-renovation-detail', component: IndividualRenovationDetailComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/renewal-individual-contracts', component: RenewalIndividualContractsComponent, canActivate: [AuthGuard] },
 
   {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
   { path: 'sign-in', component: SignInComponent },

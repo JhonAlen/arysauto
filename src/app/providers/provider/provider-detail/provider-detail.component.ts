@@ -25,6 +25,8 @@ import { ProviderStateComponent } from '@app/pop-up/provider-state/provider-stat
 import { ProviderBrandComponent } from '@app/pop-up/provider-brand/provider-brand.component';
 import { ProviderServiceComponent } from '@app/pop-up/provider-service/provider-service.component';
 import { ProviderContactComponent } from '@app/pop-up/provider-contact/provider-contact.component';
+import { ProvidersDocumentsComponent } from '@app/pop-up/providers-documents/providers-documents.component';
+
 
 @Component({
   selector: 'app-provider-detail',
@@ -38,6 +40,7 @@ export class ProviderDetailComponent implements OnInit {
   private stateGridApi;
   private contactGridApi;
   private serviceGridApi;
+  private documentGridApi;
   sub;
   currentUser;
   detail_form: UntypedFormGroup;
@@ -67,6 +70,7 @@ export class ProviderDetailComponent implements OnInit {
   brandDeletedRowList: any[] = [];
   serviceDeletedRowList: any[] = [];
   contactDeletedRowList: any[] = [];
+  documentList: any[] = [];
 
   constructor(private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
@@ -319,6 +323,18 @@ export class ProviderDetailComponent implements OnInit {
           });
         }
       }
+      this.documentList = [];
+      if (request.data.documents) {
+        for (let i = 0; i < request.data.documents.length; i++) {
+          this.documentList.push({
+            cgrid: i,
+            create: false,
+            id: request.data.documents[i].id,
+            xobservacion: request.data.documents[i].xobservacion,
+            xrutaarchivo: request.data.documents[i].xruta
+          });
+        }
+      }
     }
     this.loading_cancel = false;
   }
@@ -397,6 +413,65 @@ export class ProviderDetailComponent implements OnInit {
             xprincipal: result.bprincipal ? this.translate.instant("DROPDOWN.YES") : this.translate.instant("DROPDOWN.NO")
           });
           this.bankGridApi.setRowData(this.bankList);
+        }
+      }
+    });
+  }
+
+  addDocument(){
+    let provider = { type: 3 };
+    const modalRef = this.modalService.open(ProvidersDocumentsComponent);
+    modalRef.componentInstance.provider = provider;
+    modalRef.result.then((result: any) => { 
+      if(result){
+        this.documentList.push({
+          cgrid: this.documentList.length,
+          create: true,
+          xobservacion: result.xobservacion,
+          xrutaarchivo: result.xrutaarchivo
+        });
+        this.documentGridApi.setRowData(this.documentList);
+      }
+      console.log(this.documentList)
+    });
+  }
+
+  documentRowClicked(event: any){
+    let provider = {}
+    if(this.editStatus){ 
+      provider = { 
+        type: 1,
+        create: event.data.create, 
+        cgrid: event.data.cgrid,
+        id: event.data.id,
+        xobservacion: event.data.xobservacion,
+        xrutaarchivo: event.data.xrutaarchivo,
+        delete: false
+      };
+    }else{ 
+      provider = { 
+        type: 2,
+        create: event.data.create,
+        cgrid: event.data.cgrid,
+        id: event.data.id,
+        xobservacion: event.data.xobservacion,
+        xrutaarchivo: event.data.xrutaarchivo,
+        delete: false
+      }; 
+    }
+    const modalRef = this.modalService.open(ProvidersDocumentsComponent);
+    modalRef.componentInstance.provider = provider;
+    modalRef.result.then((result: any) => {
+      if(result){
+        if(result.type == 1){
+          for(let i = 0; i < this.documentList.length; i++){
+            if(this.documentList[i].cgrid == result.cgrid){
+              this.documentList[i].xobservacion = result.xobservacion;
+              this.documentList[i].xrutaarchivo = result.xrutaarchivo;
+              this.documentGridApi.refreshCells();
+              return;
+            }
+          }
         }
       }
     });
@@ -798,6 +873,10 @@ export class ProviderDetailComponent implements OnInit {
     this.contactGridApi = event.api;
   }
 
+  onDocumentGridReady(event){
+    this.documentGridApi = event.api;
+  }
+
   async onSubmit(form): Promise<void> {
     this.submitted = true;
     this.loading = true;
@@ -878,6 +957,8 @@ export class ProviderDetailComponent implements OnInit {
         createContactList[i].xtelefonocasa ? false : delete createContactList[i].xtelefonocasa;
         createContactList[i].xfax ? false : delete createContactList[i].xfax;
       }
+      let updateDocumentList = this.documentList.filter((row) => { return !row.create; });
+      let createDocumentList = this.documentList.filter((row) => { return row.create; });
       params = {
         permissionData: {
           cusuario: this.currentUser.data.cusuario,
@@ -925,6 +1006,10 @@ export class ProviderDetailComponent implements OnInit {
           create: createContactList,
           update: updateContactList,
           delete: this.contactDeletedRowList
+        },
+        documentos: {
+          create: createDocumentList,
+          update: updateDocumentList
         }
       };
       // url = `${environment.apiUrl}/api/v2/provider/production/update`;
@@ -992,7 +1077,8 @@ export class ProviderDetailComponent implements OnInit {
         states: createStateList,
         brands: createBrandList,
         services: createServiceList,
-        contacts: createContactList
+        contacts: createContactList,
+        documentos: this.documentList,
       };
       // url = `${environment.apiUrl}/api/v2/provider/production/create`;
       request = await this.webService.createProvider(params);
