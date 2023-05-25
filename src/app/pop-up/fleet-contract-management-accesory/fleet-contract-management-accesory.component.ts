@@ -30,8 +30,8 @@ export class FleetContractManagementAccesoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      caccesorio: ['', Validators.required],
-      maccesoriocontratoflota: ['', Validators.required]
+      caccesorio: [''],
+      maccesoriocontratoflota: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

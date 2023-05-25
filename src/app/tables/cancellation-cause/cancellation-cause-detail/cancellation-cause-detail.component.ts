@@ -34,8 +34,8 @@ export class CancellationCauseDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xcausaanulacion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xcausaanulacion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

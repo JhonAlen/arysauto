@@ -30,8 +30,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.signin_form = this.formBuilder.group({
-      xemail : ['', Validators.required],
-      xcontrasena : ['', Validators.required]
+      xemail : [''],
+      xcontrasena : ['']
     });
   }
 

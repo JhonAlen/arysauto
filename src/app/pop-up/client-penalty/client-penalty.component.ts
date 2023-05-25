@@ -30,10 +30,10 @@ export class ClientPenaltyComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cpenalizacion: ['', Validators.required],
-      ppenalizacion: ['', Validators.required],
-      mpenalizacion: ['', Validators.required],
-      fefectiva: ['', Validators.required]
+      cpenalizacion: [''],
+      ppenalizacion: [''],
+      mpenalizacion: [''],
+      fefectiva: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

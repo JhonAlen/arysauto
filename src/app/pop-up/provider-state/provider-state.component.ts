@@ -30,7 +30,7 @@ export class ProviderStateComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cestado: ['', Validators.required]
+      cestado: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

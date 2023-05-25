@@ -35,9 +35,9 @@ export class BrandDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xmarca: ['', Validators.required],
-      casociado: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xmarca: [''],
+      casociado: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

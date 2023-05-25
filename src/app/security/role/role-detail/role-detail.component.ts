@@ -47,9 +47,9 @@ export class RoleDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      cdepartamento: ['', Validators.required],
-      xrol: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      cdepartamento: [''],
+      xrol: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

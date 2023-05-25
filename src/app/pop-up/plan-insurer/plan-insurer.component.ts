@@ -30,7 +30,7 @@ export class PlanInsurerComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      caseguradora: ['', Validators.required]
+      caseguradora: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

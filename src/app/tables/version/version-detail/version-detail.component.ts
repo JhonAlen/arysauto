@@ -48,9 +48,9 @@ export class VersionDetailComponent implements OnInit {
      // casociado: [''],
       xversion: [''],
        xtransmision: [''],
-      // xcilindrajemotor: ['', Validators.required],
-      // ctipovehiculo: ['', Validators.required],
-      // ncapacidadcarga: ['', Validators.required],
+      // xcilindrajemotor: [''],
+      // ctipovehiculo: [''],
+      // ncapacidadcarga: [''],
       npasajero: [''],
       bactivo: [true]
     });

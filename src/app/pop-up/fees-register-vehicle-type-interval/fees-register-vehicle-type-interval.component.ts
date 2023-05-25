@@ -29,9 +29,9 @@ export class FeesRegisterVehicleTypeIntervalComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      fanoinicio: ['', Validators.required],
-      fanofinal: ['', Validators.required],
-      ptasainterna: ['', Validators.required]
+      fanoinicio: [''],
+      fanofinal: [''],
+      ptasainterna: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

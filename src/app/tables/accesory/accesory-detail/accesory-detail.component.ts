@@ -35,8 +35,8 @@ export class AccesoryDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xaccesorio: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xaccesorio: [''],
+      bactivo: [true]
     });
 
     this.currentUser = this.authenticationService.currentUserValue;

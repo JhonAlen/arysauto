@@ -28,13 +28,13 @@ export class PermissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cgrupo: ['', Validators.required],
-      cmodulo: ['', Validators.required],
-      bindice: [false, Validators.required],
-      bcrear: [false, Validators.required],
-      bdetalle: [false, Validators.required],
-      beditar: [false, Validators.required],
-      beliminar: [false, Validators.required]
+      cgrupo: [''],
+      cmodulo: [''],
+      bindice: [false],
+      bcrear: [false],
+      bdetalle: [false],
+      beditar: [false],
+      beliminar: [false]
     });
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };

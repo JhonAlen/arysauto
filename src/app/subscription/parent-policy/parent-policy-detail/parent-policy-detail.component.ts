@@ -53,8 +53,8 @@ export class ParentPolicyDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      ccorredor: ['', Validators.required]
+      ccliente: [''],
+      ccorredor: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

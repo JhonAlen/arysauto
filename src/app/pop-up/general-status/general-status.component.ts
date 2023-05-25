@@ -33,11 +33,11 @@ export class GeneralStatusComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.generalStatus);
     this.popup_form = this.formBuilder.group({
-      cestatusgeneral: ['', Validators.required],
-      bdefault: [false, Validators.required],
-      cgrupo: ['', Validators.required],
-      cmodulo: ['', Validators.required],
-      bgestionable: ['', Validators.required]
+      cestatusgeneral: [''],
+      bdefault: [false],
+      cgrupo: [''],
+      cmodulo: [''],
+      bgestionable: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

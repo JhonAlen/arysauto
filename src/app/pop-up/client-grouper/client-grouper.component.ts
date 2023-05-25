@@ -41,25 +41,25 @@ export class ClientGrouperComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xcontratoalternativo: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xrazonsocial: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccionfiscal: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      bfacturar: [false, Validators.required],
-      bcontribuyente: [false, Validators.required],
-      bimpuesto: [false, Validators.required],
-      xtelefono: ['', Validators.required],
+      xcontratoalternativo: [''],
+      xnombre: [''],
+      xrazonsocial: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccionfiscal: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      bfacturar: [false],
+      bcontribuyente: [false],
+      bimpuesto: [false],
+      xtelefono: [''],
       xfax: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
       ximagen: [''],
-      bactivo: [true, Validators.required]
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

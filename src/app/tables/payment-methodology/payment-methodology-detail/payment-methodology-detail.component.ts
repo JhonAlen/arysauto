@@ -34,8 +34,8 @@ export class PaymentMethodologyDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xmetodologiapago: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xmetodologiapago: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

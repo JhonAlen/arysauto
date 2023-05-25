@@ -34,8 +34,8 @@ export class CoverageDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xcobertura: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xcobertura: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

@@ -29,9 +29,9 @@ export class ClientBondComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      pbono: ['', Validators.required],
-      mbono: ['', Validators.required],
-      fefectiva: ['', Validators.required]
+      pbono: [''],
+      mbono: [''],
+      fefectiva: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

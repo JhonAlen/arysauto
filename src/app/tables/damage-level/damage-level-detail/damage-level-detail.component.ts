@@ -34,8 +34,8 @@ export class DamageLevelDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xniveldano: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xniveldano: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

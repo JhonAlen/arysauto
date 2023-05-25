@@ -28,8 +28,8 @@ export class EmailAlertRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cdepartamento: ['', Validators.required],
-      crol: ['', Validators.required]
+      cdepartamento: [''],
+      crol: ['']
     });
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };

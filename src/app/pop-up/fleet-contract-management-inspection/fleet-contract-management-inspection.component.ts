@@ -36,10 +36,10 @@ export class FleetContractManagementInspectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cperito: ['', Validators.required],
-      ctipoinspeccion: ['', Validators.required],
-      finspeccion: ['', Validators.required],
-      xobservacion: ['', Validators.required]
+      cperito: [''],
+      ctipoinspeccion: [''],
+      finspeccion: [''],
+      xobservacion: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

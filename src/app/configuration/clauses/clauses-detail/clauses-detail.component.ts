@@ -53,7 +53,7 @@ export class ClausesDetailComponent implements OnInit {
     this.detail_form = this.formBuilder.group({
       canexo: [''],
       cclausula: [''],
-      xanexo: ['', Validators.required],
+      xanexo: [''],
       xobservacion: [''],
       xclausulas: [''],
       xobjetivo: [''],

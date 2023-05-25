@@ -37,7 +37,7 @@ export class NotificationNoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xnotanotificacion: ['', Validators.required],
+      xnotanotificacion: [''],
       xarchivo: [''],
       cfiniquito: [''],
       cnotificacion: [''],

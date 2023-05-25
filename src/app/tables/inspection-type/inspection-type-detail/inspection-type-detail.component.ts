@@ -35,8 +35,8 @@ export class InspectionTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtipoinspeccion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtipoinspeccion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

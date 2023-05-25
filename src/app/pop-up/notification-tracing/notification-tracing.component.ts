@@ -31,12 +31,12 @@ export class NotificationTracingComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctiposeguimiento: ['', Validators.required],
-      cmotivoseguimiento: ['', Validators.required],
-      fdia: ['', Validators.required],
-      fhora: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      bcerrado: [false, Validators.required]
+      ctiposeguimiento: [''],
+      cmotivoseguimiento: [''],
+      fdia: [''],
+      fhora: [''],
+      xobservacion: [''],
+      bcerrado: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

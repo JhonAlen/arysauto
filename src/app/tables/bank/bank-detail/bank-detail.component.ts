@@ -35,8 +35,8 @@ export class BankDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xbanco: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xbanco: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

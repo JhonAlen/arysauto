@@ -35,8 +35,8 @@ export class NotificationProviderComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cproveedor: ['', Validators.required],
-      xobservacion: ['', Validators.required]
+      cproveedor: [''],
+      xobservacion: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

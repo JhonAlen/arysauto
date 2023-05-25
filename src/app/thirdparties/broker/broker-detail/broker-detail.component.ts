@@ -50,21 +50,18 @@ export class BrokerDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ncorredor: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
-      cactividadempresa: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      xtelefono: ['', Validators.required],
-      xemail: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])],
-      xdireccion: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ncorredor: [''],
+      xnombre: [''],
+      xapellido: [''],
+      cactividadempresa: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      xtelefono: [''],
+      xemail: [''],
+      xdireccion: [''],
+      cestado: [''],
+      cciudad: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
@@ -176,6 +173,11 @@ export class BrokerDetailComponent implements OnInit {
         this.showSaveButton = true;
       }
     });
+  }
+
+  onInputToUpper(event: any): void {
+    const inputValue = event.target.value;
+    event.target.value = inputValue.toUpperCase();
   }
 
   getBrokerData(){

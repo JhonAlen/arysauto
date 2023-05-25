@@ -34,17 +34,17 @@ export class NotificationMaterialDamageComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cdanomaterial: ['', Validators.required],
-      cniveldano: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccion: ['', Validators.required],
-      xtelefonocelular: ['', Validators.required],
+      cdanomaterial: [''],
+      cniveldano: [''],
+      xobservacion: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      xnombre: [''],
+      xapellido: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccion: [''],
+      xtelefonocelular: [''],
       xtelefonocasa: [''],
       xemail: ['', Validators.compose([
         Validators.required,

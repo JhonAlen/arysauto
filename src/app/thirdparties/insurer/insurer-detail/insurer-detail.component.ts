@@ -48,21 +48,21 @@ export class InsurerDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      xaseguradora: ['', Validators.required],
-      xrepresentante: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccionfiscal: ['', Validators.required],
+      xaseguradora: [''],
+      xrepresentante: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccionfiscal: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
       xtelefono: [''],
-      bnotificacionsms: [false, Validators.required],
+      bnotificacionsms: [false],
       xpaginaweb: [''],
-      bactivo: [true, Validators.required]
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -34,8 +34,8 @@ export class PlanTypeDetailComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtipoplan: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtipoplan: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

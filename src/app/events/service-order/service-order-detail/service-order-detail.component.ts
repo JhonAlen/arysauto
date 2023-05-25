@@ -52,9 +52,9 @@ export class ServiceOrderDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      cnotificacion: ['', Validators.required],
+      cnotificacion: [''],
       ctiposervicio: [''],
-      cproveedor: ['', Validators.required],
+      cproveedor: [''],
       xproveedor: [''],
       xdireccionproveedor: [''],
       xtelefonoproveedor: [''],
@@ -78,11 +78,11 @@ export class ServiceOrderDetailComponent implements OnInit {
       fano: [''],
       xcolor: [''],
       xplaca: [''],
-      xfechadescripcion: ['', Validators.required],
+      xfechadescripcion: [''],
       xdescripcionaccidente: [''],
-      xdanos: ['', Validators.required],
-      fajuste: ['', Validators.required],
-      xobservacion: ['', Validators.required],
+      xdanos: [''],
+      fajuste: [''],
+      xobservacion: [''],
       fcreacion: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;

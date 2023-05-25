@@ -55,26 +55,26 @@ export class OwnerDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      xnombre: ['', Validators.required],
+      xnombre: [''],
       xapellido: [''],
       cestadocivil: [''],
       fnacimiento: [''],
       xprofesion: [''],
       xocupacion: [''],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccion: ['', Validators.required],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccion: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
-      xtelefonocelular: ['', Validators.required],
+      xtelefonocelular: [''],
       xtelefonocasa: [''],
       xfax: [''],
       cparentesco: [''],
-      bactivo: [true, Validators.required],
+      bactivo: [true],
       cprocedencia: [{ value: null, disabled: true }]
     });
     this.currentUser = this.authenticationService.currentUserValue;

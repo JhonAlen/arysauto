@@ -105,34 +105,34 @@ export class ClientDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xcliente: ['', Validators.required],
+      xcliente: [''],
       xcontrato: [''],
-      xrepresentante: ['', Validators.required],
+      xrepresentante: [''],
       cempresa: [''],
-      cactividadempresa: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccionfiscal: ['', Validators.required],
+      cactividadempresa: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccionfiscal: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
       fanomaximo: [''],
-      finicio: ['', Validators.required],
+      finicio: [''],
       xtelefono: [''],
-      bcolectivo: [false, Validators.required],
-      bfacturar: [false, Validators.required],
-      bfinanciar: [false, Validators.required],
-      bcontribuyente: [false, Validators.required],
-      bimpuesto: [false, Validators.required],
-      bnotificacionsms: [false, Validators.required],
+      bcolectivo: [false],
+      bfacturar: [false],
+      bfinanciar: [false],
+      bcontribuyente: [false],
+      bimpuesto: [false],
+      bnotificacionsms: [false],
       xpaginaweb: [''],
       ctipopago: [''],
       ximagen: [''],
       ifacturacion: [''],
-      bactivo: [true, Validators.required]
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

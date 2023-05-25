@@ -34,8 +34,8 @@ export class BusinessActivityDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xactividadempresa: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xactividadempresa: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

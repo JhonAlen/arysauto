@@ -40,9 +40,9 @@ export class FleetLoadingComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      ctiporecibo: ['', Validators.required],
-      npoliza: ['', Validators.required]
+      ccliente: [''],
+      ctiporecibo: [''],
+      npoliza: ['']
     })
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

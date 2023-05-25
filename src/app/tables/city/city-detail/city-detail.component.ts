@@ -35,9 +35,9 @@ export class CityDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      cestado: ['', Validators.required],
-      xciudad: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      cestado: [''],
+      xciudad: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

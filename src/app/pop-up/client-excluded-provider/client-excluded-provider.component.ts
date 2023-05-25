@@ -30,9 +30,9 @@ export class ClientExcludedProviderComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cproveedor: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      fefectiva: ['', Validators.required]
+      cproveedor: [''],
+      xobservacion: [''],
+      fefectiva: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

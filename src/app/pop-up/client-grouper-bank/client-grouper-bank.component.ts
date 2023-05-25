@@ -31,11 +31,11 @@ export class ClientGrouperBankComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cbanco: ['', Validators.required],
-      ctipocuentabancaria: ['', Validators.required],
-      xnumerocuenta: ['', Validators.required],
-      xcontrato: ['', Validators.required],
-      bprincipal: [false, Validators.required]
+      cbanco: [''],
+      ctipocuentabancaria: [''],
+      xnumerocuenta: [''],
+      xcontrato: [''],
+      bprincipal: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

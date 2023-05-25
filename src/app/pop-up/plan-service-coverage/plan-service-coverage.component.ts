@@ -31,8 +31,8 @@ export class PlanServiceCoverageComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ccobertura: ['', Validators.required],
-      cconceptocobertura: ['', Validators.required]
+      ccobertura: [''],
+      cconceptocobertura: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

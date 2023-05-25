@@ -34,8 +34,8 @@ export class NotificationTypeDetailComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtiponotificacion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtiponotificacion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -50,14 +50,14 @@ export class ExtraCoverageDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      casociado: ['', Validators.required],
-      ccobertura: ['', Validators.required],
-      cconceptocobertura: ['', Validators.required],
-      xdescripcion: ['', Validators.required],
-      fefectiva: ['', Validators.required],
-      mcoberturaextra: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ccliente: [''],
+      casociado: [''],
+      ccobertura: [''],
+      cconceptocobertura: [''],
+      xdescripcion: [''],
+      fefectiva: [''],
+      mcoberturaextra: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

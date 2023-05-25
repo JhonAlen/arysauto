@@ -34,8 +34,8 @@ export class PenaltyDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xpenalizacion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xpenalizacion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

@@ -34,8 +34,8 @@ export class CivilStatusDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xestadocivil: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xestadocivil: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

@@ -31,9 +31,9 @@ export class BankComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cbanco: ['', Validators.required],
-      ctipocuentabancaria: ['', Validators.required],
-      xnumerocuenta: ['', Validators.required]
+      cbanco: [''],
+      ctipocuentabancaria: [''],
+      xnumerocuenta: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

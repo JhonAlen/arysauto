@@ -30,7 +30,7 @@ export class ProviderBrandComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cmarca: ['', Validators.required]
+      cmarca: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

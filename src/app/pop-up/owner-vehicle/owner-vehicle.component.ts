@@ -38,23 +38,23 @@ export class OwnerVehicleComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cmarca: ['', Validators.required],
-      cmodelo: ['', Validators.required],
+      cmarca: [''],
+      cmodelo: [''],
       cversion: [''],
-      xplaca: ['', Validators.required], 
-      fano: ['', Validators.required], 
-      xcolor: ['', Validators.required],
-      nkilometraje: ['', Validators.required],
+      xplaca: [''], 
+      fano: [''], 
+      xcolor: [''],
+      nkilometraje: [''],
       bimportado: [false],
       xcertificadoorigen: [''], 
       mpreciovehiculo: [''],
-      ncapacidadcarga: ['', Validators.required],
-      ncapacidadpasajeros: ['', Validators.required],
-      xserialcarroceria: ['', Validators.required],
-      xuso: ['', Validators.required],
-      xtipo: ['', Validators.required], 
+      ncapacidadcarga: [''],
+      ncapacidadpasajeros: [''],
+      xserialcarroceria: [''],
+      xuso: [''],
+      xtipo: [''], 
       cmoneda: [''],
-      xserialmotor: ['', Validators.required]
+      xserialmotor: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

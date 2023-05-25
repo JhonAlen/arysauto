@@ -34,8 +34,8 @@ export class TracingTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtiposeguimiento: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtiposeguimiento: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

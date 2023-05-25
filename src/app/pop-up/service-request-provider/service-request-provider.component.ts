@@ -34,8 +34,8 @@ export class ServiceRequestProviderComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required]
+      cestado: [''],
+      cciudad: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

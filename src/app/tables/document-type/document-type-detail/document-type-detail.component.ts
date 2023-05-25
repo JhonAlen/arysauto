@@ -34,9 +34,9 @@ export class DocumentTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtipodocidentidad: ['', Validators.required],
-      xdescripcion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtipodocidentidad: [''],
+      xdescripcion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

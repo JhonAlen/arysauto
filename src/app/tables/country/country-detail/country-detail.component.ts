@@ -34,9 +34,9 @@ export class CountryDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      cpais: ['', Validators.required],
-      xpais: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      cpais: [''],
+      xpais: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

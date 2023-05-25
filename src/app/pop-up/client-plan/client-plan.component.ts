@@ -32,11 +32,11 @@ export class ClientPlanComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cplan: ['', Validators.required],
-      casociado: ['', Validators.required],
-      ctipoplan: ['', Validators.required],
-      fdesde: ['', Validators.required],
-      fhasta: ['', Validators.required]
+      cplan: [''],
+      casociado: [''],
+      ctipoplan: [''],
+      fdesde: [''],
+      fhasta: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -30,7 +30,7 @@ export class QuoteByFleetExtraCoverageComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ccoberturaextra: ['', Validators.required]
+      ccoberturaextra: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

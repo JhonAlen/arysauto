@@ -32,8 +32,8 @@ export class ProviderServiceComponent implements OnInit {
   ngOnInit(): void {
     console.log('xddd ' + this.service);
     this.popup_form = this.formBuilder.group({
-      ctiposervicio: ['', Validators.required],
-      cservicio: ['', Validators.required]
+      ctiposervicio: [''],
+      cservicio: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

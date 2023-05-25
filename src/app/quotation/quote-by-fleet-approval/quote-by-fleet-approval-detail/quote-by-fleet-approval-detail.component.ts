@@ -43,18 +43,18 @@ export class QuoteByFleetApprovalDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      casociado: ['', Validators.required],
-      mmembresia: ['', Validators.required],
-      bactivo: [true, Validators.required],
-      mperdidaparcial: ['', Validators.required],
-      cimpuestoevento: ['', Validators.required],
-      mhonorario: ['', Validators.required],
-      cimpuestoprofesional: ['', Validators.required],
-      mgestionvial: ['', Validators.required],
-      cimpuestogestion: ['', Validators.required],
-      mtotalcreditofiscal: ['', Validators.required],
-      mtotalcapital: ['', Validators.required]
+      ccliente: [''],
+      casociado: [''],
+      mmembresia: [''],
+      bactivo: [true],
+      mperdidaparcial: [''],
+      cimpuestoevento: [''],
+      mhonorario: [''],
+      cimpuestoprofesional: [''],
+      mgestionvial: [''],
+      cimpuestogestion: [''],
+      mtotalcreditofiscal: [''],
+      mtotalcapital: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

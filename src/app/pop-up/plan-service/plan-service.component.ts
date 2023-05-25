@@ -42,14 +42,14 @@ export class PlanServiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctiposervicio: ['', Validators.required],
-      cservicio: ['', Validators.required],
-      ctipoagotamientoservicio: ['', Validators.required],
-      ncantidad: ['', Validators.required],
-      pservicio: ['', Validators.required],
-      mmaximocobertura: ['', Validators.required],
-      mdeducible: ['', Validators.required],
-      bserviciopadre: [false, Validators.required]
+      ctiposervicio: [''],
+      cservicio: [''],
+      ctipoagotamientoservicio: [''],
+      ncantidad: [''],
+      pservicio: [''],
+      mmaximocobertura: [''],
+      mdeducible: [''],
+      bserviciopadre: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

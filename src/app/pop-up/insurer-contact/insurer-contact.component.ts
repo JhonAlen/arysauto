@@ -30,11 +30,11 @@ export class InsurerContactComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      xtelefonocelular: ['', Validators.required],
+      xnombre: [''],
+      xapellido: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      xtelefonocelular: [''],
       xemail: ['', Validators.compose([
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
@@ -42,7 +42,7 @@ export class InsurerContactComponent implements OnInit {
       xtelefonocasa: [''],
       xtelefonooficina: [''],
       xfax: [''],
-      bnotificacion: [false, Validators.required]
+      bnotificacion: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

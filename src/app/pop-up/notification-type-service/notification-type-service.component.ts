@@ -31,8 +31,8 @@ export class NotificationTypeServiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctiposervicio: ['', Validators.required],
-      cservicio: ['', Validators.required]
+      ctiposervicio: [''],
+      cservicio: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

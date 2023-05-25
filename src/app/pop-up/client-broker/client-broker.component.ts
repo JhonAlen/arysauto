@@ -30,10 +30,10 @@ export class ClientBrokerComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ccorredor: ['', Validators.required],
-      pcorredor: ['', Validators.required],
-      mcorredor: ['', Validators.required],
-      fefectiva: ['', Validators.required]
+      ccorredor: [''],
+      pcorredor: [''],
+      mcorredor: [''],
+      fefectiva: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

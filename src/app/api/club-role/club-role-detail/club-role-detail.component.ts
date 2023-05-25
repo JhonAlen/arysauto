@@ -45,9 +45,9 @@ export class ClubRoleDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      crolclub: ['', Validators.required],
-      xrolclub: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      crolclub: [''],
+      xrolclub: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

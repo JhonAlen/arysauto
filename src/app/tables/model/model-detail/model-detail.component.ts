@@ -36,7 +36,7 @@ export class ModelDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
       cmarca: [''],
-      // casociado: ['', Validators.required],
+      // casociado: [''],
       xmodelo: [''],
       bactivo: [true]
     });

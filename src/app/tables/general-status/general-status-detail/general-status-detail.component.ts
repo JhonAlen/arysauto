@@ -34,8 +34,8 @@ export class GeneralStatusDetailComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xestatusgeneral: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xestatusgeneral: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

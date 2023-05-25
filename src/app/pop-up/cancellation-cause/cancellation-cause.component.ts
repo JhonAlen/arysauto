@@ -30,7 +30,7 @@ export class CancellationCauseComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ccausaanulacion: ['', Validators.required]
+      ccausaanulacion: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -32,10 +32,10 @@ export class NotificationReplacementComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctiporepuesto: ['', Validators.required],
-      crepuesto: ['', Validators.required],
-      ncantidad: ['', Validators.required],
-      cniveldano: ['', Validators.required]
+      ctiporepuesto: [''],
+      crepuesto: [''],
+      ncantidad: [''],
+      cniveldano: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
