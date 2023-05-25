@@ -30,11 +30,11 @@ export class RoadManagementConfigurationVehicleTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctipovehiculo: ['', Validators.required],
-      fefectiva: ['', Validators.required],
-      mtipovehiculoconfiguraciongestionvial: ['', Validators.required],
-      nlimiteano: ['', Validators.required],
-      mmayorlimiteano: ['', Validators.required]
+      ctipovehiculo: [''],
+      fefectiva: [''],
+      mtipovehiculoconfiguraciongestionvial: [''],
+      nlimiteano: [''],
+      mmayorlimiteano: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -54,22 +54,22 @@ export class ConsumerDetailComponent implements OnInit {
         Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[a-zA-Z0-9$@$!%*#?&]+$')
       ])),
-      verify_xcontrasena: new UntypedFormControl('', Validators.required) 
+      verify_xcontrasena: new UntypedFormControl('') 
     }, (formGroup: UntypedFormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });
     this.detail_form = this.formBuilder.group({
-      cpais: ['', Validators.required],
-      ccompania: ['', Validators.required],
-      xconsumidor: ['', Validators.required],
-      xproducto: ['', Validators.required],
+      cpais: [''],
+      ccompania: [''],
+      xconsumidor: [''],
+      xproducto: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
       matching_xcontrasena: this.matching_xpasswords_group,
-      xusuario: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xusuario: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

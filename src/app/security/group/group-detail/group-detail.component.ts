@@ -46,8 +46,8 @@ export class GroupDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      xgrupo: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xgrupo: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

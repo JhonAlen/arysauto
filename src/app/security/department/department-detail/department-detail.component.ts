@@ -39,8 +39,8 @@ export class DepartmentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      xdepartamento: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xdepartamento: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

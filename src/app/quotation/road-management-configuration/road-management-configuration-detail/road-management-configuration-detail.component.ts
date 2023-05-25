@@ -48,9 +48,9 @@ export class RoadManagementConfigurationDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      casociado: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ccliente: [''],
+      casociado: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -73,15 +73,15 @@ export class PlanDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ctipoplan: ['', Validators.required],
-      xplan: ['', Validators.required],
-      mcosto: ['', Validators.required],
+      ctipoplan: [''],
+      xplan: [''],
+      mcosto: [''],
       cmetodologia:[''],
       cpais:[''],
       caseguradora:[''],
       fdesde:[''],
       fhasta:[''],
-      bactivo: [true, Validators.required],
+      bactivo: [true],
       brcv: [false],
       cmoneda:[''],
       ptasa_casco:[''],

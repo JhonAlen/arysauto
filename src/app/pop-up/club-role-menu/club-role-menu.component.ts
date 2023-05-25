@@ -27,7 +27,7 @@ export class ClubRoleMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cmenuclub: ['', Validators.required]
+      cmenuclub: ['']
     });
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };

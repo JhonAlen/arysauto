@@ -34,8 +34,8 @@ export class ClaimCauseDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xcausasiniestro: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xcausasiniestro: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

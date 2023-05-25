@@ -34,8 +34,8 @@ export class VehicleTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtipovehiculo: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtipovehiculo: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

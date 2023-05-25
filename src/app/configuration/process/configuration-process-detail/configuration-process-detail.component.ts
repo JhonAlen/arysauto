@@ -58,8 +58,8 @@ export class ConfigurationProcessDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      xproceso: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xproceso: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

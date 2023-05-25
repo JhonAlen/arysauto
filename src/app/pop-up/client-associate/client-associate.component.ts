@@ -30,7 +30,7 @@ export class ClientAssociateComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      casociado: ['', Validators.required]
+      casociado: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -34,8 +34,8 @@ export class ImageDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      ximagen: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ximagen: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

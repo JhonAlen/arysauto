@@ -30,8 +30,8 @@ export class PlanPaymentMethodologyComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cmetodologiapago: ['', Validators.required],
-      mmetodologiapago: ['', Validators.required]
+      cmetodologiapago: [''],
+      mmetodologiapago: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

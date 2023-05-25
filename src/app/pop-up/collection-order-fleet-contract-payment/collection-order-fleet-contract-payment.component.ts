@@ -25,8 +25,8 @@ export class CollectionOrderFleetContractPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      mpago: ['', Validators.required],
-      bpagado: [false, Validators.required]
+      mpago: [''],
+      bpagado: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.payment){

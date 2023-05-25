@@ -41,18 +41,18 @@ export class AssociateDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ctipoasociado: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xasociado: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
+      ctipoasociado: [''],
+      ctipodocidentidad: [''],
+      xasociado: [''],
+      xdocidentidad: [''],
       xfax: [''],
-      xrazonsocial: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      xtelefono: ['', Validators.required],
-      xdireccion: ['', Validators.required],
-      fbaja: ['', Validators.required],
-      baseguradora: [false, Validators.required],
-      bactivo: [true, Validators.required]
+      xrazonsocial: [''],
+      xobservacion: [''],
+      xtelefono: [''],
+      xdireccion: [''],
+      fbaja: [''],
+      baseguradora: [false],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

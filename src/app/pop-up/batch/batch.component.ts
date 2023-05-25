@@ -34,7 +34,7 @@ export class BatchComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xobservacion: ['', Validators.required],
+      xobservacion: [''],
     });
     if(this.batch){
       if(this.batch.type == 3){

@@ -34,9 +34,9 @@ export class TaxDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      ximpuesto: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ximpuesto: [''],
+      xobservacion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

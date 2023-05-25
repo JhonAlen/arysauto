@@ -44,17 +44,17 @@ export class EnterpriseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xrazonsocial: ['', Validators.required],
-      xdireccion: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xtelefono: ['', Validators.required],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      xnombre: [''],
+      xrazonsocial: [''],
+      xdireccion: [''],
+      cestado: [''],
+      cciudad: [''],
+      xtelefono: [''],
       xfax:[''],
       ximagen: [''],
-      bactivo: [true, Validators.required]
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -36,10 +36,10 @@ export class FeesRegisterVehicleTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctipovehiculo: ['', Validators.required],
-      miniciointervalo: ['', Validators.required],
-      mfinalintervalo: ['', Validators.required],
-      ptasa: ['', Validators.required]
+      ctipovehiculo: [''],
+      miniciointervalo: [''],
+      mfinalintervalo: [''],
+      ptasa: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

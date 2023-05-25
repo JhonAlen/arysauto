@@ -34,8 +34,8 @@ export class ColorDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void>{
     this.detail_form = this.formBuilder.group({
-      xcolor: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xcolor: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

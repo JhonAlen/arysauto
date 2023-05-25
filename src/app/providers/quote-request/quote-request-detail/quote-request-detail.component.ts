@@ -45,9 +45,9 @@ export class QuoteRequestDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      xobservacion: ['', Validators.required],
-      bcerrada: [false, Validators.required],
-      mtotalcotizacion: ['', Validators.required],
+      xobservacion: [''],
+      bcerrada: [false],
+      mtotalcotizacion: [''],
       cmoneda: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;

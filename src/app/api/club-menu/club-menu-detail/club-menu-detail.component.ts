@@ -47,13 +47,13 @@ export class ClubMenuDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      cpais: ['', Validators.required],
-      ccompania: ['', Validators.required],
-      xmenuclub: ['', Validators.required],
+      cpais: [''],
+      ccompania: [''],
+      xmenuclub: [''],
       xcomponente: [''],
-      xcontenido: ['', Validators.required],
-      bsubmenu: [false, Validators.required],
-      bactivo: [true, Validators.required]
+      xcontenido: [''],
+      bsubmenu: [false],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

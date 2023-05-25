@@ -38,9 +38,9 @@ export class ServicesInsurersDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xservicio: ['', Validators.required],
-      ctiposervicio: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xservicio: [''],
+      ctiposervicio: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

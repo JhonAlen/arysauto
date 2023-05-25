@@ -47,13 +47,13 @@ export class EmailAlertDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      cpais: ['', Validators.required],
-      ccompania: ['', Validators.required],
-      xcorreo: ['', Validators.required],
-      ilenguaje: ['', Validators.required],
-      xasunto: ['', Validators.required],
-      xhtml: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      cpais: [''],
+      ccompania: [''],
+      xcorreo: [''],
+      ilenguaje: [''],
+      xasunto: [''],
+      xhtml: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

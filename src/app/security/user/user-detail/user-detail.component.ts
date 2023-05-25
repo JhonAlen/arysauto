@@ -54,29 +54,29 @@ export class UserDetailComponent implements OnInit {
         Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[a-zA-Z0-9$@$!%*#?&]+$')
       ])),
-      verify_xcontrasena: new UntypedFormControl('', Validators.required) 
+      verify_xcontrasena: new UntypedFormControl('') 
     }, (formGroup: UntypedFormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });
     this.detail_form = this.formBuilder.group({
-      cpais: ['', Validators.required],
-      ccompania: ['', Validators.required],
-      cdepartamento: ['', Validators.required],
-      crol: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
+      cpais: [''],
+      ccompania: [''],
+      cdepartamento: [''],
+      crol: [''],
+      xnombre: [''],
+      xapellido: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
       matching_xcontrasena: this.matching_xpasswords_group,
-      xtelefono: ['', Validators.required],
-      xdireccion: ['', Validators.required],
-      bproveedor: [false, Validators.required],
+      xtelefono: [''],
+      xdireccion: [''],
+      bproveedor: [false],
       cproveedor: [''],
       xproveedor: [{ value: '', disabled: true }],
       xrazonsocial: [{ value: '', disabled: true }],
-      bactivo: [true, Validators.required],
+      bactivo: [true],
       bcorredor: [false],
       ccorredor: [''],
       xcorredor: ['']

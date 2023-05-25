@@ -34,8 +34,8 @@ export class PaymentTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtipopago: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtipopago: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

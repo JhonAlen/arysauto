@@ -35,15 +35,15 @@ export class ReplacementDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      ctiporepuesto: ['', Validators.required],
-      xrepuesto: ['', Validators.required],
-      bizquierda: [false, Validators.required],
-      bderecha: [false, Validators.required],
-      bsuperior: [false, Validators.required],
-      binferior: [false, Validators.required],
-      bdelantero: [false, Validators.required],
-      btrasero: [false, Validators.required],
-      bactivo: [true, Validators.required]
+      ctiporepuesto: [''],
+      xrepuesto: [''],
+      bizquierda: [false],
+      bderecha: [false],
+      bsuperior: [false],
+      binferior: [false],
+      bdelantero: [false],
+      btrasero: [false],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

@@ -32,7 +32,7 @@ export class OwnerVehicleImageComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cimagen: ['', Validators.required],
+      cimagen: [''],
       ximagen: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;

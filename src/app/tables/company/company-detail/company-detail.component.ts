@@ -34,14 +34,14 @@ export class CompanyDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xcompania: ['', Validators.required],
-      xcolornav: ['', Validators.required],
-      xtemanav: ['', Validators.required],
-      xcolorprimario: ['', Validators.required],
-      xcolorsegundario: ['', Validators.required],
-      xcolorterciario: ['', Validators.required],
-      xcolortexto: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xcompania: [''],
+      xcolornav: [''],
+      xtemanav: [''],
+      xcolorprimario: [''],
+      xcolorsegundario: [''],
+      xcolorterciario: [''],
+      xcolortexto: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

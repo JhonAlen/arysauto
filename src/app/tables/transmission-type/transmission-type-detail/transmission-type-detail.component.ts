@@ -34,8 +34,8 @@ export class TransmissionTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtipotransmision: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtipotransmision: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

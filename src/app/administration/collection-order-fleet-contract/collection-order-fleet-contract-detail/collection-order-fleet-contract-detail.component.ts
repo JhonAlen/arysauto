@@ -46,10 +46,10 @@ export class CollectionOrderFleetContractDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      ifacturacion: ['', Validators.required],
-      cestatusgeneral: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ccliente: [''],
+      ifacturacion: [''],
+      cestatusgeneral: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

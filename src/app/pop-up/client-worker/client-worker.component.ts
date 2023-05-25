@@ -34,11 +34,11 @@ export class ClientWorkerComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
-      ctipodocidentidad: ['', Validators.required],
-      xdocidentidad: ['', Validators.required],
-      xtelefonocelular: ['', Validators.required],
+      xnombre: [''],
+      xapellido: [''],
+      ctipodocidentidad: [''],
+      xdocidentidad: [''],
+      xtelefonocelular: [''],
       xemail: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -47,12 +47,12 @@ export class ClientWorkerComponent implements OnInit {
       xocupacion: [''],
       xtelefonocasa: [''],
       xfax: [''],
-      cparentesco: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccion: ['', Validators.required],
-      fnacimiento: ['', Validators.required],
-      cestadocivil: ['', Validators.required]
+      cparentesco: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccion: [''],
+      fnacimiento: [''],
+      cestadocivil: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

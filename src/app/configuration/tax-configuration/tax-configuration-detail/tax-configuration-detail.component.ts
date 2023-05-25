@@ -40,15 +40,15 @@ export class TaxConfigurationDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ximpuesto: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      pimpuesto: ['', Validators.required],
-      ctipopago: ['', Validators.required],
-      fdesde: ['', Validators.required],
-      fhasta: ['', Validators.required],
-      mdesde: ['', Validators.required],
-      mhasta: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ximpuesto: [''],
+      xobservacion: [''],
+      pimpuesto: [''],
+      ctipopago: [''],
+      fdesde: [''],
+      fhasta: [''],
+      mdesde: [''],
+      mhasta: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

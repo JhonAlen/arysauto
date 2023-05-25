@@ -35,7 +35,7 @@ export class ChangePasswordComponent implements OnInit {
         Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[a-zA-Z0-9$@$!%*#?&]+$')
       ])),
-      verify_xcontrasena: new UntypedFormControl('', Validators.required)
+      verify_xcontrasena: new UntypedFormControl('')
     }, (formGroup: UntypedFormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });

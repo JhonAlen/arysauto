@@ -31,9 +31,9 @@ export class ClientExcludedModelComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cmarca: ['', Validators.required],
-      cmodelo: ['', Validators.required],
-      xobservacion: ['', Validators.required]
+      cmarca: [''],
+      cmodelo: [''],
+      xobservacion: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -34,8 +34,8 @@ export class ServiceTypeDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xtiposervicio: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xtiposervicio: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

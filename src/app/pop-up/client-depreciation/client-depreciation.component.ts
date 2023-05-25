@@ -30,10 +30,10 @@ export class ClientDepreciationComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cdepreciacion: ['', Validators.required],
-      pdepreciacion: ['', Validators.required],
-      mdepreciacion: ['', Validators.required],
-      fefectiva: ['', Validators.required]
+      cdepreciacion: [''],
+      pdepreciacion: [''],
+      mdepreciacion: [''],
+      fefectiva: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

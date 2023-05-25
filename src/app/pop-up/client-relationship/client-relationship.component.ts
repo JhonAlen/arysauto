@@ -30,9 +30,9 @@ export class ClientRelationshipComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cparentesco: ['', Validators.required],
-      xobservacion: ['', Validators.required],
-      fefectiva: ['', Validators.required]
+      cparentesco: [''],
+      xobservacion: [''],
+      fefectiva: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

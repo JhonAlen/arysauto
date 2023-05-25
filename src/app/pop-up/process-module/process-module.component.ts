@@ -28,8 +28,8 @@ export class ProcessModuleComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cgrupo: ['', Validators.required],
-      cmodulo: ['', Validators.required]
+      cgrupo: [''],
+      cmodulo: ['']
     });
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };

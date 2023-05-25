@@ -34,8 +34,8 @@ export class DepreciationDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xdepreciacion: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xdepreciacion: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

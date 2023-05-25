@@ -21,9 +21,9 @@ export class ModuleComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xmodulo: ['', Validators.required],
-      xruta: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xmodulo: [''],
+      xruta: [''],
+      bactivo: [true]
     });
     if(this.module){
       if(this.module.type == 3){

@@ -33,20 +33,20 @@ export class RegisterComponent implements OnInit {
 
   async ngOnInit(): Promise<void>{
     this.search_form = this.formBuilder.group({
-      cestado: ['', Validators.required],
+      cestado: [''],
       xestado: [''],
       cciudad: [''],
-      xciudad: ['', Validators.required],
-      xnombre: ['', Validators.required],
-      xapellido: ['', Validators.required],
-      fnacimiento: ['', Validators.required],
-      xcontrasena: ['', Validators.required],
-      xtelefonocelular: ['', Validators.required],
-      xemail: ['', Validators.required],
-      csexo: ['', Validators.required],
+      xciudad: [''],
+      xnombre: [''],
+      xapellido: [''],
+      fnacimiento: [''],
+      xcontrasena: [''],
+      xtelefonocelular: [''],
+      xemail: [''],
+      csexo: [''],
       xsexo: [''],
-      xdocidentidad: ['', Validators.required],
-      xdireccion: ['', Validators.required]
+      xdocidentidad: [''],
+      xdireccion: ['']
 
 //Holis prueba de guardado
 

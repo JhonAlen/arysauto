@@ -30,7 +30,7 @@ export class ExtraCoverageVehicleTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctipovehiculo: ['', Validators.required]
+      ctipovehiculo: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

@@ -34,8 +34,8 @@ export class RelationshipDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xparentesco: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xparentesco: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

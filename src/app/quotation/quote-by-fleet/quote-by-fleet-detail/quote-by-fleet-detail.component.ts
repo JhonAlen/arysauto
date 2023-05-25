@@ -48,10 +48,10 @@ export class QuoteByFleetDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: ['', Validators.required],
-      casociado: ['', Validators.required],
-      mmembresia: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      ccliente: [''],
+      casociado: [''],
+      mmembresia: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

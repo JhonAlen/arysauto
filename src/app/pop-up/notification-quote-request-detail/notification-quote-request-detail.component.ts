@@ -47,9 +47,9 @@ export class NotificationQuoteRequestDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xobservacion: ['', Validators.required],
-      bcerrada: [false, Validators.required],
-      mtotalcotizacion: ['', Validators.required],
+      xobservacion: [''],
+      bcerrada: [false],
+      mtotalcotizacion: [''],
       cmoneda: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;

@@ -26,10 +26,10 @@ export class ClubMenuSubMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      xsubmenuclub: ['', Validators.required],
-      xcomponente: ['', Validators.required],
-      xcontenido: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xsubmenuclub: [''],
+      xcomponente: [''],
+      xcontenido: [''],
+      bactivo: [true]
     });
     if(this.subMenu){
       if(this.subMenu.type == 3){

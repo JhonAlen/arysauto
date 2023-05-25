@@ -34,8 +34,8 @@ export class TracingMotiveDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.detail_form = this.formBuilder.group({
-      xmotivoseguimiento: ['', Validators.required],
-      bactivo: [true, Validators.required]
+      xmotivoseguimiento: [''],
+      bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser) {

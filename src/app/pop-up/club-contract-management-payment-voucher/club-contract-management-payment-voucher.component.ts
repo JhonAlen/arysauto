@@ -30,9 +30,9 @@ export class ClubContractManagementPaymentVoucherComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cbanco: ['', Validators.required],
-      ctransaccion: ['', Validators.required],
-      creferenciatransaccion: ['', Validators.required]
+      cbanco: [''],
+      ctransaccion: [''],
+      creferenciatransaccion: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

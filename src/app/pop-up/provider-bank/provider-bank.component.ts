@@ -31,10 +31,10 @@ export class ProviderBankComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      cbanco: ['', Validators.required],
-      ctipocuentabancaria: ['', Validators.required],
-      xnumerocuenta: ['', Validators.required],
-      bprincipal: [false, Validators.required]
+      cbanco: [''],
+      ctipocuentabancaria: [''],
+      xnumerocuenta: [''],
+      bprincipal: [false]
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){

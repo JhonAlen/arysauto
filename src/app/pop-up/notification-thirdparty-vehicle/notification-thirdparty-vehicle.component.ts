@@ -42,38 +42,38 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
 
   ngOnInit(): void {
     this.popup_form = this.formBuilder.group({
-      ctipodocidentidadconductor: ['', Validators.required],
-      xdocidentidadconductor: ['', Validators.required],
-      xnombreconductor: ['', Validators.required],
-      xapellidoconductor: ['', Validators.required],
-      xtelefonocelularconductor: ['', Validators.required],
+      ctipodocidentidadconductor: [''],
+      xdocidentidadconductor: [''],
+      xnombreconductor: [''],
+      xapellidoconductor: [''],
+      xtelefonocelularconductor: [''],
       xtelefonocasaconductor: [''],
       xemailconductor: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
-      xobservacionconductor: ['', Validators.required],
-      xplaca: ['', Validators.required],
-      cmarca: ['', Validators.required],
-      cmodelo: ['', Validators.required],
-      cversion: ['', Validators.required],
-      fano: ['', Validators.required],
-      ccolor: ['', Validators.required],
-      xobservacionvehiculo: ['', Validators.required],
-      ctipodocidentidadpropietario: ['', Validators.required],
-      xdocidentidadpropietario: ['', Validators.required],
-      xnombrepropietario: ['', Validators.required],
-      xapellidopropietario: ['', Validators.required],
-      cestado: ['', Validators.required],
-      cciudad: ['', Validators.required],
-      xdireccion: ['', Validators.required],
-      xtelefonocelularpropietario: ['', Validators.required],
+      xobservacionconductor: [''],
+      xplaca: [''],
+      cmarca: [''],
+      cmodelo: [''],
+      cversion: [''],
+      fano: [''],
+      ccolor: [''],
+      xobservacionvehiculo: [''],
+      ctipodocidentidadpropietario: [''],
+      xdocidentidadpropietario: [''],
+      xnombrepropietario: [''],
+      xapellidopropietario: [''],
+      cestado: [''],
+      cciudad: [''],
+      xdireccion: [''],
+      xtelefonocelularpropietario: [''],
       xtelefonocasapropietario: [''],
       xemailpropietario: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
-      xobservacionpropietario: ['', Validators.required]
+      xobservacionpropietario: ['']
     });
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
