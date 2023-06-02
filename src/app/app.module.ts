@@ -335,6 +335,7 @@ import { NotificationQuoteRequestIndexComponent } from './pop-up/notification-qu
 import { NotificationQuoteRequestDetailComponent } from './pop-up/notification-quote-request-detail/notification-quote-request-detail.component';
 import { RenewalIndividualContractsComponent } from './subscription/renewal-individual-contracts/renewal-individual-contracts.component';
 import { ProvidersDocumentsComponent } from './pop-up/providers-documents/providers-documents.component';
+import { LoginComponent } from './club/pages-statics/login/login.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -650,7 +651,8 @@ export function HttpLoaderFactory(http: HttpClient){
     NotificationQuoteRequestIndexComponent,
     NotificationQuoteRequestDetailComponent,
     RenewalIndividualContractsComponent,
-    ProvidersDocumentsComponent
+    ProvidersDocumentsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

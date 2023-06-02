@@ -1,0 +1,39 @@
+<body class="sign-in-basic">
+    <div class="page-header align-items-start min-vh-100" style="background-image: url('../../../../assets/imagenes/arys/Fondo\ de\ Sign\ In\ -\ ArysAuto\ Club.jpg');" loading="lazy">
+      <span class="mask  opacity-6"></span>
+      <div class="container p-4 mt-6">
+        <div class="row">
+          <div class="col-lg-4 col-md-8 col-12 mx-auto" style="text-align: center;">
+            <img class="w-65 p-3" src="../../../../assets/imagenes/arys/ArysAuto Club -  Logo.png">
+            <div class="card z-index-0 fadeIn3 fadeInBottom" style="background-color: #c9c9c9">
+              <div class="card-header p-1 position-relative">
+                <div class="btn bg-gradient-primary w-100 my-4 mb-2">
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
+                </div>
+              </div>
+              <div class="card-body">
+                <form role="form" class="text-start" [formGroup]="signin_form" (ngSubmit)="onSubmit(signin_form.value)">
+                  <div class="input-group input-group-outline my-3">
+                    <input  placeholder="Introducir Correo" type="email" formControlName="xemail" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xemail').errors }">
+                    <div *ngIf="submitted && signin_form.get('xemail').errors" class="invalid-feedback">
+                      <div *ngIf="signin_form.get('xemail').errors.required">{{ "SIGNIN.REQUIRED_EMAIL" | translate }}Correo requerido</div>
+                    </div>
+                  </div>
+                  <div class="input-group input-group-outline mb-3">
+                    <input  placeholder="Introducir Contraseña" type="password" formControlName="xcontrasena" class="form-control" [ngClass]="{ 'is-invalid' : submitted && signin_form.get('xcontrasena').errors }">
+                    <div *ngIf="submitted && signin_form.get('xcontrasena').errors" class="invalid-feedback">
+                      <div *ngIf="signin_form.get('xcontrasena').errors.required">{{ "SIGNIN.REQUIRED_PASSWORD" | translate }}</div>
+                    </div>               
+                   </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                  </div>
+    
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body> 
