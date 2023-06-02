@@ -331,6 +331,7 @@ import { IndividualRenovationIndexComponent } from './renovation/individual-reno
 import { IndividualRenovationDetailComponent } from './renovation/individual-renovation/individual-renovation-detail/individual-renovation-detail.component';
 import { ReportsComponent } from './administration/reports/reports.component';
 import { ContractServiceArysAdministrationComponent } from './subscription/contract-service-arys-administration/contract-service-arys-administration.component';
+import { LoginComponent } from './club/pages-statics/login/login.component';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -643,7 +644,8 @@ export function HttpLoaderFactory(http: HttpClient){
     IndividualRenovationIndexComponent,
     IndividualRenovationDetailComponent,
     ReportsComponent,
-    ContractServiceArysAdministrationComponent
+    ContractServiceArysAdministrationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
