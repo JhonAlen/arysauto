@@ -32,12 +32,21 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>{{ "EVENTS.NOTIFICATIONS.MATERIALDAMAGE" | translate }}</label>
-                                    <select formControlName="cdanomaterial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cdanomaterial').errors }">
+                                    <select formControlName="cdanomaterial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cdanomaterial').errors }" (change)="setCMaterialDamage()">
                                         <option></option>
                                         <option *ngFor="let materialDamage of materialDamageList" value="{{ materialDamage.id }}">{{ materialDamage.value }}</option>
                                     </select>
                                     <div *ngIf="submitted && popup_form.get('cdanomaterial').errors"  class="invalid-feedback">
                                         <div *ngIf="popup_form.get('cdanomaterial').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDMATERIALDAMAGE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4" *ngIf="cMaterialDamage == 5">
+                                <div class="form-group">
+                                    <label>Material</label>
+                                    <input type="text" formControlName="xmaterial" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('xmaterial').errors }">
+                                    <div *ngIf="submitted && popup_form.get('xmaterial').errors"  class="invalid-feedback">
+                                        <div *ngIf="popup_form.get('xmaterial').errors.required">{{ "EVENTS.NOTIFICATIONS.DAMAGEDMATERIAL" | translate }}</div>
                                     </div>
                                 </div>
                             </div>

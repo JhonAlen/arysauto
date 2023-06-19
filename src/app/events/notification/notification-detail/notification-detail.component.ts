@@ -412,6 +412,7 @@ export class NotificationDetailComponent implements OnInit {
               cdanomaterialnotificacion: response.data.materialDamages[i].cdanomaterialnotificacion,
               cdanomaterial: response.data.materialDamages[i].cdanomaterial,
               xdanomaterial: response.data.materialDamages[i].xdanomaterial,
+              xmaterial: response.data.materialDamages[i].xmaterial,
               cniveldano: response.data.materialDamages[i].cniveldano,
               xniveldano: response.data.materialDamages[i].xniveldano,
               xobservacion: response.data.materialDamages[i].xobservacion,
@@ -849,6 +850,7 @@ export class NotificationDetailComponent implements OnInit {
             create: true,
             cdanomaterial: result.cdanomaterial,
             xdanomaterial: result.xdanomaterial,
+            xmaterial: result.xmaterial,
             cniveldano: result.cniveldano,
             xniveldano: result.xniveldano,
             xobservacion: result.xobservacion,
@@ -1153,13 +1155,14 @@ export class NotificationDetailComponent implements OnInit {
 
   materialDamageRowClicked(event: any){
     let materialDamage = {};
-    if(this.editStatus && !this.editBlock){ 
+    if(this.editStatus && this.editBlock){ 
       materialDamage = { 
         type: 1,
         create: event.data.create, 
         cgrid: event.data.cgrid,
         cdanomaterialnotificacion: event.data.cdanomaterialnotificacion,
         cdanomaterial: event.data.cdanomaterial,
+        xmaterial: event.data.xmaterial,
         cniveldano: event.data.cniveldano,
         xobservacion: event.data.xobservacion,
         ctipodocidentidad: event.data.ctipodocidentidad,
@@ -1181,6 +1184,7 @@ export class NotificationDetailComponent implements OnInit {
         cgrid: event.data.cgrid,
         cdanomaterialnotificacion: event.data.cdanomaterialnotificacion,
         cdanomaterial: event.data.cdanomaterial,
+        xmaterial: event.data.xmaterial,
         cniveldano: event.data.cniveldano,
         xobservacion: event.data.xobservacion,
         ctipodocidentidad: event.data.ctipodocidentidad,
@@ -1205,6 +1209,7 @@ export class NotificationDetailComponent implements OnInit {
             if(this.materialDamageList[i].cgrid == result.cgrid){
               this.materialDamageList[i].cdanomaterial = result.cdanomaterial;
               this.materialDamageList[i].xdanomaterial = result.xdanomaterial;
+              this.materialDamageList[i].xmaterial = result.xmaterial;
               this.materialDamageList[i].cniveldano = result.cniveldano;
               this.materialDamageList[i].xniveldano = result.xniveldano;
               this.materialDamageList[i].xobservacion = result.xobservacion;
@@ -1238,7 +1243,7 @@ export class NotificationDetailComponent implements OnInit {
 
   thirdpartyVehicleRowClicked(event: any){
     let thirdpartyVehicle = {};
-    if(this.editStatus && !this.editBlock){ 
+    if(this.editStatus && this.editBlock){ 
       thirdpartyVehicle = { 
         type: 1,
         create: event.data.create, 
@@ -1347,7 +1352,7 @@ export class NotificationDetailComponent implements OnInit {
               this.thirdpartyVehicleList[i].xobservacionpropietario = result.xobservacionpropietario;
               this.thirdpartyVehicleList[i].replacements = result.replacements;
               this.thirdpartyVehicleList[i].replacementsResult = result.replacementsResult;
-              this.thirdpartyGridApi.refreshCells();
+              this.thirdpartyVehicleGridApi.refreshCells();
               return;
             }
           }
@@ -1650,6 +1655,10 @@ export class NotificationDetailComponent implements OnInit {
       let updateReplacementList = this.replacementList.filter((row) => { return !row.create; });
       let createReplacementList = this.replacementList.filter((row) => { return row.create; });
       let updateThirdpartyList = this.thirdpartyList.filter((row) => { return !row.create; });
+      let updateMaterialDamageList = this.materialDamageList.filter((row) => { return !row.create; });
+      let createMaterialDamageList = this.materialDamageList.filter((row) => { return row.create; });
+      let updateThirdPartyVehiclesList = this.thirdpartyVehicleList.filter((row) => { return !row.create; });
+      let createThirdPartyVehiclesList = this.thirdpartyVehicleList.filter((row) => { return row.create; });
       let updateProviderList = this.providerList.filter((row) => { return !row.create; });
       let createProviderList = this.providerList.filter((row) => { return row.create; });
       let updateTracingList = this.tracingList.filter((row) => { return !row.create; });
@@ -1684,6 +1693,16 @@ export class NotificationDetailComponent implements OnInit {
         },
         thirdparties: {
           update: updateThirdpartyList
+        },
+        materialDamages: {
+          create: createMaterialDamageList,
+          update: updateMaterialDamageList,
+          delete: this.materialDamageDeletedRowList
+        },
+        thirdPartyVehicles: {
+          create: createThirdPartyVehiclesList,
+          update: updateThirdPartyVehiclesList,
+          delete: this.thirdpartyVehicleDeletedRowList
         },
         providers: {
           create: createProviderList,

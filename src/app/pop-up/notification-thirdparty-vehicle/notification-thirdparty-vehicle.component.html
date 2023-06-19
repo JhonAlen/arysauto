@@ -148,9 +148,9 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>{{ "EVENTS.NOTIFICATIONS.VERSION" | translate }}</label>
-                                    <select formControlName="cversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cversion').errors }">
+                                    <select formControlName="cversion" class="form-control" [ngClass]="{ 'is-invalid' : submitted && popup_form.get('cversion').errors }" (change)="getDataYear()">
                                         <option></option>
-                                        <option *ngFor="let version of versionList" value="{{ version.id }}">{{ version.value }}</option>
+                                        <option *ngFor="let version of versionList" value="{{ version.control }}">{{ version.value }}</option>
                                     </select>
                                     <div *ngIf="submitted && popup_form.get('cversion').errors"  class="invalid-feedback">
                                         <div *ngIf="popup_form.get('cversion').errors.required">{{ "EVENTS.NOTIFICATIONS.REQUIREDVERSION" | translate }}</div>
