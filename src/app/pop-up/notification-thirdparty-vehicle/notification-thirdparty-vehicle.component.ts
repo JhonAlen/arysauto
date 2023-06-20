@@ -182,7 +182,8 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
           this.popup_form.get('cmodelo').setValue(this.thirdpartyVehicle.cmodelo);
           this.popup_form.get('cmodelo').disable();
           this.versionDropdownDataRequest();
-          this.popup_form.get('cversion').setValue(this.thirdpartyVehicle.cversion);
+          this.setDataVersion();
+          // this.popup_form.get('cversion').setValue(this.thirdpartyVehicle.cversion);
           this.popup_form.get('cversion').disable();
           this.popup_form.get('fano').setValue(this.thirdpartyVehicle.fano);
           this.popup_form.get('fano').disable();
@@ -229,7 +230,9 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
           this.modelDropdownDataRequest();
           this.popup_form.get('cmodelo').setValue(this.thirdpartyVehicle.cmodelo);
           this.versionDropdownDataRequest();
-          this.popup_form.get('cversion').setValue(this.thirdpartyVehicle.cversion);
+          // this.popup_form.get('cversion').setValue(this.thirdpartyVehicle.cversion);
+          this.setDataVersion();
+          this.popup_form.get('cversion').setValue(1);
           this.popup_form.get('fano').setValue(this.thirdpartyVehicle.fano);
           this.popup_form.get('fano').disable();
           this.popup_form.get('ccolor').setValue(this.thirdpartyVehicle.ccolor);
@@ -357,6 +360,30 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
         this.alert.show = true;
       });
     }
+
+    this.setDataVersion();
+
+  }
+
+  setDataVersion() {
+    console.log(this.versionList);
+    for (let i; i < this.versionList.length; i++) {
+      console.log(this.versionList[i]);
+      if (this.versionList[i].id == this.thirdpartyVehicle.cversion && this.versionList[i].fano == this.thirdpartyVehicle.fano) {
+        console.log(this.versionList[i] + "version encontrada");
+        return this.versionList[i];
+      }
+    }
+
+    // for (const version of this.versionList) {
+    //   console.log(version);
+    //   if (version.id == this.thirdpartyVehicle.cversion && version.fano == this.thirdpartyVehicle.fano) {
+    //     // this.popup_form.get('cversion').setValue(version.control)
+    //     console.log(version + "version encontrada");
+    //     return version;
+    //   }
+    // }
+
   }
 
   getDataYear(){
@@ -471,7 +498,7 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
     this.thirdpartyVehicle.xmarca = brandFilter[0].value;
     this.thirdpartyVehicle.cmodelo = form.cmodelo;
     this.thirdpartyVehicle.xmodelo = modelFilter[0].value;
-    this.thirdpartyVehicle.cversion = version.control;
+    this.thirdpartyVehicle.cversion = version.id;
     this.thirdpartyVehicle.xversion = version.value;
     this.thirdpartyVehicle.fano = version.fano;
     this.thirdpartyVehicle.ccolor = form.ccolor;
