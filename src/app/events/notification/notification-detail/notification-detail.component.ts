@@ -1243,6 +1243,7 @@ export class NotificationDetailComponent implements OnInit {
 
   thirdpartyVehicleRowClicked(event: any){
     let thirdpartyVehicle = {};
+    console.log(event);
     if(this.editStatus && this.editBlock){ 
       thirdpartyVehicle = { 
         type: 1,

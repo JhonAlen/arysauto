@@ -361,6 +361,8 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
 
   getDataYear(){
     let version = this.versionList.find(element => element.control === parseInt(this.popup_form.get('cversion').value));
+    console.log(version);
+    
     this.popup_form.get('fano').setValue(version.fano)
     this.popup_form.get('fano').disable()
   }
@@ -469,7 +471,7 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
     this.thirdpartyVehicle.xmarca = brandFilter[0].value;
     this.thirdpartyVehicle.cmodelo = form.cmodelo;
     this.thirdpartyVehicle.xmodelo = modelFilter[0].value;
-    this.thirdpartyVehicle.cversion = version.cversion;
+    this.thirdpartyVehicle.cversion = version.control;
     this.thirdpartyVehicle.xversion = version.value;
     this.thirdpartyVehicle.fano = version.fano;
     this.thirdpartyVehicle.ccolor = form.ccolor;
@@ -495,6 +497,8 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
         delete: this.replacementDeletedRowList
       };
     }
+    console.log(this.thirdpartyVehicle);
+    
     this.activeModal.close(this.thirdpartyVehicle);
   }
 
