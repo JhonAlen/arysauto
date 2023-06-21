@@ -182,7 +182,6 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
           this.popup_form.get('cmodelo').setValue(this.thirdpartyVehicle.cmodelo);
           this.popup_form.get('cmodelo').disable();
           this.versionDropdownDataRequest();
-          this.setDataVersion();
           // this.popup_form.get('cversion').setValue(this.thirdpartyVehicle.cversion);
           this.popup_form.get('cversion').disable();
           this.popup_form.get('fano').setValue(this.thirdpartyVehicle.fano);
@@ -230,9 +229,6 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
           this.modelDropdownDataRequest();
           this.popup_form.get('cmodelo').setValue(this.thirdpartyVehicle.cmodelo);
           this.versionDropdownDataRequest();
-          // this.popup_form.get('cversion').setValue(this.thirdpartyVehicle.cversion);
-          this.setDataVersion();
-          this.popup_form.get('cversion').setValue(1);
           this.popup_form.get('fano').setValue(this.thirdpartyVehicle.fano);
           this.popup_form.get('fano').disable();
           this.popup_form.get('ccolor').setValue(this.thirdpartyVehicle.ccolor);
@@ -347,6 +343,8 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
               control: response.data.list[i].control, });
           }
           this.versionList.sort((a,b) => a.value > b.value ? 1 : -1);
+          let version = this.setDataVersion(this.versionList);
+          this.popup_form.get('cversion').setValue(version.control)
         }
       },
       (err) => {
@@ -360,36 +358,18 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
         this.alert.show = true;
       });
     }
-
-    this.setDataVersion();
-
   }
 
-  setDataVersion() {
-    console.log(this.versionList);
-    for (let i; i < this.versionList.length; i++) {
-      console.log(this.versionList[i]);
-      if (this.versionList[i].id == this.thirdpartyVehicle.cversion && this.versionList[i].fano == this.thirdpartyVehicle.fano) {
-        console.log(this.versionList[i] + "version encontrada");
-        return this.versionList[i];
+  setDataVersion(versionList: any[]) {
+    for (let version of versionList) {
+      if (version.id == this.thirdpartyVehicle.cversion && version.fano == this.thirdpartyVehicle.fano) {
+        return version;
       }
-    }
-
-    // for (const version of this.versionList) {
-    //   console.log(version);
-    //   if (version.id == this.thirdpartyVehicle.cversion && version.fano == this.thirdpartyVehicle.fano) {
-    //     // this.popup_form.get('cversion').setValue(version.control)
-    //     console.log(version + "version encontrada");
-    //     return version;
-    //   }
-    // }
-
+    }    
   }
 
   getDataYear(){
     let version = this.versionList.find(element => element.control === parseInt(this.popup_form.get('cversion').value));
-    console.log(version);
-    
     this.popup_form.get('fano').setValue(version.fano)
     this.popup_form.get('fano').disable()
   }
@@ -524,8 +504,6 @@ export class NotificationThirdpartyVehicleComponent implements OnInit {
         delete: this.replacementDeletedRowList
       };
     }
-    console.log(this.thirdpartyVehicle);
-    
     this.activeModal.close(this.thirdpartyVehicle);
   }
 
