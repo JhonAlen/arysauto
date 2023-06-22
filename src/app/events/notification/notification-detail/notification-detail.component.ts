@@ -471,11 +471,7 @@ export class NotificationDetailComponent implements OnInit {
           }
         }
         this.thirdpartyVehicleList = [];
-        console.log(response.data);
-        
         if(response.data.thirdpartyVehicles){
-          console.log();
-          
           for(let i = 0; i < response.data.thirdpartyVehicles.length; i++){
             let replacements = [];
             for(let j = 0; j < response.data.thirdpartyVehicles[i].replacements.length; j++){
@@ -524,8 +520,6 @@ export class NotificationDetailComponent implements OnInit {
               replacements: replacements
             });
           }
-          console.log(this.thirdpartyVehicleList);
-          
         }
         this.providerList = [];
         if(response.data.providers){
