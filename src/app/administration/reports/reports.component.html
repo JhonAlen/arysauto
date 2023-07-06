@@ -7,7 +7,8 @@
                     <div class="row">
                         <div class="container">
                             <label>Buscar Primas</label>
-                            <button [disabled]="loading || !searchStatus || !search_form.valid" class="btn company-detail-button float-right mr-1" type="button" (click)="getTitulo()">
+                            <button [disabled]="loading || !searchStatus || !search_form.valid"
+                                class="btn company-detail-button float-right mr-1" type="button" (click)="getTitulo()">
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                 Buscar
                             </button>
@@ -41,7 +42,9 @@
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Desde</label>
-                                    <input type="date" formControlName="fdesde" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fdesde').errors }" (change)="onChangeDateFrom()">
+                                    <input type="date" formControlName="fdesde" class="form-control"
+                                        [ngClass]="{ 'is-invalid' : submitted && search_form.get('fdesde').errors }"
+                                        (change)="onChangeDateFrom()">
                                     <div *ngIf="submitted && search_form.get('fdesde').errors" class="invalid-feedback">
                                     </div>
                                 </div>
@@ -49,7 +52,9 @@
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Hasta</label>
-                                    <input type="date" formControlName="fhasta" class="form-control" [ngClass]="{ 'is-invalid' : submitted && search_form.get('fhasta').errors }" (change)="onChangeDateUntil()">
+                                    <input type="date" formControlName="fhasta" class="form-control"
+                                        [ngClass]="{ 'is-invalid' : submitted && search_form.get('fhasta').errors }"
+                                        (change)="onChangeDateUntil()">
                                     <div *ngIf="submitted && search_form.get('fhasta').errors" class="invalid-feedback">
                                     </div>
                                 </div>
@@ -64,7 +69,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header company-card-header">
-                    la <form [formGroup]="search_form">
+                    <form [formGroup]="search_form">
                         <div class="row">
                             <div class="col-6">
                                 <p>Listado de Recibos <input formControlName="xtitulo"

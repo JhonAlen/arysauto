@@ -411,8 +411,8 @@ export class ReportsComponent implements OnInit {
             body: [
               [
                 // { text: 'Monto Total USD:', style: 'tableHeader', fillColor: '#b9d4ff', border: [false, false, false, false] },
-                { text: `${new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(this.mtotalUSD)} USD`, style: 'tableHeader', fillColor: '#b9d4ff', border: [false, false, false, false], alignment: 'left' },
-                { text: `${new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(this.mtotalB)} B/ .`, style: 'tableHeader', fillColor: '#b9d4ff', border: [false, false, false, false], alignment: 'right' }
+                { text: `${new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(this.mtotalUSD)} USD`, style: 'tableHeader', fillColor: '#fdd213', border: [false, false, false, false], alignment: 'left' },
+                { text: `${new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(this.mtotalB)} Bs.`, style: 'tableHeader', fillColor: '#fdd213', border: [false, false, false, false], alignment: 'right' }
               ],
               // [
               //   { text: 'Monto Total B/. :', style: 'tableHeader', fillColor: '#b9d4ff', border: [false, false, false, false] },
