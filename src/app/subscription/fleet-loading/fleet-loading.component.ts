@@ -58,7 +58,6 @@ export class FleetLoadingComponent implements OnInit {
           this.canDetail = response.data.bdetalle;
           this.canEdit = response.data.beditar;
           this.canDelete = response.data.beliminar;
-          this.initializeDetailModule();
         }
       },
       (err) => {
@@ -76,51 +75,6 @@ export class FleetLoadingComponent implements OnInit {
     }
   }
 
-  initializeDetailModule() {
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    let options = { headers: headers };
-    let params = {
-      cpais: this.currentUser.data.cpais,
-      ccompania: this.currentUser.data.ccompania,
-    };
-    this.http.post(`${environment.apiUrl}/api/valrep/client`, params, options).subscribe((response : any) => {
-      if(response.data.status){
-        for(let i = 0; i < response.data.list.length; i++){
-          this.clientList.push({ id: response.data.list[i].ccliente, value: response.data.list[i].xcliente });
-        }
-        this.clientList.sort((a,b) => a.value > b.value ? 1 : -1);
-      }
-    },
-    (err) => {
-      let code = err.error.data.code;
-      let message;
-      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-      else if(code == 404){ message = "HTTP.ERROR.VALREP.CLIENTNOTFOUND"; }
-      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-      this.alert.message = message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-    });
-    this.http.post(`${environment.apiUrl}/api/valrep/receipt-type`, params, options).subscribe((response : any) => {
-      if(response.data.status){
-        for(let i = 0; i < response.data.list.length; i++){
-          this.receiptTypeList.push({ id: response.data.list[i].ctiporecibo, value: response.data.list[i].xtiporecibo, days: response.data.list[i].ncantidaddias });
-        }
-        this.receiptTypeList.sort((a,b) => a.value > b.value ? 1 : -1);
-      }
-    },
-    (err) => {
-      let code = err.error.data.code;
-      let message;
-      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
-      else if(code == 404){ message = "HTTP.ERROR.VALREP.RECEIPTTYPENOTFOUND"; }
-      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
-      this.alert.message = message;
-      this.alert.type = 'danger';
-      this.alert.show = true;
-    });
-  }
-
   onSubmit(form){
     this.submitted = true;
     this.loading = true;
@@ -131,14 +85,9 @@ export class FleetLoadingComponent implements OnInit {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
-      ccliente: form.ccliente,
-      ctiporecibo: form.ctiporecibo,
-      npoliza: form.npoliza,
-      parsedData: this.parsedData
+      policiesToRenovate: this.parsedData
     }
-    console.log(form.ctiporecibo);
-    console.log(this.detail_form.get('ctiporecibo').value)
-    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
+    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/renovate-contracts`, params, options).subscribe((response : any) => {
       if(response.data.status){
         console.log('insertado');
       }
@@ -174,7 +123,6 @@ export class FleetLoadingComponent implements OnInit {
   }
 
   async onFileSelect(event){
-    
     let fixedData: any[] = [];
     let file = event.target.files[0];
     this.fleetContractList = [];
@@ -182,11 +130,12 @@ export class FleetLoadingComponent implements OnInit {
     this.parsedData = await this.parseCSV(file);
     for (let i = 0; i < (this.parsedData.length -1); i++){
       fixedData.push({
-        ccontratoflota: parseInt(this.parsedData[i].ID),
-        xmarca: this.parsedData[i].MARCA,
-        xmodelo: this.parsedData[i].MODELO,
-        xplaca: this.parsedData[i].PLACA,
-        xversion: this.parsedData[i].VERSION,
+        cplan: this.parsedData[i].CPLAN,
+        xplaca: this.parsedData[i].XPLACA,
+        msuma_casco: this.parsedData[i].MSUMA_CASCO,
+        mdeducible: this.parsedData[i].MDEDUCIBLE,
+        fdesde_pol: this.parsedData[i].FDESDE_POL,
+        fhasta_pol: this.parsedData[i].FHASTA_POL,
         crecibo: 2
       })
     }
