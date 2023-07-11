@@ -17,6 +17,7 @@ export class FleetLoadingComponent implements OnInit {
   sub;
   currentUser;
   detail_form: FormGroup;
+  saveRenovation: boolean = false;
   loading: boolean = false;
   loading_cancel: boolean = false;
   submitted: boolean = false;
@@ -89,6 +90,8 @@ export class FleetLoadingComponent implements OnInit {
       if(response.data.status){
         window.alert('Las pólizas han sido renovadas exitosamente.');
         this.fleetContractList = [];
+        this.saveRenovation = false;
+        this.loading = false;
       }
     },
     (err) => {
@@ -175,6 +178,7 @@ export class FleetLoadingComponent implements OnInit {
         })
       }
       this.fleetContractList = fixedData;
+      this.saveRenovation = true;
     }
     else {
       event.target.value = null;

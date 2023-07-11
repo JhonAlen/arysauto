@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="col-2">
-                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)">Guardar Renovación</button>
+                            <button [disabled]="loading || !saveRenovation" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)">Guardar Renovación</button>
                         </div>
                     </div>
                 </div>
