@@ -5,55 +5,6 @@
             <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">alert.message</ngb-alert>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header company-card-header">
-                    <div class="row">
-                        <div class="col-6">
-                            Información de la carga
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <form [formGroup]="detail_form">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label>Cliente</label>
-                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }" >
-                                        <option></option>
-                                        <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
-                                    </select>
-                                    <div *ngIf="submitted && detail_form.get('ccliente').errors"  class="invalid-feedback">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label>Número de Póliza</label>
-                                    <input type="number" formControlName="npoliza" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('npoliza').errors }">
-                                    <div *ngIf="submitted && detail_form.get('npoliza').errors"  class="invalid-feedback">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Pago</label>
-                                    <select formControlName="ctiporecibo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccarga').errors }">
-                                        <option></option>
-                                        <option *ngFor="let receiptType of receiptTypeList" value="{{ receiptType.id }}">{{ receiptType.value }}</option>
-                                    </select>
-                                    <div *ngIf="submitted && detail_form.get('ctiporecibo').errors"  class="invalid-feedback">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row mt-5 mb-5">
         <div class="col-sm-12">
             <div class="card">
@@ -68,19 +19,19 @@
                         </div>
 
                         <div class="col-2">
-                            <button [disabled]="loading" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)">Guardar Carga</button>
+                            <button [disabled]="loading || !saveRenovation" class="btn company-detail-button float-right mr-1" type="button" (click)="onSubmit(detail_form.value)">Guardar Renovación</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular style="width: 100%; height: 520px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="true" [paginationPageSize]="10" rowSelection="single">
-                            <ag-grid-column headerName="N° Recibo" field="crecibo" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="N° Contrato" field="ccontratoflota" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Marca" field="xmarca" [width]="174" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Modelo" field="xmodelo" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Versión" field="xversion" [width]="274" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Placa" field="xplaca" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Placa" field="xplaca" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="N° Plan" field="cplan" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Suma Casco" field="msuma_casco" [width]="174" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Monto Deducible" field="mdeducible" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Inicio de la Póliza" field="fdesde_pol" [width]="274" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Fin de la póliza" field="fhasta_pol" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
