@@ -165,7 +165,7 @@ export class FleetContractManagementIndexComponent implements OnInit {
       if(response.data.status){
         this.chargeList = [];
         for(let i = 0; i < response.data.list.length; i++){
-          this.chargeList.push({ id: response.data.list[i].ccarga, value: `${response.data.list[i].xcliente} - Póliza Nro. ${response.data.list[i].xpoliza} - Placa ${response.data.list[i].xplaca}` });
+          this.chargeList.push({ id: response.data.list[i].ccarga, value: `${response.data.list[i].xcliente} - Póliza Nro. ${response.data.list[i].xpoliza}` });
         }
         this.chargeList.sort((a,b) => a.value > b.value ? 1 : -1);
       }

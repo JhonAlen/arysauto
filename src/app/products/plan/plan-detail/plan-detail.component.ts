@@ -269,10 +269,6 @@ export class PlanDetailComponent implements OnInit {
         this.detail_form.get('xplan').disable();
         this.detail_form.get('mcosto').setValue(response.data.mcosto);
         this.detail_form.get('mcosto').disable();
-        this.detail_form.get('parys').setValue(response.data.parys);
-        this.detail_form.get('parys').disable();
-        this.detail_form.get('paseguradora').setValue(response.data.paseguradora);
-        this.detail_form.get('paseguradora').disable();
         this.detail_form.get('ptasa_casco').setValue(response.data.ptasa_casco);
         this.detail_form.get('ptasa_casco').disable();
         this.detail_form.get('ptasa_catastrofico').setValue(response.data.ptasa_catastrofico);
@@ -289,6 +285,16 @@ export class PlanDetailComponent implements OnInit {
         this.detail_form.get('bactivo').disable();
         this.detail_form.get('cmoneda').setValue(response.data.cmoneda);
         this.detail_form.get('cmoneda').disable();
+        this.detail_form.get('cmetodologia').setValue(response.data.cmetodologia);
+        this.detail_form.get('cmetodologia').disable();
+        this.detail_form.get('caseguradora').setValue(response.data.caseguradora);
+        this.detail_form.get('caseguradora').disable();
+        this.detail_form.get('cpais').setValue(response.data.cpais);
+        this.detail_form.get('cpais').disable();
+        this.detail_form.get('fdesde').setValue(response.data.fdesde);
+        this.detail_form.get('fdesde').disable();
+        this.detail_form.get('fhasta').setValue(response.data.fhasta);
+        this.detail_form.get('fhasta').disable();
         if(this.code, this.detail_form.get('cmoneda').value){
           this.getStoreProcedure()
         }
@@ -492,12 +498,22 @@ export class PlanDetailComponent implements OnInit {
   editPlan(){
     this.detail_form.get('ctipoplan').enable();
     this.detail_form.get('xplan').enable();
-    this.detail_form.get('parys').enable();
-    this.detail_form.get('paseguradora').enable();
+    this.detail_form.get('mcosto').enable();
+    this.detail_form.get('cmoneda').enable();
+    this.detail_form.get('cmetodologia').enable();
+    this.detail_form.get('caseguradora').enable();
+    this.detail_form.get('cpais').enable();
+    this.detail_form.get('fdesde').enable();
+    this.detail_form.get('fhasta').enable();
+    this.detail_form.get('ptasa_casco').enable();
+    this.detail_form.get('ptasa_catastrofico').enable();
+    this.detail_form.get('msuma_recuperacion').enable();
+    this.detail_form.get('mprima_recuperacion').enable();
+    this.detail_form.get('mdeducible').enable();
     this.detail_form.get('bactivo').enable();
     this.showEditButton = false;
     this.showSaveButton = true;
-    this.editStatus = true;
+    this.editStatus = false;
     this.activaTasasArys = true;
     this.canReadFile = true;
   }
