@@ -162,6 +162,7 @@ export class FleetContractManagementIndexComponent implements OnInit {
       ccompania: this.currentUser.data.ccompania
     }
     this.http.post(`${environment.apiUrl}/api/valrep/charge`, params, options).subscribe((response : any) => {
+      console.log(response.data);
       if(response.data.status){
         this.chargeList = [];
         for(let i = 0; i < response.data.list.length; i++){
