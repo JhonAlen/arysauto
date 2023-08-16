@@ -435,7 +435,7 @@ export class FleetContractManagementIndexComponent implements OnInit {
             xversion: response.data.list[i].xversion,
             xplaca: response.data.list[i].xplaca,
             xestatusgeneral: response.data.list[i].xestatusgeneral,
-            xpoliza: response.data.list[i].xpoliza
+            xnombre: response.data.list[i].xnombre
           });
         }
       }
