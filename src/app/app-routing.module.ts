@@ -205,6 +205,7 @@ import { ReportsComponent } from './administration/reports/reports.component';
 import { ContractServiceArysAdministrationComponent } from './subscription/contract-service-arys-administration/contract-service-arys-administration.component';
 import { InclusionContractComponent } from './subscription/inclusion-contract/inclusion-contract.component';
 import { RenewalIndividualContractsComponent } from './subscription/renewal-individual-contracts/renewal-individual-contracts.component';
+import { LoginComponent } from './club/pages-statics/login/login.component';
 
 const routes: Routes = [
  
@@ -217,6 +218,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'dasboard', component: DashboardComponent },
   { path: 'sign-in', component: SignInComponent },
+  { path: 'sign-in-Club', component: LoginComponent },
 
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]  },
   {path: '',component: AdminLayoutComponent, children: [{ path: '', loadChildren: () => import('./club/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule) }] },
