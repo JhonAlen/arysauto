@@ -34,15 +34,6 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
-                                    <label>{{ "THIRDPARTIES.BROKERS.BROKERNUMBER" | translate }}</label>
-                                    <input type="text" (input)="onInputToUpper($event)" formControlName="ncorredor" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ncorredor').errors }">
-                                    <div *ngIf="submitted && detail_form.get('ncorredor').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('ncorredor').errors.required">{{ "THIRDPARTIES.BROKERS.REQUIREDBROKERNUMBER" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
                                     <label>{{ "THIRDPARTIES.BROKERS.NAME" | translate }}</label>
                                     <input type="text" (input)="onInputToUpper($event)" formControlName="xnombre" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xnombre').errors }">
                                     <div *ngIf="submitted && detail_form.get('xnombre').errors"  class="invalid-feedback">

@@ -5,6 +5,50 @@
             <ngb-alert *ngIf="alert.show" [type]="alert.type" (close)="alert.show = false;">alert.message</ngb-alert>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header company-card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Información de la carga
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="detail_form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Carga</label>
+                                    <select formControlName="ccarga" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccarga').errors }" (change)="getBatch()">
+                                        <option></option>
+                                        <option *ngFor="let policy of parentPolicyList" value="{{ policy.id }}">{{ policy.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('ccarga').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <label>Lote</label>
+                                    <select formControlName="clote" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('clote').errors }">
+                                        <option></option>
+                                        <option *ngFor="let batch of batchList" value="{{ batch.id }}">{{ batch.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('clote').errors"  class="invalid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+>>>>>>> origin/jhon
     <div class="row mt-5 mb-5">
         <div class="col-sm-12">
             <div class="card">

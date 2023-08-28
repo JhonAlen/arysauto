@@ -25,6 +25,7 @@ export class CorporativeIssuanceComponent implements OnInit {
   chargeList: any[] = [];
   batchList: any[] = [];
   fleetContractList: any[] = [];
+  fleetContractAllList: any[] = [];
   id: number;
   fcarga;
   xcliente: string;
@@ -76,15 +77,22 @@ export class CorporativeIssuanceComponent implements OnInit {
   planList: any[] = [];
 
   columnDefs: ColDef[] = [
-    { headerName: 'Id', field: 'id', width: 65, resizable: true },
-    { headerName: 'N° Certificado', field: 'xcertificado', width: 125, resizable: true },
-    { headerName: 'N° Póliza', field: 'xpoliza', width: 120, resizable: true },
-    { headerName: 'Propietario', field: 'xpropietario', width: 140, resizable: true},
-    { headerName: 'N° Placa', field: 'xplaca', width: 100, resizable: true},
-    { headerName: 'Marca', field: 'xmarca', width: 100, resizable: true},
-    { headerName: 'Modelo', field: 'xmodelo', width: 110, resizable: true},
+    { headerName: 'Propietario', field: 'xnombre', width: 190, resizable: true},
+    { headerName: 'N° Placa', field: 'xplaca', width: 140, resizable: true},
+    { headerName: 'Marca', field: 'xmarca', width: 150, resizable: true},
+    { headerName: 'Modelo', field: 'xmodelo', width: 160, resizable: true},
     { headerName: 'Versión', field: 'xversion', width: 110, resizable: true},
+    { headerName: 'Estatus', field: 'xestatusgeneral', width: 120, resizable: true },
     { headerName: 'Descargar', field: 'xdescargar', width: 180, resizable: true, cellStyle: {color: 'white', 'background-color': 'green', 'border-radius': '5px'}, onCellClicked: (e) => {this.downloadReceipt(e)}}
+  ];
+
+  columnAllDefs: ColDef[] = [
+    { headerName: 'Propietario', field: 'xnombre', width: 190, resizable: true},
+    { headerName: 'N° Placa', field: 'xplaca', width: 140, resizable: true},
+    { headerName: 'Marca', field: 'xmarca', width: 150, resizable: true},
+    { headerName: 'Modelo', field: 'xmodelo', width: 160, resizable: true},
+    { headerName: 'Versión', field: 'xversion', width: 274, resizable: true},
+    { headerName: 'Estatus', field: 'xestatusgeneral', width: 120, resizable: true },
   ];
 
   constructor(private formBuilder: UntypedFormBuilder,
@@ -205,6 +213,7 @@ export class CorporativeIssuanceComponent implements OnInit {
     this.search_form.get('clote').setValue(event.id)
     if(this.search_form.get('clote').value){
       this.searchStatus = true;
+      this.onSubmit(this.search_form.value)
     } else {
       this.searchStatus = false;
     }
@@ -272,14 +281,14 @@ export class CorporativeIssuanceComponent implements OnInit {
         this.fleetContractList = [];
         for(let i = 0; i < response.data.list.length; i++){
           this.fleetContractList.push({ 
-            id: response.data.list[i].id,
-            xpoliza: response.data.list[i].xpoliza,
-            xcertificado: response.data.list[i].xcertificado,
-            xpropietario: response.data.list[i].xnombre,
-            xplaca: response.data.list[i].xplaca,
+            xcliente: response.data.list[i].xcliente,
+            ccontratoflota: response.data.list[i].ccontratoflota,
             xmarca: response.data.list[i].xmarca,
             xmodelo: response.data.list[i].xmodelo,
             xversion: response.data.list[i].xversion,
+            xplaca: response.data.list[i].xplaca,
+            xestatusgeneral: response.data.list[i].xestatusgeneral,
+            xnombre: response.data.list[i].xnombre,
             xdescargar: "Descargar Certificado"
           });
         }
@@ -299,13 +308,47 @@ export class CorporativeIssuanceComponent implements OnInit {
       this.alert.show = true;
       this.loading = false;
     });
+
+    this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/search-all`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        this.fleetContractAllList = [];
+        for(let i = 0; i < response.data.list.length; i++){
+          this.fleetContractAllList.push({ 
+            xcliente: response.data.list[i].xcliente,
+            ccontratoflota: response.data.list[i].ccontratoflota,
+            xmarca: response.data.list[i].xmarca,
+            xmodelo: response.data.list[i].xmodelo,
+            xversion: response.data.list[i].xversion,
+            xplaca: response.data.list[i].xplaca,
+            xestatusgeneral: response.data.list[i].xestatusgeneral,
+            xnombre: response.data.list[i].xnombre,
+            xdescargar: "Descargar Certificado"
+          });
+        }
+      }
+      this.loading = false;
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ 
+        message = "No se encontraron contratos que cumplan con los parámetros de búsqueda"; 
+      }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
+      this.loading = false;
+    });
+
   }
 
   async downloadReceipt(e) {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
-      id: e.data.id
+      ccontratoflota: e.data.ccontratoflota
     }
     this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/detail`, params, options).subscribe((response : any) => {
       if(response.data.status){
@@ -593,7 +636,7 @@ export class CorporativeIssuanceComponent implements OnInit {
           table: {
             widths: [150, 100, 60, '*'],
             body: [
-              [{text: 'Prima Total', colSpan: 3, alignment: 'right', bold: true, border: [true, false, true, true]}, {}, {}, {text: `USD ${new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(this.mtotal)}`, alignment: 'right', bold: true, border: [false, false, true, true]}],
+              [{text: 'Prima Total', colSpan: 3, alignment: 'right', bold: true, border: [true, false, true, true]}, {}, {}, {text: `USD ${new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(this.mtotal_prima_aseg)}`, alignment: 'right', bold: true, border: [false, false, true, true]}],
             ]
           }
         }

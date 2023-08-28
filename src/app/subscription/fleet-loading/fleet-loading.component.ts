@@ -22,8 +22,8 @@ export class FleetLoadingComponent implements OnInit {
   loading_cancel: boolean = false;
   submitted: boolean = false;
   alert = { show: false, type: "", message: "" };
-  clientList: any[] = [];
-  receiptTypeList: any[] = [];
+  parentPolicyList: any[] = [];
+  batchList: any[] = [];
   parsedData: any[] = [];
   npoliza: number;
   fleetContractList: any[] = [];
@@ -39,8 +39,8 @@ export class FleetLoadingComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: [''],
-      ctiporecibo: [''],
+      ccarga: [''],
+      clote: [''],
       npoliza: ['']
     })
     this.currentUser = this.authenticationService.currentUserValue;
@@ -72,6 +72,59 @@ export class FleetLoadingComponent implements OnInit {
         this.alert.show = true;
       });
     }
+  }
+
+  initializeDetailModule() {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      cpais: this.currentUser.data.cpais,
+      ccompania: this.currentUser.data.ccompania,
+    };
+    this.http.post(`${environment.apiUrl}/api/valrep/parent-policy`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        for(let i = 0; i < response.data.list.length; i++){
+          this.parentPolicyList.push({ id: response.data.list[i].ccarga, value: response.data.list[i].xdescripcion });
+        }
+        this.parentPolicyList.sort((a,b) => a.value > b.value ? 1 : -1);
+      }
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ message = "HTTP.ERROR.VALREP.CLIENTNOTFOUND"; }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
+    });
+  }
+
+  getBatch(){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      ccarga: this.detail_form.get('ccarga').value
+    };
+    this.http.post(`${environment.apiUrl}/api/valrep/batch`, params, options).subscribe((response : any) => {
+      if(response.data.status){
+        for(let i = 0; i < response.data.list.length; i++){
+          this.batchList.push({ id: response.data.list[i].clote, value: response.data.list[i].xobservacion, days: response.data.list[i].ncantidaddias });
+        }
+        this.batchList.sort((a,b) => a.value > b.value ? 1 : -1);
+      }
+    },
+    (err) => {
+      let code = err.error.data.code;
+      let message;
+      if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+      else if(code == 404){ message = "HTTP.ERROR.VALREP.RECEIPTTYPENOTFOUND"; }
+      else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+      this.alert.message = message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
+    });
   }
 
   onSubmit(form){
@@ -164,24 +217,16 @@ export class FleetLoadingComponent implements OnInit {
     let file = event.target.files[0];
     this.fleetContractList = [];
     this.parsedData = [];
-    let parsedCSV = await this.parseCSV(file);
-    if (parsedCSV.length > 0) {
-      this.parsedData = parsedCSV;
-      for (let i = 0; i < (this.parsedData.length); i++){
-        fixedData.push({
-          cplan: this.parsedData[i].CPLAN,
-          xplaca: this.parsedData[i].XPLACA,
-          msuma_casco: this.parsedData[i].MSUMA_CASCO,
-          mdeducible: this.parsedData[i].MDEDUCIBLE,
-          fdesde_pol: this.parsedData[i].FDESDE_POL,
-          fhasta_pol: this.parsedData[i].FHASTA_POL
-        })
-      }
-      this.fleetContractList = fixedData;
-      this.saveRenovation = true;
-    }
-    else {
-      event.target.value = null;
+    this.parsedData = await this.parseCSV(file);
+    for (let i = 0; i < (this.parsedData.length -1); i++){
+      fixedData.push({
+        cplan: this.parsedData[i].CPLAN,
+        xplaca: this.parsedData[i].XPLACA,
+        casco: this.parsedData[i].MSUMA_A_CASCO,
+        mdeducible: this.parsedData[i].MDEDUCIBLE,
+        fdesde_pol: this.parsedData[i].FDESDE_POL,
+        fhasta_pol: this.parsedData[i].FHASTA_POL,
+      })
     }
   }  
 
