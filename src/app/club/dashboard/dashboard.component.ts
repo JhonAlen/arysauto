@@ -30,7 +30,9 @@ export class DashboardComponent implements OnInit {
   DataUserMantenimiento: FormGroup
   EventsCalendar : FormGroup
   DataUserDocuments : FormGroup
-
+  DataUserClub: FormGroup
+  counst = false
+  count : any
   closeResult: string;
   name : string
   apellido: string
@@ -89,48 +91,32 @@ export class DashboardComponent implements OnInit {
     const { calendarOptions } = this;
     calendarOptions.weekends = !calendarOptions.weekends;
   }
+
   handleDateSelect(selectInfo: DateSelectArg) {
     this.date = selectInfo.startStr
-    const tittle =  this.input.nativeElement.value
-     this.open(this.content)
-     console.log(tittle)
-    const calendarApi = selectInfo.view.calendar;
-    this.currentUser = this.authenticationService.currentUserValue;
-    if(this.EventsCalendar.get('evento').value == null){
-      this.message = false
-      let params = {
-        title: this.EventsCalendar.get('evento').value,
-        start: selectInfo.startStr + this.EventsCalendar.get('hora').value,
-        end: this.EventsCalendar.get('fhasta').value + this.EventsCalendar.get('hora').value,
-        cpropietario: this.currentUser.data.cpropietario
-      }
-      this.http
-      .post(environment.apiUrl + '/api/club/client-agenda' ,params)
-      .subscribe((res: any) => {
-        console.log(res.data.list)
-    
-        this.Events = []
-        this.Events = res.data.list
-        this.calendarOptions = {
-          initialView: 'dayGridMonth',
-          events: this.Events,
-        };
-      });
-    }else{
-      this.message = true
-      this.datamessage = 'Es requerida la descripción del evento'
-    }
-
+    this.open(this.content)
   }
+
   handleEventClick(clickInfo: EventClickArg) {
     if (confirm(`¿Seguro de que deseas elminar '${clickInfo.event.title}'?`)) {
       clickInfo.event.remove();
+      let params = {
+        cpropietario: this.currentUser.data.cpropietario,
+        id: clickInfo.event.id
+      }
+      this.http
+      .post(environment.apiUrl + '/api/club/deleteventagend' ,params)
+      .subscribe((res: any) => {
+
+      });
     }
   }
+
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
     this.changeDetector.detectChanges();
   }
+
   ngOnInit(){
 
     this.DataUserDocuments = this.formBuilder.group({
@@ -150,6 +136,13 @@ export class DashboardComponent implements OnInit {
       hora:  [''],
       xmantenimientoCorrect:  [''],
 
+    });
+
+    this.DataUserClub = this.formBuilder.group({
+      fdesde :  [''],
+      fhasta:  [''],
+      hora:  [''],
+      titulo:  [''],
     });
 
     this.currentUser = this.authenticationService.currentUserValue;
@@ -172,13 +165,19 @@ export class DashboardComponent implements OnInit {
         this.open(this.contentRef);
       }
     });
+
+    this.http.post<any>(environment.apiUrl + `/api/club/count/service`, params).subscribe(response => {
+      this.count = response.data.count
+      if(this.count > 0){
+      this.counst = true
+      }
+        })
     
   }
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    },);
+    })
   }
 
   openDocument(contentDocument){
@@ -199,7 +198,6 @@ export class DashboardComponent implements OnInit {
     this.submitted=true
 
   }
-
 
   onSubmit(form){
     const formData = new FormData();
@@ -231,6 +229,39 @@ export class DashboardComponent implements OnInit {
     
   }
 
+  onSubmitCalendar(form){
+    this.currentUser = this.authenticationService.currentUserValue;
+    if(form.titulo !== null){
+      this.message = false
+      let params = {
+        title: form.titulo,
+        start: this.date,
+        hora: form.hora,
+        end: form.fhasta ,
+        cpropietario: this.currentUser.data.cpropietario
+      }
+      this.http
+      .post(environment.apiUrl + '/api/club/client-agenda' ,params)
+      .subscribe((res: any) => {
+        this.Events = []
+        this.Events = res.data.list
+        this.calendarOptions = {
+          initialView: 'dayGridMonth',
+          events: this.Events,
+        };
+      }
+      );
+      this.datamessage = 'Evento creado con éxito'
+      
+      location.reload();
+    }else{
+      this.message = true
+      this.datamessage = 'Es requerida la descripción del evento'
+    }
+    
+    
+  }
+
   onSubmitMantenimiento(form){
 
     let data ={
@@ -248,9 +279,6 @@ export class DashboardComponent implements OnInit {
         this.ngOnInit()
       }
     })
-
-        
-      
     
   }
 }

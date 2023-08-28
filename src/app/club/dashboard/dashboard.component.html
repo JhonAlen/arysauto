@@ -130,36 +130,38 @@
 
 
   <ng-template #calendar let-modal>
-    <div class="container">
-        <h2 class="text-center">Detalles del Evento</h2>
-        <div class="col-md-12 mb-4 pb-2">
-            <div class="form-outline">                    
-                <label class="form-label required" for="form3Examplev3">Añade un titulo para el evento</label>
-                <input  type="text" class="form-control form-control-lg"  #myTittleElem >
-            </div>
-        </div>
-        <div class="col-md-12 mb-4 pb-2">
-          <div class="form-outline">
-            <label class="form-label required" for="form3Examplev3">Fecha desde</label>
-            <input  type="date" class="form-control form-control-lg" value="{{date}}">
+    <form [formGroup]="DataUserClub" (ngSubmit)="onSubmitCalendar(DataUserClub.value)">
+      <div class="container" >
+          <h2 class="text-center">Detalles del Evento</h2>
+          <div class="col-md-12 mb-4 pb-2">
+              <div class="form-outline">                    
+                  <label class="form-label required" >Añade un titulo para el evento</label>
+                  <input  formControlName="titulo" type="text" class="form-control form-control-lg" >
+              </div>
           </div>
-        </div>
-        <div class="col-md-12 mb-4 pb-2">
-          <div class="form-outline">
-            <label class="form-label required" for="form3Examplev3" (click)="handleDateSelect(selectInfo)">Fecha hasta</label>
-            <input  type="date" class="form-control form-control-lg" #myFhastaElem >
-          </div>
-        </div>
-        <div class="col-md-12 mb-4 pb-2">
+          <div class="col-md-12 mb-4 pb-2">
             <div class="form-outline">
-              <label class="form-label required" for="form3Examplev3">Hora</label>
-              <input  type="time" class="form-control form-control-lg" #myHoraElem  >
+              <label class="form-label required" >Fecha desde</label>
+              <input  type="date" class="form-control form-control-lg" value="{{date}}">
             </div>
-        </div>
-        <button  type="submit" class="btn success-toast align-rigth" (click)="handleDateSelect(selectInfo)">Guardar</button>
-        <a *ngIf="message">{{datamessage}}</a>            
+          </div>
+          <div class="col-md-12 mb-4 pb-2">
+            <div class="form-outline">
+              <label class="form-label required"  >Fecha hasta</label>
+              <input formControlName="fhasta" type="date" class="form-control form-control-lg"  >
+            </div>
+          </div>
+          <div class="col-md-12 mb-4 pb-2">
+              <div class="form-outline">
+                <label class="form-label required" >Hora</label>
+                <input  formControlName="hora" type="time" class="form-control form-control-lg"   >
+              </div>
+          </div>
+          <button  type="submit" class="btn success-toast align-rigth" >Guardar</button>
+          <a *ngIf="message">{{datamessage}}</a>            
 
-    </div>
+      </div>
+    </form>
   </ng-template>
 
 
@@ -234,7 +236,7 @@
             </div>
             <div class="col-md-12 mb-4 pb-2">
                 <div class="form-outline">
-                  <label class="form-label required" for="form3Examplev3">Hora</label>
+                  <label class="form-label required" >Hora</label>
                   <input formControlName="hora" type="time" class="form-control form-control-lg"  >
                 </div>
             </div>
