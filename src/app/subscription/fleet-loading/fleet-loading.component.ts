@@ -23,8 +23,8 @@ export class FleetLoadingComponent implements OnInit {
   loading_cancel: boolean = false;
   submitted: boolean = false;
   alert = { show: false, type: "", message: "" };
-  clientList: any[] = [];
-  receiptTypeList: any[] = [];
+  parentPolicyList: any[] = [];
+  batchList: any[] = [];
   parsedData: any[] = [];
   npoliza: number;
   fleetContractList: any[] = [];
@@ -40,8 +40,8 @@ export class FleetLoadingComponent implements OnInit {
 
   ngOnInit(): void {
     this.detail_form = this.formBuilder.group({
-      ccliente: [''],
-      ctiporecibo: [''],
+      ccarga: [''],
+      clote: [''],
       npoliza: ['']
     })
     this.currentUser = this.authenticationService.currentUserValue;
@@ -83,12 +83,12 @@ export class FleetLoadingComponent implements OnInit {
       cpais: this.currentUser.data.cpais,
       ccompania: this.currentUser.data.ccompania,
     };
-    this.http.post(`${environment.apiUrl}/api/valrep/client`, params, options).subscribe((response : any) => {
+    this.http.post(`${environment.apiUrl}/api/valrep/parent-policy`, params, options).subscribe((response : any) => {
       if(response.data.status){
         for(let i = 0; i < response.data.list.length; i++){
-          this.clientList.push({ id: response.data.list[i].ccliente, value: response.data.list[i].xcliente });
+          this.parentPolicyList.push({ id: response.data.list[i].ccarga, value: response.data.list[i].xdescripcion });
         }
-        this.clientList.sort((a,b) => a.value > b.value ? 1 : -1);
+        this.parentPolicyList.sort((a,b) => a.value > b.value ? 1 : -1);
       }
     },
     (err) => {
@@ -101,12 +101,20 @@ export class FleetLoadingComponent implements OnInit {
       this.alert.type = 'danger';
       this.alert.show = true;
     });
-    this.http.post(`${environment.apiUrl}/api/valrep/receipt-type`, params, options).subscribe((response : any) => {
+  }
+
+  getBatch(){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let params = {
+      ccarga: this.detail_form.get('ccarga').value
+    };
+    this.http.post(`${environment.apiUrl}/api/valrep/batch`, params, options).subscribe((response : any) => {
       if(response.data.status){
         for(let i = 0; i < response.data.list.length; i++){
-          this.receiptTypeList.push({ id: response.data.list[i].ctiporecibo, value: response.data.list[i].xtiporecibo, days: response.data.list[i].ncantidaddias });
+          this.batchList.push({ id: response.data.list[i].clote, value: response.data.list[i].xobservacion, days: response.data.list[i].ncantidaddias });
         }
-        this.receiptTypeList.sort((a,b) => a.value > b.value ? 1 : -1);
+        this.batchList.sort((a,b) => a.value > b.value ? 1 : -1);
       }
     },
     (err) => {
@@ -131,16 +139,14 @@ export class FleetLoadingComponent implements OnInit {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     let params = {
-      ccliente: form.ccliente,
-      ctiporecibo: form.ctiporecibo,
-      npoliza: form.npoliza,
-      parsedData: this.parsedData
+      ccarga: form.ccarga,
+      clote: form.clote,
+      parsedData: this.parsedData,
+      cusuario: this.currentUser.data.cusuario
     }
-    console.log(form.ctiporecibo);
-    console.log(this.detail_form.get('ctiporecibo').value)
-    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/charge-contracts`, params, options).subscribe((response : any) => {
+    this.http.post(`${environment.apiUrl}/api/fleet-contract-management/renewal`, params, options).subscribe((response : any) => {
       if(response.data.status){
-        console.log('insertado');
+        window.alert('¡La renovación se ha generado exitosamente!')
       }
     },
     (err) => {
@@ -182,12 +188,12 @@ export class FleetLoadingComponent implements OnInit {
     this.parsedData = await this.parseCSV(file);
     for (let i = 0; i < (this.parsedData.length -1); i++){
       fixedData.push({
-        ccontratoflota: parseInt(this.parsedData[i].ID),
-        xmarca: this.parsedData[i].MARCA,
-        xmodelo: this.parsedData[i].MODELO,
-        xplaca: this.parsedData[i].PLACA,
-        xversion: this.parsedData[i].VERSION,
-        crecibo: 2
+        cplan: this.parsedData[i].CPLAN,
+        xplaca: this.parsedData[i].XPLACA,
+        casco: this.parsedData[i].MSUMA_A_CASCO,
+        mdeducible: this.parsedData[i].MDEDUCIBLE,
+        fdesde_pol: this.parsedData[i].FDESDE_POL,
+        fhasta_pol: this.parsedData[i].FHASTA_POL,
       })
     }
     this.fleetContractList = fixedData;

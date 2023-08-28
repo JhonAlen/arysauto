@@ -20,31 +20,23 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
-                                    <label>Cliente</label>
-                                    <select formControlName="ccliente" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccliente').errors }" >
+                                    <label>Carga</label>
+                                    <select formControlName="ccarga" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccarga').errors }" (change)="getBatch()">
                                         <option></option>
-                                        <option *ngFor="let client of clientList" value="{{ client.id }}">{{ client.value }}</option>
+                                        <option *ngFor="let policy of parentPolicyList" value="{{ policy.id }}">{{ policy.value }}</option>
                                     </select>
-                                    <div *ngIf="submitted && detail_form.get('ccliente').errors"  class="invalid-feedback">
+                                    <div *ngIf="submitted && detail_form.get('ccarga').errors"  class="invalid-feedback">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
-                                    <label>Número de Póliza</label>
-                                    <input type="number" formControlName="npoliza" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('npoliza').errors }">
-                                    <div *ngIf="submitted && detail_form.get('npoliza').errors"  class="invalid-feedback">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de Pago</label>
-                                    <select formControlName="ctiporecibo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('ccarga').errors }">
+                                    <label>Lote</label>
+                                    <select formControlName="clote" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('clote').errors }">
                                         <option></option>
-                                        <option *ngFor="let receiptType of receiptTypeList" value="{{ receiptType.id }}">{{ receiptType.value }}</option>
+                                        <option *ngFor="let batch of batchList" value="{{ batch.id }}">{{ batch.value }}</option>
                                     </select>
-                                    <div *ngIf="submitted && detail_form.get('ctiporecibo').errors"  class="invalid-feedback">
+                                    <div *ngIf="submitted && detail_form.get('clote').errors"  class="invalid-feedback">
                                     </div>
                                 </div>
                             </div>
@@ -75,12 +67,12 @@
                 <div class="card-body">
                     <div class="container">
                         <ag-grid-angular style="width: 100%; height: 520px;" class="ag-theme-alpine" [rowData]="fleetContractList" [pagination]="true" [paginationPageSize]="10" rowSelection="single">
-                            <ag-grid-column headerName="N° Recibo" field="crecibo" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="N° Contrato" field="ccontratoflota" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Marca" field="xmarca" [width]="174" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Modelo" field="xmodelo" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Versión" field="xversion" [width]="274" [sortable]="true" [resizable]="true"></ag-grid-column>
-                            <ag-grid-column headerName="Placa" field="xplaca" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Codigo Plan" field="cplan" [width]="122" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Placa" field="xplaca" [width]="174" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="M. Casco" field="casco" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Deducible" field="mdeducible" [width]="274" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Fecha Desde" field="fdesde_pol" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
+                            <ag-grid-column headerName="Fecha Hasta" field="fhasta_pol" [width]="172" [sortable]="true" [resizable]="true"></ag-grid-column>
                         </ag-grid-angular>
                     </div>
                 </div>
