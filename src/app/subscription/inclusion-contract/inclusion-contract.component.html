@@ -18,6 +18,31 @@
             <div class="card">
              <div class="card-header company-card-header"><h5 class="card-title">Datos Personales</h5></div>
               <div class="card-body">
+                <div class="card-client">
+                  <div class="card-header company-card-header"><h5 class="card-title">Datos Cliente</h5></div>
+                  <div class="card-body">
+                    <div class="row d-flex justify-content-center align-items-center">
+                      <div class="col-md-5 mb-4 pb-2">
+                        <div class="form-outline">
+                          <label class="form-label" for="form3Examplev2">Identificación</label>
+                          <input type="text" formControlName="xrif_cliente" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xrif_cliente').errors }" (change)="Validation()"/>
+                          <div *ngIf="submitted && inclusion_form.get('xrif_cliente').errors" class="invalid-feedback">
+                            <div *ngIf="inclusion_form.get('xrif_cliente').errors.required">Se requiere completar el campo</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-5 mb-4 pb-2">
+                        <div class="form-outline">
+                          <label class="form-label" for="form3Examplev2">Cliente</label>
+                          <input type="text" formControlName="xcliente" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xcliente').errors }">
+                          <div *ngIf="submitted && inclusion_form.get('xcliente').errors" class="invalid-feedback">
+                            <div *ngIf="inclusion_form.get('xcliente').errors.required">Se requiere completar el campo</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-md-2 mb-4 pb-2">
                     <div class="form-outline">
@@ -35,18 +60,18 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3 mb-4 pb-2">
+                  <div class="col-md-4 mb-4 pb-2">
                     <div class="form-outline">
-                      <label class="form-label required" for="form3Examplev2">Identificación</label>
-                      <input type="text" formControlName="xrif_cliente" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xrif_cliente').errors }" (change)="Validation()"/>
-                      <div *ngIf="submitted && inclusion_form.get('xrif_cliente').errors" class="invalid-feedback">
-                        <div *ngIf="inclusion_form.get('xrif_cliente').errors.required">Se requiere completar el campo</div>
+                      <label class="form-label required">Identificación del Propietario</label>
+                      <input type="text" formControlName="xcedula" class="form-control form-control-lg" required [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xcedula').errors }" />
+                      <div *ngIf="submitted && inclusion_form.get('xcedula').errors" class="invalid-feedback">
+                        <div *ngIf="inclusion_form.get('xcedula').errors.required">Se requiere completar el campo</div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4 mb-4 pb-2">
+                  <div class="col-md-6 mb-4 pb-2">
                     <div class="form-outline">
-                      <label class="form-label required">Nombre y Apellido del Cliente</label>
+                      <label class="form-label required">Nombre y Apellido del Propietario</label>
                       <input type="text" formControlName="xnombre" class="form-control form-control-lg" required [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('xnombre').errors }" />
                       <div *ngIf="submitted && inclusion_form.get('xnombre').errors" class="invalid-feedback">
                         <div *ngIf="inclusion_form.get('xnombre').errors.required">Se requiere completar el campo</div>
@@ -309,7 +334,7 @@
               <div class="row" style="padding: 10px;">
                 <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
                   <div class="form-outline">
-                    <label for="form3Examplev5">Fecha de Inicio del Contrato</label>
+                    <label for="form3Examplev5">Fecha Inicio del Contrato</label>
                     <input type="date" formControlName="fdesde_pol" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('fdesde_pol').errors }" />
                     <div *ngIf="submitted && inclusion_form.get('fdesde_pol').errors" class="invalid-feedback">
                     </div>
@@ -325,7 +350,7 @@
                 </div>
                 <div class="col-md-2 mb-4 pb-2 mb-md-0 pb-md-0">
                   <div class="form-outline">
-                    <label class="form-label required" for="form3Examplev5">Fecha de Inclusión al Contrato</label>
+                    <label class="form-label" for="form3Examplev5">Fecha de Inclusión</label>
                     <input type="date" formControlName="femision" class="form-control form-control-lg" [ngClass]="{ 'is-invalid' : submitted && inclusion_form.get('femision').errors }" />
                     <div *ngIf="submitted && inclusion_form.get('femision').errors" class="invalid-feedback">
                       <div *ngIf="inclusion_form.get('femision').errors.required">Se requiere completar el campo</div>

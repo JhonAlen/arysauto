@@ -43,6 +43,7 @@ export class InclusionContractComponent implements OnInit {
   ccarga;
   clote;
   xplan;
+  xrif_cliente;
   xdocidentidad : string;
   fdesde_pol_place : Date ;
   fhasta_pol_place : Date ;
@@ -64,6 +65,7 @@ export class InclusionContractComponent implements OnInit {
                   this.fdesde_pol = this.router.getCurrentNavigation().extras.state.fdesde_pol;
                   this.fhasta_pol = this.router.getCurrentNavigation().extras.state.fhasta_pol;
                   this.clote = this.router.getCurrentNavigation().extras.state.lote;
+                  this.xrif_cliente = this.router.getCurrentNavigation().extras.state.xrif_cliente;
                 }else{
                   this.router.navigate([`subscription/corporative-issuance`]);
                 }
@@ -104,17 +106,18 @@ export class InclusionContractComponent implements OnInit {
       xcertificado: [''], 
       ncapacidad_p: [''],
       xtipo: [''],
-      xtelefono_emp: ['']
+      xtelefono_emp: [''],
+      xcliente: ['']
     });
 
 
     if(this.fdesde_pol){
       let dateFormat = new Date(this.fdesde_pol);
-      let dd = dateFormat.getDate();
-      let mm = dateFormat.getMonth() + 1;
+      let dd = String(dateFormat.getDate()).padStart(2, '0');
+      let mm = String(dateFormat.getMonth() + 1).padStart(2, '0');
       let yyyy = dateFormat.getFullYear();
-      this.fdesde_pol = yyyy + '-' + mm + '-' + dd;
-      this.inclusion_form.get('fdesde_pol').setValue(this.fdesde_pol);
+      let fdesde_pol = yyyy + '-' + mm + '-' + dd;
+      this.inclusion_form.get('fdesde_pol').setValue(fdesde_pol);
       this.inclusion_form.get('fdesde_pol').disable();
     }
 
@@ -127,6 +130,11 @@ export class InclusionContractComponent implements OnInit {
       this.inclusion_form.get('fhasta_pol').setValue(this.fhasta_pol);
       this.inclusion_form.get('fhasta_pol').disable();
     }
+
+    this.inclusion_form.get('xrif_cliente').setValue(this.xrif_cliente);
+    this.inclusion_form.get('xrif_cliente').disable();
+    this.inclusion_form.get('xcliente').setValue(this.xcliente);
+    this.inclusion_form.get('xcliente').disable();
    
     this.currentUser = this.authenticationService.currentUserValue;
     if(this.currentUser){
@@ -305,7 +313,6 @@ export class InclusionContractComponent implements OnInit {
       cpais: this.currentUser.data.cpais,
       cmarca: marca.id
     };
-    console.log(params)
     this.http.post(`${environment.apiUrl}/api/valrep/model`, params).subscribe((response: any) => {
       if(response.data.status){
         this.modelList = [];
@@ -399,7 +406,6 @@ export class InclusionContractComponent implements OnInit {
     let params =  {
       cplan: plan.id,
     };
-    console.log(params)
     this.http.post(`${environment.apiUrl}/api/contract-arys/service-type-plan`, params).subscribe((response: any) => {
       if(response.data.list){
         this.serviceList = [];
@@ -485,7 +491,7 @@ export class InclusionContractComponent implements OnInit {
     let plan = this.planList.find(element => element.control === parseInt(this.inclusion_form.get('cplan').value));
     let params = {
         icedula: this.inclusion_form.get('icedula').value,
-        xrif_cliente: form.xrif_cliente,
+        xrif_cliente: this.xrif_cliente,
         xnombre: form.xnombre,
         xapellido: form.xapellido,
         xtelefono_emp: form.xtelefono_emp,
@@ -502,7 +508,7 @@ export class InclusionContractComponent implements OnInit {
         xcolor: this.inclusion_form.get('xcolor').value,    
         xserialcarroceria: form.xserialcarroceria,
         xserialmotor: form.xserialmotor,  
-        xcedula: form.xrif_cliente,
+        xcedula: form.xcedula,
         femision: form.femision,
         msuma_a_casco: form.msuma_a_casco,
         mdeducible: form.mdeducible,
@@ -516,7 +522,6 @@ export class InclusionContractComponent implements OnInit {
         xclase: form.xclase,
         cusuario: this.currentUser.data.cusuario,
       };
-      console.log(params)
       this.http.post( `${environment.apiUrl}/api/corporative-issuance-management/create-inclusion-contract`,params).subscribe((response : any) => {
         if (response.data.status) {
           window.alert(`Se ha incluido el beneficiario ${form.xnombre} con la Póliza ${form.xpoliza} al cliente ${this.xcliente}`)

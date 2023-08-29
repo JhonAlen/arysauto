@@ -72,6 +72,7 @@ export class CorporativeIssuanceComponent implements OnInit {
   fhasta_pol;
   bAgregarPropi = false;
   ccliente;
+  xrif_cliente;
   fhasta_poliza;
   fdesde_poliza;
   planList: any[] = [];
@@ -83,7 +84,8 @@ export class CorporativeIssuanceComponent implements OnInit {
     { headerName: 'Modelo', field: 'xmodelo', width: 160, resizable: true},
     { headerName: 'Versión', field: 'xversion', width: 110, resizable: true},
     { headerName: 'Estatus', field: 'xestatusgeneral', width: 120, resizable: true },
-    { headerName: 'Descargar', field: 'xdescargar', width: 180, resizable: true, cellStyle: {color: 'white', 'background-color': 'green', 'border-radius': '5px'}, onCellClicked: (e) => {this.downloadReceipt(e)}}
+    { headerName: 'Descargar', field: 'xdescargar', width: 110, resizable: true, cellStyle: {color: 'white', 'background-color': 'green', 'border-radius': '5px'}, onCellClicked: (e) => {this.downloadReceipt(e)}},
+    { headerName: 'Excluir', field: 'xexcluir', width: 80, resizable: true, cellStyle: {color: 'white', 'background-color': 'red', 'border-radius': '5px'}, onCellClicked: (e) => {this.excluir(e)}}
   ];
 
   columnAllDefs: ColDef[] = [
@@ -230,6 +232,7 @@ export class CorporativeIssuanceComponent implements OnInit {
           this.xcliente = response.data.xcliente;
           this.fhasta_poliza = response.data.fhasta_pol;
           this.fdesde_poliza = response.data.fdesde_pol;
+          this.xrif_cliente = response.data.xrif_cliente;
           if(response.data.plan){
             for(let i = 0; i < response.data.plan.length; i++){
               this.planList.push({
@@ -244,7 +247,8 @@ export class CorporativeIssuanceComponent implements OnInit {
             fdesde_pol: this.fdesde_poliza,
             fhasta_pol: this.fhasta_poliza,
             plan: this.planList,
-            lote: this.search_form.get('clote').value
+            lote: this.search_form.get('clote').value,
+            xrif_cliente: this.xrif_cliente
           }
           this.router.navigate([`subscription/inclusion-contract/`], {state: data});
           }
@@ -289,7 +293,8 @@ export class CorporativeIssuanceComponent implements OnInit {
             xplaca: response.data.list[i].xplaca,
             xestatusgeneral: response.data.list[i].xestatusgeneral,
             xnombre: response.data.list[i].xnombre,
-            xdescargar: "Descargar Certificado"
+            xdescargar: "Certificado",
+            xexcluir: "Excluir"
           });
         }
       }
@@ -342,6 +347,10 @@ export class CorporativeIssuanceComponent implements OnInit {
       this.loading = false;
     });
 
+  }
+
+  async excluir(e){
+    console.log(e)
   }
 
   async downloadReceipt(e) {

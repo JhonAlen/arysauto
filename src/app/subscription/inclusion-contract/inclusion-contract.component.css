@@ -168,4 +168,9 @@ hr{
   .alert {
     color: white;
   }
+  .card-client{
+    width: 98%;
+    position: initial;
+    margin: 6px;
+}
   
