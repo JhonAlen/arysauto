@@ -185,6 +185,33 @@ export class WebServiceConnectionService {
     }
   }
 
+  async statusGeneralValrep(params: any): Promise<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    try {
+      let response = await this.http.post(`${environment.apiUrl}/api/valrep/status`, params, options).toPromise();
+      return response;
+    }
+    catch (err) {
+      let message;
+      switch (err.error.data.code) {
+        case 400:
+          message = "HTTP.ERROR.PARAMSERROR";
+          break;
+        case 404:
+          message = "HTTP.ERROR.VALREP.DOCUMENTTYPENOTFOUND";
+          break;
+        case 500:
+          message = "HTTP.ERROR.INTERNALSERVERERROR";
+          break;
+        default:
+          message = "HTTP.ERROR.INTERNALSERVERERROR";
+          break;
+      }
+      return { error: true, code: err.error.data.code, message: message }
+    }
+  }
+
   async valrepState(params: any): Promise<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };

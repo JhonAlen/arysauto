@@ -200,11 +200,23 @@
                                 </div>
                             </div> -->
                             <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
-                                    <label>{{ "PROVIDERS.PROVIDERS.ACTIVE" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('bactivo').errors.required">{{ "PROVIDERS.PROVIDERS.REQUIREDACTIVE" | translate }}</div>
+                                <div class="form-group">
+                                    <label>Estatus</label>
+                                    <select formControlName="cestatusgeneral" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('cestatusgeneral').errors }" (change)="Motivo()">
+                                        <option></option>
+                                        <option *ngFor="let status of generalStatusList" value="{{ status.id }}">{{ status.value }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && detail_form.get('cestatusgeneral').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('cestatusgeneral').errors.required">{{ "PROVIDERS.PROVIDERS.REQUIREDDOCUMENTTYPE" | translate }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4" *ngIf="motive">
+                                <div class="form-group">
+                                    <label>Motivo de Suspención</label>
+                                    <textarea type="text" formControlName="xmotivo" class="form-control" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('xmotivo').errors }" cols="30" rows="2"></textarea>
+                                    <div *ngIf="submitted && detail_form.get('xmotivo').errors"  class="invalid-feedback">
+                                        <div *ngIf="detail_form.get('xmotivo').errors.required">{{ "PROVIDERS.PROVIDERS.REQUIREDOBSERVATION" | translate }}</div>
                                     </div>
                                 </div>
                             </div>

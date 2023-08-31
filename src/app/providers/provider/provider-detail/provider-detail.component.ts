@@ -71,6 +71,8 @@ export class ProviderDetailComponent implements OnInit {
   serviceDeletedRowList: any[] = [];
   contactDeletedRowList: any[] = [];
   documentList: any[] = [];
+  generalStatusList: any[] = [];
+  motive: boolean = false;
 
   constructor(private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
@@ -97,6 +99,8 @@ export class ProviderDetailComponent implements OnInit {
       nlimite: [''],
       cestado: [''],
       cciudad: [''],
+      cestatusgeneral: [''],
+      xmotivo: [''],
       bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
@@ -178,7 +182,22 @@ export class ProviderDetailComponent implements OnInit {
       this.documentTypeList.sort((a, b) => a.value > b.value ? 1 : -1);
     }
 
-
+    let statusParams = { cpais: this.currentUser.data.cpais };
+    //this.http.post(`${environment.apiUrl}/api/valrep/document-type`, params, options).subscribe((response : any) => {
+    let statusRequest = await this.webService.statusGeneralValrep(statusParams);
+    if (statusRequest.error) {
+      this.alert.message = statusRequest.message;
+      this.alert.type = 'danger';
+      this.alert.show = true;
+      this.loading = false;
+      return;
+    }
+    if (statusRequest.data.status) {
+      for (let i = 0; i < statusRequest.data.list.length; i++) {
+        this.generalStatusList.push({ id: statusRequest.data.list[i].cestatusgeneral, value: statusRequest.data.list[i].xestatusgeneral });
+      }
+      this.generalStatusList.sort((a, b) => a.value > b.value ? 1 : -1);
+    }
 
 
     this.sub = this.activatedRoute.paramMap.subscribe(params => {
@@ -252,6 +271,15 @@ export class ProviderDetailComponent implements OnInit {
       this.detail_form.get('cciudad').disable();
       this.detail_form.get('bactivo').setValue(request.data.bactivo);
       this.detail_form.get('bactivo').disable();
+      this.detail_form.get('cestatusgeneral').setValue(request.data.cestatusgeneral);
+      this.detail_form.get('cestatusgeneral').disable();
+      this.detail_form.get('xmotivo').setValue(request.data.xmotivo);
+      this.detail_form.get('xmotivo').disable();
+      if(this.detail_form.get('xmotivo').value){
+        this.motive = true;
+      }else{
+        this.motive = false;
+      }
       this.bankList = [];
       if (request.data.banks) {
         for (let i = 0; i < request.data.banks.length; i++) {
@@ -377,6 +405,8 @@ export class ProviderDetailComponent implements OnInit {
     this.detail_form.get('cestado').enable();
     this.detail_form.get('cciudad').enable();
     this.detail_form.get('bactivo').enable();
+    this.detail_form.get('cestatusgeneral').enable();
+    this.detail_form.get('xmotivo').enable();
     this.showEditButton = false;
     this.showSaveButton = true;
     this.editStatus = true;
@@ -853,6 +883,17 @@ export class ProviderDetailComponent implements OnInit {
     });
   }
 
+  Motivo(){
+    if(this.detail_form.get('cestatusgeneral').value == 19){
+      this.motive = true;
+    }else if(this.detail_form.get('cestatusgeneral').value == 2){
+      this.detail_form.get('xmotivo').setValue('');
+      this.motive = false;
+    }else{
+      this.motive = false;
+    }
+  }
+
   onBanksGridReady(event) {
     this.bankGridApi = event.api;
   }
@@ -982,6 +1023,8 @@ export class ProviderDetailComponent implements OnInit {
         xobservacion: form.xobservacion,
         bactivo: form.bactivo,
         pislr: form.pislr,
+        cestatusgeneral: form.cestatusgeneral,
+        xmotivo: form.xmotivo,
         banks: {
           create: createBankList,
           update: updateBankList,
@@ -1078,6 +1121,8 @@ export class ProviderDetailComponent implements OnInit {
         brands: createBrandList,
         services: createServiceList,
         contacts: createContactList,
+        cestatusgeneral: form.cestatusgeneral,
+        xmotivo: form.xmotivo,
         documentos: this.documentList,
       };
       // url = `${environment.apiUrl}/api/v2/provider/production/create`;

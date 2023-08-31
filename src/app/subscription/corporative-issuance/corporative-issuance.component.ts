@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { environment } from '@environments/environment';
 import { ColDef} from 'ag-grid-community'
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-corporative-issuance',
@@ -15,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CorporativeIssuanceComponent implements OnInit {
 
+  @ViewChild('exclusionModal') exclusionModal: any; // Cambia el tipo a ElementRef si es necesario
   currentUser;
   keyword = 'value';
   search_form : UntypedFormGroup;
@@ -85,7 +87,7 @@ export class CorporativeIssuanceComponent implements OnInit {
     { headerName: 'Versión', field: 'xversion', width: 110, resizable: true},
     { headerName: 'Estatus', field: 'xestatusgeneral', width: 120, resizable: true },
     { headerName: 'Descargar', field: 'xdescargar', width: 110, resizable: true, cellStyle: {color: 'white', 'background-color': 'green', 'border-radius': '5px'}, onCellClicked: (e) => {this.downloadReceipt(e)}},
-    { headerName: 'Excluir', field: 'xexcluir', width: 80, resizable: true, cellStyle: {color: 'white', 'background-color': 'red', 'border-radius': '5px'}, onCellClicked: (e) => {this.excluir(e)}}
+    { headerName: 'Excluir', field: 'xexcluir', width: 80, resizable: true, cellStyle: {color: 'white', 'background-color': 'red', 'border-radius': '5px'}, onCellClicked: (e) => { this.openExclusionModal(this.exclusionModal, e.data); }}
   ];
 
   columnAllDefs: ColDef[] = [
@@ -101,7 +103,8 @@ export class CorporativeIssuanceComponent implements OnInit {
               private authenticationService : AuthenticationService,
               private http: HttpClient,
               private router: Router,
-              private toast: MatSnackBar) { }
+              private toast: MatSnackBar,
+              private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.search_form = this.formBuilder.group({
@@ -349,8 +352,39 @@ export class CorporativeIssuanceComponent implements OnInit {
 
   }
 
-  async excluir(e){
-    console.log(e)
+  openExclusionModal(content, row) {
+    const modalRef = this.modalService.open(content, { centered: true });
+  
+    modalRef.result.then((result) => {
+      if (result === 'excluded') {
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        let options = { headers: headers };
+        let params = {
+          ccontratoflota: row.ccontratoflota, 
+          cestatusgeneral: 23
+        }
+        this.http.post(`${environment.apiUrl}/api/corporative-issuance-management/exclude`, params, options).subscribe((response : any) => {
+          if(response.data.status){
+            window.alert(`Se ha excluido el propietario ${row.xnombre} del cliente ${row.xcliente}`);
+            location.reload();
+          }
+        },
+        (err) => {
+          let code = err.error.data.code;
+          let message;
+          if(code == 400){ message = "HTTP.ERROR.PARAMSERROR"; }
+          else if(code == 404){ 
+            message = "Hubo un error al excluir el propietario."; 
+          }
+          else if(code == 500){  message = "HTTP.ERROR.INTERNALSERVERERROR"; }
+          this.alert.message = message;
+          this.alert.type = 'danger';
+          this.alert.show = true;
+        })
+      }
+    }).catch((reason) => {
+      console.log('Modal cerrado sin exclusión:', reason);
+    });
   }
 
   async downloadReceipt(e) {
