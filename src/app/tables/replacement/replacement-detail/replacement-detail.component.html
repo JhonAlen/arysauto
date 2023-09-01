@@ -55,60 +55,6 @@
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="bizquierda" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bizquierda').errors }">
-                                    <label>{{ "TABLES.SPAREPARTS.LEFT" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('bizquierda').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('bizquierda').errors.required">{{ "TABLES.SPAREPARTS.REQUIREDLEFT" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="bderecha" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bderecha').errors }">
-                                    <label>{{ "TABLES.SPAREPARTS.RIGHT" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('bderecha').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('bderecha').errors.required">{{ "TABLES.SPAREPARTS.REQUIREDRIGHT" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="bsuperior" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bsuperior').errors }">
-                                    <label>{{ "TABLES.SPAREPARTS.UP" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('bsuperior').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('bsuperior').errors.required">{{ "TABLES.SPAREPARTS.REQUIREDUP" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="binferior" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('binferior').errors }">
-                                    <label>{{ "TABLES.SPAREPARTS.DOWN" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('binferior').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('binferior').errors.required">{{ "TABLES.SPAREPARTS.REQUIREDDOWN" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="bdelantero" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bdelantero').errors }">
-                                    <label>{{ "TABLES.SPAREPARTS.FRONT" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('bdelantero').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('bdelantero').errors.required">{{ "TABLES.SPAREPARTS.REQUIREDFRONT" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" formControlName="btrasero" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('btrasero').errors }">
-                                    <label>{{ "TABLES.SPAREPARTS.BACK" | translate }}</label>
-                                    <div *ngIf="submitted && detail_form.get('btrasero').errors"  class="invalid-feedback">
-                                        <div *ngIf="detail_form.get('btrasero').errors.required">{{ "TABLES.SPAREPARTS.REQUIREDBACK" | translate }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group form-check">
                                     <input type="checkbox" formControlName="bactivo" class="form-check-input" [ngClass]="{ 'is-invalid' : submitted && detail_form.get('bactivo').errors }">
                                     <label>{{ "TABLES.SPAREPARTS.ACTIVE" | translate }}</label>
                                     <div *ngIf="submitted && detail_form.get('bactivo').errors"  class="invalid-feedback">

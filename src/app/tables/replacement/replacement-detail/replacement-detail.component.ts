@@ -37,12 +37,6 @@ export class ReplacementDetailComponent implements OnInit {
     this.detail_form = this.formBuilder.group({
       ctiporepuesto: [''],
       xrepuesto: [''],
-      bizquierda: [false],
-      bderecha: [false],
-      bsuperior: [false],
-      binferior: [false],
-      bdelantero: [false],
-      btrasero: [false],
       bactivo: [true]
     });
     this.currentUser = this.authenticationService.currentUserValue;
@@ -138,18 +132,6 @@ export class ReplacementDetailComponent implements OnInit {
       this.detail_form.get('ctiporepuesto').disable();
       this.detail_form.get('xrepuesto').setValue(request.data.xrepuesto);
       this.detail_form.get('xrepuesto').disable();
-      this.detail_form.get('bizquierda').setValue(request.data.bizquierda);
-      this.detail_form.get('bizquierda').disable();
-      this.detail_form.get('bderecha').setValue(request.data.bderecha);
-      this.detail_form.get('bderecha').disable();
-      this.detail_form.get('bsuperior').setValue(request.data.bsuperior);
-      this.detail_form.get('bsuperior').disable();
-      this.detail_form.get('binferior').setValue(request.data.binferior);
-      this.detail_form.get('binferior').disable();
-      this.detail_form.get('bdelantero').setValue(request.data.bdelantero);
-      this.detail_form.get('bdelantero').disable();
-      this.detail_form.get('btrasero').setValue(request.data.btrasero);
-      this.detail_form.get('btrasero').disable();
       this.detail_form.get('bactivo').setValue(request.data.bactivo);
       this.detail_form.get('bactivo').disable();
     }
@@ -160,12 +142,6 @@ export class ReplacementDetailComponent implements OnInit {
   editReplacement() {
     this.detail_form.get('ctiporepuesto').enable();
     this.detail_form.get('xrepuesto').enable();
-    this.detail_form.get('bizquierda').enable();
-    this.detail_form.get('bderecha').enable();
-    this.detail_form.get('bsuperior').enable();
-    this.detail_form.get('binferior').enable();
-    this.detail_form.get('bdelantero').enable();
-    this.detail_form.get('btrasero').enable();
     this.detail_form.get('bactivo').enable();
     this.showEditButton = false;
     this.showSaveButton = true;
@@ -200,12 +176,6 @@ export class ReplacementDetailComponent implements OnInit {
         crepuesto: this.code,
         ctiporepuesto: form.ctiporepuesto,
         xrepuesto: form.xrepuesto,
-        bizquierda: form.bizquierda,
-        bderecha: form.bderecha,
-        bsuperior: form.bsuperior,
-        binferior: form.binferior,
-        bdelantero: form.bdelantero,
-        btrasero: form.btrasero,
         bactivo: form.bactivo,
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
@@ -221,12 +191,6 @@ export class ReplacementDetailComponent implements OnInit {
         },
         ctiporepuesto: form.ctiporepuesto,
         xrepuesto: form.xrepuesto,
-        bizquierda: form.bizquierda,
-        bderecha: form.bderecha,
-        bsuperior: form.bsuperior,
-        binferior: form.binferior,
-        bdelantero: form.bdelantero,
-        btrasero: form.btrasero,
         bactivo: form.bactivo,
         cpais: this.currentUser.data.cpais,
         ccompania: this.currentUser.data.ccompania,
