@@ -61,6 +61,43 @@ export class ToolbarComponent implements OnInit {
             this.groupList.push({ xgrupo: nameArray[i], modules: testObjectFilter });
           }
         }
+        this.groupList.sort((a, b) => {
+          const xgrupoA = a.xgrupo;
+          const xgrupoB = b.xgrupo;
+        
+          if (xgrupoA < xgrupoB) {
+            return -1;
+          } else if (xgrupoA > xgrupoB) {
+            return 1;
+          } else {
+            // Si los grupos son iguales, ordena por xmodulo dentro del grupo
+            const xmoduloA = a.modules[0].xmodulo;
+            const xmoduloB = b.modules[0].xmodulo;
+        
+            if (xmoduloA < xmoduloB) {
+              return -1;
+            } else if (xmoduloA > xmoduloB) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        });
+        
+        for (let group of this.groupList) {
+          group.modules.sort((a, b) => {
+            const xmoduloA = a.xmodulo;
+            const xmoduloB = b.xmodulo;
+        
+            if (xmoduloA < xmoduloB) {
+              return -1;
+            } else if (xmoduloA > xmoduloB) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+        }
       },
       (err) => {
         let code = err.error.data.code;
