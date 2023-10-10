@@ -215,6 +215,7 @@ export class NotificationsComponent implements OnInit {
     this.http.post(environment.apiUrl + '/api/club/Data/Solicitud',params).subscribe((response : any) => {
       if(response.data.status){
           window.alert('La solicitud fue creada con exito,en breve nos contactamos con usted');
+          location.reload();
       }
   }
   );
